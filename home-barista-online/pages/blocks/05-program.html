@@ -1,0 +1,358 @@
+<!--
+  БЛОК 05 — ПРОГРАММА КУРСА  [id="program"]
+  Место на странице: центральный блок, кнопка «Смотреть программу» из Hero ведёт сюда.
+  Задача: показать структуру курса — 2 модуля, 11 уроков.
+  Содержит: Модуль 1 (уроки 1–5, база) + Модуль 2 (уроки 6–11, практика),
+  внизу — тёмная строка с CTA и ценой.
+  ⚠️ Уроки некликабельны — человек ещё не купил курс.
+  Фон: #FFFFFF.
+-->
+
+<style>
+  .mbs-program {
+    font-family: 'Mulish', sans-serif;
+    background: #FFFFFF;
+    padding: 90px 20px;
+    color: #1F1F1F;
+  }
+
+  .mbs-program * {
+    box-sizing: border-box;
+  }
+
+  .mbs-program__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .mbs-program__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+
+  .mbs-program__label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, 0.95);
+    color: #417033;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-program__title {
+    margin: 0 0 10px;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #1F1F1F;
+  }
+
+  .mbs-program__subtitle {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #555555;
+    max-width: 520px;
+  }
+
+  .mbs-program__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .mbs-program__module {
+    padding: 24px 24px 28px;
+    border-radius: 18px;
+    background: #F5F5F5;
+    border: 2px solid transparent;
+  }
+
+  .mbs-program__module--accent {
+    background: #E7F2E3;
+    border-color: #B6D8AB;
+  }
+
+  .mbs-program__module-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .mbs-program__module-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #417033;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .mbs-program__module--accent .mbs-program__module-badge {
+    background: #4F883E;
+  }
+
+  .mbs-program__module-title {
+    margin: 0 0 2px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #1F1F1F;
+    line-height: 1.2;
+  }
+
+  .mbs-program__module-desc {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #417033;
+    line-height: 1;
+  }
+
+  .mbs-program__lessons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mbs-program__lesson {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.60);
+  }
+
+  .mbs-program__module--accent .mbs-program__lesson {
+    background: rgba(255,255,255,0.55);
+  }
+
+  .mbs-program__lesson-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #E7F2E3;
+    color: #417033;
+    font-size: 11px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .mbs-program__module--accent .mbs-program__lesson-num {
+    background: #fff;
+  }
+
+  .mbs-program__lesson-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F1F1F;
+    line-height: 1.3;
+  }
+
+  .mbs-program__total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 28px;
+    border-radius: 18px;
+    background: #fff;
+    border: 1.5px solid #4F883E;
+    flex-wrap: wrap;
+  }
+
+  .mbs-program__total-text {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1F1F1F;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .mbs-program__total-text span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+  }
+
+  .mbs-program__total-btn {
+    display: inline-block;
+    padding: 13px 28px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #fff !important;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .mbs-program__total-btn:hover {
+    background: #b02235;
+  }
+
+  @media (max-width: 720px) {
+    .mbs-program {
+      padding: 64px 16px;
+    }
+    .mbs-program__title {
+      font-size: 26px;
+    }
+    .mbs-program__grid {
+      grid-template-columns: 1fr;
+    }
+    .mbs-program__total {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 18px 20px;
+    }
+    .mbs-program__total-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<section class="mbs-program" id="program">
+  <div class="mbs-program__wrap">
+
+    <div class="mbs-program__header">
+      <span class="mbs-program__label">Программа курса</span>
+      <h2 class="mbs-program__title">11 уроков — от теории<br>к практике</h2>
+      <p class="mbs-program__subtitle">Два модуля: сначала разбираем основы, потом осваиваем каждый метод заваривания</p>
+    </div>
+
+    <div class="mbs-program__grid">
+
+      <!-- Модуль 1 -->
+      <div class="mbs-program__module">
+        <div class="mbs-program__module-header">
+          <div class="mbs-program__module-badge">1</div>
+          <div>
+            <p class="mbs-program__module-title">База кофе</p>
+            <p class="mbs-program__module-desc">5 уроков · теория и понимание</p>
+          </div>
+        </div>
+        <ul class="mbs-program__lessons">
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">1</span>
+              <p class="mbs-program__lesson-title">Вступление</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">2</span>
+              <p class="mbs-program__lesson-title">Вода и кофе</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">3</span>
+              <p class="mbs-program__lesson-title">Девайсы для заваривания</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">4</span>
+              <p class="mbs-program__lesson-title">Методы экстракции</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">5</span>
+              <p class="mbs-program__lesson-title">Управление вкусом</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Модуль 2 -->
+      <div class="mbs-program__module mbs-program__module--accent">
+        <div class="mbs-program__module-header">
+          <div class="mbs-program__module-badge">2</div>
+          <div>
+            <p class="mbs-program__module-title">Практика заваривания</p>
+            <p class="mbs-program__module-desc">6 уроков · рецепты и методы</p>
+          </div>
+        </div>
+        <ul class="mbs-program__lessons">
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">6</span>
+              <p class="mbs-program__lesson-title">Воронка</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">7</span>
+              <p class="mbs-program__lesson-title">Аэропресс</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">8</span>
+              <p class="mbs-program__lesson-title">Френч-пресс</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">9</span>
+              <p class="mbs-program__lesson-title">Заваривание в чашке</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">10</span>
+              <p class="mbs-program__lesson-title">Гейзер</p>
+            </div>
+          </li>
+          <li>
+            <div class="mbs-program__lesson">
+              <span class="mbs-program__lesson-num">11</span>
+              <p class="mbs-program__lesson-title">Джезва</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Итого -->
+    <div class="mbs-program__total">
+      <p class="mbs-program__total-text">
+        11 видеоуроков · 2 модуля · доступ навсегда
+        <span>После оплаты откроется личный кабинет со всеми материалами</span>
+      </p>
+      <a href="#order:Онлайн-курс Домашний бариста=3600" class="mbs-program__total-btn">Купить курс — 3&#160;600&#160;₽</a>
+    </div>
+
+  </div>
+</section>

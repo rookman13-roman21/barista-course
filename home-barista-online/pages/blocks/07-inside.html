@@ -1,0 +1,402 @@
+<!--
+  БЛОК 07 — ЧТО ВНУТРИ ПОСЛЕ ПОКУПКИ
+  Место на странице: после блока доверия, перед ценой
+  Задача: конкретно показать, что человек получает после оплаты.
+  Содержит: левая колонка — 4 пункта (кабинет, уроки, темп, доступ навсегда),
+  правая колонка — карточка бонуса Telegram-чат «Продлёнка»
+              + карточка скидки 20% на офлайн-курсы с двумя кнопками-ссылками.
+  Фон: #FFFFFF.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  .mbs-inside {
+    font-family: 'Mulish', sans-serif;
+    background: #FFFFFF;
+    padding: 90px 20px;
+    color: #1F1F1F;
+  }
+
+  .mbs-inside * {
+    box-sizing: border-box;
+  }
+
+  .mbs-inside__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .mbs-inside__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 52px;
+  }
+
+  .mbs-inside__label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, 0.95);
+    color: #417033;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-inside__title {
+    margin: 0 0 10px;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #1F1F1F;
+  }
+
+  .mbs-inside__subtitle {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #555555;
+  }
+
+  /* ---- Основная сетка ---- */
+  .mbs-inside__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* ---- Список того, что входит ---- */
+  .mbs-inside__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .mbs-inside__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 22px;
+    border-radius: 18px;
+    background: #F5F5F5;
+  }
+
+  .mbs-inside__item-icon {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #E7F2E3;
+    color: #417033;
+    flex-shrink: 0;
+  }
+
+  .mbs-inside__item-body {
+    flex: 1;
+  }
+
+  .mbs-inside__item-title {
+    margin: 0 0 3px;
+    font-size: 16px;
+    font-weight: 900;
+    color: #1F1F1F;
+    line-height: 1.2;
+  }
+
+  .mbs-inside__item-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555555;
+    line-height: 1.45;
+  }
+
+  /* ---- Правая колонка: бонус + офлайн ---- */
+  .mbs-inside__right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Telegram-бонус */
+  .mbs-inside__bonus {
+    padding: 30px 28px;
+    border-radius: 22px;
+    background: #E7F2E3;
+    border: 2px solid #B6D8AB;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .mbs-inside__bonus-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .mbs-inside__bonus-icon {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #FFFFFF;
+    color: #417033;
+    flex-shrink: 0;
+  }
+
+  .mbs-inside__bonus-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #4F883E;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .mbs-inside__bonus-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 900;
+    color: #1F1F1F;
+    line-height: 1.2;
+  }
+
+  .mbs-inside__bonus-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #417033;
+    line-height: 1.55;
+  }
+
+  /* Офлайн-скидка */
+  .mbs-inside__offline {
+    padding: 28px;
+    border-radius: 22px;
+    background: #F8DDE1;
+    border: 2px solid #EC98A7;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mbs-inside__offline-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .mbs-inside__offline-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .mbs-inside__offline-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 900;
+    color: #1F1F1F;
+    line-height: 1.25;
+  }
+
+  .mbs-inside__offline-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555555;
+    line-height: 1.55;
+  }
+
+  .mbs-inside__offline-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .mbs-inside__offline-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #FFFFFF !important;
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none !important;
+    transition: background 0.18s ease;
+  }
+
+  .mbs-inside__offline-link:hover {
+    background: #D83D54;
+    color: #FFFFFF !important;
+  }
+
+  /* ---- Адаптив ---- */
+  @media (max-width: 1024px) {
+    .mbs-inside__layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .mbs-inside {
+      padding: 64px 14px;
+    }
+
+    .mbs-inside__title {
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-inside__header {
+      margin-bottom: 36px;
+    }
+
+    .mbs-inside__item {
+      padding: 16px 18px;
+    }
+  }
+
+
+</style>
+
+<section class="mbs-inside">
+  <div class="mbs-inside__wrap">
+
+    <div class="mbs-inside__header">
+      <div class="mbs-inside__label">После покупки</div>
+      <h2 class="mbs-inside__title">Что вы получаете</h2>
+      <p class="mbs-inside__subtitle">Всё необходимое для обучения открывается сразу после оплаты — ничего ждать не нужно.</p>
+    </div>
+
+    <div class="mbs-inside__layout">
+
+      <!-- Левая: список -->
+      <ul class="mbs-inside__list">
+
+        <li class="mbs-inside__item">
+          <div class="mbs-inside__item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M20 21V19C20 17.3 18.7 16 17 16H7C5.3 16 4 17.3 4 19V21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <div class="mbs-inside__item-body">
+            <p class="mbs-inside__item-title">Доступ в личный кабинет</p>
+            <p class="mbs-inside__item-text">Открывается сразу после оплаты — логин и пароль приходят на почту</p>
+          </div>
+        </li>
+
+        <li class="mbs-inside__item">
+          <div class="mbs-inside__item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M8 5H19C20.1 5 21 5.9 21 7V17C21 18.1 20.1 19 19 19H8C6.9 19 6 18.1 6 17V7C6 5.9 6.9 5 8 5Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M3 8V16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M11 9.5L16 12L11 14.5V9.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="mbs-inside__item-body">
+            <p class="mbs-inside__item-title">11 видеоуроков</p>
+            <p class="mbs-inside__item-text">От воды и помола — до джезвы и воронки. Структурированный курс с понятной логикой</p>
+          </div>
+        </li>
+
+        <li class="mbs-inside__item">
+          <div class="mbs-inside__item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="mbs-inside__item-body">
+            <p class="mbs-inside__item-title">В удобном темпе, без дедлайнов</p>
+            <p class="mbs-inside__item-text">Смотрите уроки когда удобно — с телефона, планшета или ноутбука</p>
+          </div>
+        </li>
+
+        <li class="mbs-inside__item">
+          <div class="mbs-inside__item-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M4 19.5C4 18.1 5.1 17 6.5 17H20V3H6.5C5.1 3 4 4.1 4 5.5V19.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M4 19.5C4 20.9 5.1 22 6.5 22H20V17H6.5C5.1 17 4 18.1 4 19.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M8 7H14M8 11H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="mbs-inside__item-body">
+            <p class="mbs-inside__item-title">Доступ к материалам навсегда</p>
+            <p class="mbs-inside__item-text">Возвращайтесь к урокам в любое время — пересматривайте рецепты и освежайте знания</p>
+          </div>
+        </li>
+
+      </ul>
+
+      <!-- Правая: бонусы -->
+      <div class="mbs-inside__right">
+
+        <!-- Telegram-чат -->
+        <div class="mbs-inside__bonus">
+          <div class="mbs-inside__bonus-header">
+            <div class="mbs-inside__bonus-icon">
+              <!-- Telegram icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M21.2 4.8L17.9 19.2C17.7 20 17.1 20.2 16.4 19.8L11.9 16.5L9.7 18.6C9.5 18.8 9.2 18.9 8.9 18.9L9.2 14.3L17.4 6.9C17.7 6.6 17.4 6.5 17 6.8L6.9 13.2L2.5 11.8C1.6 11.5 1.6 10.9 2.7 10.5L19.9 3.8C20.7 3.5 21.4 4 21.2 4.8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <span class="mbs-inside__bonus-label">Бонус</span>
+              <p class="mbs-inside__bonus-title">Закрытый чат учеников «Продлёнка»</p>
+            </div>
+          </div>
+          <p class="mbs-inside__bonus-text">
+            После покупки вы попадаете в закрытый Telegram-чат, где общаются ученики школы. Задавайте вопросы, делитесь результатами и получайте поддержку.
+          </p>
+        </div>
+
+        <!-- Скидка на офлайн -->
+        <div class="mbs-inside__offline">
+          <div class="mbs-inside__offline-header">
+            <span class="mbs-inside__offline-badge">−20% скидка</span>
+          </div>
+          <p class="mbs-inside__offline-title">Закрепите знания в школе</p>
+          <p class="mbs-inside__offline-text">
+            После онлайн-курса вы получаете скидку 20% на очные курсы школы. Приходите отработать навыки вживую — с оборудованием, кофе и живым преподавателем.
+          </p>
+          <div class="mbs-inside__offline-links">
+            <a href="https://baristaschool.ru/alternative" class="mbs-inside__offline-link">Альтернативное заваривание</a>
+            <a href="https://baristaschool.ru/home_barista" class="mbs-inside__offline-link">Домашний бариста офлайн</a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

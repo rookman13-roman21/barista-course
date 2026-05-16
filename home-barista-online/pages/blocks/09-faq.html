@@ -1,0 +1,324 @@
+<!--
+  БЛОК 09 — FAQ (ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ)
+  Место на странице: предпоследний блок, перед финальным CTA.
+  Задача: снять оставшиеся возражения и вопросы перед покупкой.
+  Содержит: 6 вопросов-ответов в нативном аккордеоне (<details>/<summary>),
+  работает без JavaScript. Левая колонка — sticky-заголовок с кнопкой «Купить курс».
+  Фон: #F5F5F5.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  .mbs-faq {
+    font-family: 'Mulish', sans-serif;
+    background: #F5F5F5;
+    padding: 90px 20px;
+    color: #1F1F1F;
+  }
+
+  .mbs-faq * {
+    box-sizing: border-box;
+  }
+
+  .mbs-faq__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+
+  /* ---- Левая: заголовок ---- */
+  .mbs-faq__aside {
+    position: sticky;
+    top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mbs-faq__label {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, 0.95);
+    color: #417033;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-faq__title {
+    margin: 0;
+    font-size: 52px;
+    line-height: 0.96;
+    font-weight: 900;
+    letter-spacing: -0.06em;
+    color: #1F1F1F;
+  }
+
+  .mbs-faq__lead {
+    margin: 0;
+    font-size: 19px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #555555;
+  }
+
+  .mbs-faq__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 28px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-size: 15px;
+    font-weight: 900;
+    align-self: flex-start;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .mbs-faq__cta:hover {
+    background: #D83D54;
+    color: #FFFFFF !important;
+    transform: translateY(-1px);
+  }
+
+  /* ---- Правая: аккордеон ---- */
+  .mbs-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .mbs-faq__item {
+    border-radius: 18px;
+    background: #FFFFFF;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(31, 31, 31, 0.05);
+  }
+
+  /* Нативный details/summary */
+  .mbs-faq__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+  }
+
+  .mbs-faq__item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mbs-faq__q {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 800;
+    color: #1F1F1F;
+    line-height: 1.3;
+  }
+
+  .mbs-faq__arrow {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #E7F2E3;
+    color: #417033;
+    flex-shrink: 0;
+    transition: transform 0.22s ease, background 0.2s ease;
+  }
+
+  .mbs-faq__item[open] .mbs-faq__arrow {
+    transform: rotate(45deg);
+    background: #4F883E;
+    color: #FFFFFF;
+  }
+
+  .mbs-faq__answer {
+    padding: 0 24px 22px;
+  }
+
+  .mbs-faq__a {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 500;
+    color: #555555;
+    line-height: 1.65;
+    border-top: 1px solid #F0F0F0;
+    padding-top: 16px;
+  }
+
+  .mbs-faq__item[open] summary {
+    background: #FAFAFA;
+  }
+
+  /* ---- Адаптив ---- */
+  @media (max-width: 1100px) {
+    .mbs-faq__wrap {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .mbs-faq__aside {
+      position: static;
+    }
+
+    .mbs-faq__title {
+      font-size: 44px;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .mbs-faq {
+      padding: 64px 14px;
+    }
+
+    .mbs-faq__title {
+      font-size: 36px;
+      letter-spacing: -0.05em;
+    }
+
+    .mbs-faq__q {
+      font-size: 17px;
+    }
+
+    .mbs-faq__a {
+      font-size: 16px;
+    }
+
+    .mbs-faq__item summary {
+      padding: 18px 18px;
+    }
+
+    .mbs-faq__answer {
+      padding: 0 18px 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mbs-faq__title {
+      font-size: 32px;
+    }
+  }
+</style>
+
+<section class="mbs-faq">
+  <div class="mbs-faq__wrap">
+
+    <!-- Левая: заголовок -->
+    <aside class="mbs-faq__aside">
+      <div class="mbs-faq__label">Вопросы и ответы</div>
+      <h2 class="mbs-faq__title">Есть<br>вопросы?</h2>
+      <p class="mbs-faq__lead">Собрали ответы на самые частые вопросы. Если что-то осталось непонятным — напишите нам.</p>
+      <a href="#consalt" class="mbs-faq__cta">Оставить заявку</a>
+    </aside>
+
+    <!-- Правая: аккордеон -->
+    <div class="mbs-faq__list">
+
+      <details class="mbs-faq__item">
+        <summary>
+          <p class="mbs-faq__q">Подойдёт ли курс новичку?</p>
+          <span class="mbs-faq__arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="mbs-faq__answer">
+          <p class="mbs-faq__a">Да, курс рассчитан в том числе на полных новичков. Мы начинаем с самых основ: что такое экстракция, зачем важна вода, как правильно молоть кофе. Никаких предварительных знаний не требуется.</p>
+        </div>
+      </details>
+
+      <details class="mbs-faq__item">
+        <summary>
+          <p class="mbs-faq__q">Нужно ли профессиональное оборудование?</p>
+          <span class="mbs-faq__arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="mbs-faq__answer">
+          <p class="mbs-faq__a">Нет. Курс создан для домашнего использования. Подойдут обычные устройства: воронка, аэропресс, френч-пресс, джезва или гейзер. Профессиональная кофемашина не нужна.</p>
+        </div>
+      </details>
+
+      <details class="mbs-faq__item">
+        <summary>
+          <p class="mbs-faq__q">Можно ли проходить курс с телефона?</p>
+          <span class="mbs-faq__arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="mbs-faq__answer">
+          <p class="mbs-faq__a">Да. Личный кабинет корректно работает на любом устройстве: смартфон, планшет, ноутбук или компьютер. Смотрите уроки там, где удобно.</p>
+        </div>
+      </details>
+
+      <details class="mbs-faq__item">
+        <summary>
+          <p class="mbs-faq__q">Когда откроется доступ после оплаты?</p>
+          <span class="mbs-faq__arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="mbs-faq__answer">
+          <p class="mbs-faq__a">Сразу после оплаты. На почту придут логин и пароль от личного кабинета — обычно в течение нескольких минут.</p>
+        </div>
+      </details>
+
+      <details class="mbs-faq__item">
+        <summary>
+          <p class="mbs-faq__q">На сколько предоставляется доступ?</p>
+          <span class="mbs-faq__arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="mbs-faq__answer">
+          <p class="mbs-faq__a">Доступ бессрочный — никаких ограничений по времени нет. Возвращайтесь к урокам когда угодно: посмотрели, попробовали рецепт, вернулись уточнить детали.</p>
+        </div>
+      </details>
+
+      <details class="mbs-faq__item">
+        <summary>
+          <p class="mbs-faq__q">Какие способы заваривания входят в курс?</p>
+          <span class="mbs-faq__arrow">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M7 2V12M2 7H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </summary>
+        <div class="mbs-faq__answer">
+          <p class="mbs-faq__a">В практическом модуле курса шесть методов: воронка (пуровер), аэропресс, френч-пресс, заваривание в чашке, гейзер (мока-пот) и джезва. Для каждого метода — отдельный урок с рецептом.</p>
+        </div>
+      </details>
+
+    </div>
+
+  </div>
+</section>

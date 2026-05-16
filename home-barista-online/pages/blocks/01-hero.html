@@ -1,0 +1,560 @@
+<!--
+  БЛОК 01 — HERO (ПЕРВЫЙ ЭКРАН)
+  Место на странице: самый первый блок, открывает страницу курса.
+  Задача: захватить внимание, объяснить суть курса, дать первый CTA.
+  Содержит: заголовок «Домашний бариста», подзаголовок, 3 фичи (уроки / кабинет / темп),
+  кнопки «Купить курс» (#buy) и «Смотреть программу» (#program),
+  цена 3 600 ₽, промо-видео YouTube справа.
+  ⚠️ Ссылка кнопки «Купить курс»: сейчас #buy — заменить на реальную ссылку оплаты Tilda.
+  Фон: #FFFFFF, внутренний блок с градиентом #F7F7F7 + зелёные пятна.
+-->
+
+<!-- HERO: Онлайн-курс «Домашний бариста» -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --mbs-green-dark: #417033;
+    --mbs-green: #4F883E;
+    --mbs-green-light: #B6D8AB;
+    --mbs-red: #CC2841;
+    --mbs-red-soft: #D83D54;
+    --mbs-bg-green: #E7F2E3;
+    --mbs-bg: #F5F5F5;
+    --mbs-black: #1F1F1F;
+    --mbs-white: #FFFFFF;
+    --mbs-gray: #555555;
+    --mbs-border: rgba(65, 112, 51, 0.22);
+    --mbs-shadow: 0 22px 60px rgba(31, 31, 31, 0.12);
+  }
+
+  .mbs-online-hero {
+    font-family: 'Mulish', sans-serif;
+    background: var(--mbs-white);
+    padding: 48px 20px;
+    color: var(--mbs-black);
+  }
+
+  .mbs-online-hero * {
+    box-sizing: border-box;
+  }
+
+  .mbs-online-hero__wrap {
+    max-width: 1320px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    grid-template-rows: auto auto;
+    column-gap: 68px;
+    row-gap: 0;
+    align-items: start;
+    padding: 72px 76px;
+    border: 8px solid var(--mbs-bg-green);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 17% 12%, rgba(231, 242, 227, 0.78) 0, rgba(231, 242, 227, 0.78) 18%, transparent 19%),
+      radial-gradient(circle at 88% 84%, rgba(231, 242, 227, 0.66) 0, rgba(231, 242, 227, 0.66) 16%, transparent 17%),
+      radial-gradient(circle at 58% 56%, rgba(231, 242, 227, 0.32) 0, rgba(231, 242, 227, 0.32) 13%, transparent 14%),
+      #F7F7F7;
+  }
+
+  .mbs-online-hero__content-top {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mbs-online-hero__content-bottom {
+    grid-column: 1;
+    grid-row: 2;
+    position: relative;
+    z-index: 2;
+    padding-top: 32px;
+  }
+
+  .mbs-online-hero__media {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    position: relative;
+    z-index: 2;
+    align-self: center;
+  }
+
+  .mbs-online-hero__label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 28px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, 0.95);
+    color: var(--mbs-green-dark);
+    font-size: 15px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-online-hero__title {
+    margin: 0 0 28px;
+    max-width: 620px;
+    font-size: 82px;
+    line-height: 0.92;
+    font-weight: 900;
+    letter-spacing: -0.07em;
+  }
+
+  .mbs-online-hero__text {
+    margin: 0 0 36px;
+    max-width: 650px;
+    font-size: 27px;
+    line-height: 1.27;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    color: var(--mbs-black);
+  }
+
+  .mbs-online-hero__mini-trust {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--mbs-white);
+    color: var(--mbs-green-dark);
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 800;
+    box-shadow: 0 8px 24px rgba(31, 31, 31, 0.06);
+  }
+
+  .mbs-online-hero__features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin: 0 0 34px;
+    max-width: 680px;
+  }
+
+  .mbs-online-hero__feature {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    gap: 13px;
+    align-items: center;
+    min-height: 86px;
+    padding: 16px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 10px 28px rgba(31, 31, 31, 0.055);
+  }
+
+  .mbs-online-hero__icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+  }
+
+  .mbs-online-hero__feature-title {
+    margin: 0 0 4px;
+    font-size: 15px;
+    line-height: 1.1;
+    font-weight: 900;
+    color: var(--mbs-black);
+  }
+
+  .mbs-online-hero__feature-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--mbs-gray);
+  }
+
+  .mbs-online-hero__bottom {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 999px;
+    background: var(--mbs-white);
+    box-shadow: 0 18px 46px rgba(31, 31, 31, 0.12);
+  }
+
+  .mbs-online-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    padding: 0 32px;
+    border-radius: 999px;
+    text-decoration: none !important;
+    border: none;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 900;
+    cursor: pointer;
+    transition: 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .mbs-online-hero__btn--red {
+    background: var(--mbs-red);
+    color: var(--mbs-white) !important;
+  }
+
+  .mbs-online-hero__btn--red:hover {
+    background: var(--mbs-red-soft);
+    color: var(--mbs-white) !important;
+    transform: translateY(-1px);
+  }
+
+  .mbs-online-hero__btn--green {
+    background: var(--mbs-green);
+    color: var(--mbs-white) !important;
+  }
+
+  .mbs-online-hero__btn--green:hover {
+    background: var(--mbs-green-dark);
+    color: var(--mbs-white) !important;
+    transform: translateY(-1px);
+  }
+
+  .mbs-online-hero__price {
+    display: grid;
+    align-content: center;
+    min-width: 172px;
+    padding: 0 20px 0 8px;
+    color: var(--mbs-black);
+  }
+
+  .mbs-online-hero__price-label {
+    margin: 0 0 2px;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--mbs-gray);
+  }
+
+  .mbs-online-hero__price-value {
+    margin: 0;
+    color: var(--mbs-green);
+    font-size: 32px;
+    line-height: 1.05;
+    font-weight: 900;
+    white-space: nowrap;
+    letter-spacing: -0.04em;
+  }
+
+  .mbs-online-hero__media {
+    position: relative;
+    z-index: 2;
+  }
+
+  .mbs-online-hero__video {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    background: #111;
+    box-shadow: var(--mbs-shadow);
+  }
+
+  .mbs-online-hero__video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .mbs-online-hero__video-note {
+    margin-top: 18px;
+    padding: 17px 22px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--mbs-green-dark);
+    font-size: 16px;
+    line-height: 1.38;
+    font-weight: 800;
+    box-shadow: 0 10px 26px rgba(31, 31, 31, 0.07);
+  }
+
+  @media (max-width: 1180px) {
+    .mbs-online-hero__wrap {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      max-width: 960px;
+      padding: 56px 48px;
+      column-gap: 0;
+      row-gap: 36px;
+    }
+
+    .mbs-online-hero__content-top,
+    .mbs-online-hero__media,
+    .mbs-online-hero__content-bottom {
+      grid-column: 1;
+      grid-row: unset;
+    }
+
+    .mbs-online-hero__content-bottom {
+      padding-top: 0;
+    }
+
+    .mbs-online-hero__title {
+      font-size: 68px;
+    }
+
+    .mbs-online-hero__text {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .mbs-online-hero {
+      padding: 14px 12px;
+    }
+
+    .mbs-online-hero__wrap {
+      padding: 18px 16px 20px;
+      border-width: 5px;
+      border-radius: 20px;
+      row-gap: 14px;
+      column-gap: 0;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+
+    .mbs-online-hero__content-top,
+    .mbs-online-hero__media,
+    .mbs-online-hero__content-bottom {
+      grid-column: 1;
+      grid-row: unset;
+      align-self: unset;
+    }
+
+    .mbs-online-hero__content-bottom {
+      padding-top: 0;
+    }
+
+    .mbs-online-hero__video {
+      border-radius: 14px;
+    }
+
+    /* Скрываем лишнее */
+    .mbs-online-hero__video-note {
+      display: none;
+    }
+
+    .mbs-online-hero__mini-trust {
+      display: none;
+    }
+
+    .mbs-online-hero__label {
+      font-size: 12px;
+      padding: 7px 13px;
+      margin-bottom: 10px;
+    }
+
+    .mbs-online-hero__title {
+      font-size: 38px;
+      line-height: 0.96;
+      margin-bottom: 10px;
+    }
+
+    .mbs-online-hero__text {
+      font-size: 15px;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    /* Фичи — 3 колонки горизонтально */
+    .mbs-online-hero__features {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .mbs-online-hero__feature {
+      grid-template-columns: 1fr;
+      gap: 6px;
+      min-height: auto;
+      padding: 10px 8px;
+      border-radius: 14px;
+      text-align: center;
+      justify-items: center;
+    }
+
+    .mbs-online-hero__icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+
+    .mbs-online-hero__icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mbs-online-hero__feature-title {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .mbs-online-hero__feature-text {
+      font-size: 11px;
+    }
+
+    /* Кнопки — 2 в ряд, цена снизу */
+    .mbs-online-hero__bottom {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px;
+      border-radius: 20px;
+      padding: 10px;
+    }
+
+    .mbs-online-hero__price {
+      grid-column: 1 / -1;
+      min-width: 0;
+      padding: 4px 6px 2px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .mbs-online-hero__price-label {
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .mbs-online-hero__price-value {
+      font-size: 26px;
+    }
+
+    .mbs-online-hero__btn {
+      width: 100%;
+      min-height: 48px;
+      font-size: 14px;
+      padding: 0 12px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .mbs-online-hero__title {
+      font-size: 34px;
+    }
+  }
+</style>
+
+<section class="mbs-online-hero">
+  <div class="mbs-online-hero__wrap">
+
+    <div class="mbs-online-hero__content-top">
+      <div class="mbs-online-hero__label">
+        Онлайн-курс для дома
+      </div>
+
+      <h1 class="mbs-online-hero__title">
+        Домашний<br>бариста
+      </h1>
+    </div>
+
+    <div class="mbs-online-hero__media">
+      <div class="mbs-online-hero__video">
+        <iframe
+          src="https://www.youtube.com/embed/EpktspSQM5I"
+          title="Онлайн-курс Домашний бариста — промо"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <div class="mbs-online-hero__video-note">
+        Посмотрите короткое видео: рассказываем, как устроен курс и чему вы научитесь.
+      </div>
+    </div>
+
+    <div class="mbs-online-hero__content-bottom">
+      <p class="mbs-online-hero__text">
+        Научитесь готовить вкусный кофе дома: понимать воду, помол, рецепты и уверенно пользоваться разными способами заваривания.
+      </p>
+
+      <div class="mbs-online-hero__mini-trust">
+        От команды Московской школы бариста
+      </div>
+
+      <div class="mbs-online-hero__features">
+        <div class="mbs-online-hero__feature">
+          <div class="mbs-online-hero__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M8 5H19C20.1 5 21 5.9 21 7V17C21 18.1 20.1 19 19 19H8C6.9 19 6 18.1 6 17V7C6 5.9 6.9 5 8 5Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M3 8V16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M11 9.5L16 12L11 14.5V9.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="mbs-online-hero__feature-title">11 видеоуроков</p>
+            <p class="mbs-online-hero__feature-text">от воды до джезвы</p>
+          </div>
+        </div>
+
+        <div class="mbs-online-hero__feature">
+          <div class="mbs-online-hero__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M4 7.5L12 3L20 7.5L12 12L4 7.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M6.5 10V15.2C6.5 16.8 9 18.2 12 18.2C15 18.2 17.5 16.8 17.5 15.2V10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M20 8V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="mbs-online-hero__feature-title">Личный кабинет</p>
+            <p class="mbs-online-hero__feature-text">доступ после оплаты</p>
+          </div>
+        </div>
+
+        <div class="mbs-online-hero__feature">
+          <div class="mbs-online-hero__icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M7 3V6M17 3V6M4.5 9H19.5M6 5H18C19.1 5 20 5.9 20 7V18C20 19.1 19.1 20 18 20H6C4.9 20 4 19.1 4 18V7C4 5.9 4.9 5 6 5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8 13H8.01M12 13H12.01M16 13H16.01M8 16H8.01M12 16H12.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <p class="mbs-online-hero__feature-title">В удобном темпе</p>
+            <p class="mbs-online-hero__feature-text">смотрите и повторяйте</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mbs-online-hero__bottom">
+        <a href="#consalt" class="mbs-online-hero__btn mbs-online-hero__btn--red">
+          Оставить заявку
+        </a>
+
+        <a href="#program" class="mbs-online-hero__btn mbs-online-hero__btn--green">
+          Смотреть программу
+        </a>
+
+        <div class="mbs-online-hero__price">
+          <p class="mbs-online-hero__price-label">Стоимость курса</p>
+          <p class="mbs-online-hero__price-value">3 600 ₽</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

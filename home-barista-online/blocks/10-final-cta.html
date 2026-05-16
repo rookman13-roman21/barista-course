@@ -1,0 +1,193 @@
+<!--
+  БЛОК 10 — ФИНАЛЬНЫЙ CTA
+  Место на странице: последний блок перед футером.
+  Задача: финальный призыв к действию — записаться на мастер-класс.
+  Содержит: тёмно-зелёная карточка, заголовок, подзаголовок, красная кнопка.
+  Фон: #FFFFFF снаружи + #417033 внутри (тёмно-зелёная карточка с пятнами).
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  .mbs-wm-cta {
+    font-family: 'Mulish', sans-serif;
+    background: #FFFFFF;
+    padding: 90px 20px 106px;
+    color: #FFFFFF;
+  }
+
+  .mbs-wm-cta * {
+    box-sizing: border-box;
+  }
+
+  .mbs-wm-cta__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ---- Тёмно-зелёная карточка ---- */
+  .mbs-wm-cta__card {
+    padding: 72px 80px;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 10% 90%, rgba(182, 216, 171, 0.45) 0, rgba(182, 216, 171, 0.45) 22%, transparent 23%),
+      radial-gradient(circle at 90% 10%, rgba(231, 242, 227, 0.7) 0, rgba(231, 242, 227, 0.7) 18%, transparent 19%),
+      #417033;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .mbs-wm-cta__label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 24px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-wm-cta__title {
+    margin: 0 0 16px;
+    max-width: 720px;
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: #FFFFFF;
+  }
+
+  .mbs-wm-cta__subtitle {
+    margin: 0 0 40px;
+    max-width: 560px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  /* ---- CTA-строка ---- */
+  .mbs-wm-cta__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .mbs-wm-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    padding: 0 40px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-family: 'Mulish', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .mbs-wm-cta__btn:hover {
+    background: #D83D54;
+    color: #FFFFFF !important;
+    transform: translateY(-2px);
+  }
+
+  .mbs-wm-cta__consult {
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-decoration: none !important;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .mbs-wm-cta__consult:hover {
+    color: #FFFFFF !important;
+    text-decoration: underline !important;
+  }
+
+  .mbs-wm-cta__price {
+    padding-right: 10px;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* ---- Адаптив ---- */
+  @media (max-width: 820px) {
+    .mbs-wm-cta {
+      padding: 64px 14px 76px;
+    }
+    .mbs-wm-cta__card {
+      padding: 48px 24px 52px;
+      border-radius: 22px;
+    }
+    .mbs-wm-cta__title {
+      font-size: 30px;
+    }
+    .mbs-wm-cta__subtitle {
+      font-size: 16px;
+      margin-bottom: 28px;
+    }
+    .mbs-wm-cta__actions {
+      flex-direction: column;
+      align-items: stretch;
+      border-radius: 20px;
+      padding: 14px;
+      width: 100%;
+      gap: 12px;
+    }
+    .mbs-wm-cta__btn {
+      width: 100%;
+      justify-content: center;
+      font-size: 17px;
+    }
+    .mbs-wm-cta__price {
+      padding: 0;
+      text-align: center;
+      font-size: 26px;
+    }
+  }
+</style>
+
+<section class="mbs-wm-cta" id="final">
+  <div class="mbs-wm-cta__wrap">
+    <div class="mbs-wm-cta__card">
+
+      <span class="mbs-wm-cta__label">онлайн-курс</span>
+
+      <h2 class="mbs-wm-cta__title">Начните готовить кофе дома осознанно</h2>
+
+      <p class="mbs-wm-cta__subtitle">
+        Курс поможет разобраться в воде, помоле, рецептах и способах заваривания. 11 уроков, личный кабинет, доступ навсегда.
+      </p>
+
+      <div class="mbs-wm-cta__actions">
+        <a href="#order:Онлайн-курс Домашний бариста=3600" class="mbs-wm-cta__btn">Купить курс</a>
+        <span class="mbs-wm-cta__price">3&thinsp;600&nbsp;₽</span>
+      </div>
+      <a href="#consalt" class="mbs-wm-cta__consult">Или оставить заявку — ответим на вопросы →</a>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,203 @@
+<!--
+  БЛОК 04 — ЧТО ВЫ ПОЛУЧИТЕ
+  Место на странице: четвёртый блок.
+  Задача: показать что конкретно достанется участнику — материалы и бонусы.
+  Содержит: 4 карточки с материалами, которые участник получает после мастер-класса.
+  Фон: #E7F2E3 (светло-зелёный акцентный).
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  .mbs-wm-get {
+    font-family: 'Mulish', sans-serif;
+    background: #E7F2E3;
+    padding: 90px 20px;
+    color: #1F1F1F;
+  }
+
+  .mbs-wm-get * {
+    box-sizing: border-box;
+  }
+
+  .mbs-wm-get__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .mbs-wm-get__header {
+    margin-bottom: 48px;
+  }
+
+  .mbs-wm-get__label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
+    color: #417033;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-wm-get__title {
+    margin: 0 0 10px;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #1F1F1F;
+  }
+
+  .mbs-wm-get__subtitle {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #555555;
+    max-width: 560px;
+  }
+
+  /* ---- Сетка ---- */
+  .mbs-wm-get__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .mbs-wm-get__card {
+    padding: 28px 24px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    border: 2px solid #B6D8AB;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .mbs-wm-get__card-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #E7F2E3;
+    color: #417033;
+    flex-shrink: 0;
+  }
+
+  .mbs-wm-get__card-title {
+    margin: 0 0 6px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: #1F1F1F;
+  }
+
+  .mbs-wm-get__card-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: #555555;
+  }
+
+  /* ---- Адаптив ---- */
+  @media (max-width: 900px) {
+    .mbs-wm-get__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 820px) {
+    .mbs-wm-get {
+      padding: 64px 14px;
+    }
+    .mbs-wm-get__title {
+      font-size: 26px;
+    }
+    .mbs-wm-get__header {
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mbs-wm-get__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<section class="mbs-wm-get" id="what-you-get">
+  <div class="mbs-wm-get__wrap">
+
+    <div class="mbs-wm-get__header">
+      <span class="mbs-wm-get__label">После покупки</span>
+      <h2 class="mbs-wm-get__title">Что вы получаете</h2>
+      <p class="mbs-wm-get__subtitle">Всё необходимое для обучения открывается сразу после оплаты</p>
+    </div>
+
+    <div class="mbs-wm-get__grid">
+
+      <div class="mbs-wm-get__card">
+        <div class="mbs-wm-get__card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polygon points="10 8 16 12 10 16 10 8"/>
+          </svg>
+        </div>
+        <div>
+          <p class="mbs-wm-get__card-title">Личный кабинет навсегда</p>
+          <p class="mbs-wm-get__card-text">11 видеоуроков без ограничений по времени — пересматривайте в любой момент</p>
+        </div>
+      </div>
+
+      <div class="mbs-wm-get__card">
+        <div class="mbs-wm-get__card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div>
+          <p class="mbs-wm-get__card-title">Рецептуры и дозировки</p>
+          <p class="mbs-wm-get__card-text">Точные пропорции для каждого метода заваривания — варите стабильно и без угадывания</p>
+        </div>
+      </div>
+
+      <div class="mbs-wm-get__card">
+        <div class="mbs-wm-get__card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+          </svg>
+        </div>
+        <div>
+          <p class="mbs-wm-get__card-title">Гид по оборудованию</p>
+          <p class="mbs-wm-get__card-text">Что купить домой, чтобы не переплатить — список проверенных устройств для старта</p>
+        </div>
+      </div>
+
+      <div class="mbs-wm-get__card">
+        <div class="mbs-wm-get__card-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
+        <div>
+          <p class="mbs-wm-get__card-title">Закрытый чат учеников</p>
+          <p class="mbs-wm-get__card-text">«Продлёнка» — сообщество учеников школы в подарок, где можно задать вопрос и получить обратную связь</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

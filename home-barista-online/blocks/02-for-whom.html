@@ -1,0 +1,167 @@
+<!--
+  БЛОК 02 — ДЛЯ КОГО
+  Место на странице: второй блок, сразу после Hero.
+  Задача: помочь посетителю узнать себя и понять, что мастер-класс для него.
+  Содержит: 4 карточки с описанием портретов аудитории.
+  Фон: #F5F5F5.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  .mbs-wm-whom {
+    font-family: 'Mulish', sans-serif;
+    background: #F5F5F5;
+    padding: 90px 20px;
+    color: #1F1F1F;
+  }
+
+  .mbs-wm-whom * {
+    box-sizing: border-box;
+  }
+
+  .mbs-wm-whom__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .mbs-wm-whom__header {
+    margin-bottom: 48px;
+  }
+
+  .mbs-wm-whom__label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, 0.95);
+    color: #417033;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-wm-whom__title {
+    margin: 0 0 10px;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #1F1F1F;
+  }
+
+  .mbs-wm-whom__subtitle {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: #555555;
+    max-width: 580px;
+  }
+
+  /* ---- Сетка карточек ---- */
+  .mbs-wm-whom__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .mbs-wm-whom__card {
+    padding: 28px 24px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mbs-wm-whom__card-icon {
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: #E7F2E3;
+    color: #417033;
+    flex-shrink: 0;
+  }
+
+  .mbs-wm-whom__card-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: #1F1F1F;
+  }
+
+  .mbs-wm-whom__card-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.55;
+    color: #555555;
+  }
+
+  /* ---- Адаптив ---- */
+  @media (max-width: 900px) {
+    .mbs-wm-whom__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 820px) {
+    .mbs-wm-whom {
+      padding: 64px 14px;
+    }
+    .mbs-wm-whom__title {
+      font-size: 26px;
+    }
+    .mbs-wm-whom__header {
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mbs-wm-whom__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<section class="mbs-wm-whom" id="for-whom">
+  <div class="mbs-wm-whom__wrap">
+
+    <div class="mbs-wm-whom__header">
+      <span class="mbs-wm-whom__label">Для кого курс</span>
+      <h2 class="mbs-wm-whom__title">Курс для любителей<br>кофе дома</h2>
+      <p class="mbs-wm-whom__subtitle">Не нужно быть бариста или иметь опыт — начинаем с нуля и объясняем всё по шагам</p>
+    </div>
+
+    <div class="mbs-wm-whom__grid">
+
+      <div class="mbs-wm-whom__card">
+        <p class="mbs-wm-whom__card-title">Хотите вкусный кофе дома</p>
+        <p class="mbs-wm-whom__card-text">Каждое утро пьёте кофе, но он то горчит, то кислит — и непонятно почему.</p>
+      </div>
+
+      <div class="mbs-wm-whom__card">
+        <p class="mbs-wm-whom__card-title">Есть оборудование, но результат непредсказуемый</p>
+        <p class="mbs-wm-whom__card-text">Купили воронку или аэропресс, но как ими правильно пользоваться — не очень понятно.</p>
+      </div>
+
+      <div class="mbs-wm-whom__card">
+        <p class="mbs-wm-whom__card-title">Хотите разобраться в помоле и воде</p>
+        <p class="mbs-wm-whom__card-text">Слышали, что они влияют на вкус, — но как именно и что менять, не знаете.</p>
+      </div>
+
+      <div class="mbs-wm-whom__card">
+        <p class="mbs-wm-whom__card-title">Готовите на глаз и хотите систему</p>
+        <p class="mbs-wm-whom__card-text">Надоело угадывать пропорции. Хочется понятных рецептов и воспроизводимого результата.</p>
+      </div>
+
+    </div>
+  </div>
+</section>

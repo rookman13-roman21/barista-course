@@ -1,0 +1,153 @@
+<!--
+  БЛОК 04 — КАК УСТРОЕН КУРС
+  Компактная версия.
+-->
+
+<style>
+  .mbs-how {
+    font-family: 'Mulish', sans-serif;
+    background: #E7F2E3;
+    padding: 90px 20px;
+    color: #1F1F1F;
+  }
+  .mbs-how * { box-sizing: border-box; }
+  .mbs-how__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-how__header { margin-bottom: 32px; }
+  .mbs-how__label {
+    display: inline-flex; align-items: center;
+    margin-bottom: 14px; padding: 7px 16px;
+    border-radius: 999px; background: rgba(231, 242, 227, 0.95);
+    color: #417033; font-size: 13px; font-weight: 900; line-height: 1;
+  }
+  .mbs-how__title {
+    margin: 0 0 10px; font-size: 34px; line-height: 1;
+    font-weight: 900; letter-spacing: -0.04em; color: #1F1F1F;
+  }
+  .mbs-how__subtitle {
+    margin: 0; font-size: 15px; line-height: 1.5;
+    font-weight: 500; color: #555555;
+  }
+  .mbs-how__steps {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    position: relative; margin-bottom: 20px;
+  }
+  .mbs-how__steps::before {
+    content: ''; position: absolute; top: 24px;
+    left: calc(10% + 14px); right: calc(10% + 14px);
+    height: 1.5px;
+    background: repeating-linear-gradient(to right,#B6D8AB 0px,#B6D8AB 6px,transparent 6px,transparent 12px);
+    z-index: 0;
+  }
+  .mbs-how__step {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center; padding: 0 8px;
+  }
+  .mbs-how__step-circle {
+    width: 48px; height: 48px; display: grid; place-items: center;
+    border-radius: 50%; background: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(65,112,51,0.15);
+    margin-bottom: 14px; color: #417033; position: relative; flex-shrink: 0;
+  }
+  .mbs-how__step-num {
+    position: absolute; top: -4px; right: -4px;
+    width: 18px; height: 18px; display: grid; place-items: center;
+    border-radius: 50%; background: #4F883E; color: #FFFFFF;
+    font-size: 10px; font-weight: 900; line-height: 1;
+  }
+  .mbs-how__step-title { margin: 0 0 4px; font-size: 13px; font-weight: 900; color: #1F1F1F; line-height: 1.2; }
+  .mbs-how__step-text  { margin: 0; font-size: 12px; font-weight: 500; color: #417033; line-height: 1.4; }
+  .mbs-how__note { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mbs-how__note-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; border-radius: 16px; background: #FFFFFF;
+  }
+  .mbs-how__note-icon {
+    width: 36px; height: 36px; display: grid; place-items: center;
+    border-radius: 10px; background: #E7F2E3; color: #417033; flex-shrink: 0;
+  }
+  .mbs-how__note-title { margin: 0 0 2px; font-size: 14px; font-weight: 800; color: #1F1F1F; line-height: 1.2; }
+  .mbs-how__note-desc  { margin: 0; font-size: 12px; font-weight: 500; color: #555555; line-height: 1.4; }
+
+  @media (max-width: 700px) {
+    .mbs-how { padding: 64px 16px; }
+    .mbs-how__title { font-size: 26px; }
+    .mbs-how__header { margin-bottom: 24px; }
+    .mbs-how__steps { grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .mbs-how__steps::before { display: none; }
+    .mbs-how__step:last-child { grid-column: 1 / -1; }
+    .mbs-how__note { grid-template-columns: 1fr; gap: 10px; }
+  }
+</style>
+
+<section class="mbs-how">
+  <div class="mbs-how__wrap">
+    <div class="mbs-how__header">
+      <div class="mbs-how__label">Механика обучения</div>
+      <h2 class="mbs-how__title">Как устроен курс</h2>
+      <p class="mbs-how__subtitle">Никаких заданий и дедлайнов. Учитесь в своём темпе — и сразу практикуетесь дома.</p>
+    </div>
+    <div class="mbs-how__steps">
+      <div class="mbs-how__step">
+        <div class="mbs-how__step-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#417033" stroke-width="1.8"/><path d="M2 10H22" stroke="#417033" stroke-width="1.8"/><path d="M6 15H10" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="mbs-how__step-num">1</span>
+        </div>
+        <p class="mbs-how__step-title">Покупаете курс</p>
+        <p class="mbs-how__step-text">Оплачиваете любым удобным способом</p>
+      </div>
+      <div class="mbs-how__step">
+        <div class="mbs-how__step-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="8" cy="15" r="4" stroke="#417033" stroke-width="1.8"/><path d="M12 11L20 3" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/><path d="M18 5L20 7" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/><path d="M15 8L17 10" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="mbs-how__step-num">2</span>
+        </div>
+        <p class="mbs-how__step-title">Получаете доступ</p>
+        <p class="mbs-how__step-text">Личный кабинет со всеми уроками</p>
+      </div>
+      <div class="mbs-how__step">
+        <div class="mbs-how__step-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M8 5H19C20.1 5 21 5.9 21 7V17C21 18.1 20.1 19 19 19H8C6.9 19 6 18.1 6 17V7C6 5.9 6.9 5 8 5Z" stroke="#417033" stroke-width="1.8"/><path d="M3 8V16" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/><path d="M11 9.5L16 12L11 14.5V9.5Z" stroke="#417033" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <span class="mbs-how__step-num">3</span>
+        </div>
+        <p class="mbs-how__step-title">Смотрите уроки</p>
+        <p class="mbs-how__step-text">С телефона или компьютера, в любое время</p>
+      </div>
+      <div class="mbs-how__step">
+        <div class="mbs-how__step-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8H14V16C14 17.1 13.1 18 12 18H6C4.9 18 4 17.1 4 16V8Z" stroke="#417033" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 10H16C17.1 10 18 10.9 18 12C18 13.1 17.1 14 16 14H14" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/><path d="M2 21H16" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/><path d="M7 5C7 5 7 6.5 9 6.5C11 6.5 11 5 11 5" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span class="mbs-how__step-num">4</span>
+        </div>
+        <p class="mbs-how__step-title">Повторяете дома</p>
+        <p class="mbs-how__step-text">Готовите кофе по рецептам прямо во время просмотра</p>
+      </div>
+      <div class="mbs-how__step">
+        <div class="mbs-how__step-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M1 4V10H7" stroke="#417033" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.51 15C4.15 16.84 5.38 18.4 7 19.47C8.62 20.54 10.54 21.05 12.48 20.93C14.42 20.81 16.26 20.07 17.73 18.82C19.2 17.57 20.22 15.88 20.63 14C21.04 12.12 20.82 10.16 20 8.42C19.18 6.68 17.81 5.26 16.1 4.38C14.39 3.5 12.43 3.2 10.54 3.55C8.64 3.9 6.91 4.88 5.64 6.34L1 10" stroke="#417033" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="mbs-how__step-num">5</span>
+        </div>
+        <p class="mbs-how__step-title">Возвращаетесь</p>
+        <p class="mbs-how__step-text">Доступ навсегда — пересматривайте когда нужно</p>
+      </div>
+    </div>
+    <div class="mbs-how__note">
+      <div class="mbs-how__note-item">
+        <div class="mbs-how__note-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#417033" stroke-width="1.8"/><path d="M9 7H15M9 11H15M9 15H12" stroke="#417033" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <p class="mbs-how__note-title">Работает на любом устройстве</p>
+          <p class="mbs-how__note-desc">Телефон, планшет, ноутбук — смотрите откуда удобно</p>
+        </div>
+      </div>
+      <div class="mbs-how__note-item">
+        <div class="mbs-how__note-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#417033" stroke-width="1.8"/><path d="M12 7V12L15 15" stroke="#417033" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <p class="mbs-how__note-title">Никаких дедлайнов</p>
+          <p class="mbs-how__note-desc">Проходите в своём темпе — хоть за неделю, хоть за месяц</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

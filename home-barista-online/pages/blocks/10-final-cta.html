@@ -1,0 +1,271 @@
+<!--
+  БЛОК 10 — ФИНАЛЬНЫЙ CTA
+  Место на странице: последний блок страницы.
+  Задача: закрыть страницу сильным призывом к действию.
+  Содержит: тёмно-зелёная карточка (#417033) с заголовком,
+  подзаголовком, ценой 3 600 ₽ и красной кнопкой «Купить курс».
+  ⚠️ Ссылка кнопки: сейчас #buy — заменить на реальную ссылку оплаты.
+  Фон: #FFFFFF (снаружи карточки).
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  .mbs-final {
+    font-family: 'Mulish', sans-serif;
+    background: #FFFFFF;
+    padding: 90px 20px 106px;
+    color: #1F1F1F;
+  }
+
+  .mbs-final * {
+    box-sizing: border-box;
+  }
+
+  .mbs-final__wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ---- Карточка CTA ---- */
+  .mbs-final__card {
+    position: relative;
+    overflow: hidden;
+    padding: 72px 80px;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 10% 90%, rgba(182, 216, 171, 0.45) 0, rgba(182, 216, 171, 0.45) 22%, transparent 23%),
+      radial-gradient(circle at 90% 10%, rgba(231, 242, 227, 0.7) 0, rgba(231, 242, 227, 0.7) 18%, transparent 19%),
+      #417033;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+  }
+
+  /* ---- Текстовая часть ---- */
+  .mbs-final__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .mbs-final__label {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #FFFFFF;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .mbs-final__title {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    max-width: 660px;
+  }
+
+  .mbs-final__text {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 560px;
+  }
+
+  /* ---- Правая: цена + кнопка ---- */
+  .mbs-final__action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    min-width: 240px;
+  }
+
+  .mbs-final__price {
+    text-align: center;
+  }
+
+  .mbs-final__price-label {
+    margin: 0 0 4px;
+    font-size: 13px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .mbs-final__price-value {
+    margin: 0;
+    font-size: 52px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: #FFFFFF;
+    line-height: 1;
+  }
+
+  .mbs-final__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 62px;
+    padding: 0 36px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 14px 36px rgba(204, 40, 65, 0.45);
+    white-space: nowrap;
+  }
+
+  .mbs-final__btn:hover {
+    background: #D83D54;
+    color: #FFFFFF !important;
+    transform: translateY(-2px);
+    box-shadow: 0 18px 44px rgba(204, 40, 65, 0.55);
+  }
+
+  .mbs-final__note {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  /* ---- Декоративные круги ---- */
+  .mbs-final__deco {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .mbs-final__deco--1 {
+    width: 340px;
+    height: 340px;
+    top: -80px;
+    right: -60px;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .mbs-final__deco--2 {
+    width: 180px;
+    height: 180px;
+    bottom: -40px;
+    left: 40%;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* ---- Адаптив ---- */
+  @media (max-width: 1024px) {
+    .mbs-final__card {
+      grid-template-columns: 1fr;
+      padding: 56px 48px;
+      gap: 36px;
+    }
+
+    .mbs-final__action {
+      min-width: 0;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .mbs-final__title {
+      font-size: 34px;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .mbs-final {
+      padding: 64px 14px 76px;
+    }
+
+    .mbs-final__card {
+      padding: 40px 28px 44px;
+      border-radius: 22px;
+      gap: 28px;
+    }
+
+    .mbs-final__title {
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-final__text {
+      font-size: 15px;
+    }
+
+    .mbs-final__action {
+      max-width: 100%;
+    }
+
+    .mbs-final__btn {
+      width: 100%;
+      font-size: 17px;
+    }
+
+    .mbs-final__price-value {
+      font-size: 44px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mbs-final__title {
+      font-size: 26px;
+    }
+
+    .mbs-final__card {
+      padding: 32px 20px 36px;
+    }
+  }
+</style>
+
+<section class="mbs-final">
+  <div class="mbs-final__wrap">
+
+    <div class="mbs-final__card">
+
+      <!-- Декор -->
+      <div class="mbs-final__deco mbs-final__deco--1"></div>
+      <div class="mbs-final__deco mbs-final__deco--2"></div>
+
+      <!-- Текст -->
+      <div class="mbs-final__content">
+        <div class="mbs-final__label">Онлайн-курс · Московская школа бариста</div>
+        <h2 class="mbs-final__title">Начните готовить кофе дома осознанно</h2>
+        <p class="mbs-final__text">
+          Курс поможет разобраться в воде, помоле, рецептах и способах заваривания — без хаоса и гадания. 11 уроков, личный кабинет, доступ навсегда.
+        </p>
+      </div>
+
+      <!-- Цена + кнопка -->
+      <div class="mbs-final__action">
+        <div class="mbs-final__price">
+          <p class="mbs-final__price-label">Стоимость курса</p>
+          <p class="mbs-final__price-value">3&thinsp;600&nbsp;₽</p>
+        </div>
+        <a href="#order:Онлайн-курс Домашний бариста=3600" class="mbs-final__btn">Купить курс</a>
+        <p class="mbs-final__note">Доступ открывается сразу<br>после оплаты</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
