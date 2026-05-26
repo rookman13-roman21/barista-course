@@ -1,0 +1,20 @@
+<!-- MBS Trainers Widget — вставить в Tilda один раз -->
+<div class="mbs-trainers-widget-loader"
+     data-mbs-trainers-widget
+     data-widget-url="https://api.barista-school.ru/api/trainers-widget.html">
+  <div style="font-family:Mulish,sans-serif;padding:32px 20px;text-align:center;color:#555;font-size:15px;font-weight:700;">
+    Загружаем тренеров...
+  </div>
+</div>
+
+<script>
+  (function () {
+    var src = 'https://api.barista-school.ru/trainers-widget.js';
+    if (window.__mbsTrainersWidgetLoaderScript) return;
+    window.__mbsTrainersWidgetLoaderScript = true;
+    var script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.head.appendChild(script);
+  })();
+</script>

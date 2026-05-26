@@ -1,0 +1,431 @@
+<!-- ============================================================
+  TILDA BLOCK — MBS TRAINERS WIDGET
+  Универсальный блок тренеров: public JSON → карточки → popup-профиль
+  Данные по умолчанию: https://api.barista-school.ru/api/trainers.json
+============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  .mbs-trainers-widget {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 90px 20px;
+  }
+  .mbs-trainers-widget * { box-sizing: border-box; }
+  .mbs-trainers-widget__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-trainers-widget__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 14px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(231,242,227,0.95); color: #417033;
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-trainers-widget__title {
+    font-size: 34px; font-weight: 900; letter-spacing: -0.04em;
+    color: #1F1F1F; margin: 0 0 10px;
+  }
+  .mbs-trainers-widget__sub {
+    font-size: 16px; font-weight: 500; color: #555;
+    line-height: 1.55; margin: 0 0 44px;
+  }
+  .mbs-trainers-widget__grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+  }
+  .mbs-trainers-widget__state {
+    grid-column: 1 / -1; padding: 28px; border-radius: 18px;
+    background: #F5F5F5; color: #555; font-size: 15px; font-weight: 700;
+    line-height: 1.5; text-align: center;
+  }
+  .mbs-trw-card {
+    background: #F5F5F5; border-radius: 20px; overflow: hidden;
+    display: flex; flex-direction: column; width: 100%; min-height: 100%;
+    padding: 0; border: 0; text-align: left; cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .mbs-trw-card:hover,
+  .mbs-trw-card:focus-visible {
+    box-shadow: 0 10px 36px rgba(31,31,31,.1);
+    transform: translateY(-2px);
+  }
+  .mbs-trw-card:focus { outline: none; }
+  .mbs-trw-card:focus-visible { outline: 3px solid #B6D8AB; outline-offset: 3px; }
+  .mbs-trw-card__photo {
+    aspect-ratio: 3/4; background: #E7F2E3; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mbs-trw-card__photo img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .mbs-trw-card__placeholder {
+    width: 100%; height: 100%; display: grid; place-items: center;
+    color: #417033; font-size: 42px; font-weight: 900;
+  }
+  .mbs-trw-card__info {
+    padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .mbs-trw-card__name { font-size: 15px; font-weight: 800; color: #1F1F1F; line-height: 1.25; }
+  .mbs-trw-card__role { font-size: 12px; font-weight: 600; color: #4F883E; line-height: 1.4; }
+  .mbs-trw-card__meta {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+    color: #555; font-size: 11px; font-weight: 800; line-height: 1.35;
+  }
+  .mbs-trw-card__pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 8px; border-radius: 999px; background: #fff;
+  }
+  .mbs-trw-card__more {
+    display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+    margin-top: 10px; color: #417033; font-size: 12px; font-weight: 900;
+  }
+  .mbs-trw-card__more i { font-size: 14px; transition: transform .2s; }
+  .mbs-trw-card:hover .mbs-trw-card__more i,
+  .mbs-trw-card:focus-visible .mbs-trw-card__more i { transform: translateX(2px); }
+
+  @media (max-width: 900px) {
+    .mbs-trainers-widget { padding: 64px 14px; }
+    .mbs-trainers-widget__title { font-size: 26px; }
+    .mbs-trainers-widget__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .mbs-trainers-widget__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<section class="mbs-trainers-widget"
+         id="mbs-trainers-widget"
+         data-trainers-api-url="https://api.barista-school.ru/api/trainers.json">
+  <div class="mbs-trainers-widget__wrap">
+    <div class="mbs-trainers-widget__label">
+      <i class="ph ph-chalkboard-teacher"></i>
+      Тренеры
+    </div>
+    <h2 class="mbs-trainers-widget__title">Ваши проводники в мир кофе</h2>
+    <p class="mbs-trainers-widget__sub">
+      Практикующие бариста и тренеры MBS проводят занятия на профессиональном оборудовании.
+    </p>
+    <div class="mbs-trainers-widget__grid" data-trainers-grid>
+      <div class="mbs-trainers-widget__state">Загружаем тренеров...</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.__mbsTrainersWidgetInit) return;
+    window.__mbsTrainersWidgetInit = true;
+
+    var root = document.getElementById('mbs-trainers-widget');
+    if (!root) return;
+
+    var grid = root.querySelector('[data-trainers-grid]');
+    var apiUrl = root.getAttribute('data-trainers-api-url') || 'https://api.barista-school.ru/api/trainers.json';
+    var trainers = [];
+    var byId = {};
+    var ui = null;
+    var lastTrigger = null;
+    var returnFocusOnClose = false;
+
+    function esc(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char];
+      });
+    }
+
+    function numberText(value) {
+      var n = Number(value) || 0;
+      return n > 0 ? String(Math.round(n * 10) / 10).replace('.', ',') : '';
+    }
+
+    function reviewsText(count) {
+      var n = Number(count) || 0;
+      if (!n) return 'Нет отзывов';
+      var mod10 = n % 10;
+      var mod100 = n % 100;
+      var word = 'отзывов';
+      if (mod10 === 1 && mod100 !== 11) word = 'отзыв';
+      else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) word = 'отзыва';
+      return n + ' ' + word;
+    }
+
+    function cleanText(value) {
+      var text = String(value || '');
+      for (var i = 0; i < 2; i++) {
+        var textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        text = textarea.value;
+      }
+      return text.replace(/\s+/g, ' ').trim();
+    }
+
+    function normalizeTrainer(item) {
+      return {
+        id: String(item.staff_id || item.id || item.name || ''),
+        staffId: item.staff_id || item.id || '',
+        name: item.name || 'Тренер MBS',
+        position: item.position || 'Тренер MBS',
+        specialization: item.specialization || '',
+        photo: item.photo || '',
+        bio: item.bio || '',
+        rating: Number(item.rating) || 0,
+        reviewsCount: Number(item.reviews_count) || 0,
+        reviews: Array.isArray(item.reviews) ? item.reviews : []
+      };
+    }
+
+    function setState(text) {
+      grid.innerHTML = '<div class="mbs-trainers-widget__state">' + esc(text) + '</div>';
+    }
+
+    function photoHtml(trainer, className) {
+      if (trainer.photo) {
+        return '<img src="' + esc(trainer.photo) + '" alt="' + esc(trainer.name) + '" loading="lazy">';
+      }
+      return '<div class="' + className + '">' + esc((trainer.name || 'T').charAt(0)) + '</div>';
+    }
+
+    function renderCards() {
+      if (!trainers.length) {
+        setState('Сейчас нет тренеров для отображения.');
+        return;
+      }
+
+      grid.innerHTML = trainers.map(function (trainer) {
+        var rating = numberText(trainer.rating);
+        return '' +
+          '<button class="mbs-trw-card js-mbs-trw-open" type="button" data-trainer-id="' + esc(trainer.id) + '" aria-label="Смотреть профиль: ' + esc(trainer.name) + '">' +
+            '<div class="mbs-trw-card__photo">' + photoHtml(trainer, 'mbs-trw-card__placeholder') + '</div>' +
+            '<div class="mbs-trw-card__info">' +
+              '<div class="mbs-trw-card__name">' + esc(trainer.name) + '</div>' +
+              '<div class="mbs-trw-card__role">' + esc(trainer.position) + '</div>' +
+              '<div class="mbs-trw-card__meta">' +
+                (rating ? '<span class="mbs-trw-card__pill"><i class="ph ph-star"></i>' + esc(rating) + '</span>' : '') +
+                '<span class="mbs-trw-card__pill"><i class="ph ph-chat-circle-text"></i>' + esc(reviewsText(trainer.reviewsCount)) + '</span>' +
+              '</div>' +
+              '<span class="mbs-trw-card__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>' +
+            '</div>' +
+          '</button>';
+      }).join('');
+    }
+
+    function lockTouch(event) {
+      if (!ui || !ui.panel.contains(event.target)) event.preventDefault();
+    }
+
+    function createModal() {
+      if (ui) return ui;
+
+      var backdrop = document.createElement('div');
+      backdrop.id = 'mbs-trw-profile-backdrop';
+      backdrop.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(31,31,31,.58);display:none;opacity:0;transition:opacity .22s ease;overflow:hidden;touch-action:none;';
+
+      var modal = document.createElement('div');
+      modal.id = 'mbs-trw-profile-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'mbs-trw-profile-title');
+      modal.style.cssText = 'position:fixed;z-index:99999;top:50%;left:50%;width:min(1040px,calc(100vw - 80px));max-height:calc(100vh - 80px);overflow:hidden;box-sizing:border-box;background:#fff;border:6px solid #E7F2E3;border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.24);display:none;opacity:0;transform:translate(-50%,-50%) translateY(14px);transition:opacity .22s ease,transform .22s ease;font-family:Mulish,sans-serif;color:#1F1F1F;overscroll-behavior:contain;touch-action:pan-y;';
+
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Закрыть профиль тренера');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:2;width:38px;min-width:38px;height:38px;min-height:38px;box-sizing:border-box;padding:0;border:0;border-radius:50%;background:#F5F5F5;color:#1F1F1F;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;font-family:Arial,sans-serif;';
+
+      var content = document.createElement('div');
+      content.style.cssText = 'box-sizing:border-box;display:grid;grid-template-columns:340px minmax(0,1fr);gap:34px;align-items:start;padding:32px 46px 32px 32px;max-height:calc(100vh - 80px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;';
+
+      modal.appendChild(closeBtn);
+      modal.appendChild(content);
+      document.body.appendChild(backdrop);
+      document.body.appendChild(modal);
+
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', closeModal);
+
+      ui = { backdrop: backdrop, modal: modal, panel: modal, content: content, closeBtn: closeBtn };
+      return ui;
+    }
+
+    function stars(rating) {
+      var value = Math.round(Number(rating) || 0);
+      if (!value) return '';
+      var out = '';
+      for (var i = 1; i <= 5; i++) out += i <= value ? '★' : '☆';
+      return '<span style="color:#D83D54;letter-spacing:1px;">' + out + '</span>';
+    }
+
+    function reviewHtml(review) {
+      var date = review.date ? String(review.date).slice(0, 10).split('-').reverse().join('.') : '';
+      var text = cleanText(review.text);
+      var isLong = text.length > 450;
+      var shortText = isLong ? text.slice(0, 450).trim() + '...' : text;
+      return '' +
+        '<div style="box-sizing:border-box;width:100%;max-width:100%;min-width:0;overflow:hidden;background:#F5F5F5;border-radius:14px;padding:14px;">' +
+          '<div style="box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px;color:#1F1F1F;font-size:13px;font-weight:900;min-width:0;max-width:100%;">' +
+            '<span style="min-width:0;overflow-wrap:anywhere;">' + esc(review.author || 'Гость') + '</span>' +
+            '<span style="flex:0 0 auto;color:#888;font-size:12px;font-weight:700;">' + esc(date) + '</span>' +
+          '</div>' +
+          '<div style="margin-bottom:6px;font-size:12px;">' + stars(review.rating) + '</div>' +
+          '<div style="box-sizing:border-box;max-width:100%;overflow-wrap:anywhere;color:#555;font-size:13px;font-weight:600;line-height:1.5;">' +
+            '<span class="mbs-trw-review-short">' + esc(shortText) + '</span>' +
+            (isLong ? '<span class="mbs-trw-review-full" style="display:none;">' + esc(text) + '</span>' : '') +
+          '</div>' +
+          (isLong ? '<button class="mbs-trw-review-toggle" type="button" data-expanded="false" style="box-sizing:border-box;margin-top:8px;padding:0;border:0;background:transparent;color:#417033;cursor:pointer;font-family:Mulish,sans-serif;font-size:12px;font-weight:900;max-width:100%;">Читать полностью</button>' : '') +
+        '</div>';
+    }
+
+    function renderProfile(trainer) {
+      var isMobile = window.matchMedia('(max-width: 680px)').matches;
+      var photoHeight = isMobile ? 260 : 460;
+      var photoFit = isMobile ? 'contain' : 'cover';
+      var rating = numberText(trainer.rating);
+      var initialReviews = trainer.reviews.slice(0, 3);
+      var hiddenReviews = trainer.reviews.slice(3);
+      var reviewList = trainer.reviews.length
+        ? initialReviews.map(reviewHtml).join('') +
+          (hiddenReviews.length
+            ? '<div class="mbs-trw-hidden-reviews" style="box-sizing:border-box;display:none;gap:10px;width:100%;max-width:100%;min-width:0;overflow:hidden;">' + hiddenReviews.map(reviewHtml).join('') + '</div>'
+            : '')
+        : '<div style="background:#F5F5F5;border-radius:14px;padding:16px;color:#555;font-size:13px;font-weight:700;">Пока нет отзывов</div>';
+      var reviewsButton = hiddenReviews.length
+        ? '<button class="mbs-trw-reviews-toggle" type="button" data-expanded="false" data-open-label="Показать все отзывы (' + esc(reviewsText(trainer.reviewsCount)) + ')" data-close-label="Свернуть отзывы" style="box-sizing:border-box;display:block;width:100%;max-width:100%;margin:10px 0 0;padding:12px 14px;border:0;border-radius:14px;background:#E7F2E3;color:#417033;cursor:pointer;font-family:Mulish,sans-serif;font-size:13px;font-weight:900;line-height:1.25;white-space:normal;overflow-wrap:anywhere;">Показать все отзывы (' + esc(reviewsText(trainer.reviewsCount)) + ')</button>'
+        : '';
+
+      ui.modal.style.width = isMobile ? 'min(860px, calc(100vw - 32px))' : 'min(1040px, calc(100vw - 80px))';
+      ui.modal.style.maxHeight = isMobile ? 'calc(100vh - 32px)' : 'calc(100vh - 80px)';
+      ui.modal.style.boxSizing = 'border-box';
+      ui.modal.style.overflow = 'hidden';
+      ui.modal.style.overflowX = 'hidden';
+      ui.modal.style.overflowY = 'hidden';
+      ui.modal.style.overscrollBehavior = 'contain';
+      ui.modal.style.touchAction = 'pan-y';
+      ui.content.style.cssText = isMobile
+        ? 'box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding:18px 18px 22px 18px;min-width:0;width:100%;max-width:100%;max-height:calc(100vh - 32px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;'
+        : 'box-sizing:border-box;display:grid;grid-template-columns:340px minmax(0,1fr);gap:34px;align-items:start;padding:32px 46px 32px 32px;min-width:0;width:100%;max-width:100%;max-height:calc(100vh - 80px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;';
+
+      ui.modal.style.borderRadius = isMobile ? '22px' : '24px';
+      ui.content.innerHTML =
+        '<div style="box-sizing:border-box;border-radius:18px;overflow:hidden;background:#E7F2E3;height:' + photoHeight + 'px;min-width:0;max-width:100%;">' +
+          (trainer.photo
+            ? '<img src="' + esc(trainer.photo) + '" alt="' + esc(trainer.name) + '" style="width:100%;height:100%;object-fit:' + photoFit + ';object-position:center top;display:block;">'
+            : '<div style="width:100%;height:100%;display:grid;place-items:center;color:#417033;font-size:64px;font-weight:900;">' + esc((trainer.name || 'T').charAt(0)) + '</div>') +
+        '</div>' +
+        '<div style="box-sizing:border-box;padding:' + (isMobile ? '0' : '10px 0 6px 0') + ';min-width:0;width:100%;max-width:100%;overflow-x:hidden;">' +
+          '<div style="box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;padding:7px 14px;border-radius:999px;background:#E7F2E3;color:#417033;font-size:13px;font-weight:900;max-width:100%;">Тренер MBS</div>' +
+          '<h3 id="mbs-trw-profile-title" style="margin:0 ' + (isMobile ? '44px' : '18px') + ' 8px 0;color:#1F1F1F;font-size:' + (isMobile ? '28px' : '34px') + ';line-height:1;font-weight:900;letter-spacing:-.04em;">' + esc(trainer.name) + '</h3>' +
+          '<div style="margin-bottom:12px;color:#4F883E;font-size:14px;font-weight:800;line-height:1.35;">' + esc(trainer.position) + '</div>' +
+          '<div style="box-sizing:border-box;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;max-width:100%;">' +
+            (rating ? '<span style="box-sizing:border-box;display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;background:#F5F5F5;color:#1F1F1F;font-size:13px;font-weight:900;max-width:100%;"><i class="ph ph-star"></i>' + esc(rating) + '</span>' : '') +
+            '<span style="box-sizing:border-box;display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;background:#F5F5F5;color:#1F1F1F;font-size:13px;font-weight:900;max-width:100%;"><i class="ph ph-chat-circle-text"></i>' + esc(reviewsText(trainer.reviewsCount)) + '</span>' +
+          '</div>' +
+          (trainer.bio ? '<p style="box-sizing:border-box;margin:0 0 20px;max-width:100%;overflow-wrap:anywhere;color:#555;font-size:15px;font-weight:500;line-height:1.6;white-space:pre-line;">' + esc(trainer.bio) + '</p>' : '') +
+          '<div class="mbs-trw-reviews-block" style="box-sizing:border-box;margin-top:4px;width:100%;max-width:100%;min-width:0;overflow:hidden;">' +
+            '<div style="margin-bottom:4px;color:#1F1F1F;font-size:16px;font-weight:900;">Отзывы о тренере</div>' +
+            '<div style="margin-bottom:10px;color:#888;font-size:12px;font-weight:700;line-height:1.4;">Отзывы из yClients за последние 12 месяцев</div>' +
+            '<div class="mbs-trw-reviews-list" style="box-sizing:border-box;display:grid;gap:10px;width:100%;max-width:100%;max-height:' + (isMobile ? '52vh' : '430px') + ';overflow-y:auto;overflow-x:hidden;padding-right:' + (isMobile ? '0' : '4px') + ';overscroll-behavior:contain;touch-action:pan-y;min-width:0;">' + reviewList + '</div>' +
+            reviewsButton +
+          '</div>' +
+        '</div>';
+    }
+
+    function openModal(trainer, trigger, shouldReturnFocus) {
+      createModal();
+      lastTrigger = trigger || null;
+      returnFocusOnClose = !!shouldReturnFocus;
+      renderProfile(trainer);
+      ui.backdrop.style.display = 'block';
+      ui.modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('touchmove', lockTouch, { passive: false });
+      ui.backdrop.offsetHeight;
+      ui.backdrop.style.opacity = '1';
+      ui.modal.style.opacity = '1';
+      ui.modal.style.transform = 'translate(-50%,-50%) translateY(0)';
+      ui.closeBtn.focus();
+    }
+
+    function closeModal() {
+      if (!ui || ui.modal.style.display === 'none') return;
+      ui.backdrop.style.opacity = '0';
+      ui.modal.style.opacity = '0';
+      ui.modal.style.transform = 'translate(-50%,-50%) translateY(14px)';
+      document.body.style.overflow = '';
+      document.removeEventListener('touchmove', lockTouch);
+      setTimeout(function () {
+        ui.backdrop.style.display = 'none';
+        ui.modal.style.display = 'none';
+        if (returnFocusOnClose && lastTrigger) lastTrigger.focus();
+        returnFocusOnClose = false;
+      }, 230);
+    }
+
+    function loadTrainers() {
+      var url = new URL(apiUrl, window.location.href);
+      url.searchParams.set('_', String(Date.now()));
+
+      fetch(url.toString(), { cache: 'no-store' })
+        .then(function (resp) {
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          return resp.json();
+        })
+        .then(function (data) {
+          trainers = (Array.isArray(data.trainers) ? data.trainers : []).map(normalizeTrainer);
+          byId = {};
+          trainers.forEach(function (trainer) { byId[trainer.id] = trainer; });
+          renderCards();
+        })
+        .catch(function () {
+          setState('Не удалось загрузить тренеров. Попробуйте обновить страницу позже.');
+        });
+    }
+
+    document.addEventListener('click', function (event) {
+      var reviewsToggle = event.target.closest('.mbs-trw-reviews-toggle');
+      if (reviewsToggle && ui && ui.modal.contains(reviewsToggle)) {
+        var hidden = ui.modal.querySelector('.mbs-trw-hidden-reviews');
+        var reviewsBlock = ui.modal.querySelector('.mbs-trw-reviews-block');
+        var expanded = reviewsToggle.getAttribute('data-expanded') === 'true';
+        if (hidden) hidden.style.display = expanded ? 'none' : 'grid';
+        reviewsToggle.setAttribute('data-expanded', expanded ? 'false' : 'true');
+        reviewsToggle.textContent = expanded
+          ? reviewsToggle.getAttribute('data-open-label')
+          : reviewsToggle.getAttribute('data-close-label');
+        if (expanded && reviewsBlock) reviewsBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+
+      var reviewToggle = event.target.closest('.mbs-trw-review-toggle');
+      if (reviewToggle && ui && ui.modal.contains(reviewToggle)) {
+        var reviewCard = reviewToggle.parentNode;
+        var shortText = reviewCard.querySelector('.mbs-trw-review-short');
+        var fullText = reviewCard.querySelector('.mbs-trw-review-full');
+        var isExpanded = reviewToggle.getAttribute('data-expanded') === 'true';
+        if (shortText) shortText.style.display = isExpanded ? '' : 'none';
+        if (fullText) fullText.style.display = isExpanded ? 'none' : '';
+        reviewToggle.setAttribute('data-expanded', isExpanded ? 'false' : 'true');
+        reviewToggle.textContent = isExpanded ? 'Читать полностью' : 'Свернуть';
+        return;
+      }
+
+      var trigger = event.target.closest('.js-mbs-trw-open');
+      if (!trigger) return;
+      var trainer = byId[trigger.getAttribute('data-trainer-id')];
+      if (!trainer) return;
+      openModal(trainer, trigger, event.detail === 0);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeModal();
+    });
+
+    loadTrainers();
+  })();
+</script>

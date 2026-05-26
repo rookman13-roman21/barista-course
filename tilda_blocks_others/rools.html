@@ -1,0 +1,329 @@
+<div class="mbs-rools">
+  <style>
+    .mbs-rools {
+      font-family: 'Mulish', Arial, sans-serif;
+      max-width: 1100px;
+      margin: 0 auto;
+      color: #1f1f1f;
+    }
+
+    .mbs-rools * {
+      box-sizing: border-box;
+    }
+
+    .mbs-rools__wrap {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      background: #ffffff;
+      border-radius: 28px;
+      border: 1px solid rgba(31,31,31,0.10);
+      overflow: hidden;
+    }
+
+    /* ── Левая панель ── */
+    .mbs-rools__cover {
+      background:
+        radial-gradient(circle at 80% 18%, rgba(231,242,227,0.55) 0, rgba(231,242,227,0.55) 18%, transparent 19%),
+        radial-gradient(circle at 20% 85%, rgba(231,242,227,0.45) 0, rgba(231,242,227,0.45) 22%, transparent 23%),
+        #f5f5f5;
+      padding: 48px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 620px;
+    }
+
+    .mbs-rools__logo {
+      display: block;
+      height: 80px;
+      width: auto;
+      margin: 0 0 48px;
+    }
+
+    .mbs-rools__cover-title {
+      font-size: 52px;
+      line-height: 0.95;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      color: #1f1f1f;
+      margin: 0;
+    }
+
+    .mbs-rools__note {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 700;
+      color: #1f1f1f;
+      margin-top: 40px;
+    }
+
+    .mbs-rools__note-mark {
+      color: #CC2841;
+      font-size: 40px;
+      line-height: 0.8;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    /* ── Правая панель ── */
+    .mbs-rools__content {
+      padding: 48px 52px;
+      background: #fff;
+    }
+
+    .mbs-rools__label {
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(231,242,227,0.95);
+      color: #417033;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0 0 14px;
+    }
+
+    .mbs-rools__intro-title {
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: #1f1f1f;
+      margin: 0 0 10px;
+    }
+
+    .mbs-rools__intro-sub {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #555555;
+      margin: 0 0 28px;
+    }
+
+    .mbs-rools__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 0 0 16px;
+    }
+
+    .mbs-rools__card {
+      background: #f5f5f5;
+      border-radius: 20px;
+      padding: 24px 22px 22px;
+    }
+
+    .mbs-rools__card--accent {
+      background: #fff4f6;
+      border-left: 4px solid #D83D54;
+    }
+
+    .mbs-rools__card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      min-width: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: rgba(65,112,51,0.12);
+      color: #417033;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0 0 12px;
+    }
+
+    .mbs-rools__card--accent .mbs-rools__card-kicker {
+      background: rgba(216,61,84,0.12);
+      color: #CC2841;
+    }
+
+    .mbs-rools__card-title {
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #1f1f1f;
+      margin: 0 0 8px;
+    }
+
+    .mbs-rools__card-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #333;
+      margin: 0;
+    }
+
+    .mbs-rools__card-text strong {
+      font-weight: 900;
+      color: #1f1f1f;
+    }
+
+    .mbs-rools__health {
+      background: #fff4f6;
+      border: 1px solid rgba(216,61,84,0.15);
+      border-left: 4px solid #D83D54;
+      border-radius: 20px;
+      padding: 22px 24px;
+      margin: 0 0 24px;
+    }
+
+    .mbs-rools__health-title {
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #1f1f1f;
+      margin: 0 0 8px;
+    }
+
+    .mbs-rools__health-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+    }
+
+    .mbs-rools__footer {
+      border-top: 1px solid rgba(31,31,31,0.08);
+      padding-top: 18px;
+    }
+
+    .mbs-rools__footer-text {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #888888;
+      margin: 0;
+    }
+
+    /* ── Адаптив ── */
+    @media (max-width: 820px) {
+      .mbs-rools__wrap {
+        grid-template-columns: 1fr;
+        border-radius: 20px;
+      }
+
+      .mbs-rools__cover {
+        min-height: auto;
+        padding: 36px 28px;
+      }
+
+      .mbs-rools__logo {
+        height: 64px;
+        margin-bottom: 32px;
+      }
+
+      .mbs-rools__cover-title {
+        font-size: 40px;
+      }
+
+      .mbs-rools__content {
+        padding: 36px 28px;
+      }
+
+      .mbs-rools__intro-title {
+        font-size: 26px;
+      }
+
+      .mbs-rools__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .mbs-rools__cover {
+        padding: 28px 20px;
+      }
+
+      .mbs-rools__cover-title {
+        font-size: 34px;
+      }
+
+      .mbs-rools__content {
+        padding: 28px 20px;
+      }
+
+      .mbs-rools__card,
+      .mbs-rools__health {
+        border-radius: 16px;
+        padding: 20px 18px;
+      }
+    }
+  </style>
+
+  <div class="mbs-rools__wrap">
+
+    <div class="mbs-rools__cover">
+      <div>
+        <img class="mbs-rools__logo" src="https://static.tildacdn.com/tild3565-3662-4365-b465-613162656366/MBS_logo_black_1.svg" alt="MBS">
+        <h2 class="mbs-rools__cover-title">Правила<br>школы</h2>
+      </div>
+
+      <div class="mbs-rools__note">
+        <div class="mbs-rools__note-mark">!</div>
+        <div>Пожалуйста,<br>внимательно прочитайте правила</div>
+      </div>
+    </div>
+
+    <div class="mbs-rools__content">
+      <div class="mbs-rools__label">Перед записью</div>
+      <h3 class="mbs-rools__intro-title">Перед записью важно знать условия</h3>
+      <p class="mbs-rools__intro-sub">Эти правила помогают нам сохранять расписание, уважать время тренеров и проводить занятия спокойно, безопасно и продуктивно.</p>
+
+      <div class="mbs-rools__grid">
+        <div class="mbs-rools__card">
+          <div class="mbs-rools__card-kicker">01</div>
+          <h4 class="mbs-rools__card-title">Бронирование курсов</h4>
+          <p class="mbs-rools__card-text">Для записи на курсы необходимо внести предоплату <strong>5000 ₽</strong>. Предоплата бронирует время специалиста и закрепляет выбранные даты.</p>
+        </div>
+
+        <div class="mbs-rools__card">
+          <div class="mbs-rools__card-kicker">02</div>
+          <h4 class="mbs-rools__card-title">Остальная оплата</h4>
+          <p class="mbs-rools__card-text">Остальная сумма оплачивается на первом занятии. Все материалы и продукты, необходимые для занятия, входят в стоимость обучения.</p>
+        </div>
+
+        <div class="mbs-rools__card">
+          <div class="mbs-rools__card-kicker">03</div>
+          <h4 class="mbs-rools__card-title">Мастер-классы</h4>
+          <p class="mbs-rools__card-text">Для записи и бронирования места на мастер-класс необходимо внести полную оплату выбранного занятия.</p>
+        </div>
+
+        <div class="mbs-rools__card mbs-rools__card--accent">
+          <div class="mbs-rools__card-kicker">48 ч</div>
+          <h4 class="mbs-rools__card-title">Перенос и отмена</h4>
+          <p class="mbs-rools__card-text">О переносе или отмене нужно предупредить заранее — <strong>не менее чем за 48 часов</strong>. Если позже — занятие сгорает, в том числе в случае болезни.</p>
+        </div>
+
+        <div class="mbs-rools__card">
+          <div class="mbs-rools__card-kicker">04</div>
+          <h4 class="mbs-rools__card-title">Опоздание</h4>
+          <p class="mbs-rools__card-text">Время опоздания вычитается из основного времени занятия. Пожалуйста, планируйте дорогу заранее.</p>
+        </div>
+
+        <div class="mbs-rools__card">
+          <div class="mbs-rools__card-kicker">05</div>
+          <h4 class="mbs-rools__card-title">Состояние на занятии</h4>
+          <p class="mbs-rools__card-text">Запрещается приходить на занятия в состоянии алкогольного или наркотического опьянения.</p>
+        </div>
+      </div>
+
+      <div class="mbs-rools__health">
+        <h4 class="mbs-rools__health-title">Здоровье и безопасность</h4>
+        <p class="mbs-rools__health-text">Занятия связаны с кофе, горячей водой, молоком, профессиональным оборудованием и активной практикой. Ученик должен внимательно следить за своим самочувствием и аккуратно обращаться с оборудованием. Если есть недомогание, аллергия или ограничения по здоровью, необходимо заранее предупредить тренера.</p>
+      </div>
+
+      <div class="mbs-rools__footer">
+        <p class="mbs-rools__footer-text">Продолжая запись, вы подтверждаете, что ознакомились с правилами школы и понимаете условия бронирования, переноса и посещения занятий.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
