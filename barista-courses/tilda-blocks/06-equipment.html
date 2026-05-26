@@ -1,0 +1,132 @@
+<!-- ============================================================
+  TILDA BLOCK 06 — EQUIPMENT + GALLERY
+============================================================ -->
+
+<style>
+  .mbs-bc-eq { font-family: 'Mulish', sans-serif; background: #F5F5F5; padding: 64px 20px; }
+  .mbs-bc-eq * { box-sizing: border-box; }
+  .mbs-bc-eq__wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+  .mbs-bc-eq__top { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .mbs-bc-eq__intro { padding: 28px; border-radius: 20px; background: #fff; }
+  .mbs-bc-eq__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mbs-bc-eq__item { min-height: 132px; padding: 20px; border-radius: 16px; background: #fff; }
+  .mbs-bc-eq__item strong { display: block; margin-bottom: 6px; color: #1F1F1F; font-size: 17px; font-weight: 900; line-height: 1.1; }
+  .mbs-bc-eq__item span { color: #555; font-size: 13px; font-weight: 700; line-height: 1.4; }
+  .mbs-bc-eq__gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .mbs-bc-eq__photo { aspect-ratio: 4 / 3; overflow: hidden; border: 0; padding: 0; border-radius: 14px; background: #E7F2E3; cursor: zoom-in; }
+  .mbs-bc-eq__photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .mbs-bc-eq__photo:hover img { transform: scale(1.04); }
+  .mbs-bc-lightbox { position: fixed; inset: 0; z-index: 999999; display: none; align-items: center; justify-content: center; padding: 28px; background: rgba(31,31,31,.82); }
+  .mbs-bc-lightbox.is-open { display: flex; }
+  .mbs-bc-lightbox__img { max-width: min(1120px, 92vw); max-height: 86vh; border-radius: 18px; object-fit: contain; box-shadow: 0 24px 80px rgba(0,0,0,.34); }
+  .mbs-bc-lightbox__btn { position: absolute; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 0; border-radius: 50%; background: #fff; color: #1F1F1F; cursor: pointer; font-size: 30px; line-height: 1; box-shadow: 0 10px 26px rgba(0,0,0,.22); }
+  .mbs-bc-lightbox__close { top: 22px; right: 22px; }
+  .mbs-bc-lightbox__prev { left: 22px; top: 50%; transform: translateY(-50%); }
+  .mbs-bc-lightbox__next { right: 22px; top: 50%; transform: translateY(-50%); }
+  @media (max-width: 880px) {
+    .mbs-bc-eq { padding: 56px 14px; }
+    .mbs-bc-eq__top { grid-template-columns: 1fr; }
+    .mbs-bc-eq__gallery { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .mbs-bc-eq__photo { border-radius: 12px; }
+  }
+  @media (max-width: 520px) {
+    .mbs-bc-eq__grid { grid-template-columns: 1fr; }
+    .mbs-bc-eq__gallery { grid-template-columns: repeat(2, 1fr); }
+    .mbs-bc-eq__intro, .mbs-bc-eq__item { padding: 24px; }
+  }
+</style>
+
+<section class="mbs-bc-eq">
+  <div class="mbs-bc-eq__wrap">
+    <div class="mbs-bc-eq__top">
+      <div class="mbs-bc-eq__intro">
+        <div class="mbs-bc-label">Оборудование</div>
+        <h2 class="mbs-bc-title">Учитесь сразу на профессиональной технике</h2>
+        <p class="mbs-bc-sub">На курсе важно привыкнуть к рабочему оборудованию: так после обучения проще перейти к реальной смене или домашней практике на продвинутом уровне.</p>
+        <a class="mbs-bc-btn mbs-bc-btn--primary" href="#consalt">Оставить заявку</a>
+      </div>
+      <div class="mbs-bc-eq__grid">
+        <div class="mbs-bc-eq__item"><strong>Sanremo D8 Pro</strong><span>Профессиональная кофемашина для стабильной отработки эспрессо.</span></div>
+        <div class="mbs-bc-eq__item"><strong>Carimali Glow</strong><span>Рабочая кофемашина, на которой удобно тренировать скорость и повторяемость.</span></div>
+        <div class="mbs-bc-eq__item"><strong>Eureka Atom / W 75 F</strong><span>Кофемолки для понимания помола, дозировки и влияния настроек на вкус.</span></div>
+        <div class="mbs-bc-eq__item"><strong>Anfim Scody II</strong><span>Дополнительная кофемолка для сравнения оборудования и рабочих сценариев.</span></div>
+      </div>
+    </div>
+    <div class="mbs-bc-eq__gallery" aria-label="Галерея рабочего пространства">
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3965-6266-4532-a638-333361393865/0D1A7230_resized.jpg" alt="Базовый курс бариста — практика на кофемашине" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild6438-3866-4266-a463-363530333036/0D1A6468_resized.jpg" alt="Обучение бариста в Московской школе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3331-6430-4636-a530-373032376531/0D1A6473_resized.jpg" alt="Практика приготовления эспрессо на курсе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3339-3136-4831-a131-383531633439/0D1A7234_resized.jpg" alt="Тренер и ученик на базовом курсе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild6164-3335-4163-a537-613765313566/0D1A7249_resized.jpg" alt="Индивидуальная практика на курсе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3333-6164-4831-b336-643764303862/0D1A7272_resized.jpg" alt="Московская школа бариста — обучение за кофейной стойкой" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var galleries = Array.prototype.slice.call(document.querySelectorAll('.mbs-bc-eq__gallery'));
+    if (!galleries.length) return;
+
+    var lightbox = document.querySelector('.mbs-bc-lightbox');
+    if (!lightbox) {
+      lightbox = document.createElement('div');
+      lightbox.className = 'mbs-bc-lightbox';
+      lightbox.innerHTML = '<button class="mbs-bc-lightbox__btn mbs-bc-lightbox__close" type="button" aria-label="Закрыть">×</button><button class="mbs-bc-lightbox__btn mbs-bc-lightbox__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="mbs-bc-lightbox__img" alt=""><button class="mbs-bc-lightbox__btn mbs-bc-lightbox__next" type="button" aria-label="Следующее фото">›</button>';
+      document.body.appendChild(lightbox);
+    }
+
+    var imageEl = lightbox.querySelector('.mbs-bc-lightbox__img');
+    var closeBtn = lightbox.querySelector('.mbs-bc-lightbox__close');
+    var prevBtn = lightbox.querySelector('.mbs-bc-lightbox__prev');
+    var nextBtn = lightbox.querySelector('.mbs-bc-lightbox__next');
+    var photos = [];
+    var currentIndex = 0;
+
+    galleries.forEach(function (gallery) {
+      Array.prototype.slice.call(gallery.querySelectorAll('.mbs-bc-eq__photo img')).forEach(function (img) {
+        photos.push({ src: img.currentSrc || img.src, alt: img.alt || '' });
+      });
+    });
+
+    function show(index) {
+      currentIndex = (index + photos.length) % photos.length;
+      imageEl.src = photos[currentIndex].src;
+      imageEl.alt = photos[currentIndex].alt;
+    }
+
+    function open(index) {
+      show(index);
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    galleries.forEach(function (gallery) {
+      Array.prototype.slice.call(gallery.querySelectorAll('.mbs-bc-eq__photo')).forEach(function (button) {
+        button.addEventListener('click', function () {
+          var img = button.querySelector('img');
+          var index = photos.findIndex(function (photo) { return photo.src === (img.currentSrc || img.src); });
+          open(index >= 0 ? index : 0);
+        });
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { show(currentIndex - 1); });
+    nextBtn.addEventListener('click', function () { show(currentIndex + 1); });
+    lightbox.addEventListener('click', function (event) {
+      if (event.target === lightbox) close();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') close();
+      if (event.key === 'ArrowLeft') show(currentIndex - 1);
+      if (event.key === 'ArrowRight') show(currentIndex + 1);
+    });
+  })();
+</script>

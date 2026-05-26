@@ -1,0 +1,186 @@
+<!-- ============================================================
+  TILDA BLOCK 07 — FAQ
+============================================================ -->
+
+<style>
+  .mbs-bc-faq { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
+  .mbs-bc-faq * { box-sizing: border-box; }
+  .mbs-bc-faq__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: .75fr 1.25fr; gap: 48px; align-items: start; }
+  .mbs-bc-faq__side { align-self: start; position: relative; will-change: transform; }
+  .mbs-bc-faq__list { display: grid; gap: 10px; }
+  .mbs-bc-faq__item { border-radius: 18px; background: #F5F5F5; overflow: hidden; }
+  .mbs-bc-faq summary { cursor: pointer; list-style: none; padding: 22px 24px; color: #1F1F1F; font-size: 19px; font-weight: 900; line-height: 1.25; }
+  .mbs-bc-faq summary::-webkit-details-marker { display: none; }
+  .mbs-bc-faq summary::after { content: "+"; float: right; color: #417033; font-size: 24px; line-height: 1; }
+  .mbs-bc-faq__item[open] summary::after { content: "×"; }
+  .mbs-bc-faq__body { overflow: hidden; height: 0; transition: height .32s cubic-bezier(.4, 0, .2, 1); }
+  .mbs-bc-faq__item[open] .mbs-bc-faq__body { height: auto; }
+  .mbs-bc-faq__answer { margin: 0; padding: 0 24px 24px; color: #555; font-size: 16px; font-weight: 600; line-height: 1.6; overflow: visible; }
+  @media (max-width: 820px) {
+    .mbs-bc-faq { padding: 64px 14px; }
+    .mbs-bc-faq__wrap { grid-template-columns: 1fr; gap: 28px; }
+    .mbs-bc-faq__side { transform: none !important; will-change: auto; }
+    .mbs-bc-faq summary { font-size: 17px; padding: 20px; }
+    .mbs-bc-faq__answer { padding: 0 20px 20px; font-size: 15px; }
+  }
+</style>
+
+<section class="mbs-bc-faq" data-mbs-sticky-section>
+  <div class="mbs-bc-faq__wrap">
+    <div class="mbs-bc-faq__side" data-mbs-sticky-panel data-mbs-sticky-offset="90">
+      <div class="mbs-bc-label">FAQ</div>
+      <h2 class="mbs-bc-title">Частые вопросы</h2>
+      <p class="mbs-bc-sub">Если хотите выбрать время сразу, нажмите «Онлайн запись». Если нужен совет, оставьте заявку — менеджер подскажет по расписанию, оплате и формату.</p>
+      <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#consalt">Задать вопрос</a>
+    </div>
+    <div class="mbs-bc-faq__list">
+      <details class="mbs-bc-faq__item" open>
+        <summary>Можно ли прийти без опыта?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Да. Базовый курс создан для старта с нуля: тренер объясняет логику процесса, показывает технику и помогает закрепить её на практике за кофемашиной.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Как проходит обучение?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Курс состоит из 3 занятий по 3 часа. Вы много практикуетесь: работаете с кофемашиной и кофемолкой, настраиваете помол, готовите первый эспрессо, взбиваете молоко, пробуете латте-арт и собираете классические напитки меню.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Со скольки лет можно обучаться?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Обучение можно проходить с 14 лет. Если участнику меньше 18 лет, лучше заранее оставить заявку: менеджер уточнит детали и подскажет, как удобнее оформить запись.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Можно записаться вдвоём?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Да. Есть формат для двух участников за 30 000 ₽. Вы занимаетесь вместе, проходите ту же программу и бронируете те же доступные слоты. Предоплата такая же — 5 000 ₽.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Как забронировать место?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Можно записаться онлайн: выбрать формат, тренера, даты и внести предоплату 5 000 ₽. Бронь держится 5 минут и закрепляется после предоплаты. Если не готовы выбирать время сразу, оставьте заявку.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Когда оплачивается оставшаяся часть?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Предоплата 5 000 ₽ вносится при бронировании. Остаток оплачивается на первом занятии: 17 000 ₽ для одного участника или 25 000 ₽ для формата на двоих.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Что входит в стоимость?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Практика на профессиональном оборудовании, зерно, молоко, продукты для напитков, работа с тренером и все материалы, которые нужны на занятиях.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Что делать, если после курса захочется больше практики?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Если после базового курса вы поймёте, что практики недостаточно, можно будет перейти на «Продвинутый курс бариста». Это ещё 3 дня по 3 часа с более глубокой отработкой навыков.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Помогаете ли вы с трудоустройством?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Мы не занимаемся трудоустройством напрямую, но к нам часто обращаются кофейни и проекты, которые готовы работать с нашими выпускниками. Когда есть подходящие предложения, мы делимся ими с выпускниками.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Что происходит после курса?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">После обучения мы добавляем выпускников в закрытый Telegram-чат «Продлёнка». Там можно задавать вопросы, получать поддержку после курса и оставаться внутри профессионального сообщества школы.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.mbsBcStickyInit) {
+      window.mbsBcStickyInit();
+      return;
+    }
+
+    var ticking = false;
+    var desktopQuery = window.matchMedia('(min-width: 821px)');
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
+    }
+
+    function updateStickyPanels() {
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-mbs-sticky-panel]'));
+      panels.forEach(function (panel) {
+        var section = panel.closest('[data-mbs-sticky-section]');
+        if (!section || !desktopQuery.matches) {
+          panel.style.transform = '';
+          return;
+        }
+
+        var container = panel.parentElement || section;
+        var offset = parseInt(panel.getAttribute('data-mbs-sticky-offset') || '90', 10);
+        var containerRect = container.getBoundingClientRect();
+        var maxShift = Math.max(0, container.offsetHeight - panel.offsetHeight);
+        var shift = clamp(offset - containerRect.top, 0, maxShift);
+        panel.style.transform = 'translate3d(0,' + shift + 'px,0)';
+      });
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        updateStickyPanels();
+        ticking = false;
+      });
+    }
+
+    window.mbsBcStickyUpdate = updateStickyPanels;
+    window.mbsBcStickyInit = function () {
+      requestUpdate();
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    requestUpdate();
+  })();
+
+  (function () {
+    document.querySelectorAll('.mbs-bc-faq__list').forEach(function (list) {
+      var items = Array.prototype.slice.call(list.querySelectorAll('.mbs-bc-faq__item'));
+
+      function closeItem(details) {
+        var body = details.querySelector('.mbs-bc-faq__body');
+        if (!details.open || details.dataset.busy === '1') return;
+        details.dataset.busy = '1';
+        body.style.height = body.scrollHeight + 'px';
+        body.offsetHeight;
+        body.style.height = '0px';
+        body.addEventListener('transitionend', function done(ev) {
+          if (ev.propertyName !== 'height') return;
+          body.removeEventListener('transitionend', done);
+          details.open = false;
+          details.dataset.busy = '0';
+          if (window.mbsBcStickyUpdate) window.mbsBcStickyUpdate();
+        });
+      }
+
+      function openItem(details) {
+        var body = details.querySelector('.mbs-bc-faq__body');
+        if (details.open || details.dataset.busy === '1') return;
+        items.forEach(function (item) {
+          if (item !== details) closeItem(item);
+        });
+        details.dataset.busy = '1';
+        details.open = true;
+        var targetH = body.scrollHeight;
+        body.style.height = '0px';
+        body.offsetHeight;
+        body.style.height = targetH + 'px';
+        body.addEventListener('transitionend', function done(ev) {
+          if (ev.propertyName !== 'height') return;
+          body.removeEventListener('transitionend', done);
+          body.style.height = 'auto';
+          details.dataset.busy = '0';
+          if (window.mbsBcStickyUpdate) window.mbsBcStickyUpdate();
+        });
+      }
+
+      items.forEach(function (details) {
+        var body = details.querySelector('.mbs-bc-faq__body');
+        body.style.height = details.open ? 'auto' : '0px';
+        details.querySelector('summary').addEventListener('click', function (e) {
+          e.preventDefault();
+          if (details.open) closeItem(details);
+          else openItem(details);
+          if (window.mbsBcStickyUpdate) window.mbsBcStickyUpdate();
+        });
+      });
+    });
+  })();
+</script>

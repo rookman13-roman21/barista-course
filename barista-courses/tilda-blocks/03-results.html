@@ -1,0 +1,94 @@
+<!-- ============================================================
+  TILDA BLOCK 03 — RESULTS
+============================================================ -->
+
+<style>
+  .mbs-bc-results { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
+  .mbs-bc-results * { box-sizing: border-box; }
+  .mbs-bc-results__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: .82fr 1.18fr; gap: 24px; align-items: start; }
+  .mbs-bc-results__sticky { align-self: start; position: relative; will-change: transform; }
+  .mbs-bc-results__sticky .mbs-bc-sub { margin-bottom: 34px; }
+  .mbs-bc-results__list { display: grid; gap: 12px; }
+  .mbs-bc-results__item { display: grid; grid-template-columns: 42px 1fr; gap: 16px; align-items: start; padding: 20px; border-radius: 18px; background: #F5F5F5; }
+  .mbs-bc-results__mark { width: 42px; height: 42px; border-radius: 50%; background: #E7F2E3; color: #417033; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+  .mbs-bc-results__item h3 { margin: 0 0 6px; color: #1F1F1F; font-size: 19px; font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; }
+  .mbs-bc-results__item p { margin: 0; color: #555; font-size: 15px; font-weight: 600; line-height: 1.45; }
+  @media (max-width: 820px) {
+    .mbs-bc-results { padding: 64px 14px; }
+    .mbs-bc-results__wrap { grid-template-columns: 1fr; gap: 28px; }
+    .mbs-bc-results__sticky { transform: none !important; will-change: auto; }
+    .mbs-bc-results__item { grid-template-columns: 36px 1fr; padding: 18px; }
+    .mbs-bc-results__mark { width: 36px; height: 36px; }
+  }
+</style>
+
+<section class="mbs-bc-results" data-mbs-sticky-section>
+  <div class="mbs-bc-results__wrap">
+    <div class="mbs-bc-results__sticky" data-mbs-sticky-panel data-mbs-sticky-offset="90">
+      <div class="mbs-bc-label">Результат</div>
+      <h2 class="mbs-bc-title">Что вы сможете после курса</h2>
+      <p class="mbs-bc-sub">Главная цель базового курса — дать не набор фактов, а понятную опору для реальной работы бариста.</p>
+      <a class="mbs-bc-btn mbs-bc-btn--primary" href="#consalt">Оставить заявку</a>
+    </div>
+    <div class="mbs-bc-results__list">
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">1</div><div><h3>Настраивать эспрессо</h3><p>Понимать вкус, помол, время пролива и базовые параметры напитка.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">2</div><div><h3>Работать с молоком</h3><p>Взбивать молоко до нужной текстуры и температуры для капучино, латте и флэт уайта.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">3</div><div><h3>Готовить классику меню</h3><p>Разбирать рецепты и готовить эспрессо, капучино, латте, раф, моккачино и другие напитки.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">4</div><div><h3>Понимать рабочее место</h3><p>Организовывать инвентарь, пользоваться кофемолкой, питчерами, весами и нокбоксом.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">5</div><div><h3>Начать латте-арт</h3><p>Освоить базовые приёмы вливания молока и первые рисунки на молочных напитках.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.mbsBcStickyInit) {
+      window.mbsBcStickyInit();
+      return;
+    }
+
+    var ticking = false;
+    var desktopQuery = window.matchMedia('(min-width: 821px)');
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
+    }
+
+    function updateStickyPanels() {
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-mbs-sticky-panel]'));
+      panels.forEach(function (panel) {
+        var section = panel.closest('[data-mbs-sticky-section]');
+        if (!section || !desktopQuery.matches) {
+          panel.style.transform = '';
+          return;
+        }
+
+        var container = panel.parentElement || section;
+        var offset = parseInt(panel.getAttribute('data-mbs-sticky-offset') || '90', 10);
+        var containerRect = container.getBoundingClientRect();
+        var maxShift = Math.max(0, container.offsetHeight - panel.offsetHeight);
+        var shift = clamp(offset - containerRect.top, 0, maxShift);
+        panel.style.transform = 'translate3d(0,' + shift + 'px,0)';
+      });
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        updateStickyPanels();
+        ticking = false;
+      });
+    }
+
+    window.mbsBcStickyUpdate = updateStickyPanels;
+    window.mbsBcStickyInit = function () {
+      requestUpdate();
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    requestUpdate();
+  })();
+</script>

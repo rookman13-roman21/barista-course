@@ -1,0 +1,122 @@
+<!-- ============================================================
+  TILDA BLOCK 09 — ONLINE BOOKING POPUP
+  Добавить на страницу один раз после CTA-блоков.
+============================================================ -->
+
+<style>
+  .mbs-bc-booking-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    background: rgba(31,31,31,.58);
+    font-family: 'Mulish', sans-serif;
+  }
+  .mbs-bc-booking-popup.is-open { display: block; }
+  .mbs-bc-booking-popup * { box-sizing: border-box; }
+  .mbs-bc-booking-popup__scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 28px 14px;
+  }
+  .mbs-bc-booking-popup__panel {
+    position: relative;
+    width: min(860px, 100%);
+    margin: 0 auto;
+    border-radius: 24px;
+    background: #F5F5F5;
+    box-shadow: 0 24px 80px rgba(0,0,0,.24);
+    overflow: hidden;
+  }
+  .mbs-bc-booking-popup__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #1F1F1F;
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 1;
+    box-shadow: 0 8px 22px rgba(31,31,31,.12);
+  }
+  .mbs-bc-booking-popup__panel [data-course-booking-widget] {
+    min-height: 420px;
+  }
+  body.mbs-bc-booking-lock { overflow: hidden; }
+  @media (max-width: 640px) {
+    .mbs-bc-booking-popup__scroll { padding: 0; }
+    .mbs-bc-booking-popup__panel {
+      min-height: 100vh;
+      border-radius: 0;
+    }
+    .mbs-bc-booking-popup__close {
+      top: 8px;
+      right: 8px;
+    }
+  }
+</style>
+
+<div class="mbs-bc-booking-popup" id="mbs-bc-booking-popup" aria-hidden="true">
+  <div class="mbs-bc-booking-popup__scroll" data-booking-close>
+    <div class="mbs-bc-booking-popup__panel" role="dialog" aria-modal="true" aria-label="Онлайн запись на базовый курс бариста">
+      <button class="mbs-bc-booking-popup__close" type="button" data-booking-close aria-label="Закрыть">×</button>
+      <div data-course-booking-widget
+           data-course-slug="basic-barista"
+           data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json"
+           data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var popup = document.getElementById('mbs-bc-booking-popup');
+    if (!popup) return;
+
+    function ensureWidgetScript() {
+      var current = document.querySelector('script[data-course-booking-widget-script]');
+      if (current) current.parentNode.removeChild(current);
+      var script = document.createElement('script');
+      script.src = 'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260526';
+      script.async = true;
+      script.dataset.courseBookingWidgetScript = '1';
+      script.onerror = function () {
+        var root = popup.querySelector('[data-course-booking-widget]');
+        if (root) root.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
+      };
+      document.body.appendChild(script);
+    }
+
+    function openPopup(event) {
+      if (event) event.preventDefault();
+      popup.classList.add('is-open');
+      popup.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-bc-booking-lock');
+      ensureWidgetScript();
+    }
+
+    function closePopup() {
+      popup.classList.remove('is-open');
+      popup.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('mbs-bc-booking-lock');
+    }
+
+    document.querySelectorAll('.mbs-bc-online-open').forEach(function (button) {
+      button.addEventListener('click', openPopup);
+    });
+    popup.querySelectorAll('[data-booking-close]').forEach(function (item) {
+      item.addEventListener('click', function (event) {
+        if (event.target === item || event.target.hasAttribute('data-booking-close')) closePopup();
+      });
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
+    });
+  })();
+</script>

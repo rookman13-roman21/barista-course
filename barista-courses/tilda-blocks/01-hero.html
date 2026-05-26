@@ -1,0 +1,315 @@
+<!-- ============================================================
+  TILDA BLOCK 01 — HERO
+  Базовый курс бариста: первый экран и главный CTA.
+============================================================ -->
+
+<style>
+  :root {
+    --mbs-green-dark: #417033;
+    --mbs-green: #4F883E;
+    --mbs-bg-green: #E7F2E3;
+    --mbs-red: #CC2841;
+    --mbs-red-soft: #D83D54;
+    --mbs-bg: #F5F5F5;
+    --mbs-black: #1F1F1F;
+    --mbs-gray: #555555;
+  }
+  .mbs-bc-hero {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 48px 20px;
+  }
+  .mbs-bc-hero * { box-sizing: border-box; }
+  .mbs-bc-label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(231,242,227,.95);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-bc-title {
+    margin: 0 0 10px;
+    color: var(--mbs-black);
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .mbs-bc-sub {
+    max-width: 660px;
+    margin: 0 0 34px;
+    color: var(--mbs-gray);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .mbs-bc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 0 26px;
+    border-radius: 999px;
+    text-decoration: none !important;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .mbs-bc-btn:hover { transform: translateY(-1px); }
+  .mbs-bc-btn.mbs-bc-btn--primary {
+    background: var(--mbs-red);
+  }
+  .mbs-bc-btn.mbs-bc-btn--primary,
+  .mbs-bc-btn.mbs-bc-btn--primary * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    opacity: 1 !important;
+  }
+  .mbs-bc-btn--primary:hover { background: var(--mbs-red-soft); }
+  .mbs-bc-btn--secondary {
+    color: var(--mbs-green-dark) !important;
+    border: 2px solid rgba(65,112,51,.25);
+    background: rgba(255,255,255,.72);
+  }
+  .mbs-bc-btn--secondary:hover { border-color: var(--mbs-green-dark); background: #fff; }
+
+  .mbs-bc-hero__wrap { max-width: 1320px; margin: 0 auto; }
+  .mbs-bc-hero__card {
+    border: 8px solid #E7F2E3;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(231,242,227,.78) 0, rgba(231,242,227,.78) 18%, transparent 19%),
+      radial-gradient(circle at 86% 82%, rgba(231,242,227,.52) 0, rgba(231,242,227,.52) 15%, transparent 16%),
+      #F7F7F7;
+    padding: 64px 68px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 480px;
+    grid-template-rows: auto auto;
+    gap: 0 52px;
+  }
+  .mbs-bc-hero__content-top { grid-column: 1; grid-row: 1; }
+  .mbs-bc-hero__content-bottom {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 28px;
+  }
+  .mbs-bc-hero__media {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #E7F2E3;
+    height: 520px;
+    min-height: 0;
+  }
+  .mbs-bc-hero__media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .mbs-bc-hero__label {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.85);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-bc-hero__title {
+    max-width: 720px;
+    margin: 0 0 18px;
+    color: var(--mbs-black);
+    font-size: 82px;
+    font-weight: 900;
+    line-height: .92;
+    letter-spacing: -0.07em;
+  }
+  .mbs-bc-hero__lead {
+    max-width: 680px;
+    margin: 0;
+    color: var(--mbs-black);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.32;
+  }
+  .mbs-bc-hero__lead--mobile { display: none; }
+  .mbs-bc-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .mbs-bc-hero__fact {
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.86);
+    border: 1.5px solid #E7F2E3;
+  }
+  .mbs-bc-hero__fact strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--mbs-black);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+  .mbs-bc-hero__fact span {
+    display: block;
+    color: var(--mbs-gray);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .mbs-bc-hero__price-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 18px;
+    border: 1.5px solid #E7F2E3;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .mbs-bc-hero__price-row {
+    padding: 12px 16px;
+  }
+  .mbs-bc-hero__price-row + .mbs-bc-hero__price-row {
+    border-left: 1px solid #E7F2E3;
+  }
+  .mbs-bc-hero__price-row small {
+    display: block;
+    margin-bottom: 4px;
+    color: #888;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .mbs-bc-hero__price-row b {
+    color: var(--mbs-black);
+    font-size: 20px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .mbs-bc-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1.5px solid #E7F2E3;
+  }
+
+  @media (max-width: 980px) {
+    .mbs-bc-hero__card {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      padding: 42px 30px;
+      gap: 14px;
+    }
+    .mbs-bc-hero__content-top { grid-column: 1; grid-row: 1; }
+    .mbs-bc-hero__media { grid-column: 1; grid-row: 2; min-height: 360px; height: 360px; }
+    .mbs-bc-hero__lead--desktop { display: none; }
+    .mbs-bc-hero__lead--mobile {
+      display: block;
+      grid-column: 1;
+      grid-row: 3;
+      max-width: none;
+      padding-top: 2px;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+    .mbs-bc-hero__content-bottom { grid-column: 1; grid-row: 4; padding-top: 0; }
+    .mbs-bc-hero__title { font-size: 48px; margin-bottom: 0; }
+  }
+  @media (max-width: 640px) {
+    .mbs-bc-hero { padding: 28px 14px 40px; }
+    .mbs-bc-hero__card {
+      border-width: 5px;
+      border-radius: 24px;
+      padding: 30px 22px;
+      gap: 10px;
+    }
+    .mbs-bc-hero__label { margin-bottom: 14px; font-size: 12px; }
+    .mbs-bc-hero__title { font-size: 38px; letter-spacing: -0.06em; }
+    .mbs-bc-hero__media {
+      min-height: 250px;
+      height: 250px;
+      border-radius: 16px;
+    }
+    .mbs-bc-hero__lead--mobile { font-size: 15px; padding-top: 2px; }
+    .mbs-bc-hero__facts { grid-template-columns: 1fr; gap: 6px; margin-bottom: 10px; }
+    .mbs-bc-hero__fact { padding: 9px 12px; }
+    .mbs-bc-hero__fact strong {
+      margin-bottom: 2px;
+      font-size: 15px;
+    }
+    .mbs-bc-hero__fact span {
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    .mbs-bc-hero__price-card { grid-template-columns: 1fr; margin-bottom: 14px; }
+    .mbs-bc-hero__price-row + .mbs-bc-hero__price-row {
+      border-left: 0;
+      border-top: 1px solid #E7F2E3;
+    }
+    .mbs-bc-hero__actions { flex-direction: column; padding-top: 14px; }
+    .mbs-bc-btn { width: 100%; min-height: 50px; }
+    .mbs-bc-title { font-size: 26px; }
+  }
+  @media (max-width: 420px) {
+    .mbs-bc-hero__title { font-size: 34px; }
+    .mbs-bc-hero__media { height: 220px; min-height: 220px; }
+  }
+</style>
+
+<section class="mbs-bc-hero">
+  <div class="mbs-bc-hero__wrap">
+    <div class="mbs-bc-hero__card">
+      <div class="mbs-bc-hero__content-top">
+        <div class="mbs-bc-hero__label">Самая популярная программа MBS</div>
+        <h1 class="mbs-bc-hero__title">Базовый курс бариста</h1>
+        <p class="mbs-bc-hero__lead mbs-bc-hero__lead--desktop">
+          За 9 часов практики вы разберёте работу кофемашины, настройку эспрессо, молоко, классику меню и первые приёмы латте-арта.
+        </p>
+      </div>
+
+      <div class="mbs-bc-hero__media">
+        <img src="https://static.tildacdn.com/tild3061-3037-4135-b736-626566313437/__-min.jpg" alt="Базовый курс бариста в MBS" loading="eager">
+      </div>
+
+      <p class="mbs-bc-hero__lead mbs-bc-hero__lead--mobile">
+        За 9 часов практики вы разберёте работу кофемашины, настройку эспрессо, молоко, классику меню и первые приёмы латте-арта.
+      </p>
+
+      <div class="mbs-bc-hero__content-bottom">
+        <div class="mbs-bc-hero__facts">
+          <div class="mbs-bc-hero__fact"><strong>9 часов</strong><span>3 дня по 3 часа или 1 день интенсивом</span></div>
+          <div class="mbs-bc-hero__fact"><strong>Практика</strong><span>Работа за профессиональной кофемашиной</span></div>
+          <div class="mbs-bc-hero__fact"><strong>С нуля</strong><span>Подходит тем, кто только входит в профессию</span></div>
+        </div>
+        <div class="mbs-bc-hero__price-card">
+          <div class="mbs-bc-hero__price-row"><small>Один участник</small><b>22 000 ₽</b></div>
+          <div class="mbs-bc-hero__price-row"><small>Вдвоём выгоднее</small><b>30 000 ₽</b></div>
+        </div>
+        <div class="mbs-bc-hero__actions">
+          <a class="mbs-bc-btn mbs-bc-btn--primary" href="#consalt">Оставить заявку</a>
+          <a class="mbs-bc-btn mbs-bc-btn--secondary mbs-bc-online-open" href="#online-booking">Онлайн запись</a>
+          <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#mbs-bc-program">Смотреть программу</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
