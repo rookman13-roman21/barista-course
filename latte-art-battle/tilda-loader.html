@@ -1,0 +1,38 @@
+<!-- MBS Latte Art Battle — hosted loader for Tilda -->
+<div id="mbs-latte-battle-hosted-root">
+  <div style="padding:48px 20px;text-align:center;font-family:Mulish,Arial,sans-serif;color:#555;font-weight:800">
+    Загружаем страницу чемпионата...
+  </div>
+</div>
+<script>
+  (function () {
+    var root = document.getElementById('mbs-latte-battle-hosted-root');
+    if (!root) return;
+    var url = 'https://api.barista-school.ru/api/latte-art-battle.html?v=20260530-1';
+
+    function runScripts(container) {
+      Array.prototype.slice.call(container.querySelectorAll('script')).forEach(function (oldScript) {
+        var script = document.createElement('script');
+        Array.prototype.slice.call(oldScript.attributes).forEach(function (attr) {
+          script.setAttribute(attr.name, attr.value);
+        });
+        script.text = oldScript.text || oldScript.textContent || '';
+        oldScript.parentNode.replaceChild(script, oldScript);
+      });
+    }
+
+    fetch(url, { cache: 'no-store' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.text();
+      })
+      .then(function (html) {
+        root.innerHTML = html;
+        runScripts(root);
+      })
+      .catch(function (error) {
+        console.error('[mbs-latte-battle] hosted block load failed', error);
+        root.innerHTML = '<div style="padding:48px 20px;text-align:center;font-family:Mulish,Arial,sans-serif;color:#CC2841;font-weight:900">Не удалось загрузить страницу чемпионата. Обновите страницу или напишите нам в Telegram.</div>';
+      });
+  })();
+</script>

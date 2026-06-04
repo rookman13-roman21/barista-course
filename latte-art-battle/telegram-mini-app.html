@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>MBS* Latte-art x Петмол</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg: var(--tg-theme-bg-color, #f5f5f5);
+      --card: var(--tg-theme-secondary-bg-color, #ffffff);
+      --text: var(--tg-theme-text-color, #1f1f1f);
+      --muted: var(--tg-theme-hint-color, #6f766c);
+      --green: #417033;
+      --green-soft: #e7f2e3;
+      --red: #cc2841;
+      --red-soft: #f8dde1;
+      --border: rgba(65, 112, 51, .18);
+      --shadow: 0 10px 28px rgba(31, 31, 31, .08);
+      --nav: color-mix(in srgb, var(--card) 92%, transparent);
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #1e1e1e;
+      --card: #252526;
+      --text: #f3f3f3;
+      --muted: #c8c8c8;
+      --green: #89d185;
+      --green-soft: #223322;
+      --red: #ff6b7a;
+      --red-soft: #3a2028;
+      --border: rgba(137, 209, 133, .18);
+      --shadow: none;
+      --nav: rgba(24, 24, 24, .96);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #1e1e1e;
+        --card: #252526;
+        --text: #f3f3f3;
+        --muted: #c8c8c8;
+        --green: #89d185;
+        --green-soft: #223322;
+        --red: #ff6b7a;
+        --red-soft: #3a2028;
+        --border: rgba(137, 209, 133, .18);
+        --shadow: none;
+        --nav: rgba(24, 24, 24, .96);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Mulish, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button, a { font: inherit; }
+
+    .app {
+      min-height: 100vh;
+      padding: max(16px, env(safe-area-inset-top)) 14px calc(92px + env(safe-area-inset-bottom));
+    }
+
+    .hero {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--green-soft), var(--card) 70%);
+      box-shadow: var(--shadow);
+    }
+
+    .label {
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(65, 112, 51, .12);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: 30px;
+      line-height: 1.04;
+      font-weight: 1000;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 22px;
+      line-height: 1.12;
+      font-weight: 1000;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 16px;
+      line-height: 1.22;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 650;
+    }
+
+    .hero__meta,
+    .counter,
+    .quick {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pill,
+    .counter__item,
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+    }
+
+    .pill {
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .pill span,
+    .counter__item span {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .counter__item {
+      min-height: 82px;
+      padding: 12px;
+    }
+
+    .counter__item strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 1000;
+    }
+
+    .counter__item--wide { grid-column: 1 / -1; }
+
+    .section {
+      display: none;
+      gap: 14px;
+      padding-top: 16px;
+    }
+
+    .section.is-active { display: grid; }
+
+    .section__head {
+      display: grid;
+      gap: 6px;
+      padding: 4px 2px;
+    }
+
+    .card {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .card--green {
+      background: var(--green-soft);
+      border-color: rgba(65, 112, 51, .28);
+    }
+
+    .card--red {
+      background: var(--red-soft);
+      border-color: rgba(204, 40, 65, .22);
+    }
+
+    .list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.42;
+      font-weight: 700;
+    }
+
+    .list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .58em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--green);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 950;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .participants,
+    .judges,
+    .prizes,
+    .faq {
+      display: grid;
+      gap: 10px;
+    }
+
+    .participant {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+    }
+
+    .participant__num {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 1000;
+    }
+
+    .participant strong,
+    .judge strong {
+      display: block;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .participant span,
+    .judge span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .judge {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .judge img {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: var(--green-soft);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 16px 14px calc(16px + env(safe-area-inset-bottom));
+      background: rgba(0, 0, 0, .45);
+      z-index: 10;
+    }
+
+    .modal[hidden] { display: none; }
+
+    .modal__panel {
+      display: grid;
+      gap: 14px;
+      width: min(100%, 420px);
+      max-height: min(78vh, 620px);
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--card);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      overflow: auto;
+    }
+
+    .modal__head {
+      display: grid;
+      grid-template-columns: 72px 1fr 36px;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .modal__head img {
+      width: 72px;
+      height: 72px;
+      border-radius: 14px;
+      object-fit: cover;
+      background: var(--green-soft);
+    }
+
+    .modal__close {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .prize {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--card);
+      overflow: hidden;
+    }
+
+    .prize__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--green-soft);
+    }
+
+    .prize__body {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .prize__group {
+      display: grid;
+      gap: 6px;
+    }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      overflow: hidden;
+    }
+
+    summary {
+      min-height: 52px;
+      padding: 14px;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    details p {
+      padding: 0 14px 14px;
+    }
+
+    .faq__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 14px 14px;
+      min-height: 38px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .empty,
+    .access {
+      display: grid;
+      gap: 12px;
+      place-items: center;
+      min-height: 55vh;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .access .card {
+      max-width: 360px;
+      text-align: left;
+    }
+
+    .nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 4px;
+      padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      background: var(--nav);
+      backdrop-filter: blur(16px);
+      z-index: 5;
+    }
+
+    .nav button {
+      min-width: 0;
+      min-height: 44px;
+      padding: 6px 4px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1.05;
+      cursor: pointer;
+    }
+
+    .nav button.is-active {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    @supports not (color: color-mix(in srgb, white, black)) {
+      .nav { background: var(--card); }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" id="app">
+    <div class="access">
+      <div class="card">
+        <div class="label">MBS* Latte-art x Петмол</div>
+        <h1>Загружаем информацию</h1>
+        <p>Откройте мини-приложение из Telegram-чата участников чемпионата.</p>
+      </div>
+    </div>
+  </main>
+
+  <nav class="nav" id="nav" hidden>
+    <button type="button" data-tab="home" class="is-active">Главное</button>
+    <button type="button" data-tab="rules">Регламент</button>
+    <button type="button" data-tab="participants">Участники</button>
+    <button type="button" data-tab="judges">Судьи</button>
+    <button type="button" data-tab="prizes">Призы</button>
+    <button type="button" data-tab="faq">FAQ</button>
+  </nav>
+
+  <div class="modal" id="judgeModal" hidden></div>
+
+  <script>
+    (function () {
+      var API_URL = 'https://api.barista-school.ru/api/course-booking/latte-art-battle/telegram-mini-app-data';
+      var app = document.getElementById('app');
+      var nav = document.getElementById('nav');
+      var judgeModal = document.getElementById('judgeModal');
+      var tg = window.Telegram && window.Telegram.WebApp;
+      var state = { payload: null, activeTab: 'home' };
+
+      function syncTheme() {
+        document.documentElement.setAttribute('data-theme', tg && tg.colorScheme === 'dark' ? 'dark' : 'light');
+      }
+
+      function esc(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function showAccess(message) {
+        nav.hidden = true;
+        app.innerHTML = '<div class="access"><div class="card card--red">' +
+          '<div class="label">Доступ к памятке</div>' +
+          '<h1>Откройте из чата участников</h1>' +
+          '<p>' + esc(message || 'Мини-приложение доступно только участникам чемпионата.') + '</p>' +
+        '</div></div>';
+      }
+
+      function showLoading() {
+        app.innerHTML = '<div class="access"><div class="card">' +
+          '<div class="label">MBS* Latte-art x Петмол</div>' +
+          '<h1>Загружаем информацию</h1>' +
+          '<p>Проверяем доступ и обновляем данные чемпионата.</p>' +
+        '</div></div>';
+      }
+
+      function list(items) {
+        return '<ul class="list">' + (items || []).map(function (item) {
+          return '<li>' + esc(item) + '</li>';
+        }).join('') + '</ul>';
+      }
+
+      function textWithBreaks(value) {
+        return esc(value).replace(/\n/g, '<br>');
+      }
+
+      function rulesPdfUrl(url) {
+        var source = String(url || '');
+        var match = source.match(/\/document\/d\/([^/]+)/);
+        return match ? 'https://docs.google.com/document/d/' + encodeURIComponent(match[1]) + '/export?format=pdf' : source;
+      }
+
+      function renderHero(data, content) {
+        var counters = data.counters || {};
+        var schedule = (content.schedule || []).filter(function (item) {
+          return String(item.title || '').toLowerCase() !== 'взнос';
+        });
+        return '<section class="hero">' +
+          '<div class="label">Памятка участника</div>' +
+          '<h1>MBS* Latte-art x Петмол</h1>' +
+          '<p>Ключевая информация по чемпионату: регламент, участники, судьи, призы и частые вопросы.</p>' +
+          '<div class="hero__meta">' + schedule.map(function (item) {
+            return '<div class="pill"><span>' + esc(item.title) + '</span>' + esc(item.value) + '</div>';
+          }).join('') + '</div>' +
+          '<div class="counter">' +
+            '<div class="counter__item"><span>Участники</span><strong>' + esc(counters.registered || 0) + '</strong></div>' +
+            '<div class="counter__item"><span>Осталось</span><strong>' + esc(counters.remaining || 0) + '</strong></div>' +
+          '</div>' +
+        '</section>';
+      }
+
+      function renderHome(data, content) {
+        return '<section class="section is-active" data-section="home">' +
+            renderHero(data, content) +
+            '<div class="section__head"><h2>Что важно помнить</h2><p>Короткая версия правил перед днём чемпионата.</p></div>' +
+            '<div class="card card--green"><h3>Для начинающих бариста</h3><p>Чемпионат создан для бариста с опытом до 3 лет, чтобы дать реальный соревновательный опыт в честной среде.</p></div>' +
+            '<div class="card"><h3>Формат</h3>' + list(['Отборочный этап — 4 минуты.', 'Дальше проходят 16 участников.', 'Полуфинал — батл на вылет.', 'Финал — 6 минут и рисунок-задание.']) + '</div>' +
+          '</section>';
+      }
+
+      function renderRules(content) {
+        return '<section class="section" data-section="rules">' +
+          '<div class="section__head"><h2>Регламент</h2><p>Основные правила собраны здесь, полный документ откроется отдельной ссылкой.</p></div>' +
+          '<div class="card">' + list(content.rules || []) + '</div>' +
+          '<a class="btn" href="' + esc(rulesPdfUrl(content.rules_url)) + '" target="_blank" rel="noopener">Открыть PDF-регламент</a>' +
+        '</section>';
+      }
+
+      function renderParticipants(data) {
+        var items = data.participants || [];
+        var rows = items.length ? items.map(function (item, index) {
+          var name = [item.first_name, item.last_name].filter(Boolean).join(' ') || 'Участник';
+          return '<div class="participant">' +
+            '<div class="participant__num">' + esc(index + 1) + '</div>' +
+            '<div><strong>' + esc(name) + '</strong><span>' + esc(item.project_name || 'Проект не указан') + '</span></div>' +
+          '</div>';
+        }).join('') : '<div class="card"><h3>Список скоро появится</h3><p>Участники появляются после подтверждения места.</p></div>';
+        return '<section class="section" data-section="participants">' +
+          '<div class="section__head"><h2>Участники</h2><p>Список обновляется автоматически после подтверждения места.</p></div>' +
+          '<div class="participants">' + rows + '</div>' +
+        '</section>';
+      }
+
+      function renderJudges(data) {
+        var items = data.judges || [];
+        var rows = items.length ? items.map(function (judge, index) {
+          return '<button class="judge" type="button" data-judge-index="' + esc(index) + '">' +
+            '<img src="' + esc(judge.photo_url || '') + '" alt="">' +
+            '<div><strong>' + esc(judge.name || 'Судья чемпионата') + '</strong><span>' + esc(judge.role || judge.short_description || '') + '</span></div>' +
+          '</button>';
+        }).join('') : '<div class="card"><h3>Судьи скоро появятся</h3><p>Список судей обновится ближе к чемпионату.</p></div>';
+        return '<section class="section" data-section="judges">' +
+          '<div class="section__head"><h2>Судьи</h2><p>Работы участников оценивают практики кофейной индустрии.</p></div>' +
+          '<div class="judges">' + rows + '</div>' +
+        '</section>';
+      }
+
+      function renderPrizes(content) {
+        return '<section class="section" data-section="prizes">' +
+          '<div class="section__head"><h2>Призы</h2><p>Победители получат подарки от партнёров чемпионата.</p></div>' +
+          (content.prizes_note ? '<div class="card card--green"><p>' + esc(content.prizes_note) + '</p></div>' : '') +
+          '<div class="prizes">' + (content.prizes || []).map(function (prize) {
+            return '<article class="prize">' +
+              '<div class="prize__head"><h3>' + esc(prize.place) + '</h3>' + (prize.badge ? '<span class="label">' + esc(prize.badge) + '</span>' : '') + '</div>' +
+              '<div class="prize__body">' + (prize.groups || []).map(function (group) {
+                return '<div class="prize__group"><h3>' + esc(group.title) + '</h3>' + list(group.items || []) + '</div>';
+              }).join('') + (prize.note ? '<p>' + esc(prize.note) + '</p>' : '') + '</div>' +
+            '</article>';
+          }).join('') + '</div>' +
+        '</section>';
+      }
+
+      function renderFaq(content) {
+        return '<section class="section" data-section="faq">' +
+          '<div class="section__head"><h2>FAQ</h2><p>Короткие ответы по участию в чемпионате.</p></div>' +
+          '<div class="faq">' + (content.faq || []).map(function (item) {
+            var mapLink = /где проходит/i.test(String(item.q || ''))
+              ? '<a class="faq__link" href="https://yandex.ru/maps/-/CPTXJM8V" target="_blank" rel="noopener">Открыть карту</a>'
+              : '';
+            return '<details><summary>' + esc(item.q) + '</summary><p>' + esc(item.a) + '</p>' + mapLink + '</details>';
+          }).join('') + '</div>' +
+        '</section>';
+      }
+
+      function openJudgeModal(index) {
+        var data = state.payload && state.payload.data ? state.payload.data : {};
+        var judge = (data.judges || [])[Number(index)];
+        if (!judge) return;
+        var role = judge.role || judge.short_description || '';
+        var description = judge.description || judge.short_description || judge.role || 'Подробная информация о судье появится ближе к чемпионату.';
+        judgeModal.innerHTML = '<div class="modal__panel" role="dialog" aria-modal="true" aria-label="' + esc(judge.name || 'Судья чемпионата') + '">' +
+          '<div class="modal__head">' +
+            '<img src="' + esc(judge.photo_url || '') + '" alt="">' +
+            '<div><h2>' + esc(judge.name || 'Судья чемпионата') + '</h2>' + (role ? '<p>' + esc(role) + '</p>' : '') + '</div>' +
+            '<button class="modal__close" type="button" data-modal-close aria-label="Закрыть">×</button>' +
+          '</div>' +
+          '<div class="card card--green"><p>' + textWithBreaks(description) + '</p></div>' +
+        '</div>';
+        judgeModal.hidden = false;
+      }
+
+      function closeJudgeModal() {
+        judgeModal.hidden = true;
+        judgeModal.innerHTML = '';
+      }
+
+      function render(payload) {
+        state.payload = payload;
+        var data = payload.data || {};
+        var content = payload.content || {};
+        app.innerHTML = renderHome(data, content) + renderRules(content) + renderParticipants(data) + renderJudges(data) + renderPrizes(content) + renderFaq(content);
+        nav.hidden = false;
+        setActiveTab(state.activeTab);
+      }
+
+      function setActiveTab(tab) {
+        state.activeTab = tab;
+        app.querySelectorAll('[data-section]').forEach(function (section) {
+          section.classList.toggle('is-active', section.getAttribute('data-section') === tab);
+        });
+        nav.querySelectorAll('button').forEach(function (button) {
+          button.classList.toggle('is-active', button.getAttribute('data-tab') === tab);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      nav.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-tab]');
+        if (button) setActiveTab(button.getAttribute('data-tab'));
+      });
+
+      app.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-judge-index]');
+        if (button) openJudgeModal(button.getAttribute('data-judge-index'));
+      });
+
+      judgeModal.addEventListener('click', function (event) {
+        if (event.target === judgeModal || event.target.closest('[data-modal-close]')) closeJudgeModal();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && !judgeModal.hidden) closeJudgeModal();
+      });
+
+      if (tg) {
+        syncTheme();
+        tg.onEvent('themeChanged', syncTheme);
+        tg.ready();
+        tg.expand();
+        tg.setHeaderColor('secondary_bg_color');
+        tg.setBackgroundColor(getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#f5f5f5');
+      }
+
+      showLoading();
+
+      fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ initData: tg ? tg.initData : '' }),
+        cache: 'no-store'
+      }).then(function (response) {
+        return response.json().then(function (payload) {
+          if (!response.ok || !payload.ok) throw new Error(payload.error || 'Нет доступа');
+          render(payload);
+        });
+      }).catch(function (err) {
+        showAccess(err.message);
+      });
+    })();
+  </script>
+</body>
+</html>
