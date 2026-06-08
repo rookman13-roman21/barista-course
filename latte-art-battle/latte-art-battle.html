@@ -4,6 +4,114 @@
   Booking:     https://api.barista-school.ru/api/course-booking/latte-art-battle
 ============================================================ -->
 
+<script>
+  (function () {
+    var eventSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: 'MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве',
+      description: 'Чемпионат по латте-арту от Московской школы бариста и Петмол для бариста с опытом работы до 3 лет. Участники выступают перед судьями, получают соревновательный опыт и борются за призы от школы и партнёров.',
+      url: 'https://baristaschool.ru/latte_art_battle',
+      image: 'https://static.tildacdn.com/tild3139-6138-4461-a238-303466366633/IMG_9096.PNG',
+      startDate: '2026-07-02T10:00:00+03:00',
+      endDate: '2026-07-02T13:00:00+03:00',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      location: {
+        '@type': 'Place',
+        name: 'CafeStore',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Новодмитровская ул., 2, корп. 1',
+          addressLocality: 'Москва',
+          addressCountry: 'RU'
+        }
+      },
+      organizer: {
+        '@type': 'Organization',
+        name: 'Московская школа бариста',
+        url: 'https://baristaschool.ru'
+      },
+      offers: {
+        '@type': 'Offer',
+        url: 'https://baristaschool.ru/latte_art_battle',
+        price: '3000',
+        priceCurrency: 'RUB',
+        availability: 'https://schema.org/InStock',
+        validFrom: '2026-06-07T00:00:00+03:00'
+      }
+    };
+
+    function removeOldCourseSchema() {
+      Array.prototype.slice.call(document.querySelectorAll('script[type="application/ld+json"]')).forEach(function (script) {
+        if (/Продвинутый курс/.test(script.textContent || '')) {
+          script.parentNode.removeChild(script);
+        }
+      });
+    }
+
+    function addEventSchemaToHead() {
+      if (document.querySelector('script[data-mbs-latte-battle-event-schema]')) return;
+      var script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-mbs-latte-battle-event-schema', 'true');
+      script.text = JSON.stringify(eventSchema);
+      document.head.appendChild(script);
+    }
+
+    removeOldCourseSchema();
+    addEventSchemaToHead();
+
+    if (window.location.hostname !== 'api.barista-school.ru') return;
+    var robotsMeta = document.createElement('meta');
+    robotsMeta.name = 'robots';
+    robotsMeta.content = 'noindex,follow';
+    document.head.appendChild(robotsMeta);
+
+    var canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = 'https://baristaschool.ru/latte_art_battle';
+    document.head.appendChild(canonicalLink);
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве",
+  "description": "Чемпионат по латте-арту от Московской школы бариста и Петмол для бариста с опытом работы до 3 лет. Участники выступают перед судьями, получают соревновательный опыт и борются за призы от школы и партнёров.",
+  "url": "https://baristaschool.ru/latte_art_battle",
+  "image": "https://static.tildacdn.com/tild3139-6138-4461-a238-303466366633/IMG_9096.PNG",
+  "startDate": "2026-07-02T10:00:00+03:00",
+  "endDate": "2026-07-02T13:00:00+03:00",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "Place",
+    "name": "CafeStore",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Новодмитровская ул., 2, корп. 1",
+      "addressLocality": "Москва",
+      "addressCountry": "RU"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "Московская школа бариста",
+    "url": "https://baristaschool.ru"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://baristaschool.ru/latte_art_battle",
+    "price": "3000",
+    "priceCurrency": "RUB",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-06-07T00:00:00+03:00"
+  }
+}
+</script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
 
@@ -2515,7 +2623,7 @@
       <div class="mbs-latte-battle-hero__grid">
         <div>
           <div class="mbs-latte-battle-hero__kicker" data-archive-hero-kicker>Чемпионат по латте-арту</div>
-          <h1>MBS* Latte-art x Петмол</h1>
+          <h1>MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве</h1>
           <p class="mbs-latte-battle-hero__lead" data-archive-hero-lead>Чемпионат для бариста с опытом до 3 лет: реальная соревновательная атмосфера, профессиональное судейство и возможность получить первый чемпионатный опыт.</p>
           <div class="mbs-latte-battle-hero__actions">
             <button class="mbs-latte-battle__btn js-mbs-latte-battle-open" type="button">Участвовать</button>
