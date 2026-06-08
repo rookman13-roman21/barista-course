@@ -259,6 +259,64 @@
       gap: 10px;
     }
 
+    .participation {
+      display: grid;
+      gap: 10px;
+    }
+
+    .asset-card {
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+      overflow: hidden;
+    }
+
+    .asset-card__media {
+      display: grid;
+      place-items: center;
+      min-height: 104px;
+      padding: 12px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid transparent;
+    }
+
+    .asset-card__media img {
+      display: block;
+      max-width: 100%;
+      max-height: 180px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .asset-card__media--wide img {
+      width: 100%;
+      max-height: none;
+    }
+
+    .asset-card__body {
+      display: grid;
+      gap: 6px;
+    }
+
+    .asset-card__body strong {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 950;
+    }
+
+    .asset-card__body span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 750;
+    }
+
     .participant {
       display: grid;
       grid-template-columns: 34px 1fr;
@@ -599,6 +657,22 @@
             '<div class="section__head"><h2>Что важно помнить</h2><p>Короткая версия правил перед днём чемпионата.</p></div>' +
             '<div class="card card--green"><h3>Для начинающих бариста</h3><p>Чемпионат создан для бариста с опытом до 3 лет, чтобы дать реальный соревновательный опыт в честной среде.</p></div>' +
             '<div class="card"><h3>Формат</h3>' + list(['Отборочный этап — 4 минуты.', 'Дальше проходят 16 участников.', 'Полуфинал — батл на вылет.', 'Финал — 6 минут и рисунок-задание.']) + '</div>' +
+            '<div class="section__head"><h2>На чём выступаем</h2><p>Основные материалы и механика оценки на чемпионате.</p></div>' +
+            '<div class="participation">' +
+              '<article class="asset-card">' +
+                '<div class="asset-card__media"><img src="https://static.tildacdn.com/tild3138-3663-4933-a539-376330613661/1.svg" alt="Петмол Barista" loading="lazy"></div>' +
+                '<div class="asset-card__body"><strong>Молоко</strong><span>Чемпионат проходит на молоке Петмол Barista.</span></div>' +
+              '</article>' +
+              '<article class="asset-card">' +
+                '<div class="asset-card__media"><img src="https://static.tildacdn.com/tild3633-3666-4432-b665-636534613936/2.svg" alt="mowe ТЕТТА 300H" loading="lazy"></div>' +
+                '<div class="asset-card__body"><strong>Чашки</strong><span>Чашки предоставляет компания mowe, серия ТЕТТА 300H.</span></div>' +
+              '</article>' +
+              '<article class="asset-card">' +
+                '<div class="asset-card__media asset-card__media--wide"><img src="https://static.tildacdn.com/tild6630-6365-4666-b830-393266633262/3.svg" alt="Карточки рисунков для чемпионата" loading="lazy"></div>' +
+                '<div class="asset-card__body"><strong>Карточки рисунков</strong><span>Первый этап — три верхние карточки, верхний ряд.</span></div>' +
+              '</article>' +
+            '</div>' +
+            '<div class="card"><h3>Как оцениваем</h3>' + list(['Система оценки — балльная, с оценочными листами.', 'Каждый участник получит обратную связь и сможет понять, над чем стоит работать.', 'Во второй этап проходят 16 участников с наибольшим количеством баллов.']) + '</div>' +
           '</section>';
       }
 
@@ -655,13 +729,18 @@
       }
 
       function renderFaq(content) {
+        var experienceFaq = {
+          q: 'Кто может участвовать в чемпионате?',
+          a: 'Напоминаем, что чемпионат создан для бариста с опытом работы до 3 лет включительно.\n\nНам важно сохранить равные условия для всех участников, поэтому просим честно указывать свой опыт при регистрации.\n\nЕсли до начала чемпионата выяснится, что опыт работы превышает установленное ограничение, мы не сможем допустить участника к соревнованию, а вступительный взнос в этом случае не возвращается.\n\nЕсли несоответствие будет выявлено уже после чемпионата, результаты участника будут аннулированы, а титул перейдёт следующему по рейтингу участнику.'
+        };
+        var items = [experienceFaq].concat(content.faq || []);
         return '<section class="section" data-section="faq">' +
           '<div class="section__head"><h2>FAQ</h2><p>Короткие ответы по участию в чемпионате.</p></div>' +
-          '<div class="faq">' + (content.faq || []).map(function (item) {
+          '<div class="faq">' + items.map(function (item) {
             var mapLink = /где проходит/i.test(String(item.q || ''))
               ? '<a class="faq__link" href="https://yandex.ru/maps/-/CPTXJM8V" target="_blank" rel="noopener">Открыть карту</a>'
               : '';
-            return '<details><summary>' + esc(item.q) + '</summary><p>' + esc(item.a) + '</p>' + mapLink + '</details>';
+            return '<details><summary>' + esc(item.q) + '</summary><p>' + textWithBreaks(item.a) + '</p>' + mapLink + '</details>';
           }).join('') + '</div>' +
         '</section>';
       }

@@ -1,0 +1,236 @@
+<!-- ============================================================
+   TILDA BLOCK 04 — PRICING
+   Стоимость: 2 карточки + CTA
+   ============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  /* ─── PRICING ─── */
+  .mbs-hb-price {
+    font-family: 'Mulish', sans-serif;
+    background: #E7F2E3;
+    padding: 64px 20px;
+  }
+  .mbs-hb-price * { box-sizing: border-box; }
+  .mbs-hb-price__wrap { max-width: 900px; margin: 0 auto; }
+  .mbs-hb-price__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 12px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.9);
+    color: #417033;
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-hb-price__title {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: #1F1F1F;
+    margin-bottom: 6px;
+  }
+  .mbs-hb-price__sub {
+    font-size: 15px;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 28px;
+  }
+  .mbs-hb-price__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .mbs-hb-price__card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: box-shadow 0.2s;
+  }
+  .mbs-hb-price__card:hover {
+    box-shadow: 0 8px 32px rgba(31,31,31,0.08);
+  }
+  .mbs-hb-price__card--popular {
+    position: relative;
+    border: 2px solid #417033;
+  }
+  .mbs-hb-price__badge {
+    position: absolute;
+    top: -11px;
+    left: 20px;
+    padding: 3px 12px;
+    border-radius: 999px;
+    background: #417033;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+  }
+  .mbs-hb-price__card-icon { display: none; }
+  .mbs-hb-price__card-left {
+    flex: 1;
+    min-width: 0;
+  }
+  .mbs-hb-price__card-name {
+    font-size: 16px;
+    font-weight: 900;
+    color: #1F1F1F;
+    margin-bottom: 2px;
+  }
+  .mbs-hb-price__card-desc {
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    line-height: 1.4;
+    margin-bottom: 0;
+  }
+  .mbs-hb-price__card-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .mbs-hb-price__amount {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #1F1F1F;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .mbs-hb-price__amount sup {
+    font-size: 14px;
+    font-weight: 700;
+    vertical-align: super;
+    letter-spacing: 0;
+  }
+  .mbs-hb-price__amount-note {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    white-space: nowrap;
+  }
+  .mbs-hb-price__saving {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #E7F2E3;
+    color: #417033;
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 4px;
+  }
+  .mbs-hb-price__card-features { display: none; }
+  .mbs-hb-price__divider { display: none; }
+  .mbs-hb-price__features { display: none; }
+  .mbs-hb-price__cta-wrap {
+    background: #fff;
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .mbs-hb-price__cta-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    line-height: 1.4;
+  }
+  .mbs-hb-price__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 28px;
+    border-radius: 999px;
+    background: #CC2841;
+    color: #fff !important;
+    text-decoration: none !important;
+    font-family: 'Mulish', sans-serif;
+    font-size: 15px;
+    font-weight: 900;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .mbs-hb-price__btn:hover { background: #D83D54; transform: translateY(-1px); }
+  .mbs-hb-price__note {
+    margin-top: 14px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    line-height: 1.5;
+  }
+  .mbs-hb-price__note a { color: #417033; text-decoration: underline; }
+  @media (max-width: 820px) {
+    .mbs-hb-price { padding: 48px 14px; }
+    .mbs-hb-price__title { font-size: 24px; }
+    .mbs-hb-price__card { padding: 16px 16px; gap: 12px; }
+    .mbs-hb-price__amount { font-size: 24px; }
+    .mbs-hb-price__cta-wrap { flex-direction: column; align-items: stretch; }
+    .mbs-hb-price__btn { width: 100%; justify-content: center; }
+  }
+</style>
+
+<section class="mbs-hb-price" id="price">
+  <div class="mbs-hb-price__wrap">
+    <div class="mbs-hb-price__label">
+      <i class="ph ph-tag"></i>
+      Стоимость
+    </div>
+    <h2 class="mbs-hb-price__title">Стоимость курса «Бариста любитель»</h2>
+    <p class="mbs-hb-price__sub">Одно занятие — 3 часа практики, профессиональное оборудование, зерно и работа с тренером включены.</p>
+    <div class="mbs-hb-price__grid">
+
+      <div class="mbs-hb-price__card">
+        <div class="mbs-hb-price__card-left">
+          <div class="mbs-hb-price__card-name">Один участник</div>
+          <div class="mbs-hb-price__card-desc">Индивидуальный формат для знакомства с профессией</div>
+        </div>
+        <div class="mbs-hb-price__card-right">
+          <div class="mbs-hb-price__amount"><sup>₽</sup>10 000</div>
+          <div class="mbs-hb-price__amount-note">1 день · 3 часа</div>
+        </div>
+      </div>
+
+      <div class="mbs-hb-price__card mbs-hb-price__card--popular">
+        <div class="mbs-hb-price__badge">Выгоднее</div>
+        <div class="mbs-hb-price__card-left">
+          <div class="mbs-hb-price__card-name">Двое участников</div>
+          <div class="mbs-hb-price__card-desc">Приходите с другом или партнёром — учитесь вместе и экономьте</div>
+          <div class="mbs-hb-price__saving"><i class="ph ph-confetti"></i>Скидка 6 000 ₽ — вместо 20 000 ₽</div>
+        </div>
+        <div class="mbs-hb-price__card-right">
+          <div class="mbs-hb-price__amount"><sup>₽</sup>14 000</div>
+          <div class="mbs-hb-price__amount-note">за двоих · 7 000 ₽/чел</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mbs-hb-price__cta-wrap">
+      <div class="mbs-hb-price__cta-text">Хотите прийти вдвоём? Нажмите «Записаться онлайн» и выберите подходящий формат участия.</div>
+      <a href="https://n1964448.yclients.com" target="_blank" rel="noopener noreferrer" class="mbs-hb-price__btn js-mbs-hb-booking-modal">
+        <i class="ph ph-calendar-check"></i>
+        Записаться онлайн
+      </a>
+    </div>
+  </div>
+</section>

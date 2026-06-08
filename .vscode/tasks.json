@@ -2,9 +2,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "deploy-barista-prod",
+			"label": "git-push-home-barista",
 			"type": "shell",
-			"command": "bash /tmp/deploy-barista.sh"
+			"command": "bash /tmp/git_hb_push.sh 2>&1"
 		}
 	]
 }

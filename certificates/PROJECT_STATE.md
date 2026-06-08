@@ -1,4 +1,4 @@
-# База знаний: Страница подарочных сертификатов МШБ
+# База знаний: Страница подарочных сертификатов MBS
 
 > Файл для быстрого погружения в контекст проекта при продолжении работы.
 
@@ -11,9 +11,8 @@
 | Параметр | Значение |
 |---|---|
 | **Продакшн URL** | `https://baristaschool.ru/sertifikat` |
-| **Preview URL** | `https://certificates-gilt.vercel.app` |
 | **Платформа** | Tilda — каждый блок вставляется как отдельный HTML-блок (Zero Block / T123) |
-| **Деплой** | Vercel CLI: `run_task: shell: deploy-barista-prod` |
+| **Деплой** | Вставка блоков в Tilda Zero Block; превью — VS Code Live Preview |
 | **Локальная папка** | `/Users/romansuslin_1/Downloads/All_Code/barista-course/certificates/` |
 | **Бэкенд API** | `server.js` на `root@159.194.202.120`, порт 3010, PM2 (`yclients-dashboard`) |
 | **Конфиг категорий** | `/opt/yclients-dashboard/data/cert-categories.json` (без деплоя кода) |
@@ -25,7 +24,7 @@
 ```
 certificates/
 ├── index.html                    ← standalone-версия (не в Tilda, для превью)
-├── vercel.json                   ← конфиг Vercel (публикует index.html)
+├── vercel.json                   ← конфиг маршрутизации (cleanUrls/trailingSlash)
 └── tilda-blocks/
     ├── block-00-seo.html         ← вставляется в <head> страницы Tilda
     ├── block-01-hero.html        ← Hero-секция + подключение шрифтов/иконок
@@ -344,7 +343,29 @@ scp -i $HOME/.ssh/copilot_beget_temp/id_ed25519 \
 
 ---
 
-## 12. Часто встречающиеся ошибки
+## 12. Известные ограничения
+
+### 12.1 Изображения сертификатов не загружаются из YClients API
+
+**Статус:** ❌ Не решено (май 2026)
+
+**Симптом:** В карточках каталога и в модальном окне изображение не отображается — блок скрывается (`display: none`).
+
+**Причина:** YClients Partner API (`/api/v1/company/{id}/loyalty/certificate_types/search`) **не возвращает поле с изображением** в принципе. Полный список полей ответа:
+`id, title, company_id, loyalty_group_id, category_id, weight, item_type_id, expiration_type_id, expiration_date, expiration_timeout, expiration_timeout_unit_id, balance_edit_type_id, is_allow_empty_code, is_serial_number_limited, is_archived, date_archived, online_sale_is_enabled, online_sale_title, online_sale_description, online_sale_price, item_type`
+
+Поля `image`, `image_link`, `photo`, `logo` и аналогичные **отсутствуют**. В `online_sale_description` (HTML) тоже нет `<img>` тегов (проверено на всех 34 типах). Изображения видны в YClients admin и в публичном виджете `o3059.yclients.com` — но там JS SPA, который загружает их через внутренний (непубличный) API.
+
+**Где в коде:** `server.js`, строка ~721: `image: c.image || c.image_link || null` → всегда `null`. В `block-02-catalog.html` блок изображения скрывается при `data.image === null`.
+
+**Варианты решения (не реализованы):**
+1. Добавить `"defaultImage": "url"` в `cert-categories.json` → отображать иллюстрацию на категорию
+2. Создать файл `cert-images.json` с маппингом `typeId → imageUrl` — изображения загрузить вручную на хостинг
+3. Headless-парсинг публичного виджета YClients (Puppeteer) — сложно и хрупко
+
+---
+
+## 13. Часто встречающиеся ошибки
 
 | Симптом | Причина | Решение |
 |---|---|---|
@@ -359,4 +380,4 @@ scp -i $HOME/.ssh/copilot_beget_temp/id_ed25519 \
 
 ---
 
-*Версия: май 2026. Последнее обновление: категории сертификатов переведены на управление через `cert-categories.json` без деплоя кода.*
+*Версия: май 2026. Последнее обновление: задокументировано ограничение — изображения сертификатов недоступны через YClients Partner API.*

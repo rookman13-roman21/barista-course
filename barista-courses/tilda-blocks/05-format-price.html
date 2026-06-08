@@ -6,7 +6,7 @@
   .mbs-bc-price { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
   .mbs-bc-price * { box-sizing: border-box; }
   .mbs-bc-price__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: stretch; }
-  .mbs-bc-price__info { padding: 36px; border-radius: 24px; background: #F5F5F5; }
+  .mbs-bc-price__info { display: flex; flex-direction: column; padding: 36px; border-radius: 24px; background: #F5F5F5; }
   .mbs-bc-price__info .mbs-bc-sub { margin-bottom: 28px; }
   .mbs-bc-price__facts { display: grid; gap: 10px; }
   .mbs-bc-price__fact { padding: 16px 18px; border-radius: 16px; background: #fff; color: #1F1F1F; font-size: 15px; font-weight: 800; line-height: 1.35; }
@@ -19,7 +19,7 @@
   .mbs-bc-price__list { margin: 0 0 26px; padding: 0; list-style: none; display: grid; gap: 10px; }
   .mbs-bc-price__list li { color: #1F1F1F; font-size: 14px; font-weight: 700; line-height: 1.35; }
   .mbs-bc-price__list li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #4F883E; vertical-align: 2px; }
-  .mbs-bc-price__actions { display: grid; gap: 10px; margin-top: auto; }
+  .mbs-bc-price__actions { display: grid; gap: 10px; margin-top: auto; padding-top: 22px; }
   .mbs-bc-price .mbs-bc-btn.mbs-bc-btn--primary,
   .mbs-bc-price .mbs-bc-btn.mbs-bc-btn--primary * {
     color: #fff !important;
@@ -46,8 +46,10 @@
       <p class="mbs-bc-sub">После заявки менеджер поможет подобрать удобный график и объяснит, как внести предоплату для бронирования места.</p>
       <div class="mbs-bc-price__facts">
         <div class="mbs-bc-price__fact">3 дня по 3 часа или 1 день за 9 часов</div>
-        <div class="mbs-bc-price__fact">Предоплата для бронирования — 5 000 ₽</div>
-        <div class="mbs-bc-price__fact">Остальная оплата — после первого занятия</div>
+      </div>
+      <div class="mbs-bc-price__actions">
+        <a class="mbs-bc-btn mbs-bc-btn--primary mbs-bc-online-open" href="#online-booking">Онлайн запись</a>
+        <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#consalt">Оставить заявку</a>
       </div>
     </div>
     <div class="mbs-bc-price__cards">
@@ -60,10 +62,6 @@
           <li>Профессиональное оборудование</li>
           <li>Все продукты входят в стоимость</li>
         </ul>
-        <div class="mbs-bc-price__actions">
-          <a class="mbs-bc-btn mbs-bc-btn--primary mbs-bc-online-open" href="#online-booking">Онлайн запись</a>
-          <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#consalt">Оставить заявку</a>
-        </div>
       </article>
       <article class="mbs-bc-price__card mbs-bc-price__card--accent">
         <h3>Два участника</h3>
@@ -74,10 +72,6 @@
           <li>Экономия 14 000 ₽ на двоих</li>
           <li>Одинаковая программа и практика</li>
         </ul>
-        <div class="mbs-bc-price__actions">
-          <a class="mbs-bc-btn mbs-bc-btn--primary mbs-bc-online-open" href="#online-booking">Онлайн запись</a>
-          <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#consalt">Оставить заявку</a>
-        </div>
       </article>
     </div>
   </div>

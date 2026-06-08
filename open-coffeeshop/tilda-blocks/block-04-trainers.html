@@ -1,0 +1,75 @@
+<!-- ============================================================
+     БЛОК 04 — ВЕДУЩИЕ КУРСА
+     Страница: Курс по открытию кофейни с нуля
+     ──────────────────────────────────────────
+     Содержание: 2 карточки экспертов — фото, имя, должность,
+                 список достижений/компетенций.
+     Фон: #fff
+     Классы: .mbs-trainers, .mbs-trainers__card
+     ============================================================ -->
+<section class="mbs-trainers">
+  <style>
+    .mbs-trainers { background: #fff; padding: 56px 20px; font-family: 'Mulish', sans-serif; }
+    .mbs-trainers__wrap { max-width: 1100px; margin: 0 auto; }
+    .mbs-trainers__top { margin-bottom: 20px; }
+    .mbs-trainers__top-row { display: flex; align-items: baseline; gap: 20px; flex-wrap: wrap; margin-bottom: 6px; }
+    .mbs-trainers__label {
+      display: inline-flex; align-items: center;
+      padding: 7px 16px; border-radius: 999px;
+      background: rgba(231,242,227,0.95); color: #417033; font-size: 13px; font-weight: 900; line-height: 1;
+    }
+    .mbs-trainers__h2 { font-size: 24px; font-weight: 900; line-height: 1; letter-spacing: -0.03em; color: #1F1F1F; margin: 0; }
+    .mbs-trainers__sub { font-size: 15px; font-weight: 500; color: #555; margin: 0; }
+    .mbs-trainers__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .mbs-trainers__card {
+      background: #F5F5F5; border-radius: 20px; overflow: hidden;
+      display: grid; grid-template-columns: 140px 1fr; align-items: stretch;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .mbs-trainers__card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+    }
+    .mbs-trainers__photo {
+      width: 140px; height: 100%; object-fit: cover; object-position: top center;
+      display: block; background: #E7F2E3;
+    }
+    .mbs-trainers__info { padding: 20px 22px; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+    .mbs-trainers__name { font-size: 17px; font-weight: 900; color: #1F1F1F; margin: 0; }
+    .mbs-trainers__role { font-size: 12px; font-weight: 700; color: #417033; margin: 0; }
+    .mbs-trainers__text { font-size: 13px; font-weight: 500; color: #555555; line-height: 1.5; margin: 4px 0 0; }
+    @media (max-width: 820px) {
+      .mbs-trainers { padding: 48px 14px; }
+      .mbs-trainers__h2 { font-size: 20px; }
+      .mbs-trainers__grid { grid-template-columns: 1fr; }
+      .mbs-trainers__card { grid-template-columns: 110px 1fr; }
+      .mbs-trainers__photo { width: 110px; }
+    }
+  </style>
+  <div class="mbs-trainers__wrap">
+    <div class="mbs-trainers__top">
+      <div class="mbs-trainers__top-row">
+        <div class="mbs-trainers__label">Ведущие курса</div>
+        <h2 class="mbs-trainers__h2">Реальный опыт запуска десятков проектов</h2>
+      </div>
+    </div>
+    <div class="mbs-trainers__grid">
+      <div class="mbs-trainers__card">
+        <img src="https://static.tildacdn.com/tild6135-3836-4036-b761-373439313833/_1.jpg" alt="Роман Суслин" class="mbs-trainers__photo" onerror="this.style.background='#E7F2E3'">
+        <div class="mbs-trainers__info">
+          <p class="mbs-trainers__name">Роман Суслин</p>
+          <p class="mbs-trainers__role">Основатель и руководитель MBS*</p>
+          <p class="mbs-trainers__text">15+ лет в ресторанном бизнесе. Бариста «Кофемании», тренер бариста, экс-основатель двух кофейных проектов. Помог запустить десятки кофеен по всей России.</p>
+        </div>
+      </div>
+      <div class="mbs-trainers__card">
+        <img src="https://static.tildacdn.com/tild6335-6666-4962-b034-343566326138/_1.jpg" alt="Анастасия Кадушкина" class="mbs-trainers__photo" onerror="this.style.background='#E7F2E3'">
+        <div class="mbs-trainers__info">
+          <p class="mbs-trainers__name">Анастасия Кадушкина</p>
+          <p class="mbs-trainers__role">Управляющая MBS*</p>
+          <p class="mbs-trainers__text">10+ лет в ресторанном бизнесе. Бывший бариста Drinkit, экс-управляющая холдинга Dolce, запускала обжарочное производство. Судья чемпионатов бариста.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

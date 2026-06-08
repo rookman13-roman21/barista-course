@@ -1,0 +1,227 @@
+<!-- ============================================================
+   TILDA BLOCK 03 — PROGRAMME
+   «Что вы изучите за 3 часа» — 10 тем, аккордеон на мобайле
+   ============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  /* ─── PROGRAMME ─── */
+  .mbs-hb-prog {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 90px 20px;
+  }
+  .mbs-hb-prog * { box-sizing: border-box; }
+  .mbs-hb-prog__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-hb-prog__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 14px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(231,242,227,0.95); color: #417033;
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-hb-prog__header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap; margin-bottom: 44px;
+  }
+  .mbs-hb-prog__title { font-size: 34px; font-weight: 900; letter-spacing: -0.04em; color: #1F1F1F; }
+  .mbs-hb-prog__note {
+    font-size: 14px; font-weight: 600; color: #888;
+    padding: 10px 18px; background: #F5F5F5; border-radius: 999px; white-space: nowrap;
+  }
+  .mbs-hb-prog__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mbs-hb-prog__item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 22px 24px; background: #F5F5F5; border-radius: 18px;
+    cursor: default; user-select: none;
+    transition: background .2s, box-shadow .2s;
+  }
+  .mbs-hb-prog__item:hover { background: #EDF7E8; box-shadow: 0 4px 20px rgba(65,112,51,.08); }
+  .mbs-hb-prog__idx {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: #E7F2E3; color: #417033;
+    font-size: 14px; font-weight: 900; display: grid; place-items: center; flex-shrink: 0;
+  }
+  .mbs-hb-prog__item-body { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+  .mbs-hb-prog__item-title { font-size: 15px; font-weight: 800; color: #1F1F1F; line-height: 1.3; }
+  .mbs-hb-prog__item-desc  { font-size: 13px; font-weight: 500; color: #666; line-height: 1.5; }
+  .mbs-hb-prog__chevron { display: none; }
+
+  /* Mobile: accordion */
+  @media (max-width: 820px) {
+    .mbs-hb-prog { padding: 64px 14px; }
+    .mbs-hb-prog__title { font-size: 26px; }
+    .mbs-hb-prog__header { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .mbs-hb-prog__grid {
+      display: flex; flex-direction: column; gap: 0;
+      border: 1.5px solid #E8E8E8; border-radius: 18px; overflow: hidden;
+    }
+    .mbs-hb-prog__item {
+      align-items: center; padding: 16px 18px;
+      background: #fff; border-radius: 0;
+      border-bottom: 1.5px solid #E8E8E8; cursor: pointer;
+    }
+    .mbs-hb-prog__item:last-child { border-bottom: none; }
+    .mbs-hb-prog__item:hover { background: #FAFAFA; box-shadow: none; }
+    .mbs-hb-prog__item.is-open { background: #F7FBF5; }
+    .mbs-hb-prog__item-desc {
+      max-height: 0; overflow: hidden; opacity: 0; margin-top: 0;
+      transition: max-height .3s ease, opacity .25s ease, margin-top .25s ease;
+    }
+    .mbs-hb-prog__item.is-open .mbs-hb-prog__item-desc {
+      max-height: 200px; opacity: 1; margin-top: 5px;
+    }
+    .mbs-hb-prog__chevron {
+      display: grid; flex-shrink: 0; width: 28px; height: 28px;
+      border-radius: 50%; background: #F0F0F0; place-items: center;
+      transition: background .15s, transform .25s;
+    }
+    .mbs-hb-prog__chevron i { font-size: 14px; color: #888; }
+    .mbs-hb-prog__item.is-open .mbs-hb-prog__chevron { background: #E7F2E3; transform: rotate(180deg); }
+    .mbs-hb-prog__item.is-open .mbs-hb-prog__chevron i { color: #417033; }
+  }
+
+  .mbs-hb-prog__cta {
+    margin-top: 32px; padding: 26px 32px; background: #E7F2E3; border-radius: 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  }
+  .mbs-hb-prog__cta-text {
+    font-size: 16px; font-weight: 700; color: #1F1F1F; line-height: 1.4; max-width: 500px;
+  }
+  .mbs-hb-prog__cta-text span { color: #417033; }
+  .mbs-hb-prog__cta-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 26px; border-radius: 999px;
+    background: #CC2841; color: #fff !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 15px; font-weight: 900;
+    white-space: nowrap; transition: background .2s, transform .15s;
+  }
+  .mbs-hb-prog__cta-btn:hover { background: #D83D54; transform: translateY(-1px); }
+</style>
+
+<section class="mbs-hb-prog" id="programme">
+  <div class="mbs-hb-prog__wrap">
+    <div class="mbs-hb-prog__label">
+      <i class="ph ph-list-bullets"></i>
+      Программа
+    </div>
+    <div class="mbs-hb-prog__header">
+      <h2 class="mbs-hb-prog__title">Что вы успеете за 3 часа</h2>
+      <span class="mbs-hb-prog__note">10 тем · 1 занятие · Индивидуально</span>
+    </div>
+    <div class="mbs-hb-prog__grid">
+      <div class="mbs-hb-prog__item is-open">
+        <div class="mbs-hb-prog__idx">1</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Познакомиться с профессией бариста</div>
+          <p class="mbs-hb-prog__item-desc">Разберёте, как устроена работа за стойкой, какие задачи делает бариста и какие навыки важны в реальной кофейне.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">2</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Разобраться в оборудовании</div>
+          <p class="mbs-hb-prog__item-desc">Поймёте, как работает профессиональная кофемашина, кофемолка и рабочее место бариста.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">3</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Настроить помол и дозировку</div>
+          <p class="mbs-hb-prog__item-desc">Увидите, как помол, граммовка и время влияют на вкус эспрессо.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">4</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Приготовить эспрессо</div>
+          <p class="mbs-hb-prog__item-desc">Под руководством тренера приготовите свои первые шоты и разберёте, почему один получается вкуснее другого.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">5</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Взбить молоко</div>
+          <p class="mbs-hb-prog__item-desc">Потренируетесь делать правильную текстуру молока для капучино без крупных пузырей и перегрева.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">6</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Собрать капучино</div>
+          <p class="mbs-hb-prog__item-desc">Сделаете напиток на основе эспрессо и молока, сравните баланс вкуса, текстуру и подачу.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">7</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Разобрать типичные ошибки</div>
+          <p class="mbs-hb-prog__item-desc">Поймёте, что чаще всего мешает новичку: помол, темп работы, молоко, чистота и организация места.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">8</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Попробовать напитки и сравнить вкус</div>
+          <p class="mbs-hb-prog__item-desc">Сравните результат в чашке и научитесь замечать, что именно меняет вкус кофе.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">9</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Понять следующий шаг</div>
+          <p class="mbs-hb-prog__item-desc">После занятия будет проще решить, нужен ли вам полноценный базовый или продвинутый курс.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+      <div class="mbs-hb-prog__item">
+        <div class="mbs-hb-prog__idx">10</div>
+        <div class="mbs-hb-prog__item-body">
+          <div class="mbs-hb-prog__item-title">Получить ответы на вопросы</div>
+          <p class="mbs-hb-prog__item-desc">Тренер подстроит занятие под ваш уровень и объяснит то, что важно именно вам.</p>
+        </div>
+        <div class="mbs-hb-prog__chevron"><i class="ph ph-caret-down"></i></div>
+      </div>
+    </div>
+    <div class="mbs-hb-prog__cta">
+      <div class="mbs-hb-prog__cta-text">
+        За 3 часа <span>вы попробуете профессию руками</span> — без долгого обучения и лишней теории.
+      </div>
+      <a href="https://n1964448.yclients.com"
+         target="_blank" rel="noopener noreferrer" class="mbs-hb-prog__cta-btn js-mbs-hb-booking-modal">
+        <i class="ph ph-calendar-check"></i>
+        Записаться на курс
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    document.querySelectorAll('.mbs-hb-prog__item').forEach(function (item) {
+      item.addEventListener('click', function () {
+        if (window.innerWidth > 820) return;
+        var isOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.mbs-hb-prog__item').forEach(function (i) {
+          i.classList.remove('is-open');
+        });
+        if (!isOpen) item.classList.add('is-open');
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,596 @@
+<!-- ════════════════════════════════════════════════════════
+     БЛОК 2 — КАТАЛОГ СЕРТИФИКАТОВ + МОДАЛЬНОЕ ОКНО
+     Вставить в Tilda как HTML-блок (Zero Block или T123)
+     ВАЖНО: block-01-hero.html должен идти выше на странице
+            (шрифты и иконки уже подключены там)
+════════════════════════════════════════════════════════ -->
+<link rel="dns-prefetch" href="https://159-194-202-120.sslip.io">
+<link rel="preconnect" href="https://159-194-202-120.sslip.io" crossorigin>
+<style>
+  :root {
+    --mbs-green-dark: #417033;
+    --mbs-green:      #4F883E;
+    --mbs-green-light:#B6D8AB;
+    --mbs-bg-green:   #E7F2E3;
+    --mbs-red:        #CC2841;
+    --mbs-red-soft:   #D83D54;
+    --mbs-bg:         #F5F5F5;
+    --mbs-black:      #1F1F1F;
+    --mbs-gray:       #555555;
+    --mbs-white:      #FFFFFF;
+  }
+
+  .mbs-cert-cat {
+    background: var(--mbs-bg);
+    padding: 80px 20px;
+    font-family: 'Mulish', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mbs-cert-cat * { box-sizing: border-box; }
+  .mbs-cert-cat__inner { max-width: 1100px; margin: 0 auto; }
+  .mbs-cert-cat__header { text-align: left; margin-bottom: 60px; }
+  .mbs-cert-cat__label {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 14px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(231,242,227,.95); color: var(--mbs-green-dark);
+    font-size: 13px; font-weight: 900; line-height: 1;
+  }
+  .mbs-cert-cat__title {
+    font-size: 34px; font-weight: 900; line-height: 1;
+    letter-spacing: -0.04em; color: var(--mbs-black); margin-bottom: 10px;
+  }
+  .mbs-cert-cat__subtitle { font-size: 16px; font-weight: 500; color: var(--mbs-gray); }
+
+  .mbs-cert-cat__tabs {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px; justify-content: flex-start;
+  }
+  .mbs-cert-cat__tab {
+    padding: 9px 20px; border-radius: 999px;
+    border: 2px solid var(--mbs-green-light);
+    background: var(--mbs-white); color: var(--mbs-gray);
+    font-family: 'Mulish', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all .2s;
+  }
+  .mbs-cert-cat__tab:hover, .mbs-cert-cat__tab.active {
+    background: var(--mbs-green-dark); border-color: var(--mbs-green-dark); color: #fff;
+  }
+  .mbs-cert-cat__cat-desc {
+    margin: 4px 0 28px; font-size: 15px; font-weight: 500;
+    color: var(--mbs-gray); line-height: 1.5; min-height: 24px;
+  }
+  .mbs-cert-cat__section { display: none; }
+  .mbs-cert-cat__section.active { display: block; }
+  .mbs-cert-cat__section-title {
+    font-size: 22px; font-weight: 900; letter-spacing: -0.03em;
+    color: var(--mbs-black); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .mbs-cert-cat__count-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--mbs-bg-green); color: var(--mbs-green-dark);
+    font-size: 13px; font-weight: 800; border-radius: 999px; padding: 4px 12px;
+  }
+  .mbs-cert-cat__grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+
+  .mbs-cert-card {
+    background: var(--mbs-white); border-radius: 20px; padding: 28px 24px 24px;
+    display: flex; flex-direction: column; gap: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    transition: transform .2s, box-shadow .2s;
+    position: relative; overflow: hidden; cursor: pointer;
+  }
+  .mbs-cert-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--mbs-green-dark), var(--mbs-green));
+  }
+  .mbs-cert-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+  .mbs-cert-card__name { font-size: 16px; font-weight: 800; line-height: 1.3; color: var(--mbs-black); margin-bottom: 16px; flex: 1; }
+  .mbs-cert-card__price { font-size: 30px; font-weight: 900; letter-spacing: -0.04em; color: var(--mbs-green-dark); margin-bottom: 12px; line-height: 1; }
+  .mbs-cert-card__price sub { font-size: 16px; font-weight: 600; color: var(--mbs-gray); vertical-align: baseline; }
+  .mbs-cert-card__footer {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-top: auto;
+  }
+  .mbs-cert-card__btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 9px 16px; border-radius: 999px; background: var(--mbs-red);
+    color: #fff !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 13px; font-weight: 900;
+    white-space: nowrap; flex-shrink: 0;
+    transition: background .2s, transform .15s;
+  }
+  .mbs-cert-card__btn:hover { background: var(--mbs-red-soft); transform: translateY(-1px); }
+  .mbs-cert-card__duo-hint {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 700; color: var(--mbs-green-dark); margin-bottom: 6px;
+  }
+  .mbs-cert-card__duo-save {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 800; color: var(--mbs-red); margin-bottom: 10px;
+  }
+  .mbs-cert-card__duo-badge {
+    display: inline-block; background: rgba(196,30,58,.1); color: var(--mbs-red);
+    font-size: 12px; font-weight: 800; border-radius: 6px; padding: 2px 8px;
+  }
+
+  .mbs-cert-skeleton { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .mbs-cert-skeleton__card {
+    background: var(--mbs-white); border-radius: 20px; padding: 28px 24px 24px;
+    height: 240px; position: relative; overflow: hidden;
+  }
+  .mbs-cert-skeleton__card::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.7) 50%, transparent 100%);
+    background-size: 200% 100%; animation: skel-shimmer 1.4s infinite;
+  }
+  .mbs-cert-skeleton__line { background: #e0e0e0; border-radius: 8px; margin-bottom: 12px; }
+  @keyframes skel-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Modal — стили заданы инлайн через JS (createModalDOM),
+     чтобы Tilda не перебивал их через animate-on-scroll.
+     Эти CSS-правила для внутренних элементов бокса. */
+  .mbs-modal__header {
+    padding: 20px 24px 16px; border-bottom: 1px solid #f0ede8;
+    display: flex; align-items: flex-start; gap: 12px;
+    position: sticky; top: 0; background: #fff; z-index: 1;
+  }
+  .mbs-modal__title { flex: 1; font-size: 18px; font-weight: 900; line-height: 1.3; color: #1f1f1f; letter-spacing: -0.02em; font-family: 'Mulish', sans-serif; }
+  .mbs-modal__close {
+    width: 32px; height: 32px; border-radius: 50%; border: none;
+    background: #f0ede8; cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; color: #666; transition: background .15s; line-height: 1;
+  }
+  .mbs-modal__close:hover { background: #e0ddd8; color: #111; }
+
+  .mbs-cert-error { text-align: center; padding: 48px 20px; color: var(--mbs-gray); }
+  .mbs-cert-error i { font-size: 48px; color: var(--mbs-green-light); display: block; margin-bottom: 16px; }
+  .mbs-cert-error__title { font-size: 18px; font-weight: 800; color: var(--mbs-black); margin-bottom: 8px; }
+  .mbs-cert-error__link { color: var(--mbs-green-dark); font-weight: 700; text-decoration: underline; }
+
+  @media (max-width: 1024px) {
+    .mbs-cert-cat__grid { grid-template-columns: repeat(2, 1fr); }
+    .mbs-cert-skeleton { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 820px) {
+    .mbs-cert-cat { padding: 56px 16px; }
+    .mbs-cert-cat__title { font-size: 26px; }
+  }
+  @media (max-width: 540px) {
+    .mbs-cert-cat__grid { grid-template-columns: 1fr; }
+    .mbs-cert-skeleton { grid-template-columns: 1fr; }
+    .mbs-cert-cat__tab { padding: 7px 14px; font-size: 12px; }
+  }
+</style>
+
+<section class="mbs-cert-cat" id="certificates">
+  <div class="mbs-cert-cat__inner">
+    <div class="mbs-cert-cat__header">
+      <div class="mbs-cert-cat__label">
+        <i class="ph ph-list"></i>
+        Каталог
+      </div>
+      <h2 class="mbs-cert-cat__title">Все сертификаты</h2>
+      <p class="mbs-cert-cat__subtitle">Выберите категорию и нажмите «Подробнее»</p>
+    </div>
+    <div class="mbs-cert-cat__tabs" id="js-cert-tabs"></div>
+    <p class="mbs-cert-cat__cat-desc" id="js-cat-desc"></p>
+    <div id="js-cert-content">
+      <div class="mbs-cert-skeleton" id="js-cert-skeleton">
+        <div class="mbs-cert-skeleton__card">
+          <div class="mbs-cert-skeleton__line" style="height:14px;width:60%;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:20px;width:80%;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:36px;width:45%;margin-top:8px;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:46px;width:100%;margin-top:24px;border-radius:999px;"></div>
+        </div>
+        <div class="mbs-cert-skeleton__card">
+          <div class="mbs-cert-skeleton__line" style="height:14px;width:50%;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:20px;width:90%;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:36px;width:40%;margin-top:8px;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:46px;width:100%;margin-top:24px;border-radius:999px;"></div>
+        </div>
+        <div class="mbs-cert-skeleton__card">
+          <div class="mbs-cert-skeleton__line" style="height:14px;width:70%;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:20px;width:85%;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:36px;width:50%;margin-top:8px;"></div>
+          <div class="mbs-cert-skeleton__line" style="height:46px;width:100%;margin-top:24px;border-radius:999px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Модалка создаётся через JS чтобы Tilda не мог сбросить её стили -->
+
+<script>
+(function () {
+  const API_URL = 'https://159-194-202-120.sslip.io/api/public/certificates';
+  const YCLIENTS_BUY_BASE = 'https://o3059.yclients.com/certificates/';
+
+  const tabsEl    = document.getElementById('js-cert-tabs');
+  const contentEl = document.getElementById('js-cert-content');
+
+  function formatPrice(n) {
+    if (!n || n === 0) return null;
+    return Number(n).toLocaleString('ru-RU') + '\u202f₽';
+  }
+
+  function cleanTitle(t) {
+    return t
+      .replace(/^Подарочный сертификат\s*[—\-]\s*Обучение\s*[—\-]\s*/i, '')
+      .replace(/^Подарочный сертификат\s*[—\-]\s*мастер-класс\s*\|\s*/i, '')
+      .replace(/^Подарочный сертификат\s*[—\-]\s*/i, '')
+      .trim();
+  }
+
+  const DUO_SUFFIXES = [
+    /\s+для\s+двоих$/i, /\s+2\s*участника$/i,
+    /\s+двух?\s+участников$/i, /\s+для\s+двух$/i,
+  ];
+  const SOLO_TRAILING = /\s+(?:кофе|tea|coffee|1\s*участника?|один\s*участник)$/i;
+
+  function stripDuoSuffix(title) {
+    for (const re of DUO_SUFFIXES) {
+      const s = title.replace(re, '').trim();
+      if (s !== title) return s;
+    }
+    return null;
+  }
+  function normSoloTitle(title) { return title.replace(SOLO_TRAILING, '').trim(); }
+
+  function groupCerts(items) {
+    const byTitle = new Map(), byNormTitle = new Map();
+    items.forEach(c => {
+      const t = cleanTitle(c.title);
+      byTitle.set(t, c);
+      byNormTitle.set(normSoloTitle(t), c);
+    });
+    const used = new Set(), groups = [];
+    items.forEach(cert => {
+      if (used.has(cert.id)) return;
+      const title = cleanTitle(cert.title);
+      const baseTitle = stripDuoSuffix(title);
+      if (baseTitle) {
+        const soloCert = byTitle.get(baseTitle) || byNormTitle.get(baseTitle);
+        if (soloCert && !used.has(soloCert.id)) {
+          used.add(cert.id); used.add(soloCert.id);
+          groups.push({ type: 'pair', solo: soloCert, duo: cert }); return;
+        }
+      }
+      const normTitle = normSoloTitle(title);
+      const duoCert = items.find(c => !used.has(c.id) && c.id !== cert.id && (() => {
+        const b = stripDuoSuffix(cleanTitle(c.title));
+        return b === title || b === normTitle;
+      })());
+      if (duoCert) {
+        used.add(cert.id); used.add(duoCert.id);
+        groups.push({ type: 'pair', solo: cert, duo: duoCert });
+      } else {
+        used.add(cert.id);
+        groups.push({ type: 'solo', cert });
+      }
+    });
+    return groups;
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function sanitizeDesc(html) {
+    if (!html) return '';
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    div.querySelectorAll('script,style,iframe,object,embed,form,input').forEach(el => el.remove());
+    div.querySelectorAll('*').forEach(el => {
+      [...el.attributes].forEach(attr => {
+        if (/^on/i.test(attr.name)) el.removeAttribute(attr.name);
+        if (attr.name === 'href' && /^javascript:/i.test(attr.value)) el.removeAttribute(attr.name);
+      });
+    });
+    return div.innerHTML;
+  }
+
+  function safeCertId(id) { return /^\d+$/.test(String(id)) ? id : ''; }
+
+  function renderPairCard(solo, duo) {
+    const soloPrice = formatPrice(solo.balance);
+    const duoPrice  = formatPrice(duo.balance);
+    const hasSave = solo.balance && duo.balance && duo.balance < solo.balance * 2;
+    const saveAmt = hasSave ? Math.round(solo.balance * 2 - duo.balance) : 0;
+    const saveLabel = hasSave ? `<div class="mbs-cert-card__duo-save">🎁 Вдвоём выгоднее — <span class="mbs-cert-card__duo-badge">−${formatPrice(saveAmt)}</span></div>` : '';
+    const pairData = escHtml(JSON.stringify({
+      type: 'pair', title: normSoloTitle(cleanTitle(solo.title)),
+      solo: { id: solo.id, price: soloPrice || '' },
+      duo:  { id: duo.id,  price: duoPrice  || '' },
+      save: hasSave ? formatPrice(saveAmt) : '',
+      description: solo.description || '', image: solo.image || ''
+    }));
+    return `<div class="mbs-cert-card" data-modal="${pairData}" role="button" tabindex="0">
+      <div class="mbs-cert-card__name">${escHtml(normSoloTitle(cleanTitle(solo.title)))}</div>
+      <div class="mbs-cert-card__duo-hint"><i class="ph ph-users"></i> 1 или 2 участника</div>
+      ${saveLabel}
+      <div class="mbs-cert-card__footer">
+        <div class="mbs-cert-card__price">от ${soloPrice ? soloPrice.replace('\u202f₽','') : '—'}${soloPrice ? '<sub>\u202f₽</sub>' : ''}</div>
+        <div class="mbs-cert-card__btn" style="pointer-events:none">Подробнее <i class="ph ph-arrow-right" style="font-size:12px"></i></div>
+      </div>
+    </div>`;
+  }
+
+  function renderCard(cert, nominal) {
+    const price = formatPrice(cert.balance);
+    const displayTitle = nominal && price ? 'Подарочный сертификат на ' + price : cleanTitle(cert.title);
+    const cardData = escHtml(JSON.stringify({
+      type: 'solo', title: displayTitle,
+      solo: { id: cert.id, price: price || '' },
+      description: cert.description || '', image: cert.image || ''
+    }));
+    return `<div class="mbs-cert-card" data-modal="${cardData}" role="button" tabindex="0">
+      <div class="mbs-cert-card__name">${escHtml(displayTitle)}</div>
+      <div class="mbs-cert-card__footer">
+        <div class="mbs-cert-card__price">${price ? price.replace('\u202f₽','') : 'Номинал<br>по выбору'}${price ? '<sub>\u202f₽</sub>' : ''}</div>
+        <div class="mbs-cert-card__btn" style="pointer-events:none">Подробнее <i class="ph ph-arrow-right" style="font-size:12px"></i></div>
+      </div>
+    </div>`;
+  }
+
+  function render(categories) {
+    if (!categories || categories.length === 0) { showError('Сертификаты не найдены'); return; }
+    const CAT_DESC_SLUG = {
+      'barista': 'Профессиональные курсы для тех, кто хочет стать Бариста — от базовых навыков до продвинутых техник.',
+      'owners':  'Программы для владельцев и управляющих: как выстроить процессы и повысить качество кофейни.',
+      'hobby':   'Для любителей кофе — научитесь готовить правильно дома, понять вкус и аромат.',
+      'lovers':  'Для любителей кофе — научитесь готовить правильно дома, понять вкус и аромат.',
+      'masterclass': 'Групповые мастер-классы в Москве — живая практика, общение с единомышленниками и заряд вдохновения.',
+      'nominal': 'Сертификат на любую сумму — подарите право выбрать самостоятельно.',
+    };
+    const CAT_DESC_TITLE = {
+      'Для бариста': 'Профессиональные курсы для тех, кто хочет стать Бариста — от базовых навыков до продвинутых техник.',
+      'Для владельцев': 'Программы для владельцев и управляющих: как выстроить процессы и повысить качество кофейни.',
+      'Открыть кофейню': 'Программы для владельцев и управляющих: как выстроить процессы и повысить качество кофейни.',
+      'Для любителей': 'Для любителей кофе — научитесь готовить правильно дома, понять вкус и аромат.',
+      'Мастер-классы — офлайн': 'Групповые мастер-классы в Москве — живая практика, общение с единомышленниками и заряд вдохновения.',
+      'Мастер-классы': 'Групповые мастер-классы в Москве — живая практика, общение с единомышленниками и заряд вдохновения.',
+      'Номинальные': 'Сертификат на любую сумму — подарите право выбрать самостоятельно.',
+    };
+    function getCatDesc(slug, title) { return CAT_DESC_SLUG[slug] || CAT_DESC_TITLE[title] || ''; }
+
+    contentEl.innerHTML = categories.map((cat, i) => {
+      const items = cat.slug === 'nominal'
+        ? [...cat.items].sort((a, b) => (b.balance||0) - (a.balance||0)) : cat.items;
+      const groups = groupCerts(items);
+      const cardsHtml = groups.map(g => g.type === 'pair' ? renderPairCard(g.solo, g.duo) : renderCard(g.cert, cat.slug === 'nominal')).join('');
+      return `<div class="mbs-cert-cat__section${i===0?' active':''}" data-slug="${cat.slug}">
+        <div class="mbs-cert-cat__section-title">${escHtml(cat.title)}<span class="mbs-cert-cat__count-badge">${groups.length}</span></div>
+        <div class="mbs-cert-cat__grid">${cardsHtml}</div>
+      </div>`;
+    }).join('');
+
+    const descEl = document.getElementById('js-cat-desc');
+    tabsEl.innerHTML = categories.map((cat, i) => {
+      const count = groupCerts(cat.items).length;
+      return `<button class="mbs-cert-cat__tab${i===0?' active':''}" data-slug="${cat.slug}" data-title="${escHtml(cat.title)}">${escHtml(cat.title)} <span style="opacity:.6">(${count})</span></button>`;
+    }).join('');
+
+    tabsEl.addEventListener('click', e => {
+      const btn = e.target.closest('.mbs-cert-cat__tab');
+      if (!btn) return;
+      tabsEl.querySelectorAll('.mbs-cert-cat__tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      contentEl.querySelectorAll('.mbs-cert-cat__section').forEach(s => s.classList.toggle('active', s.dataset.slug === btn.dataset.slug));
+      if (descEl) descEl.textContent = getCatDesc(btn.dataset.slug, btn.dataset.title || '');
+    });
+
+    if (descEl && categories[0]) descEl.textContent = getCatDesc(categories[0].slug, categories[0].title);
+
+    contentEl.addEventListener('click', e => {
+      const card = e.target.closest('.mbs-cert-card[data-modal]');
+      if (!card) return;
+      try { openModal(JSON.parse(card.dataset.modal)); } catch(e) { console.warn('Modal parse error', e); }
+    });
+    contentEl.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const card = e.target.closest('.mbs-cert-card[data-modal]');
+        if (card) try { openModal(JSON.parse(card.dataset.modal)); } catch(e) {}
+      }
+    });
+  }
+
+  // Tilda fix: создаём backdrop и modal через createElement ПОСЛЕ загрузки,
+  // чтобы Tilda не успел применить к ним opacity:0 через animate-on-scroll.
+  function createModalDOM() {
+    const backdrop = document.createElement('div');
+    backdrop.id = 'js-modal-backdrop';
+    backdrop.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'right:0', 'bottom:0',
+      'background:rgba(0,0,0,.55)', 'z-index:99998',
+      'opacity:0', 'pointer-events:none',
+      'transition:opacity .22s', 'backdrop-filter:blur(3px)',
+      '-webkit-backdrop-filter:blur(3px)'
+    ].join(';');
+
+    const modal = document.createElement('div');
+    modal.id = 'js-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.style.cssText = [
+      'position:fixed', 'top:0', 'left:0', 'right:0', 'bottom:0',
+      'z-index:99999', 'display:flex',
+      'align-items:flex-end', 'justify-content:center',
+      'padding:0', 'pointer-events:none'
+    ].join(';');
+    modal.innerHTML = `
+      <div id="js-modal-box" style="
+        background:#fff;border-radius:24px 24px 0 0;
+        width:100%;max-width:600px;max-height:92vh;overflow-y:auto;
+        display:flex;flex-direction:column;
+        box-shadow:0 -8px 40px rgba(0,0,0,.14);
+        transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      ">
+        <div class="mbs-modal__header" style="padding:20px 24px 16px;border-bottom:1px solid #f0ede8;display:flex;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;z-index:1;border-radius:24px 24px 0 0;">
+          <div id="js-modal-title" style="flex:1;font-size:18px;font-weight:900;line-height:1.3;color:#1f1f1f;letter-spacing:-0.02em;font-family:Mulish,sans-serif;">—</div>
+          <button id="js-modal-close" aria-label="Закрыть" style="width:32px;min-width:32px;height:32px;min-height:32px;border-radius:50%;border:none;background:#f0ede8;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#666;line-height:1;box-sizing:border-box;padding:0;">✕</button>
+        </div>
+        <div id="js-modal-body" style="padding:20px 24px;display:flex;flex-direction:column;gap:18px;flex:1;">
+          <div id="js-modal-image" style="display:none;width:calc(100% + 48px);margin:-20px -24px 20px;border-radius:16px 16px 0 0;overflow:hidden;aspect-ratio:16/9;"></div>
+          <div id="js-modal-desc" style="display:none;font-size:14px;line-height:1.6;color:#555;padding:8px 0 0;font-family:Mulish,sans-serif;"></div>
+        </div>
+        <div style="padding:16px 24px 24px;display:flex;flex-direction:column;gap:10px;border-top:1px solid #f0ede8;position:sticky;bottom:0;background:#fff;">
+          <div id="js-modal-btns"></div>
+          <div style="display:flex;align-items:center;gap:7px;margin-top:4px;padding:10px 14px;background:#E7F2E3;border-radius:10px;font-size:13px;font-weight:600;color:#417033;font-family:Mulish,sans-serif;">
+            <i class="ph ph-envelope-simple"></i>
+            Сертификат придёт на email сразу после оплаты
+          </div>
+        </div>
+      </div>`;
+
+    document.body.appendChild(backdrop);
+    document.body.appendChild(modal);
+    return { backdrop, modal };
+  }
+
+  const { backdrop: modalBackdrop, modal: modalEl } = createModalDOM();
+
+  function openModal(data) {
+    const box = document.getElementById('js-modal-box');
+
+    document.getElementById('js-modal-title').textContent = data.title;
+
+    const imageEl = document.getElementById('js-modal-image');
+    if (data.image) {
+      imageEl.innerHTML = `<img src="${escHtml(data.image)}" alt="${escHtml(data.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+      imageEl.style.display = '';
+    } else { imageEl.innerHTML = ''; imageEl.style.display = 'none'; }
+
+    const descEl = document.getElementById('js-modal-desc');
+    if (data.description) { descEl.innerHTML = sanitizeDesc(data.description); descEl.style.display = ''; }
+    else { descEl.textContent = ''; descEl.style.display = 'none'; }
+
+    const footerEl = document.getElementById('js-modal-btns');
+    const btnStyle = 'display:flex;align-items:center;justify-content:space-between;min-height:54px;border-radius:14px;background:#CC2841;color:#fff;text-decoration:none;font-family:Mulish,sans-serif;font-size:15px;font-weight:900;padding:0 20px;margin-bottom:8px;box-sizing:border-box;';
+    const btnStyleSecondary = btnStyle.replace('background:#CC2841;color:#fff;', 'background:#f5f5f5;color:#1f1f1f;');
+    if (data.type === 'pair') {
+      const saveHtml = data.save ? `<span style="display:inline-block;background:#E7F2E3;color:#417033;font-size:11px;font-weight:800;border-radius:6px;padding:2px 8px;margin-left:6px;">−${escHtml(data.save)}</span>` : '';
+      footerEl.innerHTML = `
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#aaa;margin-bottom:8px;font-family:Mulish,sans-serif;">Выберите количество участников</div>
+        <a href="${escHtml(YCLIENTS_BUY_BASE + safeCertId(data.solo.id))}" style="${btnStyle}" target="_blank" rel="noopener">
+          <span style="flex:1;text-align:left;">1 участник</span>
+          <span style="font-size:18px;font-weight:900;letter-spacing:-0.03em;white-space:nowrap;">${escHtml(data.solo.price)}</span>
+        </a>
+        <a href="${escHtml(YCLIENTS_BUY_BASE + safeCertId(data.duo.id))}" style="${btnStyleSecondary}" target="_blank" rel="noopener">
+          <span style="flex:1;text-align:left;">2 участника ${saveHtml}</span>
+          <span style="font-size:18px;font-weight:900;letter-spacing:-0.03em;white-space:nowrap;color:#417033;">${escHtml(data.duo.price)}</span>
+        </a>`;
+    } else {
+      footerEl.innerHTML = `
+        <a href="${escHtml(YCLIENTS_BUY_BASE + safeCertId(data.solo.id))}" style="${btnStyle}" target="_blank" rel="noopener">
+          <span style="flex:1;text-align:left;">Купить сертификат</span>
+          <span style="font-size:18px;font-weight:900;letter-spacing:-0.03em;white-space:nowrap;">${escHtml(data.solo.price)}</span>
+        </a>`;
+    }
+
+    box.scrollTop = 0;
+
+    // Сбрасываем состояние после возможного закрытия
+    modalEl.style.display = 'flex';
+    box.style.opacity = '1';
+
+    // Открываем
+    modalBackdrop.style.opacity = '1';
+    modalBackdrop.style.pointerEvents = 'auto';
+    if (window.innerWidth >= 600) {
+      modalEl.style.alignItems = 'center';
+      modalEl.style.padding = '24px';
+      box.style.borderRadius = '24px';
+      box.style.maxWidth = '600px';
+      box.style.transform = 'translateY(0)';
+    } else {
+      modalEl.style.alignItems = 'flex-end';
+      modalEl.style.padding = '0';
+      box.style.borderRadius = '24px 24px 0 0';
+      box.style.transform = 'translateY(0)';
+    }
+    modalEl.style.pointerEvents = 'auto';
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('touchmove', _preventBgScroll, { passive: false });
+  }
+
+  function _preventBgScroll(e) {
+    const box = document.getElementById('js-modal-box');
+    if (box && box.contains(e.target)) return;
+    e.preventDefault();
+  }
+
+  function closeModal() {
+    const box = document.getElementById('js-modal-box');
+    modalBackdrop.style.opacity = '0';
+    modalBackdrop.style.pointerEvents = 'none';
+    modalEl.style.pointerEvents = 'none';
+    if (box) {
+      // Мобильные: уезжает вниз; десктоп: уезжает вниз тоже (sheet-паттерн)
+      box.style.transform = window.innerWidth >= 600 ? 'translateY(40px)' : 'translateY(100%)';
+      box.style.opacity = '0';
+    }
+    setTimeout(() => {
+      modalEl.style.display = 'none';
+    }, 300);
+    document.body.style.overflow = '';
+    document.removeEventListener('touchmove', _preventBgScroll);
+  }
+
+  modalBackdrop.addEventListener('click', closeModal);
+  modalEl.addEventListener('click', e => { if (e.target === modalEl) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('js-modal-close').addEventListener('click', closeModal);
+
+  function showError(msg) {
+    tabsEl.innerHTML = '';
+    contentEl.innerHTML = `<div class="mbs-cert-error">
+      <i class="ph ph-warning-circle"></i>
+      <div class="mbs-cert-error__title">Каталог временно недоступен</div>
+      <p style="margin-bottom:20px">Напишите нам или позвоните — поможем выбрать и оформить сертификат:</p>
+      <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto;">
+        <a href="https://wa.me/message/42GZ6YYBJTM5B1" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:#25D366;color:#fff;font-weight:800;font-size:14px;text-decoration:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:#229ED9;color:#fff;font-weight:800;font-size:14px;text-decoration:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Telegram
+        </a>
+        <a href="tel:+79959992836" style="display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:12px;background:#f0f0f0;color:#1f1f1f;font-weight:800;font-size:14px;text-decoration:none;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +7 995 999-28-36
+        </a>
+      </div>
+    </div>`;
+  }
+
+  async function load() {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    try {
+      const resp = await fetch(API_URL, { signal: controller.signal });
+      clearTimeout(timer);
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      const json = await resp.json();
+      if (!json.ok) throw new Error(json.message || 'API error');
+      render(json.categories);
+    } catch (err) {
+      clearTimeout(timer);
+      console.warn('Certificates API error:', err);
+      showError('Сервис временно недоступен.');
+    }
+  }
+
+  load();
+})();
+</script>

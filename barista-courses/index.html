@@ -89,7 +89,7 @@
     .program__time { padding: 6px 10px; border-radius: 999px; background: var(--bg); color: var(--gray); font-size: 12px; font-weight: 800; }
 
     .price__wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: stretch; }
-    .price__info { padding: 36px; border-radius: 24px; background: var(--bg); }
+    .price__info { display: flex; flex-direction: column; padding: 36px; border-radius: 24px; background: var(--bg); }
     .price__facts { display: grid; gap: 10px; }
     .price__fact { padding: 16px 18px; border-radius: 16px; background: #fff; font-size: 15px; font-weight: 800; line-height: 1.35; }
     .price__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -101,7 +101,7 @@
     .price__list { margin: 0 0 26px; padding: 0; list-style: none; display: grid; gap: 10px; }
     .price__list li { font-size: 14px; font-weight: 700; line-height: 1.35; }
     .price__list li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: var(--green); vertical-align: 2px; }
-    .price__actions { display: grid; gap: 10px; margin-top: auto; }
+    .price__actions { display: grid; gap: 10px; margin-top: auto; padding-top: 22px; }
 
     .eq { background: var(--bg); padding-top: 64px; padding-bottom: 64px; }
     .eq__wrap { display: grid; gap: 16px; }
@@ -150,12 +150,18 @@
     .final__contact-link { display: flex; align-items: center; gap: 8px; color: var(--gray) !important; -webkit-text-fill-color: var(--gray) !important; text-decoration: none !important; font-size: 13px; font-weight: 700; line-height: 1.3; transition: color .2s; }
     .final__contact-link svg { color: var(--green-dark); }
     .final__contact-link:hover { color: var(--green-dark) !important; -webkit-text-fill-color: var(--green-dark) !important; }
-    .booking-popup { position: fixed; inset: 0; z-index: 99999; display: none; background: rgba(31,31,31,.58); }
+    .booking-popup { position: fixed; inset: 0; z-index: 99999; display: none; background: rgba(31,31,31,.58); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
     .booking-popup.is-open { display: block; }
-    .booking-popup__scroll { width: 100%; height: 100%; overflow: auto; padding: 28px 14px; }
-    .booking-popup__panel { position: relative; width: min(860px, 100%); margin: 0 auto; border-radius: 24px; background: var(--bg); box-shadow: 0 24px 80px rgba(0,0,0,.24); overflow: hidden; }
+    .booking-popup__scroll { width: 100%; height: 100%; overflow: auto; padding: 28px 14px; display: flex; align-items: center; justify-content: center; }
+    .booking-popup__panel { position: relative; width: min(760px, 100%); margin: auto; border-radius: 24px; background: transparent; box-shadow: none; overflow: visible; }
     .booking-popup__close { position: absolute; top: 12px; right: 12px; z-index: 2; width: 42px; height: 42px; border: 0; border-radius: 50%; background: #fff; color: var(--black); cursor: pointer; font-size: 30px; line-height: 1; box-shadow: 0 8px 22px rgba(31,31,31,.12); }
+    .booking-popup__share { position: absolute; top: 12px; right: 64px; z-index: 2; width: 42px; height: 42px; padding: 0; border: 0; border-radius: 50%; background: #fff; color: var(--green-dark); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(31,31,31,.12); }
+    .booking-popup__share svg { width: 21px; height: 21px; display: block; }
+    .booking-popup__share.is-hidden { display: none; }
     .booking-popup__panel [data-course-booking-widget] { min-height: 420px; }
+    .booking-popup__toast { position: fixed; left: 50%; bottom: 24px; z-index: 100000; transform: translateX(-50%); padding: 12px 16px; border-radius: 999px; background: var(--black); color: #fff; font-family: 'Mulish', sans-serif; font-size: 14px; font-weight: 800; line-height: 1.2; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+    .booking-popup__toast.is-visible { opacity: 1; }
+    .booking-popup .bbb-widget-root { background: transparent !important; padding: 0 !important; }
     body.booking-lock { overflow: hidden; }
 
     @media (max-width: 980px) {
@@ -200,9 +206,10 @@
       .price__info, .price__card, .eq__intro, .eq__item { padding: 24px; }
       .eq__gallery { grid-template-columns: repeat(2, 1fr); }
       .price__value { font-size: 38px; }
-      .booking-popup__scroll { padding: 0; }
-      .booking-popup__panel { min-height: 100vh; border-radius: 0; }
+      .booking-popup__scroll { display: block; padding: 0; }
+      .booking-popup__panel { width: 100%; min-height: 100vh; border-radius: 0; }
       .booking-popup__close { top: 8px; right: 8px; }
+      .booking-popup__share { top: 8px; right: 58px; }
     }
   </style>
 </head>
@@ -278,12 +285,12 @@
           <p class="sub">Каждая тема сразу связывается с практикой, чтобы знания не оставались абстрактными.</p>
         </div>
         <div class="program__grid">
-          <article class="program__card"><div class="program__top"><span class="program__step">Модуль 01</span><span class="program__time">Кофе и вкус</span></div><h3>История и кофейная индустрия</h3><p>Разберёте арабику и робусту, базовую дегустацию и то, как происхождение зерна влияет на вкус.</p></article>
+          <article class="program__card"><div class="program__top"><span class="program__step">Модуль 01</span><span class="program__time">Видеотеория</span></div><h3>Теория до первого занятия</h3><p>После предоплаты откроем доступ в личный кабинет: видеотеория, тесты и полезные материалы. В школе всё время посвятим практике.</p></article>
           <article class="program__card"><div class="program__top"><span class="program__step">Модуль 02</span><span class="program__time">Рабочее место</span></div><h3>Инвентарь и организация</h3><p>Научитесь пользоваться питчерами, весами, таймером, нокбоксом и собирать удобную рабочую станцию.</p></article>
           <article class="program__card"><div class="program__top"><span class="program__step">Модуль 03</span><span class="program__time">Эспрессо</span></div><h3>Настройка эспрессо</h3><p>Разберёте баланс сладости, кислотности и горечи, научитесь менять вкус через помол и параметры приготовления.</p></article>
           <article class="program__card"><div class="program__top"><span class="program__step">Модуль 04</span><span class="program__time">Молоко</span></div><h3>Молочные напитки и латте-арт</h3><p>Отработаете взбивание молока, температуру, текстуру, техники вливания и базовые элементы латте-арта.</p></article>
           <article class="program__card"><div class="program__top"><span class="program__step">Модуль 05</span><span class="program__time">Меню</span></div><h3>Популярные кофейные напитки</h3><p>Приготовите капучино, латте, флэт уайт, раф, моккачино и поймёте логику техкарт.</p></article>
-          <article class="program__card"><div class="program__top"><span class="program__step">Модуль 06</span><span class="program__time">Сервис</span></div><h3>Работа бариста в смене</h3><p>Поговорите о скорости, чистоте, стабильности, коммуникации и том, как не теряться у стойки.</p></article>
+          <article class="program__card"><div class="program__top"><span class="program__step">Модуль 06</span><span class="program__time">Итоги</span></div><h3>Завершение курса</h3><p>Зафиксируем результат, дадим обратную связь, подскажем следующие шаги и добавим в закрытый чат выпускников «Продлёнка».</p></article>
         </div>
       </div>
     </section>
@@ -296,13 +303,15 @@
           <p class="sub">После заявки менеджер поможет подобрать удобный график и объяснит, как внести предоплату для бронирования места.</p>
           <div class="price__facts">
             <div class="price__fact">3 дня по 3 часа или 1 день за 9 часов</div>
-            <div class="price__fact">Предоплата для бронирования — 5 000 ₽</div>
-            <div class="price__fact">Остальная оплата — после первого занятия</div>
+          </div>
+          <div class="price__actions">
+            <a class="btn btn-primary online-booking-open" href="#online-booking">Онлайн запись</a>
+            <a class="btn btn-secondary" href="#consalt">Оставить заявку</a>
           </div>
         </div>
         <div class="price__cards">
-          <article class="price__card"><h3>Один участник</h3><div class="price__value">22 000 ₽</div><p class="price__note">Индивидуальный темп и внимание тренера на протяжении всего курса.</p><ul class="price__list"><li>9 часов обучения</li><li>Профессиональное оборудование</li><li>Все продукты входят в стоимость</li></ul><div class="price__actions"><a class="btn btn-primary online-booking-open" href="#online-booking">Онлайн запись</a><a class="btn btn-secondary" href="#consalt">Оставить заявку</a></div></article>
-          <article class="price__card price__card--accent"><h3>Два участника</h3><div class="price__value">30 000 ₽</div><p class="price__note">Выгодный формат, если хотите учиться вместе с другом, партнёром или коллегой.</p><ul class="price__list"><li>15 000 ₽ за человека</li><li>Экономия 14 000 ₽ на двоих</li><li>Одинаковая программа и практика</li></ul><div class="price__actions"><a class="btn btn-primary online-booking-open" href="#online-booking">Онлайн запись</a><a class="btn btn-secondary" href="#consalt">Оставить заявку</a></div></article>
+          <article class="price__card"><h3>Один участник</h3><div class="price__value">22 000 ₽</div><p class="price__note">Индивидуальный темп и внимание тренера на протяжении всего курса.</p><ul class="price__list"><li>9 часов обучения</li><li>Профессиональное оборудование</li><li>Все продукты входят в стоимость</li></ul></article>
+          <article class="price__card price__card--accent"><h3>Два участника</h3><div class="price__value">30 000 ₽</div><p class="price__note">Выгодный формат, если хотите учиться вместе с другом, партнёром или коллегой.</p><ul class="price__list"><li>15 000 ₽ за человека</li><li>Экономия 14 000 ₽ на двоих</li><li>Одинаковая программа и практика</li></ul></article>
         </div>
       </div>
     </section>
@@ -357,20 +366,121 @@
   <div class="booking-popup" id="online-booking-popup" aria-hidden="true">
     <div class="booking-popup__scroll" data-booking-close>
       <div class="booking-popup__panel" role="dialog" aria-modal="true" aria-label="Онлайн запись на базовый курс бариста">
+        <button class="booking-popup__share is-hidden" type="button" data-booking-share aria-label="Поделиться ссылкой" title="Поделиться"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.5 12.5 15.5 8.5M8.5 11.5l7 4M6.75 15.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 9.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 20.25a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button class="booking-popup__close" type="button" data-booking-close aria-label="Закрыть">×</button>
         <div data-course-booking-widget data-course-slug="basic-barista" data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json" data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
       </div>
     </div>
+    <div class="booking-popup__toast" id="online-booking-toast" aria-live="polite"></div>
   </div>
   <script>
     (function () {
       var popup = document.getElementById('online-booking-popup');
       if (!popup) return;
+      var toastTimer = null;
+      var shareObserver = null;
+      function showToast(message) {
+        var toast = document.getElementById('online-booking-toast');
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('is-visible');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove('is-visible');
+        }, 2200);
+      }
+      function buildShareUrl() {
+        var url = new URL(window.location.href);
+        url.searchParams.set('online_booking', '1');
+        url.hash = 'online-booking';
+        return url.toString();
+      }
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          var textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+          document.body.appendChild(textarea);
+          textarea.focus();
+          textarea.select();
+          try {
+            document.execCommand('copy') ? resolve() : reject(new Error('copy failed'));
+          } catch (err) {
+            reject(err);
+          }
+          document.body.removeChild(textarea);
+        });
+      }
+      function shareBookingLink() {
+        var url = buildShareUrl();
+        var payload = {
+          title: 'Онлайн запись на базовый курс бариста',
+          text: 'Выберите формат обучения, дату и время.',
+          url: url
+        };
+        var canUseNativeShare = navigator.share && window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (canUseNativeShare) {
+          navigator.share(payload).catch(function (err) {
+            if (!err || err.name === 'AbortError') return;
+            copyText(url).then(function () { showToast('Ссылка скопирована'); });
+          });
+          return;
+        }
+        copyText(url)
+          .then(function () { showToast('Ссылка скопирована'); })
+          .catch(function () { showToast('Не удалось скопировать ссылку'); });
+      }
+      function syncShareButtonVisibility() {
+        var button = popup.querySelector('[data-booking-share]');
+        var root = popup.querySelector('[data-course-booking-widget]');
+        if (!button) return;
+        var isVariantStep = !!(root && root.querySelector('.bbb-variant-grid'));
+        button.classList.toggle('is-hidden', !isVariantStep);
+      }
+      function observeWidgetStep(root) {
+        if (shareObserver) shareObserver.disconnect();
+        if (!root || !window.MutationObserver) {
+          syncShareButtonVisibility();
+          return;
+        }
+        shareObserver = new MutationObserver(syncShareButtonVisibility);
+        shareObserver.observe(root, { childList: true, subtree: true });
+        syncShareButtonVisibility();
+      }
+      function resetBookingDraftToVariant(root) {
+        try {
+          var slug = (root && root.dataset.courseSlug) || 'basic-barista';
+          var key = 'course-booking-draft-v1:' + slug + ':' + window.location.pathname;
+          var current = JSON.parse(window.localStorage.getItem(key) || 'null') || {};
+          window.localStorage.setItem(key, JSON.stringify({
+            savedAt: Date.now(),
+            step: 'variant',
+            variantId: '',
+            activeTrainer: null,
+            activeLesson: '1',
+            selectedDate: null,
+            cursor: '',
+            selected: {},
+            client: current.client || {}
+          }));
+        } catch (err) {
+          // localStorage может быть недоступен, виджет всё равно должен открыться.
+        }
+      }
       function ensureWidgetScript() {
+        var root = popup.querySelector('[data-course-booking-widget]');
+        if (root) {
+          resetBookingDraftToVariant(root);
+          root.innerHTML = '';
+          observeWidgetStep(root);
+        }
         var current = document.querySelector('script[data-course-booking-widget-script]');
         if (current) current.parentNode.removeChild(current);
         var script = document.createElement('script');
-        script.src = 'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260526';
+        script.src = 'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260527';
         script.async = true;
         script.dataset.courseBookingWidgetScript = '1';
         script.onerror = function () {
@@ -394,6 +504,9 @@
       document.querySelectorAll('.online-booking-open').forEach(function (button) {
         button.addEventListener('click', openPopup);
       });
+      popup.querySelectorAll('[data-booking-share]').forEach(function (button) {
+        button.addEventListener('click', shareBookingLink);
+      });
       popup.querySelectorAll('[data-booking-close]').forEach(function (item) {
         item.addEventListener('click', function (event) {
           if (event.target === item || event.target.hasAttribute('data-booking-close')) closePopup();
@@ -402,6 +515,10 @@
       document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
       });
+      try {
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('online_booking') === '1') openPopup();
+      } catch (err) {}
     })();
   </script>
   <script>

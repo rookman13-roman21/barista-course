@@ -1,0 +1,145 @@
+<!-- ════════════════════════════════════════════════════════
+     БЛОК 3 — ЧАСТЫЕ ВОПРОСЫ (FAQ)
+     Вставить в Tilda как HTML-блок (Zero Block или T123)
+════════════════════════════════════════════════════════ -->
+<style>
+  :root {
+    --mbs-green-dark: #417033;
+    --mbs-green-light:#B6D8AB;
+    --mbs-bg-green:   #E7F2E3;
+    --mbs-bg:         #F5F5F5;
+    --mbs-black:      #1F1F1F;
+    --mbs-gray:       #555555;
+    --mbs-white:      #FFFFFF;
+  }
+
+  .mbs-cert-faq {
+    background: var(--mbs-white);
+    padding: 72px 20px;
+    font-family: 'Mulish', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mbs-cert-faq * { box-sizing: border-box; }
+  .mbs-cert-faq__inner { max-width: 760px; margin: 0 auto; }
+  .mbs-cert-faq__label {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 16px; padding: 7px 16px; border-radius: 999px;
+    background: var(--mbs-bg-green); color: var(--mbs-green-dark);
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-cert-faq__title {
+    font-size: 40px; font-weight: 900; line-height: 1.05;
+    letter-spacing: -0.03em; color: var(--mbs-black); margin-bottom: 40px;
+  }
+  .mbs-cert-faq__list { display: flex; flex-direction: column; gap: 8px; }
+  .mbs-cert-faq__item {
+    border: 1.5px solid #E5E5E5; border-radius: 16px;
+    overflow: hidden; transition: border-color .2s;
+  }
+  .mbs-cert-faq__item.open { border-color: var(--mbs-green-light); }
+  .mbs-cert-faq__q {
+    width: 100%; display: flex; align-items: center;
+    justify-content: space-between; gap: 16px; padding: 20px 24px;
+    background: none; border: none; cursor: pointer; text-align: left;
+    font-family: 'Mulish', sans-serif; font-size: 16px; font-weight: 800;
+    color: var(--mbs-black); line-height: 1.35;
+  }
+  .mbs-cert-faq__q:hover { color: var(--mbs-green-dark); }
+  .mbs-cert-faq__chevron {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--mbs-bg); display: flex; align-items: center;
+    justify-content: center; font-size: 14px; color: var(--mbs-gray);
+    transition: transform .25s, background .2s;
+  }
+  .mbs-cert-faq__item.open .mbs-cert-faq__chevron {
+    transform: rotate(180deg); background: var(--mbs-bg-green); color: var(--mbs-green-dark);
+  }
+  .mbs-cert-faq__a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .35s ease;
+    padding: 0 24px;
+  }
+  .mbs-cert-faq__item.open .mbs-cert-faq__a { max-height: 600px; }
+  .mbs-cert-faq__a__inner { padding: 4px 0 20px; font-size: 15px; font-weight: 500; line-height: 1.6; color: var(--mbs-gray); }
+
+  @media (max-width: 600px) {
+    .mbs-cert-faq__title { font-size: 28px; }
+    .mbs-cert-faq__q { font-size: 15px; padding: 16px 18px; }
+    .mbs-cert-faq__a { padding: 0 18px; }
+    .mbs-cert-faq__a__inner { font-size: 14px; padding-bottom: 16px; }
+  }
+</style>
+
+<section class="mbs-cert-faq" id="faq">
+  <div class="mbs-cert-faq__inner">
+    <div class="mbs-cert-faq__label">
+      <i class="ph ph-chat-circle-dots"></i>
+      Вопросы и ответы
+    </div>
+    <h2 class="mbs-cert-faq__title">Частые вопросы</h2>
+    <div class="mbs-cert-faq__list">
+
+      <div class="mbs-cert-faq__item">
+        <button class="mbs-cert-faq__q">
+          Чьи данные указывать при оформлении?
+          <span class="mbs-cert-faq__chevron"><i class="ph ph-caret-down"></i></span>
+        </button>
+        <div class="mbs-cert-faq__a"><div class="mbs-cert-faq__a__inner">При оформлении нужно указывать данные <strong>заказчика</strong> — того, кто покупает сертификат. После оплаты мы свяжемся с вами, чтобы оформить красивый подарочный сертификат с именем получателя.</div></div>
+      </div>
+
+      <div class="mbs-cert-faq__item">
+        <button class="mbs-cert-faq__q">
+          Сколько действует сертификат?
+          <span class="mbs-cert-faq__chevron"><i class="ph ph-caret-down"></i></span>
+        </button>
+        <div class="mbs-cert-faq__a"><div class="mbs-cert-faq__a__inner">Сертификат действует <strong>1 год</strong> с даты покупки. За это время получатель может записаться на любой подходящий курс или мастер-класс.</div></div>
+      </div>
+
+      <div class="mbs-cert-faq__item">
+        <button class="mbs-cert-faq__q">
+          Как получатель воспользуется сертификатом?
+          <span class="mbs-cert-faq__chevron"><i class="ph ph-caret-down"></i></span>
+        </button>
+        <div class="mbs-cert-faq__a"><div class="mbs-cert-faq__a__inner">После оформления мы пришлём красиво оформленный сертификат — его можно распечатать или передать в электронном виде. Чтобы записаться на курс, получатель обращается в школу и называет номер сертификата.</div></div>
+      </div>
+
+      <div class="mbs-cert-faq__item">
+        <button class="mbs-cert-faq__q">
+          Можно ли вернуть или обменять сертификат?
+          <span class="mbs-cert-faq__chevron"><i class="ph ph-caret-down"></i></span>
+        </button>
+        <div class="mbs-cert-faq__a"><div class="mbs-cert-faq__a__inner">Сертификат можно обменять на другой курс аналогичной стоимости, если выбранный вариант не подошёл. Возврат денег возможен, если ни одно занятие по сертификату не было использовано — средства возвращаются <strong>только на ту карту, с которой была произведена оплата</strong>. Свяжитесь с нами, и мы поможем.</div></div>
+      </div>
+
+      <div class="mbs-cert-faq__item">
+        <button class="mbs-cert-faq__q">
+          Можно ли использовать сертификат частями?
+          <span class="mbs-cert-faq__chevron"><i class="ph ph-caret-down"></i></span>
+        </button>
+        <div class="mbs-cert-faq__a"><div class="mbs-cert-faq__a__inner">Да, номинальные сертификаты можно использовать частями — оплатить сертификатом часть стоимости курса, а остаток доплатить любым удобным способом.</div></div>
+      </div>
+
+      <div class="mbs-cert-faq__item">
+        <button class="mbs-cert-faq__q">
+          Подойдёт ли сертификат, если я не знаю уровень получателя?
+          <span class="mbs-cert-faq__chevron"><i class="ph ph-caret-down"></i></span>
+        </button>
+        <div class="mbs-cert-faq__a"><div class="mbs-cert-faq__a__inner">Если вы не уверены, какой курс подойдёт — выберите номинальный сертификат на нужную сумму. Получатель сам выберет программу, которая ему интересна. Или напишите нам — поможем подобрать идеальный вариант.</div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  document.querySelectorAll('.mbs-cert-faq__q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.mbs-cert-faq__item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.mbs-cert-faq__item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+})();
+</script>

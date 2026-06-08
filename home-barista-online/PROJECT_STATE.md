@@ -1,28 +1,21 @@
 # 🗂 База знаний — Домашний бариста (home-barista-online)
 
 **Обновлено:** 13 мая 2026  
-**Платформа:** Vercel (превью) + Tilda Members (продакшн)
+**Платформа:** Tilda Members (продакшн)
 
 ---
 
-## 🚀 Деплой
+## 🚀 Превью и деплой
 
 | Параметр | Значение |
 |----------|----------|
-| **Vercel URL** | https://home-barista-online.vercel.app |
 | **Продакшн URL** | https://baristaschool.ru/home_barista_online |
-| **Vercel проект** | `home-barista-online` |
-| **Vercel org** | `rookman13-2642s-projects` |
-| **Vercel projectId** | `prj_JqcVCu093lChsipMyDgKi6aaQUJb` |
-| **Vercel аккаунт** | `baristaschool` |
 
-### Как задеплоить после изменений:
-```bash
-cd /Users/romansuslin_1/Downloads/All_Code/barista-course/home-barista-online
-vercel --prod
-```
-> Git не используется. Деплой через Vercel CLI напрямую.
-> Токен хранится в `~/.vercel/auth.json` после первого `vercel login`.
+### Как смотреть локально:
+- ПКМ на `index.html` → **Show Preview** (VS Code Live Preview)
+
+### Как опубликовать:
+- Скопировать содержимое `index.html` в Tilda Members (редактор страницы курса)
 
 ---
 
@@ -30,7 +23,7 @@ vercel --prod
 
 **Правило:** при любом изменении блока редактировать ОБА файла, затем деплоить.
 
-| Задача | Файл-источник (блоки) | Файл Vercel |
+| Задача | Файл-источник (блоки) | Сборный файл (index.html) |
 |--------|----------------------|-------------|
 | Изменить Hero | `pages/blocks/01-hero.html` | `index.html` строки 76–634 |
 | Изменить For-whom | `pages/blocks/02-for-whom.html` | `index.html` строки 635–924 |

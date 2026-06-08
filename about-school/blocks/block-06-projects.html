@@ -1,0 +1,95 @@
+<!--
+  БЛОК 06 — PROJECTS (Бизнес-экспертиза)
+  Страница: О школе (baristaschool.ru/company)
+  Содержимое: 4 карточки услуг — Выездное обучение, Кофейное меню,
+  Помощь в запуске кофейни, Барная эргономика. У каждой — иконка Phosphor.
+  Внизу: кнопка «Обсудить задачу» + ссылка «Карта проектов».
+  Фон: светло-серый #F5F5F5.
+  Зависимости: Mulish + Phosphor Icons (подключены ниже).
+-->
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+<section class="mbs-projects">
+  <style>
+    .mbs-projects * { box-sizing: border-box; }
+    .mbs-projects { background: #F5F5F5; padding: 90px 20px; font-family: 'Mulish', sans-serif; }
+    .mbs-projects__wrap { max-width: 1100px; margin: 0 auto; }
+    .mbs-projects__label {
+      display: inline-flex; align-items: center; margin-bottom: 14px;
+      padding: 7px 16px; border-radius: 999px;
+      background: rgba(231,242,227,0.95); color: #417033; font-size: 13px; font-weight: 900; line-height: 1;
+    }
+    .mbs-projects__h2 { font-size: 34px; font-weight: 900; line-height: 1; letter-spacing: -0.04em; color: #1F1F1F; margin: 0 0 10px; }
+    .mbs-projects__sub { font-size: 16px; font-weight: 500; color: #555555; margin: 0 0 40px; }
+    .mbs-projects__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; }
+    .mbs-projects__card { background: #FFFFFF; border-radius: 20px; padding: 32px 28px; display: flex; gap: 20px; align-items: flex-start; transition: transform 0.2s, box-shadow 0.2s; }
+    .mbs-projects__card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(65,112,51,0.12); }
+    .mbs-projects__icon { width: 52px; height: 52px; border-radius: 16px; background: #E7F2E3; color: #417033; display: grid; place-items: center; flex-shrink: 0; }
+    .mbs-projects__icon i { font-size: 24px; line-height: 1; }
+    .mbs-projects__card-title { font-size: 17px; font-weight: 800; color: #1F1F1F; margin: 0 0 8px; }
+    .mbs-projects__card-text { font-size: 14px; font-weight: 500; color: #555555; line-height: 1.55; margin: 0; }
+    .mbs-projects__cta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .mbs-projects__btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 50px; padding: 0 28px; border-radius: 999px;
+      background: #4F883E; color: #fff !important; text-decoration: none !important;
+      font-family: 'Mulish', sans-serif; font-size: 15px; font-weight: 800;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .mbs-projects__btn:hover { background: #417033; transform: translateY(-1px); }
+    .mbs-projects__map-link { color: #417033 !important; text-decoration: none !important; font-size: 15px; font-weight: 700; transition: color 0.2s; }
+    .mbs-projects__map-link:hover { color: #1F1F1F !important; }
+    @media (max-width: 820px) {
+      .mbs-projects { padding: 64px 14px; }
+      .mbs-projects__h2 { font-size: 26px; }
+      .mbs-projects__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <div class="mbs-projects__wrap">
+    <div class="mbs-projects__label">Бизнес-экспертиза</div>
+    <h2 class="mbs-projects__h2">Более 100 кофейных<br>проектов по России</h2>
+    <p class="mbs-projects__sub">Реальные кейсы, которые показывают ширину и глубину нашей экспертизы.</p>
+    <div class="mbs-projects__grid">
+      <div class="mbs-projects__card">
+        <div class="mbs-projects__icon">
+          <i class="ph ph-van"></i>
+        </div>
+        <div>
+          <h3 class="mbs-projects__card-title">Выездное обучение</h3>
+          <p class="mbs-projects__card-text">Приедем к вам и обучим команду прямо на рабочем месте. Программу адаптируем под уровень сотрудников и задачи вашего заведения.</p>
+        </div>
+      </div>
+      <div class="mbs-projects__card">
+        <div class="mbs-projects__icon">
+          <i class="ph ph-coffee"></i>
+        </div>
+        <div>
+          <h3 class="mbs-projects__card-title">Кофейное меню</h3>
+          <p class="mbs-projects__card-text">Разработаем или обновим карту напитков: подберём зерно, пропишем рецептуры и обучим персонал готовить всё стабильно и вкусно.</p>
+        </div>
+      </div>
+      <div class="mbs-projects__card">
+        <div class="mbs-projects__icon">
+          <i class="ph ph-rocket-launch"></i>
+        </div>
+        <div>
+          <h3 class="mbs-projects__card-title">Помощь в запуске кофейни</h3>
+          <p class="mbs-projects__card-text">От концепции до открытия: поможем с выбором оборудования, обучением команды, составлением меню и выстраиванием процессов.</p>
+        </div>
+      </div>
+      <div class="mbs-projects__card">
+        <div class="mbs-projects__icon">
+          <i class="ph ph-ruler"></i>
+        </div>
+        <div>
+          <h3 class="mbs-projects__card-title">Барная эргономика</h3>
+          <p class="mbs-projects__card-text">Оптимизируем рабочее место бариста: расположение оборудования, маршруты движения, скорость обслуживания — всё влияет на выручку.</p>
+        </div>
+      </div>
+    </div>
+    <div class="mbs-projects__cta">
+      <a href="#consalt" class="mbs-projects__btn">Обсудить задачу →</a>
+    </div>
+  </div>
+</section>

@@ -102,6 +102,8 @@
     color: #fff !important;
     transform: translateY(-1px);
   }
+  .mbs-latte-battle-waitlist-cta { display: none; }
+  .mbs-latte-battle-waitlist-cta.is-visible { display: inline-flex; }
   .mbs-latte-battle-hero {
     padding: 48px 20px;
     background: #fff;
@@ -735,6 +737,13 @@
     flex: 1;
     min-width: 0;
   }
+  .mbs-latte-battle-participants-widget .mbs-cup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
   .mbs-latte-battle-participants-widget .mbs-cup-reg {
     display: inline-flex;
     align-items: center;
@@ -770,6 +779,17 @@
     width: 14px;
     height: 14px;
     stroke: var(--mbs-red);
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-waitlist {
+    display: none;
+    border-color: var(--mbs-green-dark);
+    color: var(--mbs-green-dark) !important;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-waitlist.is-visible {
+    display: inline-flex;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-waitlist svg {
+    stroke: var(--mbs-green-dark);
   }
   .mbs-latte-battle-participants-widget .mbs-cup-badges {
     display: flex;
@@ -2400,8 +2420,12 @@
       padding: 22px 20px 16px;
     }
     .mbs-latte-battle-participants-widget .mbs-cup-head-top {
-      flex-direction: row;
+      flex-direction: column;
       gap: 10px;
+    }
+    .mbs-latte-battle-participants-widget .mbs-cup-actions {
+      width: 100%;
+      justify-content: flex-start;
     }
     .mbs-latte-battle-participants-widget .mbs-cup-reg {
       padding: 7px 12px;
@@ -2495,6 +2519,7 @@
           <p class="mbs-latte-battle-hero__lead" data-archive-hero-lead>Чемпионат для бариста с опытом до 3 лет: реальная соревновательная атмосфера, профессиональное судейство и возможность получить первый чемпионатный опыт.</p>
           <div class="mbs-latte-battle-hero__actions">
             <button class="mbs-latte-battle__btn js-mbs-latte-battle-open" type="button">Участвовать</button>
+            <a class="mbs-latte-battle__btn-secondary mbs-latte-battle-waitlist-cta" href="#waiting_list" data-waitlist-cta aria-hidden="true">Лист ожидания</a>
             <a class="mbs-latte-battle__btn-secondary" href="#mbs-latte-battle-participants">Смотреть участников</a>
             <a class="mbs-latte-battle__btn-secondary" href="https://docs.google.com/document/d/1xat9zuJOBpGmpnvRntaEeUEOA79cW9Wx-4OSlUE0bsc/preview" target="_blank" rel="noopener">Регламент</a>
           </div>
@@ -2754,6 +2779,7 @@
         </div>
         <div class="mbs-latte-battle-final__actions">
           <button class="mbs-latte-battle__btn js-mbs-latte-battle-open" type="button">Участвовать</button>
+          <a class="mbs-latte-battle__btn-secondary mbs-latte-battle-waitlist-cta" href="#waiting_list" data-waitlist-cta aria-hidden="true">Лист ожидания</a>
           <a class="mbs-latte-battle__btn-secondary" href="#consalt">Оставить заявку</a>
           <div class="mbs-latte-battle-final__contacts">
             <a href="tel:+79959992836"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.5 9 8.7l-2 1.45c1.15 2.35 2.9 4.1 5.25 5.25l1.45-2 4.2 1.8c.55.24.86.84.72 1.42l-.55 2.35c-.14.62-.7 1.03-1.33.98C9.7 19.35 4.15 13.8 3.55 6.76c-.05-.63.36-1.19.98-1.33l2.35-.55c.58-.14 1.18.17 1.42.72Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>+7 995 999 2836</a>
@@ -2798,6 +2824,7 @@
     var BOOKING_URL = root.getAttribute('data-booking-url');
     var RULES_URL = root.getAttribute('data-rules-url') || 'https://docs.google.com/document/d/1xat9zuJOBpGmpnvRntaEeUEOA79cW9Wx-4OSlUE0bsc/preview';
     var EVENT_SLOT = { lesson_num: 1, date: '2026-07-02', time: '10:00', service_id: 14800644, staff_id: 1322836, seance_length: 10800 };
+    var WAITLIST_CLOSE_BEFORE_START_MS = 3 * 24 * 60 * 60 * 1000;
     var STORAGE_KEY = 'mbs-latte-battle-booking-client-v1';
     var STORAGE_TTL_MS = 24 * 60 * 60 * 1000;
     var PHONE_CODES = ['+7', '+375', '+380', '+374', '+995', '+998', '+996', '+992', '+90', '+49', '+44', '+1'];
@@ -2954,6 +2981,18 @@
         });
       }
     }
+    function eventStartDate(event) {
+      var eventData = event || {};
+      if (eventData.starts_at) {
+        var startsAt = new Date(eventData.starts_at);
+        if (!Number.isNaN(startsAt.getTime())) return startsAt;
+      }
+      var date = String(eventData.date || EVENT_SLOT.date || '').trim();
+      var time = String(eventData.time || EVENT_SLOT.time || '').trim();
+      if (!date || !time) return null;
+      var fallback = new Date(date + 'T' + time + ':00+03:00');
+      return Number.isNaN(fallback.getTime()) ? null : fallback;
+    }
     function eventEndDate(event) {
       var eventData = event || {};
       var date = String(eventData.date || EVENT_SLOT.date || '').trim();
@@ -2972,6 +3011,10 @@
       if (event.is_past === true || event.completed === true) return true;
       var end = eventEndDate(event);
       return end ? Date.now() >= end.getTime() : false;
+    }
+    function isWaitlistOpen(data) {
+      var start = eventStartDate((data && data.event) || {});
+      return Boolean(start && Date.now() < start.getTime() - WAITLIST_CLOSE_BEFORE_START_MS);
     }
     function updateArchiveCopy(completed) {
       setText('[data-archive-hero-kicker]', completed ? 'Чемпионат завершён' : 'Чемпионат по латте-арту');
@@ -3012,9 +3055,18 @@
         if (label) label.textContent = state.completed ? 'Завершён' : (state.soldOut ? 'Мест нет' : 'Регистрация');
       });
     }
+    function updateWaitlistCtas() {
+      var waitlistVisible = state.soldOut && !state.completed && isWaitlistOpen(state.data);
+      root.querySelectorAll('[data-waitlist-cta]').forEach(function (link) {
+        link.classList.toggle('is-visible', waitlistVisible);
+        link.setAttribute('aria-hidden', waitlistVisible ? 'false' : 'true');
+      });
+      return waitlistVisible;
+    }
     function setCtaState(soldOut, completed) {
       state.soldOut = soldOut;
       state.completed = completed;
+      var waitlistVisible = updateWaitlistCtas();
       root.querySelectorAll('.js-mbs-latte-battle-open').forEach(function (button) {
         var disabled = soldOut || completed;
         button.disabled = disabled;
@@ -3023,7 +3075,11 @@
       });
       var message = root.querySelector('[data-sold-out-message]');
       if (message) {
-        message.textContent = completed ? 'Чемпионат завершён. Регистрация закрыта.' : 'Все места на чемпионат заняты';
+        message.textContent = completed
+          ? 'Чемпионат завершён. Регистрация закрыта.'
+          : (waitlistVisible
+            ? 'Все места на чемпионат заняты. До старта могут освободиться места. Оставьте заявку в лист ожидания.'
+            : 'Все места на чемпионат заняты');
         message.classList.toggle('is-visible', soldOut || completed);
       }
       updateArchiveCopy(completed);
@@ -3084,10 +3140,16 @@
                     '<div class="mbs-cup-title">MBS* Latte-art x Петмол</div>' +
                     '<div class="mbs-cup-sub">Участники чемпионата</div>' +
                   '</div>' +
-                  '<a href="#mbs-latte-battle-popup" class="mbs-cup-reg" data-participants-register>' +
-                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>' +
-                    '<span data-participants-register-label>Регистрация</span>' +
-                  '</a>' +
+                  '<div class="mbs-cup-actions">' +
+                    '<a href="#mbs-latte-battle-popup" class="mbs-cup-reg" data-participants-register>' +
+                      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>' +
+                      '<span data-participants-register-label>Регистрация</span>' +
+                    '</a>' +
+                    '<a href="#waiting_list" class="mbs-cup-reg mbs-cup-waitlist" data-waitlist-cta aria-hidden="true">' +
+                      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>' +
+                      '<span>Лист ожидания</span>' +
+                    '</a>' +
+                  '</div>' +
                 '</div>' +
                 '<div class="mbs-cup-badges" data-mbs-cup-badges style="display:none;">' +
                   '<div class="mbs-cup-badge">' +
@@ -3152,6 +3214,7 @@
       });
       registerLink.addEventListener('click', openPopup);
       updateParticipantsRegisterLink();
+      updateWaitlistCtas();
       body.addEventListener('click', function (event) {
         var nameEl = event.target.closest('.mbs-cup-name');
         closeParticipantsTip();

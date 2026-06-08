@@ -1,0 +1,166 @@
+<!--
+  404-block.html — Zero Block для страницы baristaschool.ru/nopage (pageid 20430944)
+  Вставляется в Tilda как Zero Block вместо текущего T396-блока с rec329934057
+  Автор: GitHub Copilot
+-->
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+  @keyframes mbs404FadeIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .mbs-404 {
+    font-family: 'Mulish', 'Circe', Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    text-align: center;
+    animation: mbs404FadeIn 0.6s ease both;
+  }
+
+  .mbs-404__code {
+    font-size: clamp(120px, 20vw, 200px);
+    font-weight: 900;
+    line-height: 1;
+    color: #1f1f1f;
+    letter-spacing: -4px;
+    margin: 0 0 4px;
+    /* Полосатый акцент на цифрах */
+    background: linear-gradient(135deg, #1f1f1f 0%, #417033 60%, #cc2841 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .mbs-404__title {
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    color: #1f1f1f;
+    margin: 0 0 12px;
+    line-height: 1.3;
+  }
+
+  .mbs-404__subtitle {
+    font-size: 16px;
+    color: #666;
+    margin: 0 0 40px;
+    line-height: 1.6;
+  }
+
+  .mbs-404__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .mbs-404__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 30px;
+    background: #f5f5f5;
+    color: #1f1f1f !important;
+    text-decoration: none !important;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    border: 1.5px solid transparent;
+  }
+
+  .mbs-404__link:hover {
+    background: #eaf2e6;
+    color: #417033 !important;
+    border-color: #417033;
+    transform: translateY(-2px);
+  }
+
+  .mbs-404__link--primary {
+    background: #417033;
+    color: #fff !important;
+    border-color: #417033;
+  }
+
+  .mbs-404__link--primary:hover {
+    background: #355c28;
+    color: #fff !important;
+    border-color: #355c28;
+  }
+
+  .mbs-404__divider {
+    width: 48px;
+    height: 3px;
+    background: #cc2841;
+    border-radius: 2px;
+    margin: 0 auto 28px;
+  }
+
+  .mbs-404__help {
+    font-size: 14px;
+    color: #999;
+  }
+
+  .mbs-404__help a {
+    color: #cc2841;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .mbs-404__help a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 479px) {
+    .mbs-404 {
+      padding: 40px 16px 60px;
+    }
+
+    .mbs-404__links {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .mbs-404__link {
+      justify-content: center;
+      padding: 14px 20px;
+    }
+  }
+</style>
+
+<div class="mbs-404">
+  <div class="mbs-404__code" aria-hidden="true">404</div>
+  <h1 class="mbs-404__title">Страница не найдена</h1>
+  <p class="mbs-404__subtitle">
+    Такой адрес не существует или был перемещён.<br>
+    Зато у нас есть отличный кофе и много полезного для вас 👇
+  </p>
+
+  <div class="mbs-404__divider"></div>
+
+  <nav class="mbs-404__links">
+    <a class="mbs-404__link mbs-404__link--primary" href="https://baristaschool.ru">
+      <i class="ph ph-house"></i> На главную
+    </a>
+    <a class="mbs-404__link" href="/menu_barista">
+      <i class="ph ph-graduation-cap"></i> Курсы бариста
+    </a>
+    <a class="mbs-404__link" href="https://baristaschool.ru/#mbs-events-widget">
+      <i class="ph ph-calendar"></i> Расписание событий
+    </a>
+    <a class="mbs-404__link" href="/menu_busines">
+      <i class="ph ph-coffee"></i> Открыть кофейню
+    </a>
+    <a class="mbs-404__link" href="/company">
+      <i class="ph ph-buildings"></i> О школе
+    </a>
+  </nav>
+
+  <p class="mbs-404__help">
+    Не нашли что искали?
+    <a href="https://t.me/Moscow_barista_school" target="_blank">Напишите нам в Telegram</a>
+    — ответим быстро.
+  </p>
+</div>
