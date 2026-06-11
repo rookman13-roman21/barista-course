@@ -1,0 +1,204 @@
+<!--
+  MBS /capping — Tilda block 01 of 05
+  Назначение: верх страницы — hero, «Для кого», «Как проходит», заголовок онлайн-записи и контейнер расписания.
+  Куда вставлять: сразу после блока 00.
+  Важно: внутри есть #mbs-capping-widget; после него обязательно вставить блоки 02 и 03.
+-->
+<style id="mbs-capping-top-font-fix">
+  @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
+
+  html body .mbs-capping-page,
+  html body .mbs-capping-page *,
+  html body .mbs-capping,
+  html body .mbs-capping *,
+  html body #mbs-capping-program-title,
+  html body #mbs-capping-schedule-title,
+  html body .mbs-capping-page__program,
+  html body .mbs-capping-page__program *,
+  html body .mbs-capping-page__schedule-head,
+  html body .mbs-capping-page__schedule-head *,
+  html body .mbs-capping-page__widget-box,
+  html body .mbs-capping-page__widget-box * {
+    font-family: 'Mulish', Arial, sans-serif !important;
+  }
+</style>
+<div class="mbs-capping-page">
+  <section class="mbs-capping-page__hero" aria-labelledby="mbs-capping-hero-title">
+    <div class="mbs-capping-page__hero-card">
+      <div class="mbs-capping-page__hero-grid">
+        <div class="mbs-capping-page__hero-content">
+          <div class="mbs-capping-page__hero-label">Открытые дегустации в Москве</div>
+          <h1 class="mbs-capping-page__hero-title" id="mbs-capping-hero-title">Каппинг кофе</h1>
+          <p class="mbs-capping-page__hero-lead">В Московской школе бариста пробуем кофе, сравниваем вкус и аромат, разбираем зерно и учимся говорить о напитке точнее.</p>
+          <div class="mbs-capping-page__hero-actions">
+            <a class="mbs-capping-page__btn" href="#mbs-capping-schedule">Выбрать дату</a>
+            <a class="mbs-capping-page__btn mbs-capping-page__btn--green" href="#consalt">Оставить заявку</a>
+          </div>
+          <div class="mbs-capping-page__hero-facts" aria-label="Коротко о каппинге">
+            <div class="mbs-capping-page__fact">
+              <strong>2,5 часа</strong>
+              <span>камерная встреча с ведущим школы</span>
+            </div>
+            <div class="mbs-capping-page__fact">
+              <strong>2 000 Р</strong>
+              <span>участие в открытом каппинге</span>
+            </div>
+            <div class="mbs-capping-page__fact">
+              <strong>для всех</strong>
+              <span>можно без опыта в кофе</span>
+            </div>
+          </div>
+        </div>
+        <div class="mbs-capping-page__hero-media">
+          <img src="https://static.tildacdn.com/tild3137-3334-4637-b163-343531303334/DSC04248_copy.jpg" alt="Каппинг кофе в Московской школе бариста" loading="eager">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-capping-page__section mbs-capping-page__section--soft" aria-labelledby="mbs-capping-for-title">
+    <div class="mbs-capping-page__wrap">
+      <div class="mbs-capping-page__eyebrow">Для кого</div>
+      <h2 class="mbs-capping-page__title" id="mbs-capping-for-title">Каппинг помогает почувствовать кофе осознанно</h2>
+      <p class="mbs-capping-page__subtitle">Это не лекция и не экзамен. Вы пробуете несколько образцов, сравниваете их между собой и постепенно собираете собственный словарь вкуса.</p>
+      <div class="mbs-capping-page__cards">
+        <article class="mbs-capping-page__card">
+          <div class="mbs-capping-page__card-icon">01</div>
+          <h3>Тем, кто любит кофе</h3>
+          <p>Поймёте, почему один кофе кажется ягодным, другой ореховым, а третий более плотным и шоколадным.</p>
+        </article>
+        <article class="mbs-capping-page__card">
+          <div class="mbs-capping-page__card-icon">02</div>
+          <h3>Бариста и начинающим специалистам</h3>
+          <p>Потренируете сенсорику, сравнение лотов и спокойное описание вкуса без сложных терминов ради терминов.</p>
+        </article>
+        <article class="mbs-capping-page__card">
+          <div class="mbs-capping-page__card-icon">03</div>
+          <h3>Командам кофеен</h3>
+          <p>Можно прийти вместе, чтобы синхронизировать вкус, обсудить зерно и точнее выбирать кофе для меню.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+<script>
+  (function () {
+    var MBS_FONT_FAMILY = "'Mulish', Arial, sans-serif";
+
+    function applyTopFontFix() {
+      var nodes = document.querySelectorAll(
+        '.mbs-capping-page, .mbs-capping-page *, .mbs-capping, .mbs-capping *'
+      );
+      Array.prototype.forEach.call(nodes, function (node) {
+        if (node && node.style && node.nodeType === 1) {
+          var current = node.style.getPropertyValue('font-family');
+          var priority = node.style.getPropertyPriority('font-family');
+          if (current !== MBS_FONT_FAMILY || priority !== 'important') {
+            node.style.setProperty('font-family', MBS_FONT_FAMILY, 'important');
+          }
+        }
+      });
+    }
+
+    applyTopFontFix();
+    setTimeout(applyTopFontFix, 100);
+    setTimeout(applyTopFontFix, 500);
+    setTimeout(applyTopFontFix, 1500);
+    setTimeout(applyTopFontFix, 3500);
+
+    if (window.MutationObserver) {
+      var timer = null;
+      var observer = new MutationObserver(function () {
+        clearTimeout(timer);
+        timer = setTimeout(applyTopFontFix, 30);
+      });
+      document.querySelectorAll('.mbs-capping-page, .mbs-capping').forEach(function (root) {
+        observer.observe(root, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['style', 'class']
+        });
+      });
+    }
+  })();
+</script>
+
+  <section class="mbs-capping-page__section" aria-labelledby="mbs-capping-program-title">
+    <div class="mbs-capping-page__wrap">
+      <div class="mbs-capping-page__eyebrow">Как проходит</div>
+      <h2 class="mbs-capping-page__title" id="mbs-capping-program-title">Вкус разбираем через практику, а не через сухую теорию</h2>
+      <p class="mbs-capping-page__subtitle">Ведущий объясняет механику дегустации, помогает фиксировать ощущения и показывает, как профессионалы сравнивают кофе на каппинге.</p>
+      <div class="mbs-capping-page__program">
+        <article class="mbs-capping-page__program-card">
+          <img src="https://static.tildacdn.com/tild3633-6638-4936-a436-333366613436/__.jpg" alt="Знакомство с лотами кофе на каппинге" loading="lazy">
+          <div class="mbs-capping-page__program-text">
+            <span>Шаг 1</span>
+            <h3>Знакомство с лотами</h3>
+            <p>Смотрим, что будем пробовать, откуда кофе и чем он может отличаться.</p>
+          </div>
+        </article>
+        <article class="mbs-capping-page__program-card">
+          <img src="https://static.tildacdn.com/tild6236-3034-4364-a239-343135303831/__.jpg" alt="Оценка аромата и вкуса кофе на каппинге" loading="lazy">
+          <div class="mbs-capping-page__program-text">
+            <span>Шаг 2</span>
+            <h3>Аромат и вкус</h3>
+            <p>Сравниваем сухой аромат, заваривание, кислотность, сладость и тело.</p>
+          </div>
+        </article>
+        <article class="mbs-capping-page__program-card">
+          <img src="https://static.tildacdn.com/tild3137-3739-4163-a435-386133656662/photo.jpg" alt="Обсуждение вкуса кофе с ведущим" loading="lazy">
+          <div class="mbs-capping-page__program-text">
+            <span>Шаг 3</span>
+            <h3>Обсуждение</h3>
+            <p>Разбираем впечатления, учимся отделять личное предпочтение от описания вкуса.</p>
+          </div>
+        </article>
+        <article class="mbs-capping-page__program-card">
+          <img src="https://static.tildacdn.com/tild3661-3365-4438-b038-346661333736/photo.jpg" alt="Выводы после дегустации кофе" loading="lazy">
+          <div class="mbs-capping-page__program-text">
+            <span>Шаг 4</span>
+            <h3>Выводы</h3>
+            <p>Фиксируем, что понравилось, какие профили ближе и как выбирать кофе дальше.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-capping-page__section mbs-capping-page__section--green" id="mbs-capping-schedule" aria-labelledby="mbs-capping-schedule-title">
+    <div class="mbs-capping-page__wrap">
+      <div class="mbs-capping-page__schedule-head">
+        <div>
+          <div class="mbs-capping-page__eyebrow">Онлайн-запись</div>
+          <h2 class="mbs-capping-page__title" id="mbs-capping-schedule-title">Выберите ближайший каппинг</h2>
+          <p class="mbs-capping-page__subtitle">Мы проводим каппинги с разными обжарочными компаниями, поэтому на каждой встрече можно открыть новые вкусы, лоты и подходы к кофе.</p>
+        </div>
+        <div class="mbs-capping-page__schedule-note">
+          <strong>Можно приходить регулярно</strong>
+          Обжарочные компании и подборки кофе меняются от встречи к встрече. Если подходящей даты нет, оставьте заявку в лист ожидания.
+        </div>
+      </div>
+      <div class="mbs-capping-page__widget-box">
+<!-- Вставьте в Tilda: Zero Block → HTML -->
+<link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+<link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+<link rel="preconnect" href="https://api.barista-school.ru" crossorigin>
+<link rel="dns-prefetch" href="https://api.barista-school.ru">
+<link rel="preconnect" href="https://159-194-202-120.sslip.io" crossorigin>
+<link rel="dns-prefetch" href="https://159-194-202-120.sslip.io">
+<div id="mbs-capping-widget" class="mbs-capping"
+     data-api-url="https://api.barista-school.ru/api/cuppings.json"
+     data-fallback-api-url="https://159-194-202-120.sslip.io/api-fallback/api/cuppings.json">
+  <noscript>
+    <section class="mbs-cap-noscript">
+      <h2>Расписание каппингов — Московская школа бариста</h2>
+      <p>Каппинги — это профессиональная дегустация кофе в Москве. Записывайтесь на ближайшие каппинги школы бариста.</p>
+      <p>Для просмотра актуального расписания включите JavaScript или перейдите на <a href="https://baristaschool.ru">сайт baristaschool.ru</a></p>
+    </section>
+  </noscript>
+</div>
+
+      </div>
+    </div>
+  </section>
+</div>

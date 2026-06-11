@@ -1,0 +1,313 @@
+<!--
+  MBS /capping — Tilda block 05 of 05
+  Назначение: служебный JS страницы — meta/canonical, FAQ-аккордеон, плавный скролл и попап связи.
+  Куда вставлять: последним HTML-блоком после блока 04.
+  Важно: без этого блока FAQ, плавный скролл и SEO-meta будут без интерактива.
+-->
+  <style id="mbs-capping-font-guard">
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
+
+    html body .mbs-capping-page,
+    html body .mbs-capping-page *,
+    html body .mbs-capping-page *::before,
+    html body .mbs-capping-page *::after,
+    html body .mbs-capping,
+    html body .mbs-capping *,
+    html body .mbs-capping *::before,
+    html body .mbs-capping *::after {
+      font-family: 'Mulish', Arial, sans-serif !important;
+    }
+
+    html body .mbs-capping-page h1,
+    html body .mbs-capping-page h2,
+    html body .mbs-capping-page h3,
+    html body .mbs-capping-page h4,
+    html body .mbs-capping-page p,
+    html body .mbs-capping-page span,
+    html body .mbs-capping-page a,
+    html body .mbs-capping-page button,
+    html body .mbs-capping-page strong,
+    html body .mbs-capping h1,
+    html body .mbs-capping h2,
+    html body .mbs-capping h3,
+    html body .mbs-capping h4,
+    html body .mbs-capping p,
+    html body .mbs-capping span,
+    html body .mbs-capping a,
+    html body .mbs-capping button,
+    html body .mbs-capping strong {
+      font-family: 'Mulish', Arial, sans-serif !important;
+    }
+  </style>
+  <script>
+    (function () {
+      var pageRoots = Array.prototype.slice.call(document.querySelectorAll('.mbs-capping-page'));
+      if (!pageRoots.length) return;
+      var MBS_FONT_FAMILY = "'Mulish', Arial, sans-serif";
+
+      function ensureMbsFontLoaded() {
+        if (document.getElementById('mbs-capping-mulish-font')) return;
+        var link = document.createElement('link');
+        link.id = 'mbs-capping-mulish-font';
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap';
+        document.head.appendChild(link);
+      }
+
+      function injectFontGuardStyle() {
+        if (document.getElementById('mbs-capping-runtime-font-guard')) return;
+        var style = document.createElement('style');
+        style.id = 'mbs-capping-runtime-font-guard';
+        style.textContent = "html body .mbs-capping-page,html body .mbs-capping-page *,html body .mbs-capping,html body .mbs-capping *{font-family:'Mulish',Arial,sans-serif!important;}";
+        document.head.appendChild(style);
+      }
+
+      function applyMbsFontGuard() {
+        ensureMbsFontLoaded();
+        injectFontGuardStyle();
+        Array.prototype.slice.call(document.querySelectorAll(
+          '.mbs-capping-page, .mbs-capping-page *, .mbs-capping, .mbs-capping *'
+        )).forEach(function (node) {
+          if (node && node.style && node.nodeType === 1) {
+            var current = node.style.getPropertyValue('font-family');
+            var priority = node.style.getPropertyPriority('font-family');
+            if (current !== MBS_FONT_FAMILY || priority !== 'important') {
+              node.style.setProperty('font-family', MBS_FONT_FAMILY, 'important');
+            }
+          }
+        });
+      }
+
+      applyMbsFontGuard();
+      setTimeout(applyMbsFontGuard, 300);
+      setTimeout(applyMbsFontGuard, 1000);
+      setTimeout(applyMbsFontGuard, 2500);
+      if (window.MutationObserver) {
+        var fontGuardTimer = null;
+        var fontObserver = new MutationObserver(function () {
+          clearTimeout(fontGuardTimer);
+          fontGuardTimer = setTimeout(applyMbsFontGuard, 30);
+        });
+        pageRoots.forEach(function (root) {
+          fontObserver.observe(root, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
+          });
+        });
+        var widgetNode = document.getElementById('mbs-capping-widget');
+        if (widgetNode) {
+          fontObserver.observe(widgetNode, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
+          });
+        }
+      }
+
+      function queryAll(selector) {
+        return pageRoots.reduce(function (nodes, root) {
+          return nodes.concat(Array.prototype.slice.call(root.querySelectorAll(selector)));
+        }, []);
+      }
+
+      function setMeta(name, content, attr) {
+        var selector = attr === 'property' ? 'meta[property="' + name + '"]' : 'meta[name="' + name + '"]';
+        var tag = document.querySelector(selector);
+        if (!tag) {
+          tag = document.createElement('meta');
+          tag.setAttribute(attr || 'name', name);
+          document.head.appendChild(tag);
+        }
+        tag.setAttribute('content', content);
+      }
+
+      function setCanonical(url) {
+        var link = document.querySelector('link[rel="canonical"]');
+        if (!link) {
+          link = document.createElement('link');
+          link.setAttribute('rel', 'canonical');
+          document.head.appendChild(link);
+        }
+        link.setAttribute('href', url);
+      }
+
+      try {
+        document.title = 'Каппинг кофе в Москве | Московская школа бариста';
+        setMeta('description', 'Каппинг в Московской школе бариста: профессиональная дегустация кофе, разбор вкуса, аромата, зерна и онлайн-запись на ближайшие даты.');
+        setMeta('og:title', 'Каппинг кофе в Москве', 'property');
+        setMeta('og:description', 'Пробуем кофе, сравниваем вкус и аромат, разбираем зерно и выбираем ближайшую дату каппинга.', 'property');
+        setMeta('og:type', 'website', 'property');
+        setMeta('og:url', 'https://baristaschool.ru/capping', 'property');
+        setMeta('og:image', 'https://static.tildacdn.com/tild3137-3334-4637-b163-343531303334/DSC04248_copy.jpg', 'property');
+        setMeta('og:site_name', 'Московская школа бариста', 'property');
+        setMeta('og:locale', 'ru_RU', 'property');
+        setMeta('twitter:card', 'summary_large_image');
+        setMeta('twitter:title', 'Каппинг кофе в Москве');
+        setMeta('twitter:description', 'Пробуем кофе, сравниваем вкус и аромат, разбираем зерно и выбираем ближайшую дату каппинга.');
+        setMeta('twitter:image', 'https://static.tildacdn.com/tild3137-3334-4637-b163-343531303334/DSC04248_copy.jpg');
+        setCanonical('https://baristaschool.ru/capping');
+      } catch (error) {}
+
+      var faqItems = queryAll('.mbs-capping-page__faq-item');
+      faqItems.forEach(function (item) {
+        var btn = item.querySelector('.mbs-capping-page__faq-question');
+        var body = item.querySelector('.mbs-capping-page__faq-body');
+        if (!btn || !body) return;
+        btn.addEventListener('click', function () {
+          var isOpen = item.classList.contains('is-open');
+          faqItems.forEach(function (other) {
+            var otherBody = other.querySelector('.mbs-capping-page__faq-body');
+            var otherBtn = other.querySelector('.mbs-capping-page__faq-question');
+            other.classList.remove('is-open');
+            if (otherBody) otherBody.style.maxHeight = '0px';
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('is-open');
+            body.style.maxHeight = body.scrollHeight + 'px';
+            btn.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+
+      queryAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          var href = link.getAttribute('href');
+          if (!href || href === '#') return;
+          var target = document.getElementById(href.slice(1));
+          if (!target) return;
+          event.preventDefault();
+          var reduceMotion = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
+
+      var overlay = document.querySelector('[data-mbs-capping-contact-overlay]');
+      var openers = queryAll('[data-mbs-capping-contact]');
+      var closeBtn = overlay ? overlay.querySelector('[data-mbs-capping-contact-close]') : null;
+      var lastFocus = null;
+      var parentScrollLocked = false;
+
+      if (overlay && overlay.parentNode !== document.body) {
+        document.body.appendChild(overlay);
+      }
+
+      function updateOverlayViewport() {
+        if (!overlay) return;
+        var modal = overlay.querySelector('.mbs-capping-page__contact-modal');
+        try {
+          if (window.parent && window.parent !== window && window.frameElement && window.parent.document) {
+            var frameRect = window.frameElement.getBoundingClientRect();
+            var parentHeight = window.parent.innerHeight || window.innerHeight || 700;
+            var visibleTop = Math.max(0, -frameRect.top);
+            overlay.style.position = 'absolute';
+            overlay.style.inset = 'auto';
+            overlay.style.left = '0';
+            overlay.style.right = '0';
+            overlay.style.top = visibleTop + 'px';
+            overlay.style.width = '100%';
+            overlay.style.height = parentHeight + 'px';
+            if (modal) modal.style.maxHeight = Math.max(parentHeight - 28, 260) + 'px';
+            return;
+          }
+        } catch (error) {}
+
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.left = '';
+        overlay.style.right = '';
+        overlay.style.top = '';
+        overlay.style.width = '';
+        overlay.style.height = '';
+        if (modal) modal.style.maxHeight = '';
+      }
+
+      function getFocusableNodes() {
+        if (!overlay) return [];
+        return Array.prototype.slice.call(overlay.querySelectorAll(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+        )).filter(function (node) {
+          return node.offsetParent !== null || node === document.activeElement;
+        });
+      }
+
+      function lockScroll() {
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        try {
+          if (window.parent && window.parent !== window && window.parent.document) {
+            window.parent.document.documentElement.style.overflow = 'hidden';
+            window.parent.document.body.style.overflow = 'hidden';
+            parentScrollLocked = true;
+          }
+        } catch (error) {}
+      }
+
+      function unlockScroll() {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        if (parentScrollLocked) {
+          try {
+            window.parent.document.documentElement.style.overflow = '';
+            window.parent.document.body.style.overflow = '';
+          } catch (error) {}
+          parentScrollLocked = false;
+        }
+      }
+
+      function openContact() {
+        if (!overlay) return;
+        lastFocus = document.activeElement;
+        updateOverlayViewport();
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+        lockScroll();
+        setTimeout(function () {
+          var first = overlay.querySelector('a, button');
+          if (first) first.focus();
+        }, 30);
+      }
+
+      function closeContact() {
+        if (!overlay) return;
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+        unlockScroll();
+        updateOverlayViewport();
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+
+      openers.forEach(function (btn) {
+        btn.addEventListener('click', openContact);
+      });
+      if (closeBtn) closeBtn.addEventListener('click', closeContact);
+      if (overlay) {
+        overlay.addEventListener('click', function (event) {
+          if (event.target === overlay) closeContact();
+        });
+      }
+      document.addEventListener('keydown', function (event) {
+        if (!overlay || !overlay.classList.contains('is-open')) return;
+        if (event.key === 'Escape') {
+          closeContact();
+          return;
+        }
+        if (event.key !== 'Tab') return;
+        var focusable = getFocusableNodes();
+        if (!focusable.length) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+    })();
+  </script>
