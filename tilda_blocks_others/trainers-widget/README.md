@@ -1,8 +1,8 @@
 # Trainers Widget — универсальный блок тренеров
 
-Самостоятельный Tilda-блок для вывода тренеров Московской школы бариста.
+Самостоятельные Tilda-блоки для вывода тренеров и наставников Московской школы бариста.
 
-Цель проекта: показывать на сайте актуальный список тренеров из yClients без ручного редактирования HTML. Tilda-блок не обращается в yClients напрямую и не содержит токены. Он читает публичный JSON, который должен собираться защищённым backend/cron-процессом.
+Цель проекта: показывать на сайте актуальные списки сотрудников из yClients без ручного редактирования HTML. Tilda-блоки не обращаются в yClients напрямую и не содержат токены. Они читают публичные JSON, которые собираются защищённым backend/cron-процессом.
 
 ## Файлы
 
@@ -10,6 +10,7 @@
 - `tilda-snippet.html` — тот же loader-сниппет без длинного комментария.
 - `trainers-widget.html` — актуальная hosted-версия блока: HTML/CSS/JS, которую loader подгружает с сервера.
 - `trainers-widget.js` — стабильный loader, который загружает `trainers-widget.html` и запускает скрипты внутри него.
+- `advisors-widget.html` — отдельный самодостаточный Tilda-блок наставников: HTML/CSS/JS в одном файле, читает `advisors.json`.
 - `DATA_CONTRACT.md` — контракт публичного JSON и правила сборки из yClients.
 - `overrides.example.json` — пример ручных правок по `staff_id`: фото, порядок, био, скрытие.
 - `mock/trainers.json` — тестовый JSON для локальной проверки структуры данных.
@@ -20,6 +21,7 @@
 yClients
   → backend/cron с токенами
   → публичный JSON https://api.barista-school.ru/api/trainers.json
+  → публичный JSON https://api.barista-school.ru/api/advisors.json
   → hosted widget https://api.barista-school.ru/api/trainers-widget.html
   → loader в Tilda
 ```
@@ -27,13 +29,13 @@ yClients
 Текущий backend-генератор находится в соседнем проекте:
 
 ```text
-/Users/romansuslin_1/Downloads/All_Code/schedule-online/basic-barista-booking/scripts/update_trainers.py
+/Users/Romka/Downloads/All_Code/schedule-online/basic-barista-booking/scripts/update_trainers.py
 ```
 
 Ручные фото, порядок, био и скрытие тренеров:
 
 ```text
-/Users/romansuslin_1/Downloads/All_Code/schedule-online/basic-barista-booking/trainers/overrides.json
+/Users/Romka/Downloads/All_Code/schedule-online/basic-barista-booking/trainers/overrides.json
 ```
 
 ## Источники данных
@@ -54,6 +56,21 @@ yClients
 - флаг скрытия.
 
 Фото из yClients не используем: они мелкие и плохого качества.
+
+## Правило показа наставников
+
+Отдельный блок `advisors-widget.html` показывает сотрудников из публичного JSON:
+
+```text
+https://api.barista-school.ru/api/advisors.json
+```
+
+Сотрудник попадает в `advisors.json`, если:
+
+- не уволен в yClients;
+- в поле yClients `Должность` (`position.title`) указано строго `Основатель школы` или `Управляющий`.
+
+Для наставников не подтягиваются отзывы, рейтинг, клиентские данные и записи. Описание берётся из `staff.information` в yClients, фото задаются вручную в backend-генераторе по имени сотрудника.
 
 ## Правило показа тренеров
 
@@ -118,3 +135,5 @@ scp trainers-widget.js root@5.35.93.225:/var/www/html/trainers-widget.js
 - Не вставлять yClients-токены в Tilda-блок.
 - Не публиковать телефоны, email и другие персональные данные клиентов в JSON.
 - Отзывы в публичном JSON должны содержать только имя автора, дату, рейтинг и текст отзыва.
+- `advisors.json` не должен содержать отзывы, рейтинг, телефоны, email, клиентские ID, записи, внутренние комментарии или технические поля yClients.
+- Frontend-блоки должны читать только публичные JSON на `api.barista-school.ru`, а не yClients API напрямую.

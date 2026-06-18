@@ -1,0 +1,429 @@
+<!-- ============================================================
+  TILDA BLOCK — MBS ADVISORS WIDGET
+  Отдельный блок наставников: public JSON → карточки → popup-профиль
+  Данные по умолчанию: https://api.barista-school.ru/api/advisors.json
+============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  .mbs-advisors-widget {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 72px 20px 68px;
+  }
+  .mbs-advisors-widget * { box-sizing: border-box; }
+  .mbs-advisors-widget__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-advisors-widget__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 14px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(231,242,227,0.95); color: #417033;
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-advisors-widget__title {
+    font-size: 34px; font-weight: 900; letter-spacing: -0.04em;
+    color: #1F1F1F; margin: 0 0 10px;
+  }
+  .mbs-advisors-widget__sub {
+    font-size: 16px; font-weight: 500; color: #555;
+    line-height: 1.55; margin: 0 0 34px;
+  }
+  .mbs-advisors-widget__grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px;
+    max-width: 860px;
+  }
+  .mbs-advisors-widget__state {
+    grid-column: 1 / -1; padding: 28px; border-radius: 18px;
+    background: #F5F5F5; color: #555; font-size: 15px; font-weight: 700;
+    line-height: 1.5; text-align: center;
+  }
+  .mbs-adw-card {
+    background: #F5F5F5; border-radius: 20px; overflow: hidden;
+    display: grid; grid-template-columns: 168px minmax(0, 1fr); width: 100%; min-height: 248px;
+    padding: 0; border: 0; text-align: left; cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .mbs-adw-card:hover,
+  .mbs-adw-card:focus-visible {
+    box-shadow: 0 10px 36px rgba(31,31,31,.1);
+    transform: translateY(-2px);
+  }
+  .mbs-adw-card:focus { outline: none; }
+  .mbs-adw-card:focus-visible { outline: 3px solid #B6D8AB; outline-offset: 3px; }
+  .mbs-adw-card__photo {
+    height: 100%; min-height: 248px; background: #E7F2E3; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mbs-adw-card__photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block;
+  }
+  .mbs-adw-card__placeholder {
+    width: 100%; height: 100%; display: grid; place-items: center;
+    color: #417033; font-size: 42px; font-weight: 900;
+  }
+  .mbs-adw-card__info {
+    min-width: 0; padding: 22px 22px 22px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .mbs-adw-card__name { font-size: 17px; font-weight: 900; color: #1F1F1F; line-height: 1.2; }
+  .mbs-adw-card__role { font-size: 13px; font-weight: 700; color: #4F883E; line-height: 1.35; }
+  .mbs-adw-card__summary {
+    margin-top: 6px; color: #555; font-size: 13px; font-weight: 600;
+    line-height: 1.45; overflow-wrap: anywhere;
+  }
+  .mbs-adw-card__more {
+    display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+    margin-top: auto; padding-top: 12px; color: #417033; font-size: 12px; font-weight: 900;
+  }
+  .mbs-adw-card__more i { font-size: 14px; transition: transform .2s; }
+  .mbs-adw-card:hover .mbs-adw-card__more i,
+  .mbs-adw-card:focus-visible .mbs-adw-card__more i { transform: translateX(2px); }
+  .mbs-adw-bio-p {
+    margin: 0 0 10px;
+  }
+  .mbs-adw-bio-heading {
+    margin: 16px 0 7px;
+    color: #1F1F1F;
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1.35;
+  }
+  .mbs-adw-bio-heading:first-child {
+    margin-top: 0;
+  }
+  .mbs-adw-bio-list {
+    margin: 0 0 12px;
+    padding-left: 18px;
+    display: grid;
+    gap: 5px;
+  }
+  .mbs-adw-bio-list li {
+    padding-left: 2px;
+  }
+
+  @media (max-width: 900px) {
+    .mbs-advisors-widget { padding: 64px 14px; }
+    .mbs-advisors-widget__title { font-size: 26px; }
+    .mbs-advisors-widget__grid { max-width: 430px; gap: 16px; }
+    .mbs-adw-card {
+      display: flex; flex-direction: column; min-height: 100%;
+    }
+    .mbs-adw-card__photo { aspect-ratio: 3/4; height: auto; min-height: 0; }
+    .mbs-adw-card__info { padding: 16px 18px 20px; gap: 4px; }
+    .mbs-adw-card__name { font-size: 15px; font-weight: 800; line-height: 1.25; }
+    .mbs-adw-card__role { font-size: 12px; font-weight: 600; line-height: 1.4; }
+    .mbs-adw-card__summary { display: none; }
+    .mbs-adw-card__more { margin-top: 10px; padding-top: 0; }
+  }
+  @media (max-width: 520px) {
+    .mbs-advisors-widget__grid { max-width: none; }
+  }
+</style>
+
+<section class="mbs-advisors-widget"
+         data-mbs-advisors-widget
+         data-advisors-api-url="https://api.barista-school.ru/api/advisors.json">
+  <div class="mbs-advisors-widget__wrap">
+    <div class="mbs-advisors-widget__label">
+      <i class="ph ph-compass-tool"></i>
+      Наставники
+    </div>
+    <h2 class="mbs-advisors-widget__title">Опыт запуска и управления кофейными проектами</h2>
+    <p class="mbs-advisors-widget__sub">
+      Основатель и управляющая MBS помогают смотреть на обучение шире: от навыков команды до устойчивой работы кофейни.
+    </p>
+    <div class="mbs-advisors-widget__grid" data-advisors-grid>
+      <div class="mbs-advisors-widget__state">Загружаем наставников...</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var DEFAULT_API_URL = 'https://api.barista-school.ru/api/advisors.json';
+    var store = window.__mbsAdvisorsWidgetStore || { byId: {} };
+    window.__mbsAdvisorsWidgetStore = store;
+    var ui = null;
+    var lastTrigger = null;
+    var returnFocusOnClose = false;
+
+    function esc(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char];
+      });
+    }
+
+    function cleanBio(value) {
+      var text = String(value || '');
+      for (var i = 0; i < 2; i++) {
+        var textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        text = textarea.value;
+      }
+      return text.split(/\r?\n/).map(function (line) {
+        return line.replace(/\s+/g, ' ').trim();
+      }).filter(Boolean).join('\n');
+    }
+
+    function advisorSummary(advisor) {
+      var name = String(advisor.name || '');
+      if (name.indexOf('Роман Суслин') !== -1) {
+        return 'Запуск кофеен, обучение команд и стратегия развития школы.';
+      }
+      if (name.indexOf('Анастасия Кадушкина') !== -1) {
+        return 'Управление командой, операционные процессы и чемпионаты.';
+      }
+      return 'Практический опыт запуска и развития кофейных проектов.';
+    }
+
+    function isHeadingLine(line) {
+      return /^(Интересные факты|Управление и проекты|Чемпионаты и судейство)$/i.test(line);
+    }
+
+    function renderBioHtml(value) {
+      var lines = cleanBio(value).split('\n').filter(Boolean);
+      if (!lines.length) return '';
+
+      var html = '';
+      var listOpen = false;
+
+      function closeList() {
+        if (!listOpen) return;
+        html += '</ul>';
+        listOpen = false;
+      }
+
+      lines.forEach(function (line) {
+        var bullet = line.match(/^\s*[-–—]\s+(.+)$/);
+
+        if (isHeadingLine(line)) {
+          closeList();
+          html += '<div class="mbs-adw-bio-heading">' + esc(line) + '</div>';
+          return;
+        }
+
+        if (bullet) {
+          if (!listOpen) {
+            html += '<ul class="mbs-adw-bio-list">';
+            listOpen = true;
+          }
+          html += '<li>' + esc(bullet[1]) + '</li>';
+          return;
+        }
+
+        closeList();
+        html += '<p class="mbs-adw-bio-p">' + esc(line) + '</p>';
+      });
+
+      closeList();
+      return html;
+    }
+
+    function normalizeAdvisor(item) {
+      return {
+        id: String(item.staff_id || item.id || item.name || ''),
+        staffId: item.staff_id || item.id || '',
+        name: item.name || 'Наставник MBS',
+        position: item.position || 'Наставник MBS',
+        photo: item.photo || '',
+        bio: item.bio || ''
+      };
+    }
+
+    function setState(grid, text) {
+      grid.innerHTML = '<div class="mbs-advisors-widget__state">' + esc(text) + '</div>';
+    }
+
+    function photoHtml(advisor, className) {
+      if (advisor.photo) {
+        return '<img src="' + esc(advisor.photo) + '" alt="' + esc(advisor.name) + '" loading="lazy">';
+      }
+      return '<div class="' + className + '">' + esc((advisor.name || 'M').charAt(0)) + '</div>';
+    }
+
+    function renderCards(root, advisors) {
+      var grid = root.querySelector('[data-advisors-grid]');
+      if (!grid) return;
+
+      if (!advisors.length) {
+        setState(grid, 'Сейчас нет наставников для отображения.');
+        return;
+      }
+
+      grid.innerHTML = advisors.map(function (advisor) {
+        store.byId[advisor.id] = advisor;
+        return '' +
+          '<button class="mbs-adw-card js-mbs-adw-open" type="button" data-advisor-id="' + esc(advisor.id) + '" aria-label="Смотреть профиль: ' + esc(advisor.name) + '">' +
+            '<div class="mbs-adw-card__photo">' + photoHtml(advisor, 'mbs-adw-card__placeholder') + '</div>' +
+            '<div class="mbs-adw-card__info">' +
+              '<div class="mbs-adw-card__name">' + esc(advisor.name) + '</div>' +
+              '<div class="mbs-adw-card__role">' + esc(advisor.position) + '</div>' +
+              '<div class="mbs-adw-card__summary">' + esc(advisorSummary(advisor)) + '</div>' +
+              '<span class="mbs-adw-card__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>' +
+            '</div>' +
+          '</button>';
+      }).join('');
+    }
+
+    function lockTouch(event) {
+      if (!ui || !ui.panel.contains(event.target)) event.preventDefault();
+    }
+
+    function createModal() {
+      if (ui) return ui;
+
+      var backdrop = document.createElement('div');
+      backdrop.id = 'mbs-adw-profile-backdrop';
+      backdrop.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(31,31,31,.58);display:none;opacity:0;transition:opacity .22s ease;overflow:hidden;touch-action:none;';
+
+      var modal = document.createElement('div');
+      modal.id = 'mbs-adw-profile-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'mbs-adw-profile-title');
+      modal.style.cssText = 'position:fixed;z-index:99999;top:50%;left:50%;width:min(1040px,calc(100vw - 80px));max-height:calc(100vh - 80px);overflow:hidden;box-sizing:border-box;background:#fff;border:6px solid #E7F2E3;border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.24);display:none;opacity:0;transform:translate(-50%,-50%) translateY(14px);transition:opacity .22s ease,transform .22s ease;font-family:Mulish,sans-serif;color:#1F1F1F;overscroll-behavior:contain;touch-action:pan-y;';
+
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Закрыть профиль наставника');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:2;width:38px;min-width:38px;height:38px;min-height:38px;box-sizing:border-box;padding:0;border:0;border-radius:50%;background:#F5F5F5;color:#1F1F1F;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;font-family:Arial,sans-serif;';
+
+      var content = document.createElement('div');
+      content.style.cssText = 'box-sizing:border-box;display:grid;grid-template-columns:340px minmax(0,1fr);gap:34px;align-items:start;padding:32px 46px 32px 32px;max-height:calc(100vh - 80px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;';
+
+      modal.appendChild(closeBtn);
+      modal.appendChild(content);
+      document.body.appendChild(backdrop);
+      document.body.appendChild(modal);
+
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', closeModal);
+
+      ui = { backdrop: backdrop, modal: modal, panel: modal, content: content, closeBtn: closeBtn };
+      return ui;
+    }
+
+    function renderProfile(advisor) {
+      var isMobile = window.matchMedia('(max-width: 680px)').matches;
+      var photoHeight = isMobile ? 260 : 460;
+      var photoFit = isMobile ? 'contain' : 'cover';
+      var bioHtml = renderBioHtml(advisor.bio);
+
+      ui.modal.style.width = isMobile ? 'min(860px, calc(100vw - 32px))' : 'min(1040px, calc(100vw - 80px))';
+      ui.modal.style.maxHeight = isMobile ? 'calc(100vh - 32px)' : 'calc(100vh - 80px)';
+      ui.modal.style.boxSizing = 'border-box';
+      ui.modal.style.overflow = 'hidden';
+      ui.modal.style.overflowX = 'hidden';
+      ui.modal.style.overflowY = 'hidden';
+      ui.modal.style.overscrollBehavior = 'contain';
+      ui.modal.style.touchAction = 'pan-y';
+      ui.content.style.cssText = isMobile
+        ? 'box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);gap:18px;padding:18px 18px 22px 18px;min-width:0;width:100%;max-width:100%;max-height:calc(100vh - 32px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;'
+        : 'box-sizing:border-box;display:grid;grid-template-columns:340px minmax(0,1fr);gap:34px;align-items:start;padding:32px 46px 32px 32px;min-width:0;width:100%;max-width:100%;max-height:calc(100vh - 80px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;';
+
+      ui.modal.style.borderRadius = isMobile ? '22px' : '24px';
+      ui.content.innerHTML =
+        '<div style="box-sizing:border-box;border-radius:18px;overflow:hidden;background:#E7F2E3;height:' + photoHeight + 'px;min-width:0;max-width:100%;">' +
+          (advisor.photo
+            ? '<img src="' + esc(advisor.photo) + '" alt="' + esc(advisor.name) + '" style="width:100%;height:100%;object-fit:' + photoFit + ';object-position:center top;display:block;">'
+            : '<div style="width:100%;height:100%;display:grid;place-items:center;color:#417033;font-size:64px;font-weight:900;">' + esc((advisor.name || 'M').charAt(0)) + '</div>') +
+        '</div>' +
+        '<div style="box-sizing:border-box;padding:' + (isMobile ? '0' : '10px 0 6px 0') + ';min-width:0;width:100%;max-width:100%;overflow-x:hidden;">' +
+          '<div style="box-sizing:border-box;display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;padding:7px 14px;border-radius:999px;background:#E7F2E3;color:#417033;font-size:13px;font-weight:900;max-width:100%;">Наставник MBS</div>' +
+          '<h3 id="mbs-adw-profile-title" style="margin:0 ' + (isMobile ? '44px' : '18px') + ' 8px 0;color:#1F1F1F;font-size:' + (isMobile ? '28px' : '34px') + ';line-height:1;font-weight:900;letter-spacing:-.04em;">' + esc(advisor.name) + '</h3>' +
+          '<div style="margin-bottom:18px;color:#4F883E;font-size:14px;font-weight:800;line-height:1.35;">' + esc(advisor.position) + '</div>' +
+          (bioHtml
+            ? '<div class="mbs-adw-bio" style="box-sizing:border-box;max-width:100%;overflow-wrap:anywhere;color:#555;font-size:15px;font-weight:500;line-height:1.58;">' + bioHtml + '</div>'
+            : '<div style="background:#F5F5F5;border-radius:14px;padding:16px;color:#555;font-size:13px;font-weight:700;">Описание скоро появится.</div>') +
+        '</div>';
+    }
+
+    function openModal(advisor, trigger, shouldReturnFocus) {
+      createModal();
+      lastTrigger = trigger || null;
+      returnFocusOnClose = !!shouldReturnFocus;
+      renderProfile(advisor);
+      ui.backdrop.style.display = 'block';
+      ui.modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('touchmove', lockTouch, { passive: false });
+      ui.backdrop.offsetHeight;
+      ui.backdrop.style.opacity = '1';
+      ui.modal.style.opacity = '1';
+      ui.modal.style.transform = 'translate(-50%,-50%) translateY(0)';
+      ui.closeBtn.focus();
+    }
+
+    function closeModal() {
+      if (!ui || ui.modal.style.display === 'none') return;
+      ui.backdrop.style.opacity = '0';
+      ui.modal.style.opacity = '0';
+      ui.modal.style.transform = 'translate(-50%,-50%) translateY(14px)';
+      document.body.style.overflow = '';
+      document.removeEventListener('touchmove', lockTouch);
+      setTimeout(function () {
+        ui.backdrop.style.display = 'none';
+        ui.modal.style.display = 'none';
+        if (returnFocusOnClose && lastTrigger) lastTrigger.focus();
+        returnFocusOnClose = false;
+      }, 230);
+    }
+
+    function loadAdvisors(root) {
+      if (!root || root.getAttribute('data-mbs-advisors-loaded') === 'true') return;
+      root.setAttribute('data-mbs-advisors-loaded', 'true');
+
+      var grid = root.querySelector('[data-advisors-grid]');
+      if (!grid) return;
+
+      var apiUrl = root.getAttribute('data-advisors-api-url') || DEFAULT_API_URL;
+      var url = new URL(apiUrl, window.location.href);
+      url.searchParams.set('_', String(Date.now()));
+
+      fetch(url.toString(), { cache: 'no-store' })
+        .then(function (resp) {
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          return resp.json();
+        })
+        .then(function (data) {
+          var advisors = (Array.isArray(data.advisors) ? data.advisors : []).map(normalizeAdvisor);
+          renderCards(root, advisors);
+        })
+        .catch(function () {
+          setState(grid, 'Не удалось загрузить наставников. Попробуйте обновить страницу позже.');
+        });
+    }
+
+    function init() {
+      Array.prototype.forEach.call(document.querySelectorAll('[data-mbs-advisors-widget]'), loadAdvisors);
+    }
+
+    if (!window.__mbsAdvisorsWidgetEventsReady) {
+      window.__mbsAdvisorsWidgetEventsReady = true;
+      document.addEventListener('click', function (event) {
+        var trigger = event.target.closest('.js-mbs-adw-open');
+        if (!trigger) return;
+        var advisor = store.byId[trigger.getAttribute('data-advisor-id')];
+        if (!advisor) return;
+        openModal(advisor, trigger, event.detail === 0);
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') closeModal();
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

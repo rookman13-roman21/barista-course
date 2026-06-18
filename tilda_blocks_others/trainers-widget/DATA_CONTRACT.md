@@ -1,6 +1,6 @@
 # Data Contract — Trainers Widget
 
-## Public JSON
+## Trainers Public JSON
 
 Публичный файл:
 
@@ -51,6 +51,40 @@ https://api.barista-school.ru/api/trainers.json
 }
 ```
 
+## Advisors Public JSON
+
+Публичный файл:
+
+```text
+https://api.barista-school.ru/api/advisors.json
+```
+
+Формат:
+
+```json
+{
+  "updated_at": "2026-06-18T23:40:49+03:00",
+  "advisors": [
+    {
+      "staff_id": 1322544,
+      "name": "Роман Суслин",
+      "position": "Основатель школы",
+      "photo": "https://static.tildacdn.com/...",
+      "bio": "Описание из yClients staff.information"
+    }
+  ]
+}
+```
+
+Правила:
+
+- источник сотрудников: `GET /company/{companyId}/staff/`;
+- фильтровать сотрудников по `position.title`, где значение строго равно `Основатель школы` или `Управляющий`;
+- не использовать поле `specialization` для отбора наставников;
+- брать описание из `staff.information` в yClients, очищая HTML-разметку;
+- брать фото только из backend-списка ручных фото по имени сотрудника;
+- не отдавать `reviews`, `reviews_count`, `rating`, клиентские данные, телефоны, email, записи и внутренние технические поля yClients.
+
 ## Backend сборка
 
 Источник сотрудников:
@@ -90,6 +124,8 @@ GET /comments/{companyId}
 - ID клиентов;
 - внутренние комментарии записей;
 - технические поля yClients, не нужные для сайта.
+
+Для `advisors.json` дополнительно нельзя отдавать отзывы, рейтинг и данные записей. Сейчас публичный состав полей ограничен `updated_at`, `staff_id`, `name`, `position`, `photo`, `bio`.
 
 ## Frontend fallback
 
