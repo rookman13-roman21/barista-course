@@ -1,0 +1,146 @@
+<!--
+  MBS coffee_accounting_webinar — Tilda block 03 of 05
+  Назначение: обновление даты и CTA из публичного JSON расписания.
+-->
+<script>
+(function () {
+  var API_URL = 'https://api.barista-school.ru/api/coffee-accounting-webinar.json';
+  var FALLBACK_API_URL = 'https://159-194-202-120.sslip.io/api/coffee-accounting-webinar.json';
+  var FALLBACK_EVENT_START_ISO = '2026-06-25T19:30:00+03:00';
+  var FALLBACK_DATE_LABEL = '25 июня';
+  var FALLBACK_TIME_LABEL = '19:30';
+  var FALLBACK_BOOKING_URL = 'https://b829827.yclients.com/company/453962/activity/info/44746455?o=m-1act2026-06-25aid44746455c1';
+  var WAITING_LIST = '#waiting_list';
+
+  function isSafeYclientsUrl(url) {
+    try {
+      var parsed = new URL(url, window.location.href);
+      return parsed.protocol === 'https:' && /(^|\.)yclients\.com$/i.test(parsed.hostname);
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function getDateTimeLabel(data) {
+    var date = data.dateLabel || FALLBACK_DATE_LABEL;
+    var time = data.timeLabel || FALLBACK_TIME_LABEL;
+    return data.dateTimeLabel || (date && time ? date + ', ' + time : date || time || '');
+  }
+
+  function getEventStartMs(data) {
+    var value = data.eventStartIso || data.startDate || FALLBACK_EVENT_START_ISO;
+    var ms = new Date(value).getTime();
+    return isNaN(ms) ? new Date(FALLBACK_EVENT_START_ISO).getTime() : ms;
+  }
+
+  function applyDateLabels(data) {
+    var label = getDateTimeLabel(data);
+    if (!label) return;
+
+    document.querySelectorAll('[data-caw-date-time]').forEach(function (node) {
+      node.textContent = label;
+    });
+  }
+
+  function updateMetaDescription(data) {
+    var date = data.dateLabel || FALLBACK_DATE_LABEL;
+    var description = 'Вебинар ' + date + ' для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.';
+    var nodes = [
+      document.querySelector('meta[name="description"]'),
+      document.querySelector('meta[property="og:description"]'),
+      document.querySelector('meta[name="twitter:description"]')
+    ];
+
+    nodes.forEach(function (node) {
+      if (node) node.setAttribute('content', description);
+    });
+  }
+
+  function updateJsonLd(data) {
+    var startDate = data.eventStartIso || data.startDate;
+    if (!startDate && !data.bookingUrl && !data.soldOut) return;
+
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(function (script) {
+      var json;
+      try {
+        json = JSON.parse(script.textContent || '{}');
+      } catch (error) {
+        return;
+      }
+
+      var graph = Array.isArray(json['@graph']) ? json['@graph'] : [json];
+      graph.forEach(function (item) {
+        if (!item || item['@type'] !== 'Event') return;
+        if (startDate) item.startDate = startDate;
+        if (data.bookingUrl && item.offers) item.offers.url = data.bookingUrl;
+        if (item.offers) {
+          item.offers.availability = data.soldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock';
+        }
+      });
+
+      script.textContent = JSON.stringify(json, null, 2);
+    });
+  }
+
+  function updateBookingButtons(data) {
+    var buttons = document.querySelectorAll('.js-mbs-caw-booking');
+    if (!buttons.length) return;
+
+    var isPast = data.isPast === true || Date.now() >= getEventStartMs(data);
+    var bookingUrl = data.bookingUrl || FALLBACK_BOOKING_URL;
+    var safeBookingUrl = isSafeYclientsUrl(bookingUrl) ? bookingUrl : WAITING_LIST;
+    var shouldWait = data.found === false || data.soldOut === true || isPast || safeBookingUrl === WAITING_LIST;
+
+    buttons.forEach(function (button) {
+      if (shouldWait) {
+        button.setAttribute('href', WAITING_LIST);
+        button.removeAttribute('target');
+        button.removeAttribute('rel');
+        button.textContent = button.getAttribute('data-after-text') || 'Лист ожидания';
+      } else {
+        button.setAttribute('href', safeBookingUrl);
+        button.setAttribute('target', '_blank');
+        button.setAttribute('rel', 'noopener noreferrer');
+        button.textContent = button.getAttribute('data-before-text') || 'Записаться на вебинар';
+      }
+    });
+  }
+
+  function applyEventData(data) {
+    var normalized = data && typeof data === 'object' ? data : {};
+    applyDateLabels(normalized);
+    updateMetaDescription(normalized);
+    updateJsonLd(normalized);
+    updateBookingButtons(normalized);
+  }
+
+  function fetchJson(url) {
+    return fetch(url, { method: 'GET', cache: 'no-cache' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Bad response');
+        return response.json();
+      });
+  }
+
+  function loadEventData() {
+    if (!window.fetch) {
+      applyEventData({});
+      return;
+    }
+
+    fetchJson(API_URL)
+      .catch(function () {
+        return fetchJson(FALLBACK_API_URL);
+      }).then(applyEventData)
+      .catch(function () {
+        applyEventData({});
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadEventData);
+  } else {
+    loadEventData();
+  }
+})();
+</script>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Налоги и финансы в общепите 2026 — вебинар МШБ</title>
+  <meta name="description" content="Вебинар 25 июня для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.">
+  <link rel="canonical" href="https://baristaschool.ru/coffee_accounting_webinar">
+  <meta property="og:image" content="https://static.tildacdn.com/tild6266-6338-4136-b462-383734383864/image.png">
+  <style>
+    body {
+      margin: 0;
+      background: #f5f5f5;
+      color: #1f1f1f;
+      font-family: Arial, sans-serif;
+    }
+
+    .template-preview-notice {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 18px 20px;
+      color: #555;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="template-preview-notice">
+    Локальное превью страницы <code>/coffee_accounting_webinar</code>. В Tilda вставлять блоки из <code>tilda-blocks/</code> строго по порядку <code>00 → 05</code>.
+  </div>
+  <div id="mbs-template-preview-root"></div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('mbs-template-preview-root');
+      var files = [
+        './tilda-blocks/00-seo-and-page-styles.html',
+        './tilda-blocks/01-top-content.html',
+        './tilda-blocks/02-schedule-widget-styles.html',
+        './tilda-blocks/03-schedule-widget-script.html',
+        './tilda-blocks/04-bottom-content.html',
+        './tilda-blocks/05-page-scripts.html'
+      ];
+
+      function appendHtml(html) {
+        var template = document.createElement('template');
+        template.innerHTML = html;
+        Array.prototype.slice.call(template.content.childNodes).forEach(function (node) {
+          if (node.tagName === 'SCRIPT') {
+            var script = document.createElement('script');
+            Array.prototype.slice.call(node.attributes).forEach(function (attr) {
+              script.setAttribute(attr.name, attr.value);
+            });
+            script.textContent = node.textContent;
+            document.body.appendChild(script);
+          } else {
+            root.appendChild(node);
+          }
+        });
+      }
+
+      files.reduce(function (chain, file) {
+        return chain.then(function () {
+          return fetch(file).then(function (response) {
+            if (!response.ok) throw new Error(file + ': ' + response.status);
+            return response.text();
+          }).then(appendHtml);
+        });
+      }, Promise.resolve()).catch(function (error) {
+        root.innerHTML = '<div class="template-preview-notice">Не удалось загрузить блоки: ' + error.message + '</div>';
+      });
+    })();
+  </script>
+</body>
+</html>
