@@ -1,0 +1,368 @@
+<!-- MBS Mixology Recipes — static catalog prototype for Tilda -->
+<div id="mbs-sd-catalog-root" class="mbs-sd mbs-sd--catalog">
+  <section class="mbs-sd-hero" aria-labelledby="mbs-sd-hero-title">
+    <div class="mbs-sd-hero__media" aria-hidden="true"></div>
+    <div class="mbs-sd-hero__overlay"></div>
+    <div class="mbs-sd-hero__inner">
+      <span class="mbs-sd-pill mbs-sd-pill--light">MBS MIXOLOGY CUP · авторские рецепты</span>
+      <h1 id="mbs-sd-hero-title">Рецепты напитков от участников MBS MIXOLOGY CUP</h1>
+      <p>Чемпионские рецепты, сезонные дропы и авторские напитки сильных миксологов для кофеен разных форматов: от быстрых летних позиций до сложных гастрономичных подач.</p>
+      <div class="mbs-sd-hero__actions">
+        <a class="mbs-sd-btn mbs-sd-btn--primary" href="#mbs-sd-catalog">Смотреть рецепты</a>
+        <a class="mbs-sd-btn mbs-sd-btn--light" href="#mbs-sd-included">Что получает кофейня</a>
+      </div>
+      <div class="mbs-sd-hero__facts" aria-label="Ключевые преимущества">
+        <span>участники чемпионата</span>
+        <span>оценки и авторы</span>
+        <span>техкарты, видео, поставщики</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-sd-section mbs-sd-section--white" aria-labelledby="mbs-sd-benefits-title">
+    <div class="mbs-sd-wrap">
+      <span class="mbs-sd-pill">Витрина рецептов</span>
+      <div class="mbs-sd-section__head">
+        <h2 id="mbs-sd-benefits-title">Здесь собраны напитки миксологов, которые умеют создавать меню</h2>
+        <p>Мы показываем не случайные идеи, а рецепты участников MBS MIXOLOGY CUP: напитки с понятным авторством, сезонностью, оценками и материалами для запуска в кофейне.</p>
+      </div>
+      <div class="mbs-sd-benefits">
+        <article><b>Чемпионские рецепты</b><span>Позиции от участников и призёров MBS MIXOLOGY CUP с оценками и связью с конкурсом.</span></article>
+        <article><b>Сезонные дропы</b><span>Летние, зимние и тематические подборки под конкретный спрос и период продаж.</span></article>
+        <article><b>Выбор по автору</b><span>Можно собрать несколько рецептов одного миксолога или комбинировать напитки разных авторов.</span></article>
+        <article><b>Под формат кофейни</b><span>Простые и сложные напитки для маленьких кофеен, больших проектов и авторских меню.</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-sd-section mbs-sd-section--gray" id="mbs-sd-catalog" aria-labelledby="mbs-sd-catalog-title">
+    <div class="mbs-sd-wrap">
+      <div class="mbs-sd-section__head mbs-sd-section__head--row">
+        <div>
+          <span class="mbs-sd-pill">Каталог</span>
+          <h2 id="mbs-sd-catalog-title">Выберите рецепты под сезон, автора и формат кофейни</h2>
+        </div>
+        <p>В прототипе данные статические. На следующем этапе эти же поля можно будет подключить к опубликованным рецептам из Coffee_menu и кабинету автора.</p>
+      </div>
+      <div class="mbs-sd-toolbar" aria-label="Фильтры каталога">
+        <input class="mbs-sd-field" type="search" placeholder="Поиск по названию, автору, вкусу или ингредиенту" data-mbs-sd-filter="query">
+        <select class="mbs-sd-field" data-mbs-sd-filter="author"><option value="">Все авторы</option></select>
+        <select class="mbs-sd-field" data-mbs-sd-filter="season"><option value="">Все сезоны</option></select>
+        <select class="mbs-sd-field" data-mbs-sd-filter="format"><option value="">Любой формат</option></select>
+        <button class="mbs-sd-btn mbs-sd-btn--ghost" type="button" data-mbs-sd-clear>Сбросить</button>
+      </div>
+      <div class="mbs-sd-grid" data-mbs-sd-grid></div>
+    </div>
+  </section>
+
+  <section class="mbs-sd-section mbs-sd-section--white" aria-labelledby="mbs-sd-flow-title">
+    <div class="mbs-sd-wrap">
+      <span class="mbs-sd-pill">Внедрение</span>
+      <h2 id="mbs-sd-flow-title">Как кофейня запускает рецепт после покупки</h2>
+      <div class="mbs-sd-steps">
+        <article><span>01</span><b>Выбираете автора и напиток</b><p>Смотрите preview, сезон, сложность, вкус, оценку и для какого формата кофейни подходит рецепт.</p></article>
+        <article><span>02</span><b>Получаете материалы</b><p>В личном кабинете открываются техкарта, видео процесса, список ингредиентов и контакты поставщиков.</p></article>
+        <article><span>03</span><b>Проводите проработку</b><p>Команда проверяет вкус, стабильность, отдачу на баре и подачу перед вводом в меню.</p></article>
+        <article><span>04</span><b>Запускаете с поддержкой</b><p>Школа помогает на этапе внедрения, если появляются вопросы по ингредиентам, технологии или адаптации.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-sd-section mbs-sd-section--green" id="mbs-sd-included" aria-labelledby="mbs-sd-included-title">
+    <div class="mbs-sd-wrap mbs-sd-included">
+      <div>
+        <span class="mbs-sd-pill">Что входит</span>
+        <h2 id="mbs-sd-included-title">Покупаете не картинку напитка, а комплект для запуска</h2>
+        <p>До покупки показываем продающий preview. Полная технология, граммовки и рабочие материалы открываются только после оформления доступа.</p>
+      </div>
+      <div class="mbs-sd-included__grid">
+        <article>Технологическая карта</article>
+        <article>Видео процесса приготовления</article>
+        <article>Контакты поставщиков ингредиентов</article>
+        <article>Доступ в личный кабинет</article>
+        <article>Рекомендации по внедрению</article>
+        <article>Поддержка школы при запуске</article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-sd-section mbs-sd-section--white" aria-labelledby="mbs-sd-authors-title">
+    <div class="mbs-sd-wrap">
+      <span class="mbs-sd-pill">Авторы</span>
+      <h2 id="mbs-sd-authors-title">Миксологи, которые создают рецепты на сильных ингредиентах</h2>
+      <p class="mbs-sd-lead">Витрина строится вокруг участников MBS MIXOLOGY CUP. У одного автора может быть несколько рецептов, а кофейня сможет собрать подборку из напитков разных авторов под свой сезон и формат.</p>
+      <div class="mbs-sd-authors">
+        <article><b>Дмитрий Безсметрный</b><span>участник MBS MIXOLOGY CUP</span></article>
+        <article><b>Валерия Батыршина</b><span>участник MBS MIXOLOGY CUP</span></article>
+        <article><b>Данила Макаров</b><span>призёр MBS MIXOLOGY CUP</span></article>
+        <article><b>Артём Янин</b><span>участник MBS MIXOLOGY CUP</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-sd-section mbs-sd-section--white" aria-labelledby="mbs-sd-final-title">
+    <div class="mbs-sd-wrap">
+      <div class="mbs-sd-final">
+        <span class="mbs-sd-pill">Подборка под меню</span>
+        <h2 id="mbs-sd-final-title">Можно начать с одного рецепта или собрать дроп из нескольких авторов</h2>
+        <p>Выберите напиток в каталоге, изучите preview и перейдите на страницу рецепта. Корзины в этой версии нет: покупку и доступ к материалам подключим отдельным этапом после утверждения страницы.</p>
+        <div class="mbs-sd-final__actions">
+          <a class="mbs-sd-btn mbs-sd-btn--primary" href="#mbs-sd-catalog">Смотреть каталог</a>
+          <a class="mbs-sd-btn mbs-sd-btn--ghost" href="#mbs-sd-included">Что входит после покупки</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@500;600;700;800;900&display=swap');
+  #mbs-sd-catalog-root,
+  #mbs-sd-catalog-root * { box-sizing: border-box; }
+  #mbs-sd-catalog-root {
+    --mbs-green-dark:#417033; --mbs-green:#4F883E; --mbs-green-light:#B6D8AB; --mbs-bg-green:#E7F2E3;
+    --mbs-red:#CC2841; --mbs-red-soft:#D83D54; --mbs-bg:#F5F5F5; --mbs-black:#1F1F1F; --mbs-gray:#555; --mbs-white:#fff;
+    font-family: Mulish, Arial, sans-serif; color: var(--mbs-black); background: var(--mbs-white);
+  }
+  #mbs-sd-catalog-root a { color: inherit; }
+  .mbs-sd-wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-sd-section { padding: 88px 20px; }
+  .mbs-sd-section--white { background: #fff; }
+  .mbs-sd-section--gray { background: #f5f5f5; }
+  .mbs-sd-section--green { background: #e7f2e3; }
+  .mbs-sd-hero { position: relative; min-height: 660px; display: flex; align-items: end; overflow: hidden; background: #1f1f1f; }
+  .mbs-sd-hero__media { position: absolute; inset: 0; background: url('https://static.tildacdn.com/tild3066-3765-4262-a438-396233663362/ComfyUI_00120_.png') center/cover no-repeat; transform: scale(1.02); }
+  .mbs-sd-hero__overlay { position: absolute; inset: 0; background: rgba(31,31,31,.52); }
+  .mbs-sd-hero__inner { position: relative; z-index: 1; width: min(1100px, calc(100% - 40px)); margin: 0 auto; padding: 88px 0; color: #fff; }
+  .mbs-sd-hero h1 { max-width: 900px; margin: 0; font-size: 68px; line-height: .98; font-weight: 900; letter-spacing: 0; }
+  .mbs-sd-hero p { max-width: 760px; margin: 22px 0 0; font-size: 22px; line-height: 1.34; font-weight: 700; }
+  .mbs-sd-hero__actions, .mbs-sd-hero__facts, .mbs-sd-final__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .mbs-sd-hero__facts span { padding: 10px 14px; border: 1px solid rgba(255,255,255,.42); border-radius: 999px; color: #fff; font-size: 13px; font-weight: 900; }
+  .mbs-sd-pill { display: inline-flex; align-items: center; margin-bottom: 14px; padding: 7px 16px; border-radius: 999px; background: rgba(231,242,227,.95); color: var(--mbs-green-dark); font-size: 13px; line-height: 1; font-weight: 900; }
+  .mbs-sd-pill--light { background: rgba(255,255,255,.9); color: var(--mbs-green-dark); }
+  .mbs-sd-section__head { max-width: 760px; margin-bottom: 28px; }
+  .mbs-sd-section__head--row { max-width: none; display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(280px, .88fr); gap: 24px; align-items: end; }
+  .mbs-sd-section h2 { margin: 0; font-size: 34px; line-height: 1; font-weight: 900; letter-spacing: 0; }
+  .mbs-sd-section p, .mbs-sd-lead { margin: 12px 0 0; color: var(--mbs-gray); font-size: 16px; line-height: 1.55; font-weight: 600; }
+  .mbs-sd-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border: 1.5px solid transparent; border-radius: 999px; font-size: 14px; font-weight: 900; text-decoration: none !important; cursor: pointer; transition: transform .18s ease, background .18s ease, border-color .18s ease; }
+  .mbs-sd-btn:hover { transform: translateY(-1px); }
+  .mbs-sd-btn--primary { background: var(--mbs-red); color: #fff !important; }
+  .mbs-sd-btn--primary:hover { background: var(--mbs-red-soft); }
+  .mbs-sd-btn--light { background: #fff; color: var(--mbs-green-dark) !important; }
+  .mbs-sd-btn--ghost { background: #fff; border-color: var(--mbs-green-light); color: var(--mbs-green-dark) !important; }
+  .mbs-sd-btn.is-disabled { opacity: .55; pointer-events: none; }
+  .mbs-sd-benefits, .mbs-sd-steps, .mbs-sd-authors { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .mbs-sd-benefits article, .mbs-sd-steps article, .mbs-sd-authors article { min-height: 150px; padding: 20px; border: 1px solid #e2ebdf; border-radius: 18px; background: #fff; box-shadow: 0 8px 28px rgba(31,31,31,.05); }
+  .mbs-sd-benefits b, .mbs-sd-steps b, .mbs-sd-authors b { display: block; font-size: 18px; line-height: 1.15; font-weight: 900; }
+  .mbs-sd-benefits span, .mbs-sd-steps p, .mbs-sd-authors span { display: block; margin-top: 10px; color: var(--mbs-gray); font-size: 14px; line-height: 1.45; font-weight: 600; }
+  .mbs-sd-steps article span { display: inline-flex; margin: 0 0 12px; color: var(--mbs-red); font-size: 14px; font-weight: 900; }
+  .mbs-sd-toolbar { display: grid; grid-template-columns: minmax(260px, 2fr) 1fr 1fr 1fr auto; gap: 10px; margin-bottom: 18px; }
+  .mbs-sd-field { width: 100%; min-height: 46px; border: 1.5px solid var(--mbs-green-light); border-radius: 14px; padding: 0 14px; background: #fff; color: var(--mbs-black); font: 800 14px Mulish, Arial, sans-serif; }
+  .mbs-sd-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .mbs-sd-card { overflow: hidden; border: 1px solid #e1eadf; border-radius: 18px; background: #fff; box-shadow: 0 10px 28px rgba(31,31,31,.06); }
+  .mbs-sd-card__media { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--mbs-bg); overflow: hidden; }
+  .mbs-sd-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mbs-sd-card__body { padding: 18px; }
+  .mbs-sd-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 10px; }
+  .mbs-sd-chip { border-radius: 999px; padding: 6px 10px; background: var(--mbs-bg-green); color: var(--mbs-green-dark); font-size: 12px; line-height: 1; font-weight: 900; }
+  .mbs-sd-chip--score { background: #f8dde1; color: var(--mbs-red); }
+  .mbs-sd-card h3 { margin: 0; font-size: 22px; line-height: 1.14; font-weight: 900; }
+  .mbs-sd-card__author, .mbs-sd-card__desc, .mbs-sd-card__meta { color: var(--mbs-gray); font-size: 14px; line-height: 1.45; font-weight: 650; }
+  .mbs-sd-card__author { display:flex; align-items:center; gap:10px; margin-top: 10px; min-width:0; }
+  .mbs-sd-author-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; flex:0 0 auto; border:1px solid var(--mbs-green-light); background:var(--mbs-bg-green); }
+  .mbs-sd-author-avatar--empty { display:grid; place-items:center; color:var(--mbs-green-dark); font-weight:900; }
+  .mbs-sd-card__author b { display:block; color:var(--mbs-black); font-size:14px; line-height:1.2; font-weight:900; }
+  .mbs-sd-card__author em { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-top:2px; color:var(--mbs-gray); font-style:normal; font-size:12px; line-height:1.3; font-weight:700; }
+  .mbs-sd-card__meta { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  .mbs-sd-card__meta span { padding: 9px 10px; border-radius: 12px; background: var(--mbs-bg); color: var(--mbs-green-dark); font-size: 12px; font-weight: 900; }
+  .mbs-sd-card__desc { margin: 10px 0 16px; }
+  .mbs-sd-card__foot { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; }
+  .mbs-sd-price { color: var(--mbs-green-dark); font-size: 22px; font-weight: 900; white-space: nowrap; }
+  .mbs-sd-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+  .mbs-sd-actions .mbs-sd-btn { min-height: 40px; padding: 0 14px; border-radius: 12px; font-size: 13px; }
+  .mbs-sd-empty { grid-column: 1 / -1; padding: 22px; border: 1.5px dashed var(--mbs-green-light); border-radius: 16px; background: #fff; color: var(--mbs-green-dark); font-size: 14px; font-weight: 900; text-align: center; }
+  .mbs-sd-included { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 24px; align-items: center; }
+  .mbs-sd-included__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .mbs-sd-included__grid article { padding: 18px; border: 1px solid var(--mbs-green-light); border-radius: 16px; background: #fff; color: var(--mbs-black); font-size: 15px; font-weight: 900; }
+  .mbs-sd-final { padding: 54px; border-radius: 28px; background: var(--mbs-bg-green); text-align: center; }
+  .mbs-sd-final h2, .mbs-sd-final p { max-width: 760px; margin-left: auto; margin-right: auto; }
+  .mbs-sd-final__actions { justify-content: center; }
+  @media (max-width: 1040px) { .mbs-sd-toolbar, .mbs-sd-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mbs-sd-toolbar input { grid-column: 1 / -1; } }
+  @media (max-width: 980px) { .mbs-sd-hero h1 { font-size: 52px; } .mbs-sd-benefits, .mbs-sd-steps, .mbs-sd-authors { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mbs-sd-included, .mbs-sd-section__head--row { grid-template-columns: 1fr; } }
+  @media (max-width: 720px) { .mbs-sd-section { padding: 64px 14px; } .mbs-sd-hero { min-height: 580px; } .mbs-sd-hero__inner { width: calc(100% - 28px); padding: 64px 0; } .mbs-sd-hero h1 { font-size: 36px; line-height: 1; } .mbs-sd-hero p { font-size: 16px; } .mbs-sd-section h2 { font-size: 26px; } .mbs-sd-toolbar, .mbs-sd-grid, .mbs-sd-benefits, .mbs-sd-steps, .mbs-sd-authors, .mbs-sd-included__grid, .mbs-sd-card__meta { grid-template-columns: 1fr; } .mbs-sd-card__foot { grid-template-columns: 1fr; } .mbs-sd-actions { justify-content: stretch; } .mbs-sd-actions .mbs-sd-btn, .mbs-sd-final__actions .mbs-sd-btn { width: 100%; } .mbs-sd-final { padding: 38px 22px; border-radius: 22px; } }
+</style>
+<script>
+(function () {
+  var root = document.getElementById('mbs-sd-catalog-root');
+  if (!root) return;
+  var detailLocal = '../recipe-ice-tea-2026.html';
+  var detailPublic = '/summer_drinks/ice_tea_2026';
+  var isLocalBlock = location.protocol === 'file:' || /tilda-blocks/.test(location.pathname);
+  var recipes = [
+    {
+      id: 101,
+      public_slug: 'ice_tea_2026',
+      title: 'Ice Tea 2026',
+      category: 'Холодный чай',
+      group_name: 'cold',
+      season: 'Лето',
+      format: 'Маленькая кофейня',
+      complexity: 'Простой запуск',
+      volume_ml: 300,
+      price: 6000,
+      public_description: 'Холодный чай с чистым цитрусовым профилем, мягкой сладостью и понятной сборкой для потока. Подходит как сезонная позиция без сложной станции.',
+      image_url: 'https://static.tildacdn.com/tild3066-3765-4262-a438-396233663362/ComfyUI_00120_.png',
+      author: {
+        name: 'Дмитрий Безсметрный',
+        avatar_url: '',
+        bio: 'Миксолог и участник MBS MIXOLOGY CUP. Работает с понятными сезонными напитками для потока.',
+        role: 'участник MBS MIXOLOGY CUP'
+      },
+      is_mixology: true,
+      score: '92/100',
+      badges: ['чемпионат', 'летний дроп', 'preview готов'],
+      taste: 'чай, цитрус, лёгкая сладость',
+      equipment_preview: ['шейкер', 'мерный стакан', 'лёд'],
+      included: ['техкарта', 'видео процесса', 'список ингредиентов', 'контакты поставщиков', 'личный кабинет', 'поддержка внедрения']
+    },
+    {
+      id: 102,
+      public_slug: 'berry_espresso_tonic',
+      title: 'Berry Espresso Tonic',
+      category: 'Кофейный микс',
+      group_name: 'cold',
+      season: 'Лето',
+      format: 'Кофейня с потоком',
+      complexity: 'Простой запуск',
+      volume_ml: 280,
+      price: 8000,
+      public_description: 'Ягодная версия эспрессо-тоника для летнего меню: узнаваемый кофейный вкус, быстрая сборка и яркая подача.',
+      image_url: 'https://static.tildacdn.com/tild3066-3765-4262-a438-396233663362/ComfyUI_00120_.png',
+      author: {
+        name: 'Валерия Батыршина',
+        avatar_url: '',
+        bio: 'Участник MBS MIXOLOGY CUP. Делает напитки с понятной экономикой и выразительным вкусом.',
+        role: 'участник MBS MIXOLOGY CUP'
+      },
+      is_mixology: true,
+      score: '88/100',
+      badges: ['чемпионат', 'летний дроп', 'скоро detail'],
+      taste: 'ягоды, кофе, тоник',
+      equipment_preview: ['стакан хайбол', 'джиггер', 'лёд'],
+      included: ['техкарта', 'видео процесса', 'список ингредиентов', 'контакты поставщиков']
+    },
+    {
+      id: 103,
+      public_slug: 'matcha_citrus_cloud',
+      title: 'Matcha Citrus Cloud',
+      category: 'Матча',
+      group_name: 'cold',
+      season: 'Весна-лето',
+      format: 'Авторское меню',
+      complexity: 'Средняя сложность',
+      volume_ml: 300,
+      price: 6000,
+      public_description: 'Освежающий напиток на базе матча с цитрусовым акцентом и выразительной визуальной подачей для авторского меню.',
+      image_url: 'https://static.tildacdn.com/tild3066-3765-4262-a438-396233663362/ComfyUI_00120_.png',
+      author: {
+        name: 'Артём Янин',
+        avatar_url: '',
+        bio: 'Участник MBS MIXOLOGY CUP. Собирает рецепты вокруг баланса вкуса и визуальной подачи.',
+        role: 'участник MBS MIXOLOGY CUP'
+      },
+      is_mixology: true,
+      score: '90/100',
+      badges: ['авторский микс', 'скоро detail'],
+      taste: 'матча, цитрус, кремовая текстура',
+      equipment_preview: ['матча-венчик', 'шейкер', 'сито'],
+      included: ['техкарта', 'видео процесса', 'список ингредиентов', 'контакты поставщиков']
+    },
+    {
+      id: 104,
+      public_slug: 'cold_brew_cherry_garden',
+      title: 'Cold Brew Cherry Garden',
+      category: 'Cold Brew',
+      group_name: 'cold',
+      season: 'Осень-зима',
+      format: 'Большой проект',
+      complexity: 'Сложная подача',
+      volume_ml: 320,
+      price: 12000,
+      public_description: 'Премиальная позиция для меню: cold brew, вишня и гастрономичная подача без раскрытия полной технологии до покупки.',
+      image_url: 'https://static.tildacdn.com/tild3066-3765-4262-a438-396233663362/ComfyUI_00120_.png',
+      author: {
+        name: 'Данила Макаров',
+        avatar_url: '',
+        bio: 'Призёр MBS MIXOLOGY CUP. Работает с гастрономичной подачей и напитками для сильного меню.',
+        role: 'призёр MBS MIXOLOGY CUP'
+      },
+      is_mixology: true,
+      score: '95/100',
+      badges: ['призёр Cup', 'скоро detail'],
+      taste: 'cold brew, вишня, специи',
+      equipment_preview: ['cold brew система', 'джиггер', 'лёд'],
+      included: ['техкарта', 'видео процесса', 'список ингредиентов', 'контакты поставщиков', 'поддержка внедрения']
+    }
+  ];
+  var state = { query: '', author: '', season: '', format: '' };
+  function esc(value) { return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function money(value) { return Number(value || 0).toLocaleString('ru-RU') + ' ₽'; }
+  function uniq(key) { var seen = {}; recipes.forEach(function (r) { var value = key === 'author' ? r.author.name : r[key]; if (value) seen[value] = true; }); return Object.keys(seen).sort(); }
+  function filtered() {
+    var q = state.query.trim().toLowerCase();
+    return recipes.filter(function (r) {
+      var text = [r.title, r.category, r.group_name, r.public_description, r.author.name, r.author.role, r.author.bio, r.taste, r.season, r.format, r.complexity, (r.badges || []).join(' '), (r.equipment_preview || []).join(' ')].join(' ').toLowerCase();
+      if (q && text.indexOf(q) === -1) return false;
+      if (state.author && r.author.name !== state.author) return false;
+      if (state.season && r.season !== state.season) return false;
+      if (state.format && r.format !== state.format) return false;
+      return true;
+    });
+  }
+  function renderFilters() {
+    ['author', 'season', 'format'].forEach(function (key) {
+      var select = root.querySelector('[data-mbs-sd-filter="' + key + '"]');
+      if (!select || select.dataset.ready) return;
+      var label = key === 'author' ? 'Все авторы' : key === 'season' ? 'Все сезоны' : 'Любой формат';
+      select.innerHTML = '<option value="">' + label + '</option>' + uniq(key).map(function (name) { return '<option value="' + esc(name) + '">' + esc(name) + '</option>'; }).join('');
+      select.dataset.ready = '1';
+    });
+  }
+  function authorMarkup(author) {
+    author = author || {};
+    var name = author.name || 'Moscow Barista School';
+    var avatar = author.avatar_url ? '<img class="mbs-sd-author-avatar" src="' + esc(author.avatar_url) + '" alt="' + esc(name) + '" loading="lazy">' : '<span class="mbs-sd-author-avatar mbs-sd-author-avatar--empty">' + esc(name.charAt(0) || 'M') + '</span>';
+    return avatar + '<span><b>' + esc(name) + '</b><em>' + esc(author.bio || author.role || '') + '</em></span>';
+  }
+  function card(r) {
+    var slug = r.public_slug || r.slug || String(r.id);
+    var detailHref = slug === 'ice_tea_2026' ? (isLocalBlock ? detailLocal : detailPublic) : '';
+    var chips = ['<span class="mbs-sd-chip">' + esc(r.category) + '</span>', '<span class="mbs-sd-chip">' + Number(r.volume_ml) + ' мл</span>', '<span class="mbs-sd-chip">' + esc(r.season) + '</span>'];
+    if (r.is_mixology) chips.push('<span class="mbs-sd-chip">MBS MIXOLOGY CUP</span>');
+    if (r.score) chips.push('<span class="mbs-sd-chip mbs-sd-chip--score">оценка ' + esc(r.score) + '</span>');
+    return '<article class="mbs-sd-card">' +
+      '<a class="mbs-sd-card__media" ' + (detailHref ? 'href="' + esc(detailHref) + '" target="_top"' : 'aria-disabled="true"') + '><img src="' + esc(r.image_url) + '" alt="' + esc(r.title) + '" loading="lazy"></a>' +
+      '<div class="mbs-sd-card__body"><div class="mbs-sd-chips">' + chips.join('') + '</div>' +
+      '<h3>' + esc(r.title) + '</h3><div class="mbs-sd-card__author">' + authorMarkup(r.author) + '</div><p class="mbs-sd-card__desc">' + esc(r.public_description) + '</p>' +
+      '<div class="mbs-sd-card__meta"><span>' + esc(r.format) + '</span><span>' + esc(r.complexity) + '</span><span>' + esc(r.taste) + '</span><span>после покупки: ' + esc((r.included || []).slice(0, 2).join(' + ')) + '</span></div>' +
+      '<div class="mbs-sd-card__foot"><div class="mbs-sd-price">' + money(r.price) + '</div><div class="mbs-sd-actions">' +
+      (detailHref ? '<a class="mbs-sd-btn mbs-sd-btn--primary" href="' + esc(detailHref) + '" target="_top">Подробнее</a>' : '<span class="mbs-sd-btn mbs-sd-btn--ghost is-disabled">Скоро</span>') +
+      '</div></div></div></article>';
+  }
+  function renderGrid() {
+    var grid = root.querySelector('[data-mbs-sd-grid]');
+    var items = filtered();
+    if (grid) grid.innerHTML = items.length ? items.map(card).join('') : '<div class="mbs-sd-empty">По выбранным фильтрам рецептов не найдено.</div>';
+  }
+  function render() { renderFilters(); renderGrid(); }
+  root.addEventListener('input', function (event) { var key = event.target && event.target.getAttribute('data-mbs-sd-filter'); if (!key) return; state[key] = event.target.value || ''; renderGrid(); });
+  root.addEventListener('change', function (event) { var key = event.target && event.target.getAttribute('data-mbs-sd-filter'); if (!key) return; state[key] = event.target.value || ''; renderGrid(); });
+  root.addEventListener('click', function (event) {
+    if (event.target.closest('[data-mbs-sd-clear]')) {
+      state.query = ''; state.author = ''; state.season = ''; state.format = '';
+      root.querySelectorAll('[data-mbs-sd-filter]').forEach(function (el) { el.value = ''; });
+      renderGrid();
+    }
+  });
+  render();
+})();
+</script>
