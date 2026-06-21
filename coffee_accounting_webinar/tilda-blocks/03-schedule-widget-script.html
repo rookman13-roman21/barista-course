@@ -6,10 +6,10 @@
 (function () {
   var API_URL = 'https://api.barista-school.ru/api/coffee-accounting-webinar.json';
   var FALLBACK_API_URL = 'https://159-194-202-120.sslip.io/api/coffee-accounting-webinar.json';
-  var FALLBACK_EVENT_START_ISO = '2026-06-25T19:30:00+03:00';
-  var FALLBACK_DATE_LABEL = '25 июня';
+  var FALLBACK_EVENT_START_ISO = '2026-07-04T19:30:00+03:00';
+  var FALLBACK_DATE_LABEL = '4 июля';
   var FALLBACK_TIME_LABEL = '19:30';
-  var FALLBACK_BOOKING_URL = 'https://b829827.yclients.com/company/453962/activity/info/44746455?o=m-1act2026-06-25aid44746455c1';
+  var FALLBACK_BOOKING_URL = 'https://b829827.yclients.com/company/453962/activity/info/44746455?o=m-1act2026-07-04aid44746455c1';
   var WAITING_LIST = '#waiting_list';
 
   function isSafeYclientsUrl(url) {
@@ -112,6 +112,7 @@
     updateMetaDescription(normalized);
     updateJsonLd(normalized);
     updateBookingButtons(normalized);
+    document.body.classList.add('mbs-caw-sync-ready');
   }
 
   function fetchJson(url) {
