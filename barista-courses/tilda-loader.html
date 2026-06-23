@@ -1,0 +1,268 @@
+<!-- MBS /barista_courses hosted loader for Tilda — insert once -->
+<div id="mbs-bc-hosted-root">
+  <section class="mbs-bc-loader-fallback" aria-label="Базовый курс бариста">
+    <style>
+      #mbs-bc-hosted-root,
+      #mbs-bc-hosted-root * {
+        box-sizing: border-box;
+      }
+
+      #mbs-bc-hosted-root {
+        font-family: Mulish, Arial, sans-serif;
+        color: #1F1F1F;
+        background: #FFFFFF;
+      }
+
+      .mbs-bc-loader-fallback {
+        padding: 56px 20px;
+        background: #FFFFFF;
+      }
+
+      .mbs-bc-loader-fallback__card {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 42px;
+        border: 6px solid #E7F2E3;
+        border-radius: 24px;
+        background: #F5F5F5;
+      }
+
+      .mbs-bc-loader-fallback__label {
+        display: inline-flex;
+        margin: 0 0 14px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        background: #FFFFFF;
+        color: #417033;
+        font-size: 13px;
+        line-height: 1;
+        font-weight: 900;
+      }
+
+      .mbs-bc-loader-fallback h1 {
+        max-width: 760px;
+        margin: 0 0 16px;
+        color: #1F1F1F;
+        font-size: 54px;
+        line-height: .98;
+        font-weight: 900;
+        letter-spacing: 0;
+      }
+
+      .mbs-bc-loader-fallback__lead {
+        max-width: 760px;
+        margin: 0 0 22px;
+        color: #555555;
+        font-size: 18px;
+        line-height: 1.5;
+        font-weight: 700;
+      }
+
+      .mbs-bc-loader-fallback__facts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0 0 24px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .mbs-bc-loader-fallback__facts li {
+        display: inline-flex;
+        align-items: center;
+        min-height: 40px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: #FFFFFF;
+        color: #1F1F1F;
+        font-size: 14px;
+        line-height: 1.25;
+        font-weight: 900;
+      }
+
+      .mbs-bc-loader-fallback__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .mbs-bc-loader-fallback__btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 50px;
+        padding: 0 22px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: #CC2841;
+        color: #FFFFFF !important;
+        font-size: 16px;
+        line-height: 1.1;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .mbs-bc-loader-fallback__btn--ghost {
+        border-color: rgba(65, 112, 51, .24);
+        background: #FFFFFF;
+        color: #417033 !important;
+      }
+
+      .mbs-bc-loader-fallback__status {
+        margin: 18px 0 0;
+        color: #777777;
+        font-size: 14px;
+        line-height: 1.45;
+        font-weight: 800;
+      }
+
+      @media (max-width: 640px) {
+        .mbs-bc-loader-fallback {
+          padding: 28px 14px 40px;
+        }
+
+        .mbs-bc-loader-fallback__card {
+          padding: 28px 22px;
+          border-width: 5px;
+        }
+
+        .mbs-bc-loader-fallback h1 {
+          font-size: 38px;
+        }
+
+        .mbs-bc-loader-fallback__lead {
+          font-size: 15px;
+        }
+
+        .mbs-bc-loader-fallback__actions,
+        .mbs-bc-loader-fallback__btn {
+          width: 100%;
+        }
+      }
+    </style>
+
+    <div class="mbs-bc-loader-fallback__card">
+      <div class="mbs-bc-loader-fallback__label">Самая популярная программа MBS</div>
+      <h1>Базовый курс бариста</h1>
+      <p class="mbs-bc-loader-fallback__lead">
+        9 часов практики за кофемашиной: эспрессо, молоко, классические напитки и первые приёмы латте-арта.
+      </p>
+      <ul class="mbs-bc-loader-fallback__facts" aria-label="Ключевые условия">
+        <li>9 часов</li>
+        <li>22 000 ₽</li>
+        <li>Скидка 10% школьникам и студентам до 31 августа</li>
+      </ul>
+      <div class="mbs-bc-loader-fallback__actions">
+        <a class="mbs-bc-loader-fallback__btn" href="#consalt">Оставить заявку</a>
+        <a class="mbs-bc-loader-fallback__btn mbs-bc-loader-fallback__btn--ghost" href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+      </div>
+      <p class="mbs-bc-loader-fallback__status">Сейчас загрузим полную страницу курса.</p>
+    </div>
+  </section>
+  <noscript>
+    <section>
+      <h1>Базовый курс бариста</h1>
+      <p>9 часов практики за кофемашиной: эспрессо, молоко, классические напитки и первые приёмы латте-арта.</p>
+      <p>Скидка 10% школьникам и студентам до 31 августа.</p>
+      <p><a href="https://t.me/Moscow_barista_school">Написать в Telegram</a></p>
+    </section>
+  </noscript>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('mbs-bc-hosted-root');
+    if (!root || root.getAttribute('data-mbs-bc-loader-ready') === '1') return;
+
+    root.setAttribute('data-mbs-bc-loader-ready', '1');
+
+    var urls = [
+      'https://api.barista-school.ru/api/barista-courses-page.html',
+      'https://159-194-202-120.sslip.io/api-fallback/api/barista-courses-page.html'
+    ];
+    var LOAD_TIMEOUT_MS = 10000;
+
+    function cacheBustedUrl(url) {
+      var separator = url.indexOf('?') === -1 ? '?' : '&';
+      return url + separator + 'v=' + Date.now();
+    }
+
+    function runScripts(container) {
+      Array.prototype.slice.call(container.querySelectorAll('script')).forEach(function (oldScript) {
+        var script = document.createElement('script');
+        Array.prototype.slice.call(oldScript.attributes).forEach(function (attr) {
+          script.setAttribute(attr.name, attr.value);
+        });
+        script.text = oldScript.text || oldScript.textContent || '';
+        oldScript.parentNode.replaceChild(script, oldScript);
+      });
+    }
+
+    function fetchWithTimeout(requestUrl) {
+      var controller = window.AbortController ? new AbortController() : null;
+      var timeoutId = null;
+      var fetchOptions = { cache: 'no-store' };
+      if (controller) fetchOptions.signal = controller.signal;
+
+      return new Promise(function (resolve, reject) {
+        timeoutId = window.setTimeout(function () {
+          if (controller) controller.abort();
+          reject(new Error('Timeout'));
+        }, LOAD_TIMEOUT_MS);
+
+        fetch(cacheBustedUrl(requestUrl), fetchOptions)
+          .then(function (response) {
+            window.clearTimeout(timeoutId);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.text();
+          })
+          .then(resolve)
+          .catch(function (error) {
+            window.clearTimeout(timeoutId);
+            reject(error);
+          });
+      });
+    }
+
+    function validateHostedHtml(html) {
+      if (typeof html !== 'string' || html.length < 30000) {
+        throw new Error('Short HTML response');
+      }
+      if (html.indexOf('mbs-bc-hero') === -1 || html.indexOf('mbs-bc-booking-popup') === -1) {
+        throw new Error('Unexpected HTML response');
+      }
+      return html;
+    }
+
+    function loadFrom(index) {
+      return fetchWithTimeout(urls[index])
+        .then(validateHostedHtml)
+        .catch(function (error) {
+          if (index + 1 < urls.length) return loadFrom(index + 1);
+          throw error;
+        });
+    }
+
+    function renderError() {
+      root.innerHTML = '' +
+        '<section class="mbs-bc-loader-fallback" style="padding:56px 20px;text-align:center;font-family:Mulish,Arial,sans-serif;background:#F5F5F5;color:#1F1F1F">' +
+          '<div style="max-width:560px;margin:0 auto;padding:30px 22px;border:1px solid #E7F2E3;border-radius:16px;background:#FFFFFF">' +
+            '<div role="heading" aria-level="2" style="margin:0 0 10px;font-size:34px;line-height:1.05;font-weight:900;letter-spacing:0">Базовый курс бариста</div>' +
+            '<p style="margin:0 0 20px;color:#555;font-size:17px;line-height:1.45;font-weight:700">Страница временно не загрузилась. Напишите нам, и мы поможем выбрать время обучения.</p>' +
+            '<a href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:999px;background:#417033;color:#fff;text-decoration:none;font-size:16px;font-weight:900">Написать в Telegram</a>' +
+            '<div style="margin-top:14px"><button type="button" onclick="window.location.reload()" style="border:0;background:transparent;color:#417033;text-decoration:underline;font:inherit;font-size:14px;font-weight:800;cursor:pointer">Обновить страницу</button></div>' +
+          '</div>' +
+        '</section>';
+    }
+
+    loadFrom(0)
+      .then(function (html) {
+        root.innerHTML = html;
+        runScripts(root);
+      })
+      .catch(function (error) {
+        console.error('[mbs-barista-courses] hosted page load failed', error);
+        renderError();
+      });
+  })();
+</script>

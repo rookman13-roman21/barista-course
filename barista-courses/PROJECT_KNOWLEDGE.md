@@ -32,6 +32,46 @@
 9. `08-final-cta.html` — финальный CTA с контактами и inline SVG-иконками.
 10. `09-online-booking-popup.html` — popup онлайн-записи, вставляется один раз после CTA-блоков.
 
+## Hosted loader для Tilda
+
+Для страницы `/barista_courses` подготовлена архитектура одного Tilda HTML-блока:
+
+- `tilda-loader.html` — короткий loader, который один раз вставляется в Tilda.
+- `hosted/barista-courses-page.html` — полный HTML страницы для выкладки на сервер.
+- `build-barista-courses.js` — сборка hosted HTML из рабочих блоков `01`–`09`.
+
+После перехода страницы на loader обычные правки делать в `tilda-blocks/`, затем запускать:
+
+```bash
+node barista-courses/build-barista-courses.js
+```
+
+После сборки выложить файл:
+
+```text
+barista-courses/hosted/barista-courses-page.html
+```
+
+на сервер как:
+
+```text
+/var/www/html/api/barista-courses-page.html
+```
+
+Публичный URL hosted HTML:
+
+```text
+https://api.barista-school.ru/api/barista-courses-page.html
+```
+
+Fallback URL для loader:
+
+```text
+https://159-194-202-120.sslip.io/api-fallback/api/barista-courses-page.html
+```
+
+В Tilda после перехода оставлять только loader-блок, системные блоки Tilda и форму `#consalt`, если она нужна на странице. Старые большие HTML-блоки `01`–`09` вместе с loader не публиковать, иначе контент продублируется.
+
 ## Курс и цены
 
 - Курс: `Базовый курс бариста`.
