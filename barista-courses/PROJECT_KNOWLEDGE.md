@@ -58,6 +58,8 @@ barista-courses/hosted/barista-courses-page.html
 ```text
 /var/www/html/api/barista-courses-page.html
 ```
+Важно: `git commit` и `git push` сохраняют исходники на GitHub, но сами по себе не обновляют live-страницу. После изменений в блоках `/barista_courses` обязательно отдельно выкладывать свежий `hosted/barista-courses-page.html` на сервер, иначе Tilda продолжит подтягивать старую hosted-версию.
+
 
 Публичный URL hosted HTML:
 
