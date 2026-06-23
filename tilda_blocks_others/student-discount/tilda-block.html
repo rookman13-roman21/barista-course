@@ -59,6 +59,43 @@
       color: #3e424a;
     }
 
+    .mbs-student-discount__promo {
+      margin-top: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #f8dde1;
+      color: #24262b;
+    }
+
+    .mbs-student-discount__promo-label {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: #5d616a;
+    }
+
+    .mbs-student-discount__promo-code {
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: #cc2841;
+    }
+
+    .mbs-student-discount__note {
+      margin: 14px 0 0;
+      max-width: 640px;
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: #5d616a;
+    }
+
     .mbs-student-discount__image-wrap {
       width: 100%;
       aspect-ratio: 1.45 / 1;
@@ -101,6 +138,24 @@
         line-height: 1.45;
       }
 
+      .mbs-student-discount__promo {
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .mbs-student-discount__promo-label {
+        font-size: 14px;
+      }
+
+      .mbs-student-discount__promo-code {
+        font-size: 17px;
+      }
+
+      .mbs-student-discount__note {
+        font-size: 15px;
+      }
+
       .mbs-student-discount__image-wrap {
         width: 100%;
         aspect-ratio: 1.5 / 1;
@@ -112,8 +167,13 @@
   <div class="mbs-student-discount__card">
     <div class="mbs-student-discount__content">
       <p class="mbs-student-discount__label">До 31 августа 2026 года</p>
-      <h2 class="mbs-student-discount__title">Скидка 10% школьникам и студентам</h2>
-      <p class="mbs-student-discount__text">На индивидуальные курсы бариста в Московской школе бариста.</p>
+      <h2 class="mbs-student-discount__title">Скидка 10% на индивидуальные курсы бариста</h2>
+      <p class="mbs-student-discount__text">Для школьников и студентов в Московской школе бариста.</p>
+      <div class="mbs-student-discount__promo" aria-label="Промокод СТУДЕНТ10">
+        <span class="mbs-student-discount__promo-label">Промокод</span>
+        <strong class="mbs-student-discount__promo-code">СТУДЕНТ10</strong>
+      </div>
+      <p class="mbs-student-discount__note">Назовите промокод при записи и подтвердите статус школьника или студента.</p>
     </div>
     <div class="mbs-student-discount__image-wrap" aria-hidden="true">
       <img
