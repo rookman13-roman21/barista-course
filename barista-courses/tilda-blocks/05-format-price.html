@@ -12,6 +12,16 @@
   .mbs-bc-price__fact { padding: 16px 18px; border-radius: 16px; background: #fff; color: #1F1F1F; font-size: 15px; font-weight: 800; line-height: 1.35; }
   .mbs-bc-price__promo { margin-top: 10px; padding: 16px 18px; border-radius: 16px; background: #F8DDE1; color: #1F1F1F; font-size: 14px; font-weight: 700; line-height: 1.45; }
   .mbs-bc-price__promo strong { color: #CC2841; font-weight: 900; }
+  .mbs-bc-discount-info { position: relative; display: inline-flex; align-items: center; margin-left: 6px; vertical-align: -3px; }
+  .mbs-bc-discount-info__toggle { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: #CC2841; color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .mbs-bc-discount-info__toggle svg { width: 14px; height: 14px; display: block; }
+  .mbs-bc-discount-info__popup { position: absolute; left: 50%; bottom: calc(100% + 10px); z-index: 20; display: none; width: min(360px, calc(100vw - 40px)); padding: 14px 16px; border: 1px solid #EC98A7; border-radius: 14px; background: #fff; color: #555; box-shadow: 0 16px 42px rgba(31,31,31,.18); transform: translateX(-50%); font-size: 14px; font-weight: 700; line-height: 1.45; }
+  .mbs-bc-discount-info__popup::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 14px; height: 14px; background: #fff; border-right: 1px solid #EC98A7; border-bottom: 1px solid #EC98A7; transform: translateX(-50%) rotate(45deg); }
+  .mbs-bc-discount-info.is-open .mbs-bc-discount-info__popup { display: block; }
+  .mbs-bc-discount-info__title { display: block; margin-bottom: 8px; color: #1F1F1F; font-size: 15px; font-weight: 900; }
+  .mbs-bc-discount-info__popup p { margin: 0; }
+  .mbs-bc-discount-info__popup p + p { margin-top: 8px; }
+  .mbs-bc-discount-info__code { color: #CC2841; font-weight: 900; }
   .mbs-bc-price__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .mbs-bc-price__card { display: flex; flex-direction: column; min-height: 430px; padding: 30px; border-radius: 24px; background: #F5F5F5; }
   .mbs-bc-price__card--accent { background: #E7F2E3; }
@@ -51,7 +61,24 @@
         <div class="mbs-bc-price__fact">Предоплата для бронирования — 5 000 ₽</div>
         <div class="mbs-bc-price__fact">Остальная оплата — после первого занятия</div>
       </div>
-      <div class="mbs-bc-price__promo"><strong>Скидка 10%</strong> школьникам и студентам до 31 августа.</div>
+      <div class="mbs-bc-price__promo">
+        <strong>Скидка 10%</strong> школьникам и студентам до 31 августа 2026.
+        <span class="mbs-bc-discount-info" data-mbs-bc-discount-info>
+          <button class="mbs-bc-discount-info__toggle" type="button" aria-label="Условия скидки" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+              <path d="M12 10.8v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+              <circle cx="12" cy="7.3" r="1.3" fill="currentColor"></circle>
+            </svg>
+          </button>
+          <span class="mbs-bc-discount-info__popup" role="tooltip">
+            <span class="mbs-bc-discount-info__title">Условия скидки</span>
+            <p>Промокод: <span class="mbs-bc-discount-info__code">СТУДЕНТ10</span>.</p>
+            <p>Назовите промокод при записи и подтвердите статус школьника или студента.</p>
+            <p>Скидка действует только на индивидуальные курсы бариста и не применяется задним числом.</p>
+          </span>
+        </span>
+      </div>
     </div>
     <div class="mbs-bc-price__cards">
       <article class="mbs-bc-price__card">
@@ -85,3 +112,40 @@
     </div>
   </div>
 </section>
+
+<script>
+  (function () {
+    function closeInfo(info) {
+      var button = info.querySelector('.mbs-bc-discount-info__toggle');
+      info.classList.remove('is-open');
+      if (button) button.setAttribute('aria-expanded', 'false');
+    }
+
+    document.querySelectorAll('[data-mbs-bc-discount-info]').forEach(function (info) {
+      var button = info.querySelector('.mbs-bc-discount-info__toggle');
+      if (!button || info.dataset.mbsDiscountBound === 'true') return;
+      info.dataset.mbsDiscountBound = 'true';
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var shouldOpen = !info.classList.contains('is-open');
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(closeInfo);
+        info.classList.toggle('is-open', shouldOpen);
+        button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      });
+    });
+
+    if (window.mbsBcDiscountInfoGlobalBound !== 'true') {
+      window.mbsBcDiscountInfoGlobalBound = 'true';
+      document.addEventListener('click', function (event) {
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(function (info) {
+          if (!info.contains(event.target)) closeInfo(info);
+        });
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(closeInfo);
+      });
+    }
+  })();
+</script>
