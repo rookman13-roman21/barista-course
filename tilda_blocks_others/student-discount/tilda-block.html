@@ -83,9 +83,10 @@
     .mbs-student-discount__promo-summary {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 10px 14px;
-      border-radius: 12px;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 20px;
+      border-radius: 999px;
       background: #f8dde1;
       cursor: pointer;
       list-style: none;
@@ -96,27 +97,25 @@
     }
 
     .mbs-student-discount__promo-label {
-      font-size: 15px;
-      line-height: 1.2;
-      font-weight: 700;
-      letter-spacing: 0;
-      color: #5d616a;
-    }
-
-    .mbs-student-discount__promo-code {
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.2;
       font-weight: 900;
       letter-spacing: 0;
       color: #cc2841;
     }
 
-    .mbs-student-discount__promo-hint {
-      font-size: 14px;
+    .mbs-student-discount__promo-code {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f8dde1;
+      font-size: 18px;
       line-height: 1.2;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 0;
-      color: #8d3141;
+      color: #cc2841;
     }
 
     .mbs-student-discount__conditions {
@@ -204,20 +203,14 @@
 
       .mbs-student-discount__promo-summary {
         width: 100%;
-        justify-content: space-between;
-        gap: 8px;
       }
 
       .mbs-student-discount__promo-label {
-        font-size: 14px;
+        font-size: 15px;
       }
 
       .mbs-student-discount__promo-code {
         font-size: 17px;
-      }
-
-      .mbs-student-discount__promo-hint {
-        font-size: 13px;
       }
 
       .mbs-student-discount__conditions {
@@ -242,12 +235,11 @@
       <p class="mbs-student-discount__text">Для школьников и студентов в Московской школе бариста.</p>
       <div class="mbs-student-discount__age">Обучаем с 14 лет</div>
       <details class="mbs-student-discount__promo">
-        <summary class="mbs-student-discount__promo-summary" aria-label="Промокод СТУДЕНТ10, условия скидки">
-          <span class="mbs-student-discount__promo-label">Промокод</span>
-          <strong class="mbs-student-discount__promo-code">СТУДЕНТ10</strong>
-          <span class="mbs-student-discount__promo-hint">условия</span>
+        <summary class="mbs-student-discount__promo-summary" aria-label="Условия скидки">
+          <span class="mbs-student-discount__promo-label">Условия</span>
         </summary>
         <div class="mbs-student-discount__conditions">
+          <p>Промокод: <strong class="mbs-student-discount__promo-code">СТУДЕНТ10</strong></p>
           <p>Назовите промокод при записи.</p>
           <p>Скидка действует после подтверждения статуса школьника или студента.</p>
         </div>
