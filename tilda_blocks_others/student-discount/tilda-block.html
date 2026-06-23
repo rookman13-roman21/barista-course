@@ -21,7 +21,7 @@
       margin: 0 auto;
       padding: 34px 42px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 410px);
       align-items: center;
       gap: 28px;
       background: #ffffff;
@@ -59,22 +59,20 @@
       color: #3e424a;
     }
 
-    .mbs-student-discount__mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 236px;
-      min-height: 58px;
-      padding: 16px 24px;
-      border-radius: 999px;
-      background: #d83d54;
-      color: #ffffff;
-      font-size: 16px;
-      line-height: 1.25;
-      font-weight: 900;
-      text-align: center;
-      letter-spacing: 0;
-      white-space: normal;
+    .mbs-student-discount__image-wrap {
+      width: 100%;
+      aspect-ratio: 1.45 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #f8dde1;
+    }
+
+    .mbs-student-discount__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
     }
 
     @media (max-width: 760px) {
@@ -103,12 +101,10 @@
         line-height: 1.45;
       }
 
-      .mbs-student-discount__mark {
+      .mbs-student-discount__image-wrap {
         width: 100%;
-        min-width: 0;
-        min-height: 54px;
-        padding: 15px 18px;
-        font-size: 15px;
+        aspect-ratio: 1.5 / 1;
+        border-radius: 16px;
       }
     }
   </style>
@@ -119,6 +115,13 @@
       <h2 class="mbs-student-discount__title">Скидка 10% школьникам и студентам</h2>
       <p class="mbs-student-discount__text">На индивидуальные курсы бариста в Московской школе бариста.</p>
     </div>
-    <div class="mbs-student-discount__mark">Только индивидуальные курсы</div>
+    <div class="mbs-student-discount__image-wrap" aria-hidden="true">
+      <img
+        class="mbs-student-discount__image"
+        src="https://static.tildacdn.com/tild3864-3635-4431-b562-653032663566/__.jpeg"
+        alt=""
+        loading="lazy"
+      >
+    </div>
   </div>
 </section>
