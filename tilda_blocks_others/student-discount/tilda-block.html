@@ -145,9 +145,7 @@
       color: #5d616a;
     }
 
-    .mbs-student-discount__promo[open] .mbs-student-discount__conditions,
-    .mbs-student-discount__promo:hover .mbs-student-discount__conditions,
-    .mbs-student-discount__promo:focus-within .mbs-student-discount__conditions {
+    .mbs-student-discount__promo[open] .mbs-student-discount__conditions {
       display: block;
     }
 
@@ -273,4 +271,32 @@
       >
     </div>
   </div>
+
+  <script>
+    (function () {
+      var blocks = document.querySelectorAll(".mbs-student-discount");
+
+      blocks.forEach(function (block) {
+        var promo = block.querySelector(".mbs-student-discount__promo");
+
+        if (!promo || promo.dataset.mbsDiscountBound === "true") {
+          return;
+        }
+
+        promo.dataset.mbsDiscountBound = "true";
+
+        document.addEventListener("click", function (event) {
+          if (promo.open && !promo.contains(event.target)) {
+            promo.open = false;
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && promo.open) {
+            promo.open = false;
+          }
+        });
+      });
+    })();
+  </script>
 </section>
