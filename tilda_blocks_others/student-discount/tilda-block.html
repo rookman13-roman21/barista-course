@@ -50,7 +50,7 @@
     }
 
     .mbs-student-discount__text {
-      margin: 12px 0 0;
+      margin: 10px 0 0;
       max-width: 470px;
       font-size: 17px;
       line-height: 1.4;
@@ -59,10 +59,18 @@
       color: #3e424a;
     }
 
+    .mbs-student-discount__actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
     .mbs-student-discount__age {
       display: inline-flex;
       align-items: center;
-      margin: 14px 0 0;
+      margin: 0;
       padding: 7px 11px;
       border-radius: 10px;
       background: #e7f2e3;
@@ -74,7 +82,7 @@
     }
 
     .mbs-student-discount__promo {
-      margin-top: 14px;
+      margin: 0;
       position: relative;
       width: fit-content;
       color: #24262b;
@@ -193,12 +201,21 @@
         line-height: 1.45;
       }
 
+      .mbs-student-discount__actions {
+        width: 100%;
+        align-items: stretch;
+        gap: 10px;
+      }
+
       .mbs-student-discount__age {
+        flex: 1 1 auto;
+        justify-content: center;
         font-size: 15px;
       }
 
       .mbs-student-discount__promo {
-        width: 100%;
+        flex: 1 1 auto;
+        width: auto;
       }
 
       .mbs-student-discount__promo-summary {
@@ -233,17 +250,19 @@
       <p class="mbs-student-discount__label">До 31 августа 2026 года</p>
       <h2 class="mbs-student-discount__title">Скидка 10% на индивидуальные курсы бариста</h2>
       <p class="mbs-student-discount__text">Для школьников и студентов в Московской школе бариста.</p>
-      <div class="mbs-student-discount__age">Обучаем с 14 лет</div>
-      <details class="mbs-student-discount__promo">
-        <summary class="mbs-student-discount__promo-summary" aria-label="Условия скидки">
-          <span class="mbs-student-discount__promo-label">Условия</span>
-        </summary>
-        <div class="mbs-student-discount__conditions">
-          <p>Промокод: <strong class="mbs-student-discount__promo-code">СТУДЕНТ10</strong></p>
-          <p>Назовите промокод при записи.</p>
-          <p>Скидка действует после подтверждения статуса школьника или студента.</p>
-        </div>
-      </details>
+      <div class="mbs-student-discount__actions">
+        <div class="mbs-student-discount__age">Обучаем с 14 лет</div>
+        <details class="mbs-student-discount__promo">
+          <summary class="mbs-student-discount__promo-summary" aria-label="Условия скидки">
+            <span class="mbs-student-discount__promo-label">Условия</span>
+          </summary>
+          <div class="mbs-student-discount__conditions">
+            <p>Промокод: <strong class="mbs-student-discount__promo-code">СТУДЕНТ10</strong></p>
+            <p>Назовите промокод при записи.</p>
+            <p>Скидка действует после подтверждения статуса школьника или студента.</p>
+          </div>
+        </details>
+      </div>
     </div>
     <div class="mbs-student-discount__image-wrap" aria-hidden="true">
       <img
