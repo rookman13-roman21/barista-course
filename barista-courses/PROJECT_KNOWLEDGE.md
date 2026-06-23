@@ -28,7 +28,7 @@
 5. `04-program.html` — программа курса.
 6. `05-format-price.html` — формат, стоимость, предоплата.
 7. `06-equipment.html` — оборудование + компактная галерея с фотоальбомом.
-8. `../tilda_blocks_others/trainers-widget/tilda-block.html` — общий loader-блок тренеров, встроен в hosted-сборку после оборудования.
+8. `../tilda_blocks_others/trainers-widget/tilda-block.html` — общий loader-блок тренеров, встроен в hosted-сборку сразу после блока `03-results.html` / «Результат».
 9. `07-faq.html` — FAQ с плавной гармошкой и single-open логикой.
 10. `08-final-cta.html` — финальный CTA с контактами и inline SVG-иконками.
 11. `09-online-booking-popup.html` — popup онлайн-записи, вставляется один раз после CTA-блоков.
