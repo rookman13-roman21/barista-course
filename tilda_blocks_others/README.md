@@ -10,6 +10,12 @@
 
 ## Проекты
 
+- `student-discount/` — маленький standalone-блок акции:
+  - `tilda-block.html` — самодостаточный HTML/CSS-фрагмент для Tilda;
+  - сообщает про скидку 10% школьникам и студентам до 31 августа 2026 года;
+  - скидка указана только для индивидуальных курсов бариста;
+  - блок не содержит JS, backend-запросов, персональных данных, расчёта цен и связей с yClients.
+
 - `trainers-widget/` — универсальный hosted-блок тренеров:
   - Tilda получает короткий loader `tilda-block.html` / `tilda-snippet.html`;
   - актуальная вёрстка подгружается с `https://api.barista-school.ru/api/trainers-widget.html`;
