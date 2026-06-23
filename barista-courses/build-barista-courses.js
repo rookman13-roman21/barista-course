@@ -12,13 +12,17 @@ const blockFiles = [
   '04-program.html',
   '05-format-price.html',
   '06-equipment.html',
+  '../tilda_blocks_others/trainers-widget/tilda-block.html',
   '07-faq.html',
   '08-final-cta.html',
   '09-online-booking-popup.html',
 ];
 
 function readBlock(fileName) {
-  return fs.readFileSync(path.join(blocksDir, fileName), 'utf8').trimEnd();
+  var sourcePath = fileName.indexOf('../') === 0
+    ? path.join(rootDir, fileName)
+    : path.join(blocksDir, fileName);
+  return fs.readFileSync(sourcePath, 'utf8').trimEnd();
 }
 
 function buildPageBody() {

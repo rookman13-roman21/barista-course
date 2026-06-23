@@ -28,9 +28,10 @@
 5. `04-program.html` — программа курса.
 6. `05-format-price.html` — формат, стоимость, предоплата.
 7. `06-equipment.html` — оборудование + компактная галерея с фотоальбомом.
-8. `07-faq.html` — FAQ с плавной гармошкой и single-open логикой.
-9. `08-final-cta.html` — финальный CTA с контактами и inline SVG-иконками.
-10. `09-online-booking-popup.html` — popup онлайн-записи, вставляется один раз после CTA-блоков.
+8. `../tilda_blocks_others/trainers-widget/tilda-block.html` — общий loader-блок тренеров, встроен в hosted-сборку после оборудования.
+9. `07-faq.html` — FAQ с плавной гармошкой и single-open логикой.
+10. `08-final-cta.html` — финальный CTA с контактами и inline SVG-иконками.
+11. `09-online-booking-popup.html` — popup онлайн-записи, вставляется один раз после CTA-блоков.
 
 ## Hosted loader для Tilda
 
@@ -38,7 +39,7 @@
 
 - `tilda-loader.html` — короткий loader, который один раз вставляется в Tilda.
 - `hosted/barista-courses-page.html` — полный HTML страницы для выкладки на сервер.
-- `build-barista-courses.js` — сборка hosted HTML из рабочих блоков `01`–`09`.
+- `build-barista-courses.js` — сборка hosted HTML из рабочих блоков `01`–`09` и общего loader-блока тренеров.
 
 После перехода страницы на loader обычные правки делать в `tilda-blocks/`, затем запускать:
 
@@ -71,6 +72,8 @@ https://159-194-202-120.sslip.io/api-fallback/api/barista-courses-page.html
 ```
 
 В Tilda после перехода оставлять только loader-блок, системные блоки Tilda и форму `#consalt`, если она нужна на странице. Старые большие HTML-блоки `01`–`09` вместе с loader не публиковать, иначе контент продублируется.
+
+Блок тренеров не копировать внутрь `barista-courses/tilda-blocks/`: сборка берёт общий источник `tilda_blocks_others/trainers-widget/tilda-block.html`. Сам виджет тренеров обновляется отдельно через `tilda_blocks_others/trainers-widget/` и публичные endpoints `https://api.barista-school.ru/api/trainers-widget.html` / `https://api.barista-school.ru/api/trainers.json`.
 
 ## Курс и цены
 
