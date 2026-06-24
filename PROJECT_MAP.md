@@ -22,6 +22,7 @@ barista-course/
 ├── home-barista-online/      ← Онлайн-курс «Домашний бариста» (baristaschool.ru/home_barista_online)
 ├── master-doma/              ← Мастер-класс «Домашнее заваривание» (baristaschool.ru/master_doma)
 ├── open-coffeeshop/          ← Курс «Открытие кофейни с нуля» (baristaschool.ru/open_coffeeshop)
+├── open_cafe_app/            ← Лендинг платформы для расчёта открытия кофейни (baristaschool.ru/open_cafe_app)
 ├── prepay/                   ← Страница предоплаты (baristaschool.ru/prepay)
 ├── tilda_blocks_others/      ← Разрозненные блоки для других страниц Tilda
 ├── scripts/                  ← Утилиты разработки (Tilda API, миграции)
@@ -51,6 +52,7 @@ barista-course/
 | `home-barista-online/` | `/home_barista_online` | Tilda Members | Онлайн-курс: лендинг + 11 уроков + личный кабинет |
 | `master-doma/` | `/master_doma` | Tilda HTML Block | Мастер-класс «Домашнее заваривание»: landing + онлайн-запись из `homebrew.json` |
 | `open-coffeeshop/` | `/open_coffeeshop` | Tilda Zero Block | Курс «Открытие кофейни»: 8 блоков, 2 ведущих, 2 тарифа |
+| `open_cafe_app/` | `/open_cafe_app` | Static HTML prototype | Лендинг платформы MBS* Coffee Menu для расчёта открытия кофейни: бюджет, продажи, рецепты, финмодель, поставщики, PDF/Excel и покупка через Tilda Shop |
 | `prepay/` | `/prepay` | Tilda Zero Block | Страница предоплаты: Hero + Курсы + Правила (1 файл `tilda-block.html`) |
 | `tilda_blocks_others/` | разные | Tilda | Отдельные Tilda-блоки и hosted-виджеты, включая универсальный блок тренеров и публичный оценочный лист каппинга |
 | `scripts/` | — | Node.js | Утилиты: скачивание из Tilda API, миграция уроков |
@@ -72,6 +74,7 @@ barista-course/
 | Домашний бариста (онлайн, уроки) | `home-barista-online/pages/lessons/lesson-*.html` | те же файлы |
 | Домашнее заваривание | `master-doma/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html` | `master-doma/index.html` |
 | Открытие кофейни | `open-coffeeshop/tilda-blocks/block-*.html` | `open-coffeeshop/index.html` |
+| Платформа для открытия кофейни | пока не нарезан на Tilda-блоки | `open_cafe_app/index.html` |
 | Предоплата | `prepay/tilda-block.html` | `prepay/index.html` |
 | Теоретическая подготовка | `barista-theory-cabinet/pages/barista_theory_*.html` | те же файлы |
 | 404 | `404/tilda-block.html` | `404/index.html` |
@@ -214,6 +217,25 @@ scripts/tilda-fetch.js
 - Sync находится в соседнем проекте `schedule-online/coffee-accounting-webinar-sync/` и развёрнут на `159.194.202.120` с cron каждые 5 минут.
 - Tilda-страница читает JSON в блоке `03`, обновляет дату/ссылку и переключает CTA на `#waiting_list`, если событие прошло, не найдено или мест нет.
 - Блок эксперта содержит фото Андрея Лаврищева, смысловые бейджи экспертности и раскрывающуюся карточку с местами работы и компетенциями.
+
+### 4.11. Платформа для открытия кофейни `/open_cafe_app`
+- Страница: `open_cafe_app/index.html`.
+- Продакшн URL в тексте, SEO и canonical: `https://baristaschool.ru/open_cafe_app`.
+- На текущем этапе это один самодостаточный HTML-файл для локальной правки; на Tilda-блоки ещё не нарезан и не деплоился.
+- Продуктовое позиционирование в hero: «Платформа для открытия кофейни».
+- Оффер: расчёт бюджета, продаж, среднего чека, окупаемости, поставщиков и отчётов до аренды и закупок.
+- Цена: `18 900 ₽`; в стоимость входит 1 час консультации с Романом Суслиным, основателем MBS*.
+- CTA покупки: `#order:Сервис открытия кофейни + консультация=18900`.
+- CTA заявки: `#consalt`; локальный JS не должен перехватывать этот якорь, чтобы Tilda могла открыть попап.
+- Дизайн опирается на `/Users/Romka/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`: Mulish, фирменные цвета, чистая карточная сетка, классы с префиксом `mbs-openapp__`.
+- Блок реальных экранов содержит 5 карточек: план продаж, бюджет запуска, рецепты, финмодель, поставщики. На desktop и mobile карточки идут в горизонтальной ленте.
+- По клику карточка открывает lightbox. Внутри открытой карточки переключаются только вложенные слайды выбранного раздела: стрелками, клавиатурой и свайпом. Между основными карточками из lightbox не переключаемся.
+- В карточке «Бюджет» есть дополнительные слайды списка оборудования и карточки оборудования.
+- В карточке «Рецепты» есть дополнительные слайды карточки напитка, редактирования рецепта и PDF техкарты.
+- В карточке «Фин.модель» есть дополнительные слайды калькулятора ФОТ, P&L и PDF-отчёта для инвестора или партнёра.
+- FAQ работает как accordion: при открытии одного вопроса остальные закрываются. Левый текстовый блок использует sticky-паттерн `data-mbs-sticky-section` / `data-mbs-sticky-panel` как на `barista-courses`.
+- Финальный CTA — компактная зелёная карточка с покупкой, заявкой и контактами; не растягивать её до hero-размера.
+- Скриншоты подключены публичными ссылками Tilda CDN и не должны содержать приватные данные, токены, внутренние админские URL или личные контакты клиентов.
 
 ---
 
