@@ -619,7 +619,7 @@
 
 <div class="mbs-trainers-widget-loader"
      data-mbs-trainers-widget
-     data-widget-url="https://159-194-202-120.sslip.io/api-fallback/api/trainers-widget.html">
+     data-widget-url="https://api.barista-school.ru/api/trainers-widget.html">
   <div style="font-family:Mulish,sans-serif;padding:32px 20px;text-align:center;color:#555;font-size:15px;font-weight:700;">
     Загружаем тренеров...
   </div>
@@ -627,33 +627,13 @@
 
 <script>
   (function () {
-    var primarySrc = 'https://api.barista-school.ru/trainers-widget.js?v=20260609-stable';
-    var fallbackSrc = 'https://159-194-202-120.sslip.io/api-fallback/trainers-widget.js?v=20260609-stable';
-    var fallbackTimer = null;
-    var fallbackStarted = false;
-
+    var src = 'https://api.barista-school.ru/trainers-widget.js';
     if (window.__mbsTrainersWidgetLoaderScript) return;
     window.__mbsTrainersWidgetLoaderScript = true;
-
-    function appendScript(src, onload, onerror) {
-      var script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      if (onload) script.onload = onload;
-      if (onerror) script.onerror = onerror;
-      document.head.appendChild(script);
-    }
-
-    function loadFallback() {
-      if (fallbackStarted || window.__mbsTrainersWidgetLoaderReady) return;
-      fallbackStarted = true;
-      appendScript(fallbackSrc);
-    }
-
-    fallbackTimer = setTimeout(loadFallback, 2500);
-    appendScript(primarySrc, function () {
-      clearTimeout(fallbackTimer);
-    }, loadFallback);
+    var script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.head.appendChild(script);
   })();
 </script>
 

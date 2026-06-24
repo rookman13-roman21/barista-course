@@ -10,6 +10,8 @@
     z-index: 99999;
     display: none;
     background: rgba(31,31,31,.58);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     font-family: 'Mulish', sans-serif;
   }
   .mbs-bc-booking-popup.is-open { display: block; }
@@ -19,15 +21,18 @@
     height: 100%;
     overflow: auto;
     padding: 28px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .mbs-bc-booking-popup__panel {
     position: relative;
-    width: min(860px, 100%);
-    margin: 0 auto;
+    width: min(760px, 100%);
+    margin: auto;
     border-radius: 24px;
-    background: #F5F5F5;
-    box-shadow: 0 24px 80px rgba(0,0,0,.24);
-    overflow: hidden;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
   }
   .mbs-bc-booking-popup__close {
     position: absolute;
@@ -45,13 +50,66 @@
     line-height: 1;
     box-shadow: 0 8px 22px rgba(31,31,31,.12);
   }
+  .mbs-bc-booking-popup__share {
+    position: absolute;
+    top: 12px;
+    right: 64px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #417033;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(31,31,31,.12);
+  }
+  .mbs-bc-booking-popup__share svg {
+    width: 21px;
+    height: 21px;
+    display: block;
+  }
+  .mbs-bc-booking-popup__share.is-hidden {
+    display: none;
+  }
   .mbs-bc-booking-popup__panel [data-course-booking-widget] {
     min-height: 420px;
   }
+  .mbs-bc-booking-popup__toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 100000;
+    transform: translateX(-50%);
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: #1F1F1F;
+    color: #fff;
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+  }
+  .mbs-bc-booking-popup__toast.is-visible { opacity: 1; }
+  .mbs-bc-booking-popup .bbb-widget-root {
+    background: transparent !important;
+    padding: 0 !important;
+  }
   body.mbs-bc-booking-lock { overflow: hidden; }
   @media (max-width: 640px) {
-    .mbs-bc-booking-popup__scroll { padding: 0; }
+    .mbs-bc-booking-popup__scroll {
+      display: block;
+      padding: 0;
+    }
     .mbs-bc-booking-popup__panel {
+      width: 100%;
       min-height: 100vh;
       border-radius: 0;
     }
@@ -59,38 +117,186 @@
       top: 8px;
       right: 8px;
     }
+    .mbs-bc-booking-popup__share {
+      top: 8px;
+      right: 58px;
+    }
   }
 </style>
 
 <div class="mbs-bc-booking-popup" id="mbs-bc-booking-popup" aria-hidden="true">
   <div class="mbs-bc-booking-popup__scroll" data-booking-close>
     <div class="mbs-bc-booking-popup__panel" role="dialog" aria-modal="true" aria-label="Онлайн запись на базовый курс бариста">
+      <button class="mbs-bc-booking-popup__share is-hidden" type="button" data-booking-share aria-label="Поделиться ссылкой" title="Поделиться">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M8.5 12.5 15.5 8.5M8.5 11.5l7 4M6.75 15.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 9.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 20.25a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
       <button class="mbs-bc-booking-popup__close" type="button" data-booking-close aria-label="Закрыть">×</button>
       <div data-course-booking-widget
            data-course-slug="basic-barista"
            data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json"
+           data-fallback-api-url="https://159-194-202-120.sslip.io/api-fallback/api/basic-barista-slots.json"
            data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
     </div>
   </div>
+  <div class="mbs-bc-booking-popup__toast" id="mbs-bc-booking-toast" aria-live="polite"></div>
 </div>
 
 <script>
   (function () {
     var popup = document.getElementById('mbs-bc-booking-popup');
     if (!popup) return;
+    var toastTimer = null;
+    var shareObserver = null;
+
+    function showToast(message) {
+      var toast = document.getElementById('mbs-bc-booking-toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('is-visible');
+      }, 2200);
+    }
+
+    function buildShareUrl() {
+      var url = new URL(window.location.href);
+      url.searchParams.set('online_booking', '1');
+      url.hash = 'online-booking';
+      return url.toString();
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      return new Promise(function (resolve, reject) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand('copy') ? resolve() : reject(new Error('copy failed'));
+        } catch (err) {
+          reject(err);
+        }
+        document.body.removeChild(textarea);
+      });
+    }
+
+    function shareBookingLink() {
+      var url = buildShareUrl();
+      var payload = {
+        title: 'Онлайн запись на базовый курс бариста',
+        text: 'Выберите формат обучения, дату и время.',
+        url: url
+      };
+      var canUseNativeShare = navigator.share && window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if (canUseNativeShare) {
+        navigator.share(payload).catch(function (err) {
+          if (!err || err.name === 'AbortError') return;
+          copyText(url).then(function () { showToast('Ссылка скопирована'); });
+        });
+        return;
+      }
+      copyText(url)
+        .then(function () { showToast('Ссылка скопирована'); })
+        .catch(function () { showToast('Не удалось скопировать ссылку'); });
+    }
+
+    function syncShareButtonVisibility() {
+      var button = popup.querySelector('[data-booking-share]');
+      var root = popup.querySelector('[data-course-booking-widget]');
+      if (!button) return;
+      var isVariantStep = !!(root && root.querySelector('.bbb-variant-grid'));
+      button.classList.toggle('is-hidden', !isVariantStep);
+    }
+
+    function observeWidgetStep(root) {
+      if (shareObserver) shareObserver.disconnect();
+      if (!root || !window.MutationObserver) {
+        syncShareButtonVisibility();
+        return;
+      }
+      shareObserver = new MutationObserver(syncShareButtonVisibility);
+      shareObserver.observe(root, { childList: true, subtree: true });
+      syncShareButtonVisibility();
+    }
+
+    function resetBookingDraftToVariant(root) {
+      try {
+        var slug = (root && root.dataset.courseSlug) || 'basic-barista';
+        var key = 'course-booking-draft-v1:' + slug + ':' + window.location.pathname;
+        var current = JSON.parse(window.localStorage.getItem(key) || 'null') || {};
+        window.localStorage.setItem(key, JSON.stringify({
+          savedAt: Date.now(),
+          step: 'variant',
+          variantId: '',
+          activeTrainer: null,
+          activeLesson: '1',
+          selectedDate: null,
+          cursor: '',
+          selected: {},
+          client: current.client || {}
+        }));
+      } catch (err) {
+        // localStorage может быть недоступен, виджет всё равно должен открыться.
+      }
+    }
 
     function ensureWidgetScript() {
+      var root = popup.querySelector('[data-course-booking-widget]');
+      if (root) {
+        resetBookingDraftToVariant(root);
+        root.innerHTML = '';
+        observeWidgetStep(root);
+      }
       var current = document.querySelector('script[data-course-booking-widget-script]');
       if (current) current.parentNode.removeChild(current);
-      var script = document.createElement('script');
-      script.src = 'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260526';
-      script.async = true;
-      script.dataset.courseBookingWidgetScript = '1';
-      script.onerror = function () {
+
+      var urls = [
+        'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260611-stable',
+        'https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=basic-barista-variants-20260611-stable'
+      ];
+      var index = 0;
+
+      function failWidget() {
         var root = popup.querySelector('[data-course-booking-widget]');
         if (root) root.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
-      };
-      document.body.appendChild(script);
+      }
+
+      function loadNext() {
+        if (index >= urls.length) {
+          failWidget();
+          return;
+        }
+        var script = document.createElement('script');
+        var timer = setTimeout(function () {
+          script.onerror = null;
+          if (script.parentNode) script.parentNode.removeChild(script);
+          index += 1;
+          loadNext();
+        }, 3000);
+
+        script.src = urls[index];
+        script.async = true;
+        script.dataset.courseBookingWidgetScript = '1';
+        script.onload = function () {
+          clearTimeout(timer);
+        };
+        script.onerror = function () {
+          clearTimeout(timer);
+          index += 1;
+          loadNext();
+        };
+        document.body.appendChild(script);
+      }
+
+      loadNext();
     }
 
     function openPopup(event) {
@@ -110,6 +316,9 @@
     document.querySelectorAll('.mbs-bc-online-open').forEach(function (button) {
       button.addEventListener('click', openPopup);
     });
+    popup.querySelectorAll('[data-booking-share]').forEach(function (button) {
+      button.addEventListener('click', shareBookingLink);
+    });
     popup.querySelectorAll('[data-booking-close]').forEach(function (item) {
       item.addEventListener('click', function (event) {
         if (event.target === item || event.target.hasAttribute('data-booking-close')) closePopup();
@@ -118,5 +327,9 @@
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
     });
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('online_booking') === '1') openPopup();
+    } catch (err) {}
   })();
 </script>

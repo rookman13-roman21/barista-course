@@ -5,9 +5,9 @@
 Публичная страница: `https://baristaschool.ru/barista_courses`
 
 Локальная папка:
-`/Users/romansuslin_1/Downloads/All_Code/barista-course/barista-courses`
+`/Users/Romka/Downloads/All_Code/barista-course/barista-courses`
 
-Статус на 2026-05-26: блоки подготовлены, проверены и опубликованы в Tilda.
+Статус на 2026-06-24: страница работает через Tilda loader и hosted HTML на сервере; popup онлайн-записи обновлён, блок тренеров в hosted-странице исправлен и задеплоен на основной API-домен без нерабочего `sslip.io` fallback.
 
 ## Главные файлы
 
@@ -58,8 +58,8 @@ barista-courses/hosted/barista-courses-page.html
 ```text
 /var/www/html/api/barista-courses-page.html
 ```
-Важно: `git commit` и `git push` сохраняют исходники на GitHub, но сами по себе не обновляют live-страницу. После изменений в блоках `/barista_courses` обязательно отдельно выкладывать свежий `hosted/barista-courses-page.html` на сервер, иначе Tilda продолжит подтягивать старую hosted-версию.
 
+Важно: `git commit` и `git push` сохраняют исходники на GitHub, но сами по себе не обновляют live-страницу. После изменений в блоках `/barista_courses` обязательно отдельно выкладывать свежий `hosted/barista-courses-page.html` на сервер, иначе Tilda продолжит подтягивать старую hosted-версию.
 
 Публичный URL hosted HTML:
 
@@ -67,15 +67,31 @@ barista-courses/hosted/barista-courses-page.html
 https://api.barista-school.ru/api/barista-courses-page.html
 ```
 
-Fallback URL для loader:
+Текущий loader использует только основной hosted URL:
 
 ```text
-https://159-194-202-120.sslip.io/api-fallback/api/barista-courses-page.html
+https://api.barista-school.ru/api/barista-courses-page.html
 ```
+
+Не добавлять обратно fallback `https://159-194-202-120.sslip.io/api-fallback/api/barista-courses-page.html` без отдельной проверки HTTPS: 2026-06-24 этот fallback был причиной риска падения загрузки.
 
 В Tilda после перехода оставлять только loader-блок, системные блоки Tilda и форму `#consalt`, если она нужна на странице. Старые большие HTML-блоки `01`–`09` вместе с loader не публиковать, иначе контент продублируется.
 
 Блок тренеров не копировать внутрь `barista-courses/tilda-blocks/`: сборка берёт общий источник `tilda_blocks_others/trainers-widget/tilda-block.html`. Сам виджет тренеров обновляется отдельно через `tilda_blocks_others/trainers-widget/` и публичные endpoints `https://api.barista-school.ru/api/trainers-widget.html` / `https://api.barista-school.ru/api/trainers.json`.
+
+Важно по блоку тренеров:
+
+- `data-widget-url` должен быть только `https://api.barista-school.ru/api/trainers-widget.html`;
+- loader-скрипт должен грузить только `https://api.barista-school.ru/trainers-widget.js`;
+- не использовать `https://159-194-202-120.sslip.io/api-fallback/api/trainers-widget.html`, потому что 2026-06-24 он не отвечал по HTTPS и ломал загрузку блока на `/barista_courses`.
+
+Последний деплой hosted HTML:
+
+- дата: 2026-06-24;
+- файл: `barista-courses/hosted/barista-courses-page.html`;
+- серверный путь: `/var/www/html/api/barista-courses-page.html`;
+- backup перед деплоем: `/var/www/html/api/barista-courses-page.html.bak-20260624-173218`;
+- live-проверка после деплоя: hosted HTML отдаёт `HTTP/2 200`, внутри блока тренеров стоит основной `api.barista-school.ru`, `trainers.json` валиден и содержит `trainers: 5`.
 
 ## Курс и цены
 
@@ -125,10 +141,25 @@ Popup-блок:
 tilda-blocks/09-online-booking-popup.html
 ```
 
+Важно: для страницы `https://baristaschool.ru/barista_courses` онлайн-запись встроена именно через этот проектный popup-блок. Не вставлять сюда standalone snippet из проекта `schedule-online/basic-barista-booking/tilda/tilda-snippet.html`: он не содержит обработчики `.mbs-bc-online-open` и ломает открытие popup на странице.
+
+При каждом открытии popup онлайн-записи виджет принудительно начинает с шага выбора формата:
+
+- `Один участник`;
+- `Два участника`.
+
+Это сделано намеренно: старый draft в `localStorage` может помнить предыдущий шаг, но при новом клике по `Онлайн запись` клиент должен сначала выбрать формат обучения. При этом контактные данные из draft сохраняются, а ранее выбранные формат, тренер, даты и занятия сбрасываются.
+
 Виджет подключается из:
 
 ```text
-https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260526
+https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260611-stable
+```
+
+Если основной API-домен недоступен, popup пробует fallback JS:
+
+```text
+https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=basic-barista-variants-20260611-stable
 ```
 
 Slots JSON:
@@ -137,11 +168,19 @@ Slots JSON:
 https://api.barista-school.ru/api/basic-barista-slots.json
 ```
 
+Fallback slots JSON:
+
+```text
+https://159-194-202-120.sslip.io/api-fallback/api/basic-barista-slots.json
+```
+
 Backend записи:
 
 ```text
 https://api.barista-school.ru/api/barista-booking
 ```
+
+Актуальная production-логика на 2026-06-15: базовый курс создаётся в yClients через manager-flow с `manager_seance_length = 12600` и `manager_technical_break_duration = 1800`. Это даёт 3 часа услуги и 30 минут технического перерыва. Тестовая запись после изменения подтвердила корректную длительность; тестовую запись на `+79035064620` отдельно не меняли.
 
 Проверено перед публикацией:
 
@@ -237,6 +276,9 @@ FAQ сделан через `details`, но открытие/закрытие а
 - Секреты и локальные URL: не найдены.
 - Порядок файлов: `00`–`09`.
 - Popup онлайн-записи связан с классом `.mbs-bc-online-open`.
+- Popup онлайн-записи должен оставаться в `09-online-booking-popup.html`; standalone snippet `tilda-snippet.html` из `schedule-online` на эту страницу не вставлять.
+- Hosted HTML должен содержать `data-widget-url="https://api.barista-school.ru/api/trainers-widget.html"` для блока тренеров.
+- `tilda-loader.html` должен грузить `https://api.barista-school.ru/api/barista-courses-page.html` без `sslip.io` fallback.
 - `#mbs-bc-program` существует и соответствует ссылке из hero.
 
 ## Что не трогать без необходимости
@@ -244,6 +286,8 @@ FAQ сделан через `details`, но открытие/закрытие а
 - Не удалять кнопку `Оставить заявку`: она нужна как fallback для клиентов, не готовых записаться онлайн.
 - Не заменять `#consalt`: это рабочий якорь Tilda для формы заявки.
 - Не удалять `09-online-booking-popup.html`: без него кнопки онлайн-записи не откроют виджет.
+- Не заменять проектный popup на `schedule-online/basic-barista-booking/tilda/tilda-snippet.html`: этот snippet предназначен для самостоятельной вставки виджета, а не для страницы с интегрированным popup.
+- Не возвращать fallback `159-194-202-120.sslip.io` в loader страницы или loader блока тренеров без новой live-проверки.
 - Не переносить секреты или YClients-токены в frontend/Tilda-блоки.
 - Не использовать старую WhatsApp-ссылку `https://wa.me/79959992836`; актуальная ссылка указана выше.
 
@@ -251,10 +295,10 @@ FAQ сделан через `details`, но открытие/закрытие а
 
 Онлайн-запись и backend живут отдельно:
 
-`/Users/romansuslin_1/Downloads/All_Code/schedule-online/basic-barista-booking`
+`/Users/Romka/Downloads/All_Code/schedule-online/basic-barista-booking`
 
 Дизайн-система:
 
-`/Users/romansuslin_1/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`
+`/Users/Romka/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`
 
 Правило финального CTA и контактов уже добавлено в дизайн-систему.
