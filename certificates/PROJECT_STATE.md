@@ -1,4 +1,4 @@
-# База знаний: Страница подарочных сертификатов МШБ
+# База знаний: Страница подарочных сертификатов MBS
 
 > Файл для быстрого погружения в контекст проекта при продолжении работы.
 
@@ -11,9 +11,8 @@
 | Параметр | Значение |
 |---|---|
 | **Продакшн URL** | `https://baristaschool.ru/sertifikat` |
-| **Preview URL** | `https://certificates-gilt.vercel.app` |
 | **Платформа** | Tilda — каждый блок вставляется как отдельный HTML-блок (Zero Block / T123) |
-| **Деплой** | Vercel CLI: `run_task: shell: deploy-barista-prod` |
+| **Деплой** | Вставка блоков в Tilda Zero Block; превью — VS Code Live Preview |
 | **Локальная папка** | `/Users/romansuslin_1/Downloads/All_Code/barista-course/certificates/` |
 | **Бэкенд API** | `server.js` на `root@159.194.202.120`, порт 3010, PM2 (`yclients-dashboard`) |
 | **Конфиг категорий** | `/opt/yclients-dashboard/data/cert-categories.json` (без деплоя кода) |
@@ -25,7 +24,7 @@
 ```
 certificates/
 ├── index.html                    ← standalone-версия (не в Tilda, для превью)
-├── vercel.json                   ← конфиг Vercel (публикует index.html)
+├── vercel.json                   ← конфиг маршрутизации (cleanUrls/trailingSlash)
 └── tilda-blocks/
     ├── block-00-seo.html         ← вставляется в <head> страницы Tilda
     ├── block-01-hero.html        ← Hero-секция + подключение шрифтов/иконок
@@ -51,14 +50,32 @@ certificates/
 |---|---|---|
 | Шрифт Mulish (Google Fonts) | `<link>` тег | `block-01-hero.html` |
 | Phosphor Icons v2.1.1 | `<script src="https://unpkg.com/@phosphor-icons/web@2.1.1">` | `block-01-hero.html` |
-| API сертификатов | `https://159-194-202-120.sslip.io/api/public/certificates` | `block-02-catalog.html` |
+| API сертификатов | primary: `https://api.barista-school.ru/api/public/certificates`; fallback: `https://159-194-202-120.sslip.io/api/public/certificates` | `block-02-catalog.html` |
 | YClients (оформление заказа) | `https://o3059.yclients.com/certificates/` | `block-02-catalog.html` |
 
 ---
 
 ## 4. API сертификатов
 
-**Endpoint:** `GET https://159-194-202-120.sslip.io/api/public/certificates`
+**Primary endpoint:** `GET https://api.barista-school.ru/api/public/certificates`
+
+**Fallback endpoint:** `GET https://159-194-202-120.sslip.io/api/public/certificates`
+
+Primary endpoint настроен на сервере `5.35.93.225` в nginx-файле `/etc/nginx/sites-enabled/barista-api` как proxy location на реальный backend `YClients-Dashboard`:
+
+```nginx
+location = /api/public/certificates {
+  proxy_pass https://159-194-202-120.sslip.io/api/public/certificates;
+  proxy_ssl_server_name on;
+  proxy_set_header Host 159-194-202-120.sslip.io;
+}
+```
+
+Причина: у части пользователей из России `sslip.io` / сервер `159.194.202.120` может открываться нестабильно. Для браузера первым должен быть более стабильный домен `api.barista-school.ru`, старый `sslip.io` остаётся только fallback.
+
+После проблемы с плавающей доступностью из РФ на старом host `159-194-202-120.sslip.io` также отключён TLS 1.3: в `/etc/nginx/sites-enabled/yclients-dashboard` на `159.194.202.120` задано `ssl_protocols TLSv1.2;`. Backup перед правкой: `/root/nginx-backups/yclients-dashboard.bak-tls12-certificates-20260625-082741`.
+
+Frontend дополнительно сохраняет последний успешный ответ в `localStorage` ключ `mbs-certificates-catalog-v1` на 6 часов. Если оба endpoint временно недоступны, но кеш свежий, каталог всё равно отрисуется.
 
 Возвращает объект с категориями:
 ```json
@@ -333,6 +350,40 @@ scp -i $HOME/.ssh/copilot_beget_temp/id_ed25519 server.js root@159.194.202.120:/
 pm2 restart yclients-dashboard --update-env
 ```
 
+### Nginx proxy для публичного API сертификатов
+```bash
+# Сервер публичного API:
+ssh -i $HOME/.ssh/id_ed25519 root@5.35.93.225
+
+# Конфиг:
+/etc/nginx/sites-enabled/barista-api
+
+# Проверка после правки:
+nginx -t && systemctl reload nginx
+
+# Smoke-check:
+curl -Iv --http2 https://api.barista-school.ru/api/public/certificates
+curl -sS --http2 https://api.barista-school.ru/api/public/certificates | head -c 500
+```
+
+### TLS-настройка fallback host `159-194-202-120.sslip.io`
+```bash
+# Сервер старого backend/fallback:
+ssh -i $HOME/.ssh/copilot_beget_temp/id_ed25519 root@159.194.202.120
+
+# Конфиг:
+/etc/nginx/sites-enabled/yclients-dashboard
+
+# Для снижения риска плавающих блокировок из РФ:
+ssl_protocols TLSv1.2;
+
+# Проверки:
+nginx -t && systemctl reload nginx
+openssl s_client -connect 159-194-202-120.sslip.io:443 -servername 159-194-202-120.sslip.io -tls1_3 </dev/null
+openssl s_client -connect 159-194-202-120.sslip.io:443 -servername 159-194-202-120.sslip.io -tls1_2 </dev/null
+curl -Iv --http2 https://159-194-202-120.sslip.io/api/public/certificates
+```
+
 ### Конфиг категорий (без деплоя кода)
 ```bash
 # Обновить cert-categories.json на сервере напрямую:
@@ -344,7 +395,29 @@ scp -i $HOME/.ssh/copilot_beget_temp/id_ed25519 \
 
 ---
 
-## 12. Часто встречающиеся ошибки
+## 12. Известные ограничения
+
+### 12.1 Изображения сертификатов не загружаются из YClients API
+
+**Статус:** ❌ Не решено (май 2026)
+
+**Симптом:** В карточках каталога и в модальном окне изображение не отображается — блок скрывается (`display: none`).
+
+**Причина:** YClients Partner API (`/api/v1/company/{id}/loyalty/certificate_types/search`) **не возвращает поле с изображением** в принципе. Полный список полей ответа:
+`id, title, company_id, loyalty_group_id, category_id, weight, item_type_id, expiration_type_id, expiration_date, expiration_timeout, expiration_timeout_unit_id, balance_edit_type_id, is_allow_empty_code, is_serial_number_limited, is_archived, date_archived, online_sale_is_enabled, online_sale_title, online_sale_description, online_sale_price, item_type`
+
+Поля `image`, `image_link`, `photo`, `logo` и аналогичные **отсутствуют**. В `online_sale_description` (HTML) тоже нет `<img>` тегов (проверено на всех 34 типах). Изображения видны в YClients admin и в публичном виджете `o3059.yclients.com` — но там JS SPA, который загружает их через внутренний (непубличный) API.
+
+**Где в коде:** `server.js`, строка ~721: `image: c.image || c.image_link || null` → всегда `null`. В `block-02-catalog.html` блок изображения скрывается при `data.image === null`.
+
+**Варианты решения (не реализованы):**
+1. Добавить `"defaultImage": "url"` в `cert-categories.json` → отображать иллюстрацию на категорию
+2. Создать файл `cert-images.json` с маппингом `typeId → imageUrl` — изображения загрузить вручную на хостинг
+3. Headless-парсинг публичного виджета YClients (Puppeteer) — сложно и хрупко
+
+---
+
+## 13. Часто встречающиеся ошибки
 
 | Симптом | Причина | Решение |
 |---|---|---|
@@ -356,7 +429,8 @@ scp -i $HOME/.ssh/copilot_beget_temp/id_ed25519 \
 | Подчёркивание на кнопке-ссылке | Tilda переопределяет `<a>` | Добавить `text-decoration: none !important` |
 | Белый текст на кнопке пропадает | Tilda переопределяет `color` | Добавить `color: #fff !important` |
 | `#consalt` не работает | Используется старый якорь `#consalt_sert` | Заменить на `#consalt` везде |
+| Каталог временно недоступен у части пользователей | Браузер не достучался до primary и fallback API, свежего localStorage-кеша нет | Проверить `https://api.barista-school.ru/api/public/certificates`, nginx на `5.35.93.225`, затем fallback `https://159-194-202-120.sslip.io/api/public/certificates` |
 
 ---
 
-*Версия: май 2026. Последнее обновление: категории сертификатов переведены на управление через `cert-categories.json` без деплоя кода.*
+*Версия: июнь 2026. Последнее обновление: primary API сертификатов переведён на `api.barista-school.ru`, `sslip.io` оставлен fallback, добавлен browser cache.*

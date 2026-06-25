@@ -117,6 +117,11 @@ scripts/tilda-fetch.js
 
 ### 4.2. Бэкенд сертификатов (внешний сервер)
 - Сервер: `root@159.194.202.120`, порт 3010, PM2 (`yclients-dashboard`)
+- Primary публичный endpoint для страницы `/sertifikat`: `https://api.barista-school.ru/api/public/certificates`
+- Fallback endpoint: `https://159-194-202-120.sslip.io/api/public/certificates`
+- На `5.35.93.225` в `/etc/nginx/sites-enabled/barista-api` настроен exact-location `= /api/public/certificates`, который проксирует реальный backend `YClients-Dashboard`.
+- На fallback host `159-194-202-120.sslip.io` после плавающих проблем доступности из РФ отключён TLS 1.3: в `/etc/nginx/sites-enabled/yclients-dashboard` задано `ssl_protocols TLSv1.2;`.
+- Frontend каталога в `certificates/tilda-blocks/block-02-catalog.html` сначала пробует primary endpoint, затем fallback, затем свежий `localStorage` кеш `mbs-certificates-catalog-v1`.
 - Конфиг категорий: `/opt/yclients-dashboard/data/cert-categories.json`
 - Этот сервер **не входит** в данный репозиторий
 

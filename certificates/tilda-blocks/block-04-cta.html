@@ -1,0 +1,104 @@
+<!-- ════════════════════════════════════════════════════════
+     БЛОК 4 — CTA «Сомневаетесь?»
+     Вставить в Tilda как HTML-блок (Zero Block или T123)
+════════════════════════════════════════════════════════ -->
+<style>
+  :root {
+    --mbs-green-dark: #417033;
+    --mbs-bg-green:   #E7F2E3;
+    --mbs-red:        #CC2841;
+    --mbs-red-soft:   #D83D54;
+    --mbs-bg:         #F5F5F5;
+    --mbs-black:      #1F1F1F;
+    --mbs-gray:       #555555;
+    --mbs-white:      #FFFFFF;
+  }
+
+  .mbs-cert-cta {
+    background: var(--mbs-white);
+    padding: 80px 20px 100px;
+    font-family: 'Mulish', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mbs-cert-cta * { box-sizing: border-box; }
+  .mbs-cert-cta__inner { max-width: 1100px; margin: 0 auto; }
+  .mbs-cert-cta__card {
+    background: var(--mbs-bg-green); border-radius: 28px; padding: 64px 72px;
+    display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  }
+  .mbs-cert-cta__left { flex: 1; }
+  .mbs-cert-cta__label {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 16px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(65,112,51,.12); color: var(--mbs-green-dark);
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-cert-cta__title {
+    font-size: 34px; font-weight: 900; line-height: 1.1;
+    letter-spacing: -0.04em; color: var(--mbs-black); margin-bottom: 12px;
+  }
+  .mbs-cert-cta__text { font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--mbs-gray); }
+  .mbs-cert-cta__right {
+    display: flex; flex-direction: column; gap: 12px;
+    align-items: flex-start; flex-shrink: 0;
+  }
+  .mbs-cert-cta__btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 56px; padding: 0 36px; border-radius: 999px;
+    background: var(--mbs-red); color: #fff !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 17px; font-weight: 900;
+    white-space: nowrap; transition: background .2s, transform .15s;
+  }
+  .mbs-cert-cta__btn:hover { background: var(--mbs-red-soft); transform: translateY(-1px); }
+  .mbs-cert-cta__socials { display: flex; gap: 10px; margin-top: 4px; }
+  .mbs-cert-cta__social {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--mbs-white); color: var(--mbs-black) !important;
+    text-decoration: none !important; font-family: 'Mulish', sans-serif;
+    font-size: 14px; font-weight: 700;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    transition: background .2s, box-shadow .2s;
+  }
+  .mbs-cert-cta__social:hover { background: var(--mbs-bg); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+  .mbs-cert-cta__social i { font-size: 18px; color: var(--mbs-green-dark); }
+
+  @media (max-width: 820px) {
+    .mbs-cert-cta__card { flex-direction: column; padding: 40px 28px; }
+    .mbs-cert-cta__right { width: 100%; }
+    .mbs-cert-cta__btn { width: 100%; }
+  }
+  @media (max-width: 540px) {
+    .mbs-cert-cta__socials { flex-direction: column; }
+    .mbs-cert-cta__social { justify-content: center; }
+  }
+</style>
+
+<section class="mbs-cert-cta">
+  <div class="mbs-cert-cta__inner">
+    <div class="mbs-cert-cta__card">
+      <div class="mbs-cert-cta__left">
+        <div class="mbs-cert-cta__label">
+          <i class="ph ph-question"></i>
+          Сомневаетесь?
+        </div>
+        <h2 class="mbs-cert-cta__title">Не знаете, какой<br>сертификат выбрать?</h2>
+        <p class="mbs-cert-cta__text">
+          Расскажите нам об увлечениях и целях получателя —<br>
+          поможем подобрать идеальный вариант за 5 минут.
+        </p>
+      </div>
+      <div class="mbs-cert-cta__right">
+        <a href="#consalt" class="mbs-cert-cta__btn">Помочь с выбором</a>
+        <div class="mbs-cert-cta__socials">
+          <a href="https://instagram.com/barista_school" class="mbs-cert-cta__social" target="_blank" rel="noopener">
+            <i class="ph ph-instagram-logo"></i> Instagram
+          </a>
+          <a href="https://t.me/moscowbaristaschool" class="mbs-cert-cta__social" target="_blank" rel="noopener">
+            <i class="ph ph-telegram-logo"></i> Telegram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
