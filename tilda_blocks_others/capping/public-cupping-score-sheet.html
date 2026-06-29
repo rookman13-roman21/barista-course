@@ -1,0 +1,4848 @@
+<!--
+  MBS* Public Cupping Score Sheet
+  Публичная версия оценочного листа каппинга для Tilda.
+  Страница: https://baristaschool.ru/capping_list
+  Hosted-фрагмент: https://api.barista-school.ru/api/public-cupping-score-sheet.html
+  Данные не отправляются на сервер и сохраняются только в браузере участника.
+-->
+<section class="mbs-cs" id="mbsCuppingScoreSheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    .mbs-cs,
+    .mbs-cs * {
+      box-sizing: border-box;
+    }
+
+    .mbs-cs {
+      --mbs-cs-green-dark: #417033;
+      --mbs-cs-green: #4F883E;
+      --mbs-cs-green-soft: #E7F2E3;
+      --mbs-cs-green-line: #B6D8AB;
+      --mbs-cs-red: #CC2841;
+      --mbs-cs-red-soft: #D83D54;
+      --mbs-cs-bg: #F5F5F5;
+      --mbs-cs-card: #FFFFFF;
+      --mbs-cs-text: #1F1F1F;
+      --mbs-cs-muted: #555555;
+      --mbs-cs-line: rgba(31, 31, 31, .08);
+      --mbs-cs-shadow: 0 24px 72px rgba(31, 31, 31, .12);
+      width: 100%;
+      margin: 0;
+      padding: 48px 20px;
+      background: var(--mbs-cs-bg);
+      color: var(--mbs-cs-text);
+      font-family: Mulish, Arial, sans-serif;
+      line-height: 1.4;
+    }
+
+    .mbs-cs__shell {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .mbs-cs__top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .mbs-cs__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 0 14px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(231, 242, 227, .95);
+      color: var(--mbs-cs-green-dark);
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mbs-cs__title {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 64px;
+      font-weight: 900;
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .mbs-cs__lead {
+      max-width: 800px;
+      margin: 16px 0 0;
+      color: var(--mbs-cs-text);
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .mbs-cs__top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .mbs-cs__guide-open {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-green-line);
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, transform .2s;
+    }
+
+    .mbs-cs__guide-open:hover {
+      border-color: var(--mbs-cs-green-dark);
+      background: var(--mbs-cs-green-soft);
+      transform: translateY(-1px);
+    }
+
+    .mbs-cs__badge {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-green-line);
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mbs-cs__event,
+    .mbs-cs__admin {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 22px;
+      padding: 24px 28px;
+      background: #fff;
+      box-shadow: 0 12px 36px rgba(31, 31, 31, .06);
+    }
+
+    .mbs-cs__event-title,
+    .mbs-cs__admin-title {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .mbs-cs__event-meta,
+    .mbs-cs__admin-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mbs-cs__event-meta li,
+    .mbs-cs__admin-meta li {
+      display: inline-flex;
+      min-height: 30px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: #F5F5F5;
+      color: var(--mbs-cs-muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__admin {
+      border-color: rgba(204, 40, 65, .18);
+      background: #FFF7F8;
+    }
+
+    .mbs-cs__admin[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__panel {
+      overflow: hidden;
+      border: 8px solid var(--mbs-cs-green-soft);
+      border-radius: 28px;
+      background: var(--mbs-cs-card);
+      box-shadow: var(--mbs-cs-shadow);
+    }
+
+    .mbs-cs__nav {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--mbs-cs-line);
+      background: #F5F5F5;
+    }
+
+    .mbs-cs__tab {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 16px;
+      border: 0;
+      border-right: 1px solid var(--mbs-cs-line);
+      background: transparent;
+      color: var(--mbs-cs-muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .mbs-cs__tab[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__tab:link,
+    .mbs-cs__tab:visited {
+      color: var(--mbs-cs-muted);
+      text-decoration: none;
+    }
+
+    .mbs-cs__tab:last-child {
+      border-right: 0;
+    }
+
+    .mbs-cs__tab.is-active,
+    .mbs-cs__tab.is-active:link,
+    .mbs-cs__tab.is-active:visited {
+      background: var(--mbs-cs-green);
+      color: #fff;
+    }
+
+    .mbs-cs__body {
+      padding: 32px;
+    }
+
+    .mbs-cs__view[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__section-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .mbs-cs__h2 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .mbs-cs__muted {
+      margin: 0;
+      color: var(--mbs-cs-muted);
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .mbs-cs__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mbs-cs__field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mbs-cs__field--wide {
+      grid-column: 1 / -1;
+    }
+
+    .mbs-cs__label {
+      color: var(--mbs-cs-text);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__input,
+    .mbs-cs__select,
+    .mbs-cs__textarea {
+      width: 100%;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font: inherit;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .mbs-cs__input,
+    .mbs-cs__select {
+      min-height: 46px;
+      padding: 0 16px;
+    }
+
+    .mbs-cs__textarea {
+      min-height: 88px;
+      padding: 14px 16px;
+      resize: vertical;
+    }
+
+    .mbs-cs__input:focus,
+    .mbs-cs__select:focus,
+    .mbs-cs__textarea:focus {
+      border-color: rgba(65, 112, 51, .54);
+      box-shadow: 0 0 0 3px rgba(65, 112, 51, .1);
+    }
+
+    .mbs-cs [hidden] {
+      display: none !important;
+    }
+
+    .mbs-cs__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .mbs-cs__btn {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 999px;
+      padding: 13px 24px;
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .2s, color .2s, border-color .2s, transform .2s;
+    }
+
+    .mbs-cs__btn:hover {
+      border-color: var(--mbs-cs-green-dark);
+      background: var(--mbs-cs-green-dark);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .mbs-cs__btn:disabled {
+      opacity: .46;
+      cursor: not-allowed;
+    }
+
+    .mbs-cs__btn:disabled:hover {
+      border-color: var(--mbs-cs-line);
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      transform: none;
+    }
+
+    .mbs-cs__btn--primary {
+      border-color: var(--mbs-cs-red);
+      background: var(--mbs-cs-red);
+      color: #fff;
+    }
+
+    .mbs-cs__btn--primary:hover {
+      border-color: var(--mbs-cs-red-soft);
+      background: var(--mbs-cs-red-soft);
+      color: #fff;
+    }
+
+    .mbs-cs__btn--danger {
+      border-color: rgba(204, 40, 65, .24);
+      color: var(--mbs-cs-red);
+    }
+
+    .mbs-cs__btn--primary:disabled,
+    .mbs-cs__btn--primary:disabled:hover {
+      opacity: 1;
+      border-color: var(--mbs-cs-green-line);
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mbs-cs__btn--danger:disabled,
+    .mbs-cs__btn--danger:disabled:hover {
+      opacity: .58;
+      border-color: rgba(31, 31, 31, .08);
+      background: #fff;
+      color: var(--mbs-cs-muted);
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mbs-cs__progress {
+      display: grid;
+      gap: 8px;
+      min-width: 220px;
+    }
+
+    .mbs-cs__progress-text {
+      color: var(--mbs-cs-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .mbs-cs__progress-track {
+      overflow: hidden;
+      height: 8px;
+      border-radius: 999px;
+      background: #F5F5F5;
+    }
+
+    .mbs-cs__progress-fill {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--mbs-cs-green-dark);
+      transition: width .18s ease;
+    }
+
+    .mbs-cs__lot-nav {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 8px;
+      margin: 0 0 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+
+    .mbs-cs__lot-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mbs-cs__lot-nav::after {
+      content: "";
+      flex: 0 0 calc(100% - 96px);
+      min-width: 120px;
+    }
+
+    .mbs-cs__lot-nav-btn {
+      display: inline-flex;
+      flex: 0 0 auto;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: #fff;
+      color: var(--mbs-cs-muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .mbs-cs__lot-nav-btn:hover {
+      border-color: rgba(65, 112, 51, .34);
+      color: var(--mbs-cs-green-dark);
+    }
+
+    .mbs-cs__lot-nav-btn.is-partial {
+      border-color: rgba(65, 112, 51, .28);
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+    }
+
+    .mbs-cs__lot-nav-btn.is-complete {
+      border-color: var(--mbs-cs-green-dark);
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+    }
+
+    .mbs-cs__lot-nav-btn.is-active {
+      border-color: var(--mbs-cs-green-dark);
+      background: var(--mbs-cs-green-dark);
+      color: #fff;
+    }
+
+    .mbs-cs__lot-add {
+      display: inline-flex;
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba(65, 112, 51, .44);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      font: inherit;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .mbs-cs__lot-add:hover {
+      border-style: solid;
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__lot-editor {
+      display: grid;
+      gap: 14px;
+      border: 1px solid rgba(65, 112, 51, .18);
+      border-radius: 22px;
+      padding: 18px;
+      background: #FAFCF9;
+    }
+
+    .mbs-cs__lot-editor-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .mbs-cs__lot-editor-head h3 {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.08;
+    }
+
+    .mbs-cs__lot-editor-head p {
+      max-width: 620px;
+      margin: 6px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .mbs-cs__lot-editor-toggle {
+      display: inline-flex;
+      min-height: 38px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(65, 112, 51, .22);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .mbs-cs__lot-editor-toggle:hover {
+      border-color: var(--mbs-cs-green-dark);
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__lot-editor-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .mbs-cs__lot-editor-list[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__lot-editor-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mbs-cs__lot-editor-label {
+      color: var(--mbs-cs-green-dark);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__lot-editor-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .mbs-cs__lot-delete {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(204, 40, 65, .24);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-red);
+      font: inherit;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .mbs-cs__lot-delete:hover {
+      border-color: var(--mbs-cs-red);
+      background: #FFF7F8;
+    }
+
+    .mbs-cs__lot-delete:disabled {
+      opacity: .36;
+      cursor: not-allowed;
+    }
+
+    .mbs-cs__lot-details {
+      margin: -2px 0 16px;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .mbs-cs__lot-details p {
+      margin: 0;
+    }
+
+    .mbs-cs__lot-details:empty {
+      display: none;
+    }
+
+    .mbs-cs__lots {
+      position: relative;
+    }
+
+    .mbs-cs__lot {
+      display: none;
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 20px;
+      padding: 24px;
+      background: #fff;
+    }
+
+    .mbs-cs__lot.is-active {
+      display: block;
+      animation: mbsCsLotIn .16s ease;
+    }
+
+    @keyframes mbsCsLotIn {
+      from {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .mbs-cs__lot-switcher {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .mbs-cs__lot-position {
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .mbs-cs__lot-head {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .mbs-cs__lot-title {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .mbs-cs__lot-meta {
+      margin: 8px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .mbs-cs__score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mbs-cs__criterion {
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 18px;
+      padding: 16px;
+      background: #F5F5F5;
+    }
+
+    .mbs-cs__criterion-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__criterion-title small {
+      color: var(--mbs-cs-muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .mbs-cs__scale {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .mbs-cs__scale label {
+      display: flex;
+      justify-content: center;
+    }
+
+    .mbs-cs__scale input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mbs-cs__scale span {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .mbs-cs__scale input:checked + span {
+      border-color: var(--mbs-cs-green);
+      background: var(--mbs-cs-green);
+      color: #fff;
+    }
+
+    .mbs-cs__scale input:focus-visible + span {
+      box-shadow: 0 0 0 3px rgba(65, 112, 51, .16);
+    }
+
+    .mbs-cs__descriptor-tools {
+      display: grid;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .mbs-cs__descriptor-picked {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 0;
+    }
+
+    .mbs-cs__descriptor-chip {
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      gap: 5px;
+      border: 0;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: var(--mbs-cs-tone-bg, #fff);
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-green-dark));
+      box-shadow: inset 0 0 0 1px var(--mbs-cs-tone-border, rgba(65, 112, 51, .18));
+      font: inherit;
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .mbs-cs__descriptor-chip i {
+      font-style: normal;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .mbs-cs__descriptor-open {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 34px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(65, 112, 51, .22);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+
+    .mbs-cs__descriptor-open:hover {
+      border-color: var(--mbs-cs-green-dark);
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__descriptor-modal[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__guide-modal[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__guide-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(31, 31, 31, .42);
+    }
+
+    .mbs-cs__guide-sheet {
+      display: flex;
+      width: min(760px, 100%);
+      max-height: min(86vh, 760px);
+      overflow: hidden;
+      flex-direction: column;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 24px 72px rgba(31, 31, 31, .24);
+    }
+
+    .mbs-cs__guide-head {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid var(--mbs-cs-line);
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__guide-title {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__guide-subtitle {
+      margin: 8px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .mbs-cs__guide-close {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font: inherit;
+      font-size: 22px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__guide-body {
+      display: grid;
+      gap: 14px;
+      overflow: auto;
+      padding: 22px 24px;
+    }
+
+    .mbs-cs__guide-intro {
+      margin: 0;
+      border: 1px solid var(--mbs-cs-green-line);
+      border-radius: 18px;
+      padding: 16px 18px;
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .mbs-cs__guide-card {
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+    }
+
+    .mbs-cs__guide-card h4 {
+      margin: 0 0 10px;
+      color: var(--mbs-cs-text);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .mbs-cs__guide-card p,
+    .mbs-cs__guide-card li {
+      color: var(--mbs-cs-muted);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .mbs-cs__guide-card p {
+      margin: 0;
+    }
+
+    .mbs-cs__guide-card ul {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .mbs-cs__guide-scale {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mbs-cs__guide-scale li {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: #F5F5F5;
+    }
+
+    .mbs-cs__guide-scale strong {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--mbs-cs-green);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__guide-foot {
+      display: flex;
+      justify-content: flex-end;
+      padding: 16px 24px 22px;
+      border-top: 1px solid var(--mbs-cs-line);
+      background: #fff;
+    }
+
+    .mbs-cs__descriptor-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(31, 31, 31, .38);
+    }
+
+    .mbs-cs__descriptor-sheet {
+      width: min(760px, 100%);
+      max-height: min(82vh, 720px);
+      overflow: hidden;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 24px 72px rgba(31, 31, 31, .24);
+    }
+
+    .mbs-cs__descriptor-head {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--mbs-cs-line);
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__descriptor-title {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__descriptor-context {
+      margin: 7px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .mbs-cs__descriptor-close {
+      display: inline-flex;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font: inherit;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__descriptor-body {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 16px;
+      max-height: calc(min(82vh, 720px) - 172px);
+      overflow: auto;
+      padding: 18px 22px;
+    }
+
+    .mbs-cs__descriptor-step {
+      margin: 0 0 10px;
+      color: var(--mbs-cs-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mbs-cs__descriptor-groups,
+    .mbs-cs__descriptor-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mbs-cs__descriptor-groups {
+      flex-direction: column;
+      flex-wrap: nowrap;
+    }
+
+    .mbs-cs__descriptor-group,
+    .mbs-cs__descriptor-option {
+      border: 1px solid var(--mbs-cs-tone-border, rgba(31, 31, 31, .08));
+      border-radius: 999px;
+      background: var(--mbs-cs-tone-bg, #fff);
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-text));
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .2s, border-color .2s, color .2s, transform .2s;
+    }
+
+    .mbs-cs__descriptor-group:hover,
+    .mbs-cs__descriptor-option:hover {
+      transform: translateY(-1px);
+    }
+
+    .mbs-cs__descriptor-group {
+      min-height: 40px;
+      padding: 8px 13px;
+      text-align: left;
+    }
+
+    .mbs-cs__descriptor-option {
+      min-height: 36px;
+      padding: 7px 12px;
+    }
+
+    .mbs-cs__descriptor-group.is-active,
+    .mbs-cs__descriptor-option.is-selected {
+      border-color: var(--mbs-cs-tone-strong, var(--mbs-cs-green-dark));
+      background: var(--mbs-cs-tone-strong, var(--mbs-cs-green-dark));
+      color: #fff;
+    }
+
+    .mbs-cs__descriptor-option.is-disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    .mbs-cs__descriptor-foot {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px 18px;
+      border-top: 1px solid var(--mbs-cs-line);
+    }
+
+    .mbs-cs__descriptor-count {
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__wheel-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .mbs-cs__wheel-stage {
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 24px;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .mbs-cs__wheel-svg {
+      display: block;
+      width: min(360px, 100%);
+      height: auto;
+      overflow: visible;
+    }
+
+    .mbs-cs__wheel-sector {
+      cursor: pointer;
+      outline: none;
+    }
+
+    .mbs-cs__wheel-sector path {
+      fill: var(--mbs-cs-tone-bg, var(--mbs-cs-green-soft));
+      stroke: #fff;
+      stroke-width: 4;
+      transition: fill .2s, stroke .2s, transform .2s;
+    }
+
+    .mbs-cs__wheel-sector text {
+      fill: var(--mbs-cs-tone-text, var(--mbs-cs-text));
+      font-family: Mulish, Arial, sans-serif;
+      font-size: 10px;
+      font-weight: 900;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      pointer-events: none;
+      text-transform: uppercase;
+    }
+
+    .mbs-cs__wheel-sector:hover path,
+    .mbs-cs__wheel-sector:focus-visible path {
+      stroke: var(--mbs-cs-tone-border, var(--mbs-cs-green-line));
+    }
+
+    .mbs-cs__wheel-sector.is-active path {
+      fill: var(--mbs-cs-tone-strong, var(--mbs-cs-green));
+    }
+
+    .mbs-cs__wheel-sector.is-active text {
+      fill: #fff;
+    }
+
+    .mbs-cs__wheel-core {
+      fill: #fff;
+      stroke: var(--mbs-cs-green-line);
+      stroke-width: 2;
+    }
+
+    .mbs-cs__wheel-core-text {
+      fill: var(--mbs-cs-green-dark);
+      font-family: Mulish, Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+      text-anchor: middle;
+      dominant-baseline: middle;
+      text-transform: uppercase;
+    }
+
+    .mbs-cs__wheel-hint {
+      margin: 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mbs-cs__wheel-panel {
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .mbs-cs__wheel-panel-head {
+      border: 1px solid var(--mbs-cs-tone-border, var(--mbs-cs-line));
+      border-radius: 22px;
+      padding: 18px;
+      background: var(--mbs-cs-tone-bg, var(--mbs-cs-green-soft));
+    }
+
+    .mbs-cs__wheel-panel-head h3 {
+      margin: 0;
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-text));
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__wheel-panel-head p {
+      margin: 8px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__wheel-groups {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mbs-cs__wheel-group {
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 18px;
+      padding: 13px;
+      background: #fff;
+    }
+
+    .mbs-cs__wheel-group-title {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 28px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: var(--mbs-cs-tone-bg, var(--mbs-cs-green-soft));
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-green-dark));
+      box-shadow: inset 0 0 0 1px var(--mbs-cs-tone-border, rgba(65, 112, 51, .18));
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mbs-cs__wheel-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mbs-cs__wheel-chip {
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: var(--mbs-cs-tone-bg, #F5F5F5);
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-text));
+      box-shadow: inset 0 0 0 1px var(--mbs-cs-tone-border, rgba(31, 31, 31, .08));
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .mbs-cs__score-workspace {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mbs-cs__score-task {
+      border: 1px solid var(--mbs-cs-tone-border, var(--mbs-cs-line));
+      border-radius: 22px;
+      padding: 18px;
+      background: var(--mbs-cs-tone-bg, var(--mbs-cs-green-soft));
+    }
+
+    .mbs-cs__score-task h3 {
+      margin: 0;
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-text));
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__score-task-title {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mbs-cs__help-btn {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-tone-border, var(--mbs-cs-line));
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-green-dark));
+      font: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__score-task p {
+      margin: 8px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__hint-popover {
+      margin-top: 10px;
+      border-radius: 16px;
+      padding: 12px;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.45;
+      box-shadow: inset 0 0 0 1px var(--mbs-cs-tone-border, rgba(31, 31, 31, .08));
+    }
+
+    .mbs-cs__criterion-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mbs-cs__criterion-step {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #fff;
+      color: var(--mbs-cs-muted);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__criterion-step i {
+      display: inline-flex;
+      width: 18px;
+      height: 18px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #F5F5F5;
+      color: inherit;
+      font-style: normal;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__criterion-step.is-active {
+      border-color: var(--mbs-cs-green);
+      background: var(--mbs-cs-green);
+      color: #fff;
+    }
+
+    .mbs-cs__criterion-step.is-active i {
+      background: #fff;
+      color: var(--mbs-cs-green);
+    }
+
+    .mbs-cs__criterion-step.is-complete {
+      border-color: rgba(65, 112, 51, .18);
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+    }
+
+    .mbs-cs__criterion-step.is-locked {
+      opacity: .42;
+      cursor: not-allowed;
+    }
+
+    .mbs-cs__score-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .mbs-cs__score-card {
+      display: grid;
+      gap: 14px;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 24px;
+      padding: 20px;
+      background: #fff;
+    }
+
+    .mbs-cs__score-card-head {
+      display: grid;
+      gap: 5px;
+    }
+
+    .mbs-cs__score-card-head h3 {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__score-card-head p {
+      margin: 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__descriptor-mode-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .mbs-cs__descriptor-mode {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: #fff;
+      color: var(--mbs-cs-muted);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__descriptor-mode.is-active {
+      border-color: var(--mbs-cs-green);
+      background: var(--mbs-cs-green);
+      color: #fff;
+    }
+
+    .mbs-cs__score-picked {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 28px;
+    }
+
+    .mbs-cs__score-picked:empty::before {
+      content: 'Дескриптор можно не выбирать';
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__score-scale {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .mbs-cs__score-scale-title {
+      margin: 2px 0 -4px;
+      color: var(--mbs-cs-text);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__score-scale button {
+      display: inline-flex;
+      aspect-ratio: 1 / 1;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font: inherit;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__score-scale button.is-selected {
+      border-color: var(--mbs-cs-green);
+      background: var(--mbs-cs-green);
+      color: #fff;
+    }
+
+    .mbs-cs__score-scale button:disabled,
+    .mbs-cs__score-scale button:disabled:hover {
+      opacity: 1;
+      border-color: rgba(31, 31, 31, .08);
+      background: #F5F5F5;
+      color: rgba(85, 85, 85, .48);
+      cursor: not-allowed;
+    }
+
+    .mbs-cs__score-help {
+      margin: 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__score-next {
+      display: inline-flex;
+      width: 100%;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-green);
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: var(--mbs-cs-green);
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__score-next:disabled {
+      opacity: 1;
+      border-color: var(--mbs-cs-green-line);
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      cursor: not-allowed;
+    }
+
+    .mbs-cs__descriptor-toggle {
+      display: none;
+      width: 100%;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-green-line);
+      border-radius: 999px;
+      padding: 11px 16px;
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__score-panel {
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .mbs-cs__score-descriptor-tools {
+      display: contents;
+    }
+
+    .mbs-cs__descriptor-panel {
+      display: grid;
+      grid-column: 1 / -1;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .mbs-cs__score-state {
+      display: none;
+    }
+
+    .mbs-cs__note {
+      margin-top: 12px;
+    }
+
+    .mbs-cs__status {
+      min-height: 20px;
+      margin-top: 12px;
+      color: var(--mbs-cs-muted);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .mbs-cs__status.is-error {
+      color: var(--mbs-cs-red);
+    }
+
+    .mbs-cs__status.is-success {
+      color: var(--mbs-cs-green-dark);
+    }
+
+    .mbs-cs__summary {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .mbs-cs__summary-card {
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 18px;
+      padding: 18px;
+      background: #F5F5F5;
+    }
+
+    .mbs-cs__summary-card span {
+      display: block;
+      color: var(--mbs-cs-muted);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mbs-cs__summary-card strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--mbs-cs-text);
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__summary-card--favorite {
+      border: 2px solid var(--mbs-cs-green-line);
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__summary-card--favorite strong {
+      font-size: 30px;
+    }
+
+    .mbs-cs__summary-card p {
+      margin: 6px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__strengths {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .mbs-cs__strengths span {
+      display: inline-flex;
+      min-height: 28px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: #fff;
+      color: var(--mbs-cs-green-dark);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    @media print {
+      .mbs-cs {
+        padding: 0;
+        background: #fff;
+      }
+
+      .mbs-cs__top,
+      .mbs-cs__event,
+      .mbs-cs__nav,
+      .mbs-cs__actions,
+      .mbs-cs__details summary,
+      .mbs-cs__guide-modal,
+      .mbs-cs__descriptor-modal,
+      .mbs-cs__result-lot-modal {
+        display: none !important;
+      }
+
+      .mbs-cs__panel {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .mbs-cs__body {
+        padding: 0;
+      }
+
+      .mbs-cs__view {
+        display: block !important;
+      }
+
+      .mbs-cs__view:not([data-mbs-cs-view="result"]) {
+        display: none !important;
+      }
+
+      .mbs-cs__details,
+      .mbs-cs__details[open] {
+        display: block;
+      }
+    }
+
+    .mbs-cs__top-head {
+      margin: 0 0 8px;
+    }
+
+    .mbs-cs__top-head h3 {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .mbs-cs__top-head p {
+      margin: 4px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    .mbs-cs__top-list {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+
+    .mbs-cs__top-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: #fff;
+    }
+
+    .mbs-cs__top-card span {
+      display: inline-flex;
+      width: 28px;
+      height: 28px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__top-card strong {
+      display: block;
+      color: var(--mbs-cs-text);
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__top-card p {
+      margin: 2px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .mbs-cs__top-score {
+      color: var(--mbs-cs-green-dark);
+      font-size: 16px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mbs-cs__details {
+      margin-top: 14px;
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 18px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .mbs-cs__details summary {
+      min-height: 48px;
+      padding: 16px 18px;
+      color: var(--mbs-cs-text);
+      font-size: 15px;
+      font-weight: 900;
+      cursor: pointer;
+      list-style-position: inside;
+    }
+
+    .mbs-cs__table-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--mbs-cs-line);
+    }
+
+    .mbs-cs__table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 14px;
+    }
+
+    .mbs-cs__table th,
+    .mbs-cs__table td {
+      border-bottom: 1px solid var(--mbs-cs-line);
+      padding: 10px 11px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .mbs-cs__table th:first-child,
+    .mbs-cs__table td:first-child {
+      min-width: 96px;
+      white-space: nowrap;
+    }
+
+    .mbs-cs__table th {
+      background: #F5F5F5;
+      color: var(--mbs-cs-muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mbs-cs__table-lot {
+      display: inline-flex;
+      align-items: center;
+      border: 0;
+      border-radius: 999px;
+      padding: 0;
+      background: transparent;
+      color: var(--mbs-cs-text);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .mbs-cs__table-lot:hover {
+      color: var(--mbs-cs-green-dark);
+    }
+
+    .mbs-cs__table-average {
+      display: inline-flex;
+      min-height: 30px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 5px 11px;
+      background: var(--mbs-cs-green-soft);
+      color: var(--mbs-cs-green-dark);
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mbs-cs__table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .mbs-cs__result-modal[hidden] {
+      display: none;
+    }
+
+    .mbs-cs__result-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(31, 31, 31, .38);
+    }
+
+    .mbs-cs__result-sheet {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      width: min(680px, 100%);
+      max-height: min(82vh, 680px);
+      overflow: hidden;
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: 0 24px 72px rgba(31, 31, 31, .24);
+    }
+
+    .mbs-cs__result-head {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 20px 22px 16px;
+      border-bottom: 1px solid var(--mbs-cs-line);
+      background: var(--mbs-cs-green-soft);
+    }
+
+    .mbs-cs__result-title {
+      margin: 0;
+      color: var(--mbs-cs-text);
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.05;
+    }
+
+    .mbs-cs__result-subtitle {
+      margin: 7px 0 0;
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__result-close {
+      display: inline-flex;
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--mbs-cs-text);
+      font: inherit;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mbs-cs__result-body {
+      display: grid;
+      gap: 12px;
+      min-height: 0;
+      overflow: auto;
+      padding: 18px 22px;
+    }
+
+    .mbs-cs__result-empty {
+      margin: 0;
+      border-radius: 18px;
+      padding: 16px;
+      background: #F5F5F5;
+      color: var(--mbs-cs-muted);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .mbs-cs__result-group {
+      border: 1px solid rgba(31, 31, 31, .08);
+      border-radius: 18px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .mbs-cs__result-group strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--mbs-cs-text);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .mbs-cs__result-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .mbs-cs__result-chips span {
+      display: inline-flex;
+      min-height: 26px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: var(--mbs-cs-tone-bg, var(--mbs-cs-green-soft));
+      color: var(--mbs-cs-tone-text, var(--mbs-cs-green-dark));
+      box-shadow: inset 0 0 0 1px var(--mbs-cs-tone-border, rgba(65, 112, 51, .18));
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mbs-cs__result-note {
+      border-radius: 18px;
+      padding: 14px;
+      background: #F5F5F5;
+      color: var(--mbs-cs-muted);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .mbs-cs__result-foot {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px 18px;
+      border-top: 1px solid var(--mbs-cs-line);
+      background: #fff;
+    }
+
+    .mbs-cs__result-foot-text {
+      color: var(--mbs-cs-muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mbs-cs__result-foot-btn {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--mbs-cs-red);
+      border-radius: 999px;
+      padding: 10px 24px;
+      background: var(--mbs-cs-red);
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 1180px) {
+      .mbs-cs__title {
+        font-size: 52px;
+      }
+
+      .mbs-cs__lead {
+        font-size: 17px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .mbs-cs {
+        padding: 14px 12px;
+      }
+
+      .mbs-cs__top,
+      .mbs-cs__section-head,
+      .mbs-cs__lot-head {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mbs-cs__top {
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .mbs-cs__title {
+        font-size: 38px;
+        line-height: 1;
+      }
+
+      .mbs-cs__lead {
+        margin-top: 12px;
+        font-size: 15px;
+      }
+
+      .mbs-cs__top-actions {
+        margin-top: 14px;
+      }
+
+      .mbs-cs__guide-open {
+        width: 100%;
+        min-height: 44px;
+      }
+
+      .mbs-cs__event,
+      .mbs-cs__admin {
+        padding: 22px 16px;
+      }
+
+      .mbs-cs__body {
+        padding: 18px 16px 20px;
+      }
+
+      .mbs-cs__panel {
+        border-width: 6px;
+        border-radius: 24px;
+      }
+
+      .mbs-cs__nav {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-cs__tab {
+        border-right: 0;
+        border-bottom: 1px solid var(--mbs-cs-line);
+      }
+
+      .mbs-cs__h2 {
+        font-size: 26px;
+      }
+
+      .mbs-cs__grid,
+      .mbs-cs__lot-editor-list,
+      .mbs-cs__score-grid,
+      .mbs-cs__summary {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-cs__lot-editor-head {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .mbs-cs__wheel-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .mbs-cs__wheel-stage {
+        padding: 14px;
+      }
+
+      .mbs-cs__wheel-svg {
+        width: min(310px, 100%);
+      }
+
+      .mbs-cs__wheel-panel-head {
+        padding: 16px;
+      }
+
+      .mbs-cs__wheel-panel-head h3 {
+        font-size: 24px;
+      }
+
+      .mbs-cs__score-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .mbs-cs__descriptor-toggle {
+        display: inline-flex;
+      }
+
+      .mbs-cs__score-descriptor-tools {
+        display: grid;
+        gap: 16px;
+      }
+
+      .mbs-cs__score-descriptor-tools:not(.is-open) {
+        display: none;
+      }
+
+      .mbs-cs__score-card {
+        padding: 14px;
+      }
+
+      .mbs-cs__score-task {
+        border-radius: 18px;
+        padding: 13px 14px;
+      }
+
+      .mbs-cs__score-task h3 {
+        font-size: 24px;
+      }
+
+      .mbs-cs__score-task p {
+        margin-top: 6px;
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .mbs-cs__help-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+      }
+
+      .mbs-cs__score-card-head h3 {
+        font-size: 24px;
+      }
+
+      .mbs-cs__criterion-steps {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+
+      .mbs-cs__criterion-steps::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mbs-cs__criterion-step {
+        flex: 0 0 auto;
+      }
+
+      .mbs-cs__lot {
+        padding: 18px;
+      }
+
+      .mbs-cs__lot-title {
+        font-size: 24px;
+      }
+
+      .mbs-cs__top-card {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        padding: 9px 10px;
+      }
+
+      .mbs-cs__top-score {
+        grid-column: auto;
+        font-size: 15px;
+      }
+
+      .mbs-cs__summary {
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .mbs-cs__summary-card {
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      .mbs-cs__summary-card span {
+        font-size: 11px;
+      }
+
+      .mbs-cs__summary-card strong {
+        font-size: 24px;
+      }
+
+      .mbs-cs__summary-card--favorite {
+        border-width: 1.5px;
+      }
+
+      .mbs-cs__summary-card--favorite strong {
+        font-size: 30px;
+      }
+
+      .mbs-cs__summary-card p {
+        font-size: 13px;
+        line-height: 1.35;
+      }
+
+      .mbs-cs__strengths {
+        gap: 5px;
+        margin-top: 8px;
+      }
+
+      .mbs-cs__strengths span {
+        min-height: 24px;
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+
+      .mbs-cs__top-list {
+        gap: 7px;
+      }
+
+      .mbs-cs__top-card span {
+        width: 26px;
+        height: 26px;
+        font-size: 12px;
+      }
+
+      .mbs-cs__top-card strong {
+        font-size: 15px;
+      }
+
+      .mbs-cs__top-card p {
+        display: none;
+      }
+
+      .mbs-cs__actions {
+        justify-content: stretch;
+      }
+
+      .mbs-cs__btn {
+        width: 100%;
+        min-height: 52px;
+      }
+
+      .mbs-cs__lot-switcher {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .mbs-cs__lot-position {
+        grid-column: 1 / -1;
+        grid-row: 1;
+      }
+
+      .mbs-cs__scale span {
+        width: 40px;
+        height: 40px;
+      }
+
+      .mbs-cs__descriptor-modal {
+        align-items: center;
+        padding: 12px;
+      }
+
+      .mbs-cs__guide-modal {
+        align-items: center;
+        padding: 10px;
+      }
+
+      .mbs-cs__guide-sheet {
+        max-height: min(92vh, calc(100dvh - 20px));
+        border-radius: 22px;
+      }
+
+      .mbs-cs__guide-head {
+        padding: 16px;
+      }
+
+      .mbs-cs__guide-title {
+        font-size: 23px;
+      }
+
+      .mbs-cs__guide-subtitle {
+        font-size: 13px;
+      }
+
+      .mbs-cs__guide-body {
+        padding: 16px;
+      }
+
+      .mbs-cs__guide-card {
+        padding: 15px;
+      }
+
+      .mbs-cs__guide-foot {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px 16px 16px;
+      }
+
+      .mbs-cs__descriptor-sheet {
+        max-height: min(88vh, calc(100dvh - 24px));
+        border-radius: 22px;
+      }
+
+      .mbs-cs__descriptor-head {
+        padding: 16px;
+      }
+
+      .mbs-cs__descriptor-title {
+        font-size: 19px;
+      }
+
+      .mbs-cs__descriptor-body {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        max-height: calc(min(88vh, 100dvh - 24px) - 174px);
+        padding: 16px;
+      }
+
+      .mbs-cs__descriptor-groups {
+        flex-direction: row;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+
+      .mbs-cs__descriptor-groups::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mbs-cs__descriptor-group {
+        flex: 0 0 auto;
+      }
+
+      .mbs-cs__descriptor-foot {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px 16px 16px;
+      }
+
+      .mbs-cs__result-modal {
+        align-items: center;
+        padding: 12px;
+      }
+
+      .mbs-cs__result-sheet {
+        max-height: min(88vh, calc(100dvh - 24px));
+        border-radius: 22px;
+      }
+
+      .mbs-cs__result-head {
+        padding: 16px;
+      }
+
+      .mbs-cs__result-title {
+        font-size: 21px;
+      }
+
+      .mbs-cs__result-body {
+        min-height: 0;
+        padding: 16px;
+      }
+
+      .mbs-cs__result-foot {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 12px 16px 16px;
+      }
+
+      .mbs-cs__result-foot-btn {
+        width: 100%;
+        min-height: 46px;
+      }
+
+      .mbs-cs__progress {
+        min-width: 0;
+      }
+
+      .mbs-cs__progress-text {
+        text-align: left;
+      }
+    }
+  </style>
+
+  <div class="mbs-cs__shell">
+    <header class="mbs-cs__top">
+      <div>
+        <p class="mbs-cs__eyebrow">Московская школа бариста</p>
+        <h1 class="mbs-cs__title">Оценочный лист каппинга</h1>
+        <p class="mbs-cs__lead">Заполните короткую анкету и оцените каждый лот по простой шкале от 1 до 5. Данные сохраняются только на этом устройстве; чтобы передать результат организатору, скопируйте итог или скачайте файл.</p>
+        <div class="mbs-cs__top-actions">
+          <button class="mbs-cs__guide-open" type="button" data-guide-open>Как заполнять</button>
+        </div>
+      </div>
+    </header>
+
+    <div data-cupping-info></div>
+    <div data-admin-panel hidden></div>
+
+    <div class="mbs-cs__panel">
+      <nav class="mbs-cs__nav" aria-label="Шаги оценочного листа">
+        <button class="mbs-cs__tab is-active" type="button" data-mbs-cs-tab="profile">1. Анкета</button>
+        <button class="mbs-cs__tab" type="button" data-mbs-cs-tab="scores">2. Оценка лотов</button>
+        <button class="mbs-cs__tab" type="button" data-mbs-cs-tab="result">3. Итог</button>
+      </nav>
+
+      <div class="mbs-cs__body">
+        <section class="mbs-cs__view" data-mbs-cs-view="profile">
+          <div class="mbs-cs__section-head">
+            <div>
+              <h2 class="mbs-cs__h2">Перед началом</h2>
+              <p class="mbs-cs__muted">Пара вопросов поможет ведущему мягко ориентироваться в опыте группы. Это не тест: отвечайте так, как вам комфортно.</p>
+            </div>
+          </div>
+
+          <div class="mbs-cs__grid">
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Имя</span>
+              <input class="mbs-cs__input" type="text" name="participant_name" autocomplete="given-name" placeholder="Например: Роман">
+            </label>
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Номер телефона</span>
+              <input class="mbs-cs__input" type="tel" name="participant_contact" autocomplete="tel" placeholder="+7 999 123-45-67">
+            </label>
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Название каппинга</span>
+              <input class="mbs-cs__input" type="text" name="cupping_title" maxlength="120" placeholder="Например: Каппинг с друзьями">
+            </label>
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Как вы обычно пьёте кофе?</span>
+              <select class="mbs-cs__select" name="coffee_role">
+                <option value="">Выбрать</option>
+                <option value="Пью дома или беру с собой">Пью дома или беру с собой</option>
+                <option value="Иногда выбираю зерно и способы заваривания">Иногда выбираю зерно и способы заваривания</option>
+                <option value="Работаю бариста">Работаю бариста</option>
+                <option value="Работаю с кофе профессионально">Работаю с кофе профессионально</option>
+              </select>
+            </label>
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Как часто пробуете новое зерно?</span>
+              <select class="mbs-cs__select" name="coffee_frequency">
+                <option value="">Выбрать</option>
+                <option value="Редко, просто интересно">Редко, просто интересно</option>
+                <option value="Иногда покупаю новое зерно">Иногда покупаю новое зерно</option>
+                <option value="Регулярно сравниваю разные лоты">Регулярно сравниваю разные лоты</option>
+                <option value="Почти каждый день работаю со вкусом">Почти каждый день работаю со вкусом</option>
+              </select>
+            </label>
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Бывали на дегустациях или каппингах?</span>
+              <select class="mbs-cs__select" name="cupping_experience">
+                <option value="">Выбрать</option>
+                <option value="Это первый опыт">Это первый опыт</option>
+                <option value="Был(а) 1-2 раза">Был(а) 1-2 раза</option>
+                <option value="Хожу иногда">Хожу иногда</option>
+                <option value="Провожу или оцениваю профессионально">Провожу или оцениваю профессионально</option>
+              </select>
+            </label>
+            <label class="mbs-cs__field">
+              <span class="mbs-cs__label">Какие вкусы обычно нравятся?</span>
+              <input class="mbs-cs__input" type="text" name="favorite_profile" placeholder="Например: сладкий, ягодный, шоколадный">
+            </label>
+          </div>
+
+          <div class="mbs-cs__actions">
+            <button class="mbs-cs__btn mbs-cs__btn--primary" type="button" data-mbs-cs-next="scores">Перейти к оценке</button>
+          </div>
+          <div class="mbs-cs__status" data-mbs-cs-status aria-live="polite"></div>
+        </section>
+
+        <section class="mbs-cs__view" data-mbs-cs-view="scores" hidden>
+          <div class="mbs-cs__section-head">
+            <div>
+              <h2 class="mbs-cs__h2">Оценка лотов</h2>
+              <p class="mbs-cs__muted">1 — почти не чувствую / не понравилось, 5 — ярко выражено / очень понравилось.</p>
+            </div>
+            <div class="mbs-cs__progress">
+              <span class="mbs-cs__progress-text" data-mbs-cs-progress-text>0%</span>
+              <span class="mbs-cs__progress-track"><span class="mbs-cs__progress-fill" data-mbs-cs-progress-fill></span></span>
+            </div>
+          </div>
+
+          <div class="mbs-cs__score-workspace">
+            <div class="mbs-cs__lot-editor" data-lot-editor></div>
+            <div class="mbs-cs__lot-nav" data-mbs-cs-lot-nav aria-label="Быстрый переход по лотам"></div>
+            <div data-lot-details></div>
+            <div class="mbs-cs__criterion-steps" data-score-steps aria-label="Шаги оценки лота"></div>
+            <div class="mbs-cs__score-layout">
+              <div class="mbs-cs__score-panel" data-score-panel></div>
+              <div class="mbs-cs__score-descriptor-tools" data-score-descriptor-tools>
+                <div class="mbs-cs__wheel-stage">
+                  <div data-score-descriptor-mode-tabs></div>
+                  <div data-score-wheel></div>
+                  <p class="mbs-cs__wheel-hint">Колесо помогает выбрать оттенок, если хочется уточнить впечатление</p>
+                </div>
+                <div class="mbs-cs__descriptor-panel" data-score-descriptor-panel></div>
+              </div>
+            </div>
+            <div data-score-state class="mbs-cs__score-state"></div>
+          </div>
+
+          <div class="mbs-cs__status" data-mbs-cs-status aria-live="polite"></div>
+        </section>
+
+        <section class="mbs-cs__view" data-mbs-cs-view="result" hidden>
+          <div class="mbs-cs__section-head">
+            <div>
+              <h2 class="mbs-cs__h2">Ваш итог</h2>
+              <p class="mbs-cs__muted">Результат хранится только в этом браузере. Чтобы передать его организатору, скопируйте текст или скачайте файл.</p>
+            </div>
+          </div>
+
+          <div class="mbs-cs__summary" data-mbs-cs-summary></div>
+          <div class="mbs-cs__top-head">
+            <h3>Топ-3 лота</h3>
+            <p>Ваш личный рейтинг по средней оценке.</p>
+          </div>
+          <div class="mbs-cs__top-list" data-mbs-cs-top-list></div>
+          <details class="mbs-cs__details">
+            <summary>Показать все оценки по критериям</summary>
+            <div class="mbs-cs__table-wrap" data-mbs-cs-result-table></div>
+          </details>
+          <div class="mbs-cs__status" data-mbs-cs-result-status aria-live="polite"></div>
+
+          <div class="mbs-cs__actions">
+            <button class="mbs-cs__btn" type="button" data-mbs-cs-next="scores">Вернуться к оценкам</button>
+            <button class="mbs-cs__btn mbs-cs__btn--primary" type="button" data-mbs-cs-copy>Скопировать результаты</button>
+            <button class="mbs-cs__btn" type="button" data-mbs-cs-print>Распечатать / PDF</button>
+            <button class="mbs-cs__btn" type="button" data-mbs-cs-download-csv>Скачать CSV</button>
+            <button class="mbs-cs__btn mbs-cs__btn--danger" type="button" data-mbs-cs-reset>Очистить</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="mbs-cs__guide-modal" data-guide-modal hidden>
+    <div class="mbs-cs__guide-sheet" role="dialog" aria-modal="true" aria-labelledby="mbsCsGuideTitle">
+      <div class="mbs-cs__guide-head">
+        <div>
+          <h3 class="mbs-cs__guide-title" id="mbsCsGuideTitle">Как заполнять оценочный лист</h3>
+          <p class="mbs-cs__guide-subtitle">Короткая инструкция для первого каппинга или самостоятельной дегустации.</p>
+        </div>
+        <button class="mbs-cs__guide-close" type="button" data-guide-close aria-label="Закрыть инструкцию">×</button>
+      </div>
+      <div class="mbs-cs__guide-body">
+        <p class="mbs-cs__guide-intro">Это личный лист впечатлений. Здесь нет правильных и неправильных ответов: важно честно отметить, что вы почувствовали. Оценки сохраняются только на этом устройстве.</p>
+
+        <article class="mbs-cs__guide-card">
+          <h4>1. Заполните анкету</h4>
+          <ul>
+            <li>Имя и телефон помогают организатору понять, чей это результат.</li>
+            <li>Название каппинга помогает не перепутать разные дегустации.</li>
+            <li>Вопросы про опыт нужны только для ориентира, это не тест.</li>
+          </ul>
+        </article>
+
+        <article class="mbs-cs__guide-card">
+          <h4>2. Настройте лоты</h4>
+          <ul>
+            <li>По умолчанию в листе есть 6 лотов.</li>
+            <li>Лоты можно переименовать, добавить или удалить.</li>
+            <li>Лучше подписывать лоты так же, как они стоят на столе.</li>
+          </ul>
+        </article>
+
+        <article class="mbs-cs__guide-card">
+          <h4>3. Оценивайте по шкале 1–5</h4>
+          <ul class="mbs-cs__guide-scale">
+            <li><strong>1</strong><span>Почти не чувствую или совсем не понравилось.</span></li>
+            <li><strong>3</strong><span>Средне: заметно, но без яркого впечатления.</span></li>
+            <li><strong>5</strong><span>Очень ярко выражено или очень понравилось.</span></li>
+          </ul>
+        </article>
+
+        <article class="mbs-cs__guide-card">
+          <h4>4. Дескрипторы и заметки</h4>
+          <ul>
+            <li>Дескрипторы необязательны: это подсказки, если хочется точнее описать вкус.</li>
+            <li>Можно выбрать несколько слов или ничего не выбирать.</li>
+            <li>В заметках удобно оставить любые личные мысли по лоту.</li>
+          </ul>
+        </article>
+
+        <article class="mbs-cs__guide-card">
+          <h4>5. Сохраните итог</h4>
+          <ul>
+            <li>После заполнения можно скопировать результаты и отправить их организатору.</li>
+            <li>Можно распечатать лист или сохранить его в PDF.</li>
+            <li>CSV нужен только тем, кто хочет открыть результат в таблице.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="mbs-cs__guide-foot">
+        <button class="mbs-cs__btn mbs-cs__btn--primary" type="button" data-guide-close>Понятно</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mbs-cs__descriptor-modal" data-descriptor-modal hidden>
+    <div class="mbs-cs__descriptor-sheet" role="dialog" aria-modal="true" aria-labelledby="mbsCsDescriptorTitle">
+      <div class="mbs-cs__descriptor-head">
+        <div>
+          <h3 class="mbs-cs__descriptor-title" id="mbsCsDescriptorTitle" data-descriptor-title>Что напоминает?</h3>
+          <p class="mbs-cs__descriptor-context" data-descriptor-context>Выберите подходящие дескрипторы. Можно отметить несколько.</p>
+        </div>
+        <button class="mbs-cs__descriptor-close" type="button" data-descriptor-close aria-label="Закрыть">×</button>
+      </div>
+      <div class="mbs-cs__descriptor-body">
+        <div>
+          <p class="mbs-cs__descriptor-step">1. Направление</p>
+          <div class="mbs-cs__descriptor-groups" data-descriptor-groups></div>
+        </div>
+        <div>
+          <p class="mbs-cs__descriptor-step">2. Конкретные варианты</p>
+          <div class="mbs-cs__descriptor-options" data-descriptor-options></div>
+        </div>
+      </div>
+      <div class="mbs-cs__descriptor-foot">
+        <span class="mbs-cs__descriptor-count" data-descriptor-count>Выбрано 0</span>
+        <div class="mbs-cs__actions" style="margin-top:0">
+          <button class="mbs-cs__btn" type="button" data-descriptor-clear>Очистить</button>
+          <button class="mbs-cs__btn mbs-cs__btn--primary" type="button" data-descriptor-done>Готово</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mbs-cs__result-modal" data-result-lot-modal hidden>
+    <div class="mbs-cs__result-sheet" role="dialog" aria-modal="true" aria-labelledby="mbsCsResultLotTitle">
+      <div class="mbs-cs__result-head">
+        <div>
+          <h3 class="mbs-cs__result-title" id="mbsCsResultLotTitle" data-result-lot-title>Лот</h3>
+          <p class="mbs-cs__result-subtitle" data-result-lot-subtitle>Средняя оценка: —</p>
+        </div>
+        <button class="mbs-cs__result-close" type="button" data-result-lot-close aria-label="Закрыть">×</button>
+      </div>
+      <div class="mbs-cs__result-body" data-result-lot-body></div>
+      <div class="mbs-cs__result-foot">
+        <span class="mbs-cs__result-foot-text">Описание выбранного лота</span>
+        <button class="mbs-cs__result-foot-btn" type="button" data-result-lot-close>Закрыть</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('mbsCuppingScoreSheet');
+      if (!root) return;
+
+      var urlParams = new URLSearchParams(window.location.search);
+      var cuppingId = 'public';
+      var cuppingApiBase = '';
+      var cabinetTokenKey = '';
+      var authToken = '';
+      function storageScope(value) {
+        value = String(value || '').trim();
+        var hash = 0;
+        for (var i = 0; i < value.length; i += 1) {
+          hash = ((hash << 5) - hash + value.charCodeAt(i)) | 0;
+        }
+        return value ? Math.abs(hash).toString(36) : 'anonymous';
+      }
+      var storageKey = 'mbs-public-cupping-score-sheet-v2';
+      var formVersion = 'public-cupping-score-sheet-v2.0';
+      var isAdminMode = false;
+      var remoteEvent = null;
+      var profileRequired = true;
+      var remoteProfile = null;
+      var remoteSubmissionScores = null;
+      var profileSaving = false;
+      var profileSavePromise = null;
+      var cuppingConfig = {
+        title: 'Общедоступный оценочный лист каппинга',
+        date: '',
+        roaster: '',
+        location: 'Московская школа бариста',
+        lots: [
+          { id: 'lot-1', title: 'Лот 1', meta: '' },
+          { id: 'lot-2', title: 'Лот 2', meta: '' },
+          { id: 'lot-3', title: 'Лот 3', meta: '' },
+          { id: 'lot-4', title: 'Лот 4', meta: '' },
+          { id: 'lot-5', title: 'Лот 5', meta: '' },
+          { id: 'lot-6', title: 'Лот 6', meta: '' }
+        ]
+      };
+      var criteria = [
+        { key: 'aroma', label: 'Аромат сухой', hint: 'до заваривания', descriptorGroup: 'aroma', help: 'Оцените запах сухого молотого кофе до добавления воды. Ищите первые ассоциации: цветы, ягоды, фрукты, шоколад, орехи или специи.' },
+        { key: 'break_aroma', label: 'Аромат мокрый / на сломе', hint: 'после заливания водой', descriptorGroup: 'aroma', help: 'Оцените аромат после заливания водой и разрушения корки. Он может стать ярче, слаще, фруктовее или тяжелее, чем сухой аромат.' },
+        { key: 'acidity', label: 'Кислотность', hint: 'яркость, сочность', descriptorGroup: 'acidity', help: 'Кислотность в кофе — это не просто кислый вкус, а ощущение яркости и сочности. Она может напоминать цитрусы, яблоки, ягоды, вино или йогурт.' },
+        { key: 'bitterness', label: 'Горечь', hint: 'насколько заметна горечь', descriptorGroup: 'bitterness', help: 'Горечь может быть приятной, как какао или темный шоколад, а может быть жесткой, жженой или сухой. Оцените ее заметность и характер.' },
+        { key: 'sweetness', label: 'Сладость', hint: 'ощущение сладости', descriptorGroup: 'sweetness', help: 'Сладость — это ощущение мягкости и приятной сладкой ассоциации, даже если в кофе нет сахара. Подумайте о меде, карамели, фруктах или шоколаде.' },
+        { key: 'body', label: 'Тело', hint: 'плотность, текстура', descriptorGroup: 'body', help: 'Тело — это тактильное ощущение напитка во рту: легкое, чайное, сливочное, плотное, сиропное или суховатое.' },
+        { key: 'aftertaste', label: 'Послевкусие', hint: 'длина и чистота', descriptorGroup: 'aftertaste', help: 'Послевкусие — то, что остается после глотка. Оцените, насколько оно долгое, чистое, сладкое, сухое, фруктовое или шоколадное.' },
+        { key: 'overall', label: 'Общее впечатление', hint: 'насколько понравилось', descriptorGroup: 'overall', help: 'Общее впечатление — ваша личная итоговая оценка лота. Здесь важны баланс, чистота, удовольствие и желание вернуться к этому кофе.' }
+      ];
+
+      var descriptorGroups = {
+        aroma: [
+          { label: 'Цветы', items: ['жасмин', 'роза', 'цветочный', 'чайная роза', 'мёдовые цветы', 'лаванда', 'акация'] },
+          { label: 'Ягоды', items: ['клубника', 'малина', 'черника', 'чёрная смородина', 'вишня', 'клюква', 'ежевика', 'брусника'] },
+          { label: 'Фрукты', items: ['яблоко', 'груша', 'персик', 'абрикос', 'слива', 'виноград', 'нектарин', 'инжир', 'изюм'] },
+          { label: 'Цитрусы', items: ['лимон', 'апельсин', 'мандарин', 'грейпфрут', 'лайм', 'цедра', 'помело', 'бергамот'] },
+          { label: 'Тропики', items: ['ананас', 'манго', 'банан', 'маракуйя', 'дыня', 'папайя', 'личи', 'кокос'] },
+          { label: 'Сладкое', items: ['шоколад', 'карамель', 'мёд', 'ваниль', 'печенье', 'сухофрукты', 'нуга', 'тростниковый сахар', 'молочный шоколад'] },
+          { label: 'Орехи и специи', items: ['миндаль', 'фундук', 'грецкий орех', 'корица', 'мускатный орех', 'гвоздика', 'арахис', 'кардамон', 'чёрный перец'] },
+          { label: 'Травы и тёмные', items: ['травяной', 'чёрный чай', 'табак', 'дым', 'древесный', 'землистый', 'сено', 'хвоя', 'кедр', 'солод'] }
+        ],
+        acidity: [
+          { label: 'Цитрусы', items: ['лимон', 'лайм', 'апельсин', 'грейпфрут', 'мандарин', 'цедра', 'помело', 'лимонадная'] },
+          { label: 'Яблочные', items: ['зелёное яблоко', 'красное яблоко', 'груша', 'айва', 'яблочный сок'] },
+          { label: 'Ягоды', items: ['красная смородина', 'клюква', 'вишня', 'малина', 'облепиха', 'ежевика', 'брусника'] },
+          { label: 'Виноградные', items: ['виноград', 'белое вино', 'красное вино', 'сидр', 'гранат', 'винная'] },
+          { label: 'Тропики', items: ['ананас', 'маракуйя', 'манго', 'киви', 'личи'] },
+          { label: 'Ферментация', items: ['йогурт', 'кефир', 'комбуча', 'уксусность', 'винная кислотность', 'молочная кислотность'] }
+        ],
+        bitterness: [
+          { label: 'Какао', items: ['какао', 'тёмный шоколад', 'какао-бобы', 'шоколадная горечь', 'какао-порошок'] },
+          { label: 'Цитрусовая', items: ['грейпфрут', 'цедра', 'апельсиновая корка', 'лаймовая корка', 'помело'] },
+          { label: 'Чайная', items: ['чёрный чай', 'зелёный чай', 'травяной настой', 'танинность', 'крепкий чай'] },
+          { label: 'Ореховая', items: ['миндальная кожура', 'грецкий орех', 'жареный орех', 'арахис', 'пекан', 'горький миндаль'] },
+          { label: 'Жареная', items: ['жжёный сахар', 'тост', 'дым', 'обжаренная корка', 'уголь', 'кофейная корка'] },
+          { label: 'Зелёная', items: ['травяная горечь', 'зелёная кожура', 'стебель', 'полынь'] }
+        ],
+        sweetness: [
+          { label: 'Сахара', items: ['сахар', 'тростниковый сахар', 'коричневый сахар', 'сахарная пудра', 'сахарный сироп'] },
+          { label: 'Карамель', items: ['карамель', 'ириска', 'жжёный сахар', 'патока', 'сироп', 'кленовый сироп'] },
+          { label: 'Мёд', items: ['мёд', 'липовый мёд', 'цветочный мёд', 'медовая'] },
+          { label: 'Шоколад', items: ['молочный шоколад', 'тёмный шоколад', 'какао', 'брауни', 'шоколадная паста'] },
+          { label: 'Фрукты', items: ['спелая ягода', 'персик', 'банан', 'виноград', 'сухофрукты', 'изюм', 'финик', 'чернослив'] },
+          { label: 'Десертное', items: ['ваниль', 'печенье', 'бисквит', 'марципан', 'варенье', 'нуга', 'пломбир'] }
+        ],
+        body: [
+          { label: 'Лёгкое', items: ['лёгкое', 'чайное', 'водянистое', 'воздушное', 'тонкое'] },
+          { label: 'Сочное', items: ['сочное', 'чистое', 'прозрачное', 'освежающее', 'живое'] },
+          { label: 'Среднее', items: ['округлое', 'мягкое', 'ровное', 'бархатистое', 'гладкое'] },
+          { label: 'Сливочное', items: ['сливочное', 'маслянистое', 'шёлковое', 'молочное', 'кремовое'] },
+          { label: 'Плотное', items: ['плотное', 'тяжёлое', 'сиропное', 'обволакивающее', 'насыщенное'] },
+          { label: 'Сухое', items: ['суховатое', 'вяжущее', 'пыльное', 'шероховатое', 'меловое', 'пустое'] }
+        ],
+        aftertaste: [
+          { label: 'Длина', items: ['короткое', 'среднее', 'долгое', 'очень долгое', 'затухающее'] },
+          { label: 'Чистота', items: ['чистое', 'ровное', 'прозрачное', 'мутное', 'грязное'] },
+          { label: 'Сладкое', items: ['сладкое', 'карамельное', 'медовое', 'шоколадное', 'ванильное'] },
+          { label: 'Фруктовое', items: ['цитрусовое', 'ягодное', 'винное', 'сухофрукты', 'тропическое'] },
+          { label: 'Сухое', items: ['сухое', 'вяжущее', 'чайное', 'танинное', 'шершавое'] },
+          { label: 'Тёмное', items: ['какао', 'ореховое', 'дымное', 'древесное', 'табачное'] }
+        ],
+        overall: [
+          { label: 'Баланс', items: ['сбалансированный', 'гармоничный', 'ровный', 'перекошенный', 'цельный'] },
+          { label: 'Чистота', items: ['чистый', 'прозрачный', 'мутный', 'дефектный', 'аккуратный'] },
+          { label: 'Яркость', items: ['яркий', 'спокойный', 'сочный', 'деликатный', 'выразительный'] },
+          { label: 'Сложность', items: ['сложный', 'многослойный', 'простой', 'понятный', 'интересный'] },
+          { label: 'Эмоция', items: ['понравился', 'необычный', 'спорный', 'запоминающийся', 'хочется ещё'] },
+          { label: 'Профиль', items: ['фруктовый', 'шоколадный', 'цветочный', 'ореховый', 'винный', 'чайный', 'десертный'] }
+        ]
+      };
+
+      var defectDescriptorGroups = [
+        { label: 'Ферментация', items: ['уксусность', 'спиртовой', 'перебродивший', 'гнилой фрукт'] },
+        { label: 'Плесень и сырость', items: ['плесень', 'затхлый', 'сырой подвал', 'влажная земля'] },
+        { label: 'Бумага и старость', items: ['бумага', 'картон', 'мешковина', 'старый кофе'] },
+        { label: 'Химия', items: ['резина', 'пластик', 'лекарственный', 'фенольный', 'химический'] },
+        { label: 'Зелёное', items: ['травянистый', 'стебель', 'зелёный горох', 'овощной'] },
+        { label: 'Жареное', items: ['пепел', 'уголь', 'жжёный', 'дымный', 'пережаренный'] },
+        { label: 'Грязное', items: ['грязный', 'животный', 'луковый', 'чесночный'] }
+      ];
+
+      var descriptorPalette = {
+        default: { bg: '#E7F2E3', border: '#B6D8AB', text: '#417033', strong: '#4F883E' },
+        'Цветы': { bg: '#F8DDE1', border: '#EC98A7', text: '#8E2635', strong: '#CC2841' },
+        'Ягоды': { bg: '#F4D8E7', border: '#D77EA7', text: '#7E244D', strong: '#B6336B' },
+        'Фрукты': { bg: '#FFE7C7', border: '#F2B36D', text: '#7A3F00', strong: '#D47A16' },
+        'Цитрусы': { bg: '#FFF2B8', border: '#E4C95D', text: '#6A5600', strong: '#C99A00' },
+        'Цитрусовая': { bg: '#FFF2B8', border: '#E4C95D', text: '#6A5600', strong: '#C99A00' },
+        'Тропики': { bg: '#FFE1B5', border: '#F0A84B', text: '#794300', strong: '#D97706' },
+        'Сладкое': { bg: '#F8E3C8', border: '#D6A86B', text: '#70410B', strong: '#A8651A' },
+        'Сахара': { bg: '#F8E3C8', border: '#D6A86B', text: '#70410B', strong: '#A8651A' },
+        'Карамель': { bg: '#F1D0A7', border: '#C7833B', text: '#65360C', strong: '#9A5A16' },
+        'Мёд': { bg: '#FFE4A6', border: '#E0AC3A', text: '#6D4700', strong: '#B87900' },
+        'Шоколад': { bg: '#E4D0BD', border: '#B1835A', text: '#593316', strong: '#7A4A28' },
+        'Какао': { bg: '#E4D0BD', border: '#B1835A', text: '#593316', strong: '#7A4A28' },
+        'Десертное': { bg: '#F2D9CC', border: '#CA9476', text: '#6C361F', strong: '#9D5838' },
+        'Орехи и специи': { bg: '#EAD3B8', border: '#B98958', text: '#5F3516', strong: '#8B5428' },
+        'Ореховая': { bg: '#EAD3B8', border: '#B98958', text: '#5F3516', strong: '#8B5428' },
+        'Травы и тёмные': { bg: '#DDEAD5', border: '#9ABF86', text: '#355B28', strong: '#4F883E' },
+        'Зелёная': { bg: '#DDEAD5', border: '#9ABF86', text: '#355B28', strong: '#4F883E' },
+        'Яблочные': { bg: '#E7F2E3', border: '#B6D8AB', text: '#417033', strong: '#4F883E' },
+        'Виноградные': { bg: '#E9D7F0', border: '#B98BCB', text: '#5A2C6D', strong: '#7B3F98' },
+        'Ферментация': { bg: '#F1D7E7', border: '#C78AAD', text: '#6E2D52', strong: '#9B4D79' },
+        'Чайная': { bg: '#DDE7DC', border: '#91A98A', text: '#344F2E', strong: '#596E35' },
+        'Жареная': { bg: '#E6D6C8', border: '#A97A5D', text: '#5B2F1C', strong: '#7A4027' },
+        'Лёгкое': { bg: '#EAF5F1', border: '#A9D2C5', text: '#2B6153', strong: '#3F8574' },
+        'Сочное': { bg: '#DDF0E9', border: '#8CC7B5', text: '#276151', strong: '#3B8C77' },
+        'Среднее': { bg: '#E7F2E3', border: '#B6D8AB', text: '#417033', strong: '#4F883E' },
+        'Сливочное': { bg: '#F2EAD6', border: '#CDBD85', text: '#65551B', strong: '#8F7A2B' },
+        'Плотное': { bg: '#EAD9CB', border: '#B58A6C', text: '#623C25', strong: '#8A5636' },
+        'Сухое': { bg: '#ECECEC', border: '#B8B8B8', text: '#565656', strong: '#737373' },
+        'Длина': { bg: '#E4EEF8', border: '#96BADD', text: '#2E587A', strong: '#4B7FAF' },
+        'Чистота': { bg: '#EAF5F1', border: '#A9D2C5', text: '#2B6153', strong: '#3F8574' },
+        'Фруктовое': { bg: '#FFE7C7', border: '#F2B36D', text: '#7A3F00', strong: '#D47A16' },
+        'Тёмное': { bg: '#E0D6CE', border: '#9E7C67', text: '#513524', strong: '#6F4B35' },
+        'Баланс': { bg: '#E7F2E3', border: '#B6D8AB', text: '#417033', strong: '#4F883E' },
+        'Яркость': { bg: '#FFF2B8', border: '#E4C95D', text: '#6A5600', strong: '#C99A00' },
+        'Сложность': { bg: '#E9D7F0', border: '#B98BCB', text: '#5A2C6D', strong: '#7B3F98' },
+        'Эмоция': { bg: '#F8DDE1', border: '#EC98A7', text: '#8E2635', strong: '#CC2841' },
+        'Профиль': { bg: '#E4EEF8', border: '#96BADD', text: '#2E587A', strong: '#4B7FAF' },
+        'Плесень и сырость': { bg: '#ECE7E2', border: '#A9978A', text: '#5B4337', strong: '#745241' },
+        'Бумага и старость': { bg: '#EEE9DF', border: '#B7AA96', text: '#5A4E3F', strong: '#77654F' },
+        'Химия': { bg: '#E8E8EA', border: '#9C9CA5', text: '#3F3F49', strong: '#62626C' },
+        'Зелёное': { bg: '#DFE7D8', border: '#8FA27F', text: '#3F4E34', strong: '#617653' },
+        'Жареное': { bg: '#E3D4C9', border: '#9D745E', text: '#573422', strong: '#744835' },
+        'Грязное': { bg: '#E5DED8', border: '#A48473', text: '#51372C', strong: '#704D3C' }
+      };
+
+      var descriptorValuePalette = {
+        'лимон': { bg: '#FFF6B8', border: '#E7CF4A', text: '#655300', strong: '#BFA000' },
+        'лайм': { bg: '#E8F3B2', border: '#B4CC45', text: '#4D5E0B', strong: '#829A13' },
+        'апельсин': { bg: '#FFE0B7', border: '#EEA34A', text: '#7A3C00', strong: '#D06A00' },
+        'мандарин': { bg: '#FFE8BC', border: '#F1B356', text: '#7A4400', strong: '#D47A00' },
+        'грейпфрут': { bg: '#FFE1CB', border: '#E99273', text: '#7A321D', strong: '#C9502B' },
+        'цедра': { bg: '#F5DB9A', border: '#D0A832', text: '#5E4A00', strong: '#9A7900' },
+        'апельсиновая корка': { bg: '#FFD6A6', border: '#E48B34', text: '#743800', strong: '#BD5D00' },
+        'лаймовая корка': { bg: '#DCEFAF', border: '#9DBB3E', text: '#40560C', strong: '#6F8D16' },
+        'зелёное яблоко': { bg: '#E5F2C9', border: '#A9C96D', text: '#405B20', strong: '#6F9134' },
+        'красное яблоко': { bg: '#F8D4D6', border: '#DB7B82', text: '#77272D', strong: '#B73D48' },
+        'груша': { bg: '#F1E8B9', border: '#CDBB5A', text: '#5E5418', strong: '#918126' },
+        'айва': { bg: '#F7E2A0', border: '#D1AA3A', text: '#654C00', strong: '#9C7500' },
+        'клубника': { bg: '#F8D2DD', border: '#D87492', text: '#7A2640', strong: '#B83A5F' },
+        'малина': { bg: '#F3CCE1', border: '#C86598', text: '#74264F', strong: '#AA3970' },
+        'черника': { bg: '#DCD8F0', border: '#9287C9', text: '#3F3670', strong: '#6759A8' },
+        'чёрная смородина': { bg: '#E4D2EC', border: '#9E75B8', text: '#4C2764', strong: '#753E95' },
+        'клюква': { bg: '#F5CFD8', border: '#CF6C82', text: '#762339', strong: '#B43854' },
+        'вишня': { bg: '#F1CFD3', border: '#C85F6B', text: '#72232B', strong: '#A93442' },
+        'маракуйя': { bg: '#F4D8EF', border: '#B976CB', text: '#5B2A6C', strong: '#8842A0' },
+        'манго': { bg: '#FFE1A8', border: '#EDAA3E', text: '#704500', strong: '#C37400' },
+        'ананас': { bg: '#FFF0B4', border: '#D9BE45', text: '#5F5300', strong: '#A78C00' },
+        'какао': { bg: '#E4D0BD', border: '#B1835A', text: '#593316', strong: '#7A4A28' },
+        'тёмный шоколад': { bg: '#D8C2B3', border: '#93694F', text: '#4B2D1C', strong: '#6B4029' },
+        'чёрный чай': { bg: '#DDD8BE', border: '#A49A62', text: '#4B4520', strong: '#6F6531' },
+        'зелёный чай': { bg: '#DDEAD5', border: '#9ABF86', text: '#355B28', strong: '#4F883E' }
+      };
+
+      var descriptorToneAccents = ['#FFF2B8', '#FFE1B5', '#F8DDE1', '#E9D7F0', '#DDF0E9', '#DDEAD5', '#E4EEF8', '#F2EAD6'];
+
+      var defaultLots = cuppingConfig.lots.map(function (lot) { return Object.assign({}, lot); });
+      var lots = defaultLots.map(function (lot) { return Object.assign({}, lot); });
+      var criterionToneLabels = {
+        aroma: 'Цветы',
+        break_aroma: 'Цветы',
+        acidity: 'Цитрусы',
+        bitterness: 'Какао',
+        sweetness: 'Карамель',
+        body: 'Сочное',
+        aftertaste: 'Длина',
+        overall: 'Баланс'
+      };
+      var activeLotId = lots[0] ? lots[0].id : null;
+      var activeCriterionKey = 'aroma';
+      var activeDescriptorMode = 'taste';
+      var activeDescriptorGroupIndex = 0;
+      var activeDefectGroupIndex = 0;
+      var mobileDescriptorsOpen = false;
+      var lotEditorOpen = false;
+      var activeHelpKey = null;
+      var descriptorModalState = null;
+      var autoSaveInFlight = false;
+      var autoSavedSignature = '';
+      var autoSaveTimer = null;
+
+      function escapeHtml(value) {
+        return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[char];
+        });
+      }
+
+      function readState() {
+        try {
+          return JSON.parse(localStorage.getItem(storageKey) || '{}');
+        } catch (error) {
+          return {};
+        }
+      }
+
+      function writeState() {
+        localStorage.setItem(storageKey, JSON.stringify(collectState()));
+      }
+
+      function shellMessage(title, text, actionHtml) {
+        var shell = root.querySelector('.mbs-cs__shell');
+        if (!shell) return;
+        shell.innerHTML = '<section class="mbs-cs__event">' +
+          '<h1 class="mbs-cs__title" style="font-size:40px">' + escapeHtml(title) + '</h1>' +
+          '<p class="mbs-cs__lead">' + escapeHtml(text) + '</p>' +
+          (actionHtml || '') +
+        '</section>';
+      }
+
+      function fetchCuppingJson(path, options) {
+        return Promise.reject(new Error('public_mode_no_api'));
+      }
+
+      function profileIsComplete(profile) {
+        profile = profile || {};
+        return Boolean(profile.coffee_role && profile.coffee_frequency && profile.cupping_experience && profile.favorite_profile);
+      }
+
+      function loadCabinetCuppingProfile() {
+        return Promise.resolve(null);
+      }
+
+      function applyRemoteEvent(event) {
+        remoteEvent = event || null;
+        if (!remoteEvent) return;
+        cuppingConfig.title = remoteEvent.title || cuppingConfig.title;
+        cuppingConfig.date = remoteEvent.date || cuppingConfig.date;
+        cuppingConfig.roaster = remoteEvent.title || cuppingConfig.roaster;
+        if (Array.isArray(remoteEvent.lots) && remoteEvent.lots.length) {
+          defaultLots = remoteEvent.lots.map(function (lot, index) {
+            return {
+              id: lot.id || 'lot-' + (index + 1),
+              title: lot.title || 'Лот ' + (index + 1),
+              meta: lot.meta || ''
+            };
+          });
+          lots = defaultLots.map(function (lot) { return Object.assign({}, lot); });
+          activeLotId = lots[0] ? lots[0].id : null;
+        }
+        if (Array.isArray(remoteEvent.criteria) && remoteEvent.criteria.length) {
+          remoteEvent.criteria.forEach(function (item) {
+            var local = criteria.find(function (criterion) { return criterion.key === item.key; });
+            if (local && item.label) local.label = item.label;
+          });
+        }
+      }
+
+      function loadRemoteEvent() {
+        remoteEvent = null;
+        profileRequired = true;
+        remoteProfile = null;
+        remoteSubmissionScores = null;
+        return Promise.resolve(cuppingConfig);
+      }
+
+      function profileForSubmit() {
+        var profile = collectProfile();
+        return profileIsComplete(profile) ? profile : (remoteProfile || profile);
+      }
+
+      function submitScores() {
+        writeState();
+        return Promise.resolve({ ok: true, publicMode: true });
+      }
+
+      function scoresSaveSignature() {
+        try {
+          return JSON.stringify({ profile: profileForSubmit(), scores: collectScores() });
+        } catch (error) {
+          return '';
+        }
+      }
+
+      function maybeAutoSaveCompleteScores() {
+        var progress = scoresProgress();
+        if (!progress.total || progress.done !== progress.total) return;
+        var signature = scoresSaveSignature();
+        if (!signature || autoSaveInFlight || autoSavedSignature === signature) return;
+        autoSaveInFlight = true;
+        setStatus('Оценочный лист сохранён в этом браузере.', 'success');
+        submitScores().then(function () {
+          autoSavedSignature = signature;
+          setStatus('Оценочный лист сохранён в этом браузере.', 'success');
+        }).catch(function (error) {
+          setStatus((error && error.message ? error.message : 'Не удалось сохранить черновик.') + ' Нажмите «Посмотреть итог», чтобы повторить сохранение.', 'error');
+        }).finally(function () {
+          autoSaveInFlight = false;
+        });
+      }
+
+      function scheduleAutoSaveCompleteScores(delay) {
+        if (autoSaveTimer) window.clearTimeout(autoSaveTimer);
+        autoSaveTimer = window.setTimeout(function () {
+          autoSaveTimer = null;
+          maybeAutoSaveCompleteScores();
+        }, delay || 0);
+      }
+
+      function scoresProgress() {
+        var total = lots.length * criteria.length;
+        var done = 0;
+        lots.forEach(function (lot) {
+          criteria.forEach(function (criterion) {
+            if (criterionIsComplete(lot.id, criterion.key)) done += 1;
+          });
+        });
+        return { done: done, total: total, percent: total ? Math.round(done / total * 100) : 0 };
+      }
+
+      function saveAndShowResult() {
+        writeState();
+        var progress = updateProgress();
+        if (progress.done !== progress.total) {
+          switchView('result');
+          setResultStatus('Это предварительный итог. Сохранение откроется после заполнения всех лотов.', 'error');
+          return;
+        }
+        setStatus('Готовим итог...', 'success');
+        submitScores().then(function () {
+          autoSavedSignature = scoresSaveSignature();
+          setStatus('Оценочный лист сохранён в этом браузере.', 'success');
+          switchView('result');
+          setResultStatus('Итог готов. Чтобы передать результат организатору, скопируйте его или скачайте файл.', 'success');
+        }).catch(function (error) {
+          var message = error.message || 'Не удалось сохранить оценочный лист.';
+          setStatus(message, 'error');
+          setResultStatus(message, 'error');
+        });
+      }
+
+      function setStatus(message, type) {
+        root.querySelectorAll('[data-mbs-cs-status]').forEach(function (target) {
+          target.textContent = message || '';
+          target.className = 'mbs-cs__status' + (type ? ' is-' + type : '');
+        });
+      }
+
+      function setAdminStatus(message, type) {
+        var target = root.querySelector('[data-admin-status]');
+        if (!target) return;
+        target.textContent = message || '';
+        target.className = 'mbs-cs__status' + (type ? ' is-' + type : '');
+      }
+
+      function setResultStatus(message, type) {
+        var target = root.querySelector('[data-mbs-cs-result-status]');
+        if (!target) return;
+        target.textContent = message || '';
+        target.className = 'mbs-cs__status' + (type ? ' is-' + type : '');
+      }
+
+      function switchView(name) {
+        root.querySelectorAll('[data-mbs-cs-view]').forEach(function (view) {
+          view.hidden = view.getAttribute('data-mbs-cs-view') !== name;
+        });
+        root.querySelectorAll('[data-mbs-cs-tab]').forEach(function (tab) {
+          tab.classList.toggle('is-active', tab.getAttribute('data-mbs-cs-tab') === name);
+        });
+        if (name === 'scores') renderScoreWorkspace();
+        if (name === 'result') renderResult();
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function applyProfileVisibility() {
+        var profileTab = root.querySelector('[data-mbs-cs-tab="profile"]');
+        if (profileTab) profileTab.hidden = false;
+      }
+
+      function completeProfileStep() {
+        if (!profileRequired) return;
+        applyProfileVisibility();
+      }
+
+      function saveProfileStep() {
+        if (!profileRequired) return Promise.resolve();
+        var profile = collectProfile();
+        profileSaving = true;
+        setStatus('Анкета сохранена в этом браузере.', 'success');
+        profileSavePromise = Promise.resolve().then(function () {
+          remoteProfile = profile;
+          writeState();
+          completeProfileStep();
+          setStatus('', '');
+        }).finally(function () {
+          profileSaving = false;
+          profileSavePromise = null;
+        });
+        return profileSavePromise;
+      }
+
+      function validateProfile() {
+        if (!profileRequired) return true;
+        var profile = collectProfile();
+        if (!profile.participant_name || !profile.participant_contact || !profile.coffee_role || !profile.coffee_frequency || !profile.cupping_experience || !profile.favorite_profile) {
+          setStatus('Заполните имя, телефон и 4 коротких вопроса анкеты, затем переходите к оценке.', 'error');
+          return false;
+        }
+        setStatus('', '');
+        return true;
+      }
+
+      function currentCuppingTitle(profile) {
+        profile = profile || collectProfile();
+        return profile.cupping_title || cuppingConfig.title || 'Оценочный лист каппинга';
+      }
+
+      function formatRussianDate(value) {
+        var raw = String(value || '').trim().slice(0, 10);
+        var match = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!match) return raw;
+        var date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+        if (isNaN(date.getTime())) return raw;
+        return date.toLocaleDateString('ru-RU', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+      }
+
+      function renderCuppingInfo() {
+        var target = root.querySelector('[data-cupping-info]');
+        if (!target) return;
+        var meta = [
+          cuppingConfig.date ? 'Дата: ' + formatRussianDate(cuppingConfig.date) : '',
+          cuppingConfig.roaster ? 'Обжарщик: ' + cuppingConfig.roaster : '',
+          lots.length + ' лотов'
+        ].filter(Boolean);
+        target.innerHTML = '<section class="mbs-cs__event">' +
+          '<h2 class="mbs-cs__event-title">' + escapeHtml(currentCuppingTitle()) + '</h2>' +
+          '<ul class="mbs-cs__event-meta">' + meta.map(function (item) { return '<li>' + escapeHtml(item) + '</li>'; }).join('') + '</ul>' +
+        '</section>';
+      }
+
+      function renderAdminPanel() {
+        var target = root.querySelector('[data-admin-panel]');
+        if (!target) return;
+        target.hidden = true;
+        target.innerHTML = '';
+      }
+
+      function renderLots() {
+        var lotCount = root.querySelector('[data-mbs-cs-lot-count]');
+        if (lotCount) lotCount.textContent = lots.length + ' лотов';
+        renderCuppingInfo();
+        renderAdminPanel();
+        renderScoreState();
+        renderScoreWorkspace();
+      }
+
+      function renderScoreState() {
+        var target = root.querySelector('[data-score-state]');
+        if (!target) return;
+        lots.forEach(function (lot) {
+          if (root.querySelector('[data-score-state-lot="' + lot.id + '"]')) return;
+          target.insertAdjacentHTML('beforeend', '<div data-score-state-lot="' + escapeHtml(lot.id) + '">' +
+            criteria.map(function (criterion) {
+              var name = 'mbs-cs-' + lot.id + '-' + criterion.key;
+              return '<div data-descriptor-picked data-descriptor-lot="' + escapeHtml(lot.id) + '" data-descriptor-field="' + escapeHtml(criterion.key) + '" data-descriptors="[]"></div>' +
+                [1, 2, 3, 4, 5].map(function (score) {
+                  return '<input type="radio" name="' + escapeHtml(name) + '" value="' + score + '" data-score-field="' + escapeHtml(criterion.key) + '" data-score-lot="' + escapeHtml(lot.id) + '">';
+                }).join('');
+            }).join('') +
+            '<textarea data-comment-lot="' + escapeHtml(lot.id) + '"></textarea>' +
+          '</div>');
+        });
+      }
+
+      function cleanDisplayLotTitle(title) {
+        return String(title || '').replace(/^\s*\d+\.\s*/, '').trim();
+      }
+
+      function lotIndexById(lotId) {
+        return lots.findIndex(function (lot) { return lot.id === lotId; });
+      }
+
+      function numberedLotTitle(lot, index) {
+        var displayIndex = typeof index === 'number' && index >= 0 ? index : lotIndexById(lot && lot.id);
+        var number = displayIndex >= 0 ? displayIndex + 1 : 0;
+        var title = cleanDisplayLotTitle(lot && lot.title) || (number ? 'Лот ' + number : 'Лот');
+        return number ? number + '. ' + title : title;
+      }
+
+      function numberedLotTitleById(lotId, fallback) {
+        var index = lotIndexById(lotId);
+        if (index >= 0) return numberedLotTitle(lots[index], index);
+        return cleanDisplayLotTitle(fallback) || 'Лот';
+      }
+
+      function renderLotNav() {
+        var nav = root.querySelector('[data-mbs-cs-lot-nav]');
+        if (!nav) return;
+        nav.innerHTML = lots.map(function (lot, index) {
+          return '<button class="mbs-cs__lot-nav-btn" type="button" data-lot-jump="' + escapeHtml(lot.id) + '">' + escapeHtml(numberedLotTitle(lot, index)) + '</button>';
+        }).join('') + '<button class="mbs-cs__lot-add" type="button" data-lot-add aria-label="Добавить лот">+</button>';
+      }
+
+      function renderLotEditor() {
+        var target = root.querySelector('[data-lot-editor]');
+        if (!target) return;
+        target.classList.toggle('is-open', lotEditorOpen);
+        target.innerHTML = '<div class="mbs-cs__lot-editor-head">' +
+          '<div><h3>Названия лотов</h3><p>Подпишите стаканы так, как удобно на вашем мероприятии. Эти названия попадут в итог и файлы для отправки.</p></div>' +
+          '<button class="mbs-cs__lot-editor-toggle" type="button" data-lot-editor-toggle aria-expanded="' + (lotEditorOpen ? 'true' : 'false') + '">' + (lotEditorOpen ? 'Скрыть настройку' : 'Настроить лоты') + '</button>' +
+        '</div>' +
+        '<div class="mbs-cs__lot-editor-list"' + (lotEditorOpen ? '' : ' hidden') + '>' + lots.map(function (lot, index) {
+          return '<label class="mbs-cs__lot-editor-field">' +
+            '<span class="mbs-cs__lot-editor-label">Лот ' + (index + 1) + '</span>' +
+            '<span class="mbs-cs__lot-editor-row">' +
+              '<input class="mbs-cs__input" type="text" value="' + escapeHtml(cleanDisplayLotTitle(lot.title) || ('Лот ' + (index + 1))) + '" maxlength="80" data-lot-title-input="' + escapeHtml(lot.id) + '">' +
+              '<button class="mbs-cs__lot-delete" type="button" data-lot-delete="' + escapeHtml(lot.id) + '" aria-label="Удалить лот ' + (index + 1) + '"' + (lots.length <= 1 ? ' disabled' : '') + '>×</button>' +
+            '</span>' +
+          '</label>';
+        }).join('') + '</div>';
+      }
+
+      function toggleLotEditor() {
+        lotEditorOpen = !lotEditorOpen;
+        renderLotEditor();
+      }
+
+      function renameLot(lotId, value) {
+        var index = lotIndexById(lotId);
+        if (index < 0) return;
+        lots[index].title = String(value || '').slice(0, 80);
+        var navButton = root.querySelector('[data-lot-jump="' + lotId + '"]');
+        if (navButton) navButton.textContent = numberedLotTitle(lots[index], index);
+        renderLotDetails();
+        updateProgress();
+        writeState();
+      }
+
+      function deleteLot(lotId) {
+        if (lots.length <= 1) {
+          setStatus('Нужен хотя бы один лот.', 'error');
+          return;
+        }
+        var index = lotIndexById(lotId);
+        if (index < 0) return;
+        var removed = lots[index];
+        var confirmText = lotHasData(lotId)
+          ? 'Удалить «' + numberedLotTitle(removed, index) + '» и все его оценки, описания и заметки?'
+          : 'Удалить «' + numberedLotTitle(removed, index) + '»?';
+        if (!window.confirm(confirmText)) return;
+        lots.splice(index, 1);
+        var stateNode = root.querySelector('[data-score-state-lot="' + removed.id + '"]');
+        if (stateNode) stateNode.remove();
+        if (activeLotId === removed.id) {
+          var nextLot = lots[Math.min(index, lots.length - 1)] || lots[0];
+          activeLotId = nextLot ? nextLot.id : null;
+          activeCriterionKey = activeLotId ? firstAvailableCriterion(activeLotId) : 'aroma';
+        }
+        renderCuppingInfo();
+        renderAdminPanel();
+        renderScoreWorkspace();
+        writeState();
+        setStatus('Лот удалён.', 'success');
+      }
+
+      function lotHasData(lotId) {
+        var score = collectScores()[lotId] || {};
+        var hasScore = criteria.some(function (criterion) { return score[criterion.key] != null; });
+        var hasDescriptors = Object.keys(score.descriptors || {}).some(function (key) {
+          return (score.descriptors[key] || []).length;
+        });
+        return hasScore || hasDescriptors || Boolean(score.comment);
+      }
+
+      function scrollActiveLotNavIntoView() {
+        var nav = root.querySelector('[data-mbs-cs-lot-nav]');
+        var activeButton = nav ? nav.querySelector('[data-lot-jump].is-active') : null;
+        if (!nav || !activeButton) return;
+        var navRect = nav.getBoundingClientRect();
+        var activeRect = activeButton.getBoundingClientRect();
+        var targetLeft = Math.max(0, nav.scrollLeft + activeRect.left - navRect.left - 8);
+        if (nav.scrollTo) {
+          nav.scrollTo({ left: targetLeft, behavior: 'smooth' });
+        } else {
+          nav.scrollLeft = targetLeft;
+        }
+      }
+
+      function setActiveLot(lotId) {
+        if (!lotId) return;
+        activeLotId = lotId;
+        activeCriterionKey = firstAvailableCriterion(lotId);
+        activeDescriptorMode = 'taste';
+        activeDescriptorGroupIndex = 0;
+        activeDefectGroupIndex = 0;
+        mobileDescriptorsOpen = false;
+        activeHelpKey = null;
+        renderScoreWorkspace();
+      }
+
+      function addLot() {
+        var nextNumber = lots.length + 1;
+        var lot = {
+          id: 'lot-' + nextNumber,
+          title: 'Лот ' + nextNumber,
+          meta: ''
+        };
+        while (lots.some(function (item) { return item.id === lot.id; })) {
+          nextNumber += 1;
+          lot.id = 'lot-' + nextNumber;
+          lot.title = 'Лот ' + nextNumber;
+        }
+        lots.push(lot);
+        renderScoreState();
+        renderScoreWorkspace();
+        writeState();
+        renderCuppingInfo();
+        renderAdminPanel();
+        setStatus('Добавлен ' + lot.title + '.', 'success');
+      }
+
+      function updateActiveLotNav() {
+        var activeIndex = lots.findIndex(function (lot) { return lot.id === activeLotId; });
+        root.querySelectorAll('[data-lot-jump]').forEach(function (button) {
+          var lotId = button.getAttribute('data-lot-jump');
+          button.classList.toggle('is-active', lotId === activeLotId);
+        });
+        var label = root.querySelector('[data-active-lot-label]');
+        if (label && activeIndex >= 0) label.textContent = 'Лот ' + (activeIndex + 1) + ' из ' + lots.length;
+        scrollActiveLotNavIntoView();
+      }
+
+      function scoreValue(lotId, criterionKey) {
+        var input = root.querySelector('[data-score-lot="' + lotId + '"][data-score-field="' + criterionKey + '"]:checked');
+        return input ? Number(input.value) : 0;
+      }
+
+      function setHiddenScore(lotId, criterionKey, value) {
+        var input = root.querySelector('[data-score-lot="' + lotId + '"][data-score-field="' + criterionKey + '"][value="' + value + '"]');
+        if (input) input.checked = true;
+      }
+
+      function clearHiddenScore(lotId, criterionKey) {
+        root.querySelectorAll('[data-score-lot="' + lotId + '"][data-score-field="' + criterionKey + '"]').forEach(function (input) {
+          input.checked = false;
+        });
+      }
+
+      function criterionIsComplete(lotId, criterionKey) {
+        return scoreValue(lotId, criterionKey) > 0;
+      }
+
+      function allLotsHaveCriterion(criterionKey) {
+        return lots.length > 0 && lots.every(function (lot) {
+          return criterionIsComplete(lot.id, criterionKey);
+        });
+      }
+
+      function scorePhase() {
+        if (!allLotsHaveCriterion('aroma')) return 'dry_aroma';
+        if (!allLotsHaveCriterion('break_aroma')) return 'break_aroma';
+        return 'free';
+      }
+
+      function aromaPhaseActive() {
+        return scorePhase() === 'dry_aroma';
+      }
+
+      function nextLotNeedingCriterionAfter(lotId, criterionKey) {
+        var currentIndex = lots.findIndex(function (lot) { return lot.id === lotId; });
+        var splitIndex = Math.max(0, currentIndex + 1);
+        var orderedLots = lots.slice(splitIndex).concat(lots.slice(0, splitIndex));
+        return orderedLots.find(function (lot) {
+          return !criterionIsComplete(lot.id, criterionKey);
+        }) || null;
+      }
+
+      function firstLotNeedingCriterion(criterionKey) {
+        return lots.find(function (lot) {
+          return !criterionIsComplete(lot.id, criterionKey);
+        }) || null;
+      }
+
+      function criterionIsUnlocked(lotId, criterionKey) {
+        var phase = scorePhase();
+        if (phase === 'dry_aroma') {
+          return criterionKey === 'aroma' || (criterionKey === 'break_aroma' && criterionIsComplete(lotId, 'break_aroma'));
+        }
+        if (phase === 'break_aroma') return criterionKey === 'aroma' || criterionKey === 'break_aroma';
+        if (criterionKey === 'aroma' || criterionKey === 'break_aroma') return true;
+        if (criterionKey === 'overall') {
+          return criteria
+            .filter(function (criterion) { return criterion.key !== 'overall'; })
+            .every(function (criterion) { return criterionIsComplete(lotId, criterion.key); });
+        }
+        return true;
+      }
+
+      function firstAvailableCriterion(lotId) {
+        var phase = scorePhase();
+        if (phase === 'dry_aroma') return 'aroma';
+        if (phase === 'break_aroma') return 'break_aroma';
+        var next = criteria.find(function (criterion) {
+          return criterionIsUnlocked(lotId, criterion.key) && !criterionIsComplete(lotId, criterion.key);
+        });
+        if (next) return next.key;
+        var unlocked = criteria.find(function (criterion) {
+          return criterionIsUnlocked(lotId, criterion.key);
+        });
+        return unlocked ? unlocked.key : 'aroma';
+      }
+
+      function nextCriterionAfter(lotId, criterionKey) {
+        var currentIndex = criteria.findIndex(function (criterion) { return criterion.key === criterionKey; });
+        var after = criteria.slice(currentIndex + 1).find(function (criterion) {
+          return criterionIsUnlocked(lotId, criterion.key) && !criterionIsComplete(lotId, criterion.key);
+        });
+        if (after) return after;
+        return criteria.find(function (criterion) {
+          return criterion.key !== criterionKey && criterionIsUnlocked(lotId, criterion.key) && !criterionIsComplete(lotId, criterion.key);
+        }) || null;
+      }
+
+      function lotIsComplete(lotId) {
+        return criteria.every(function (criterion) {
+          return criterionIsComplete(lotId, criterion.key);
+        });
+      }
+
+      function nextLotAfter(lotId) {
+        var currentIndex = lots.findIndex(function (lot) { return lot.id === lotId; });
+        return lots.slice(currentIndex + 1).find(function (lot) {
+          return !lotIsComplete(lot.id);
+        }) || null;
+      }
+
+      function firstUnfinishedPosition() {
+        var phase = scorePhase();
+        if (phase === 'dry_aroma') {
+          var aromaLot = firstLotNeedingCriterion('aroma');
+          return aromaLot ? { lotId: aromaLot.id, criterionKey: 'aroma' } : null;
+        }
+        if (phase === 'break_aroma') {
+          var breakAromaLot = firstLotNeedingCriterion('break_aroma');
+          return breakAromaLot ? { lotId: breakAromaLot.id, criterionKey: 'break_aroma' } : null;
+        }
+        for (var lotIndex = 0; lotIndex < lots.length; lotIndex += 1) {
+          var lot = lots[lotIndex];
+          if (lotIsComplete(lot.id)) continue;
+          return {
+            lotId: lot.id,
+            criterionKey: firstAvailableCriterion(lot.id)
+          };
+        }
+        return null;
+      }
+
+      function continueUnfinished() {
+        var position = firstUnfinishedPosition();
+        if (!position) {
+          saveAndShowResult();
+          return;
+        }
+        activeLotId = position.lotId;
+        activeCriterionKey = position.criterionKey;
+        activeDescriptorMode = 'taste';
+        activeDescriptorGroupIndex = 0;
+        activeDefectGroupIndex = 0;
+        mobileDescriptorsOpen = false;
+        activeHelpKey = null;
+        setStatus('', '');
+        renderScoreWorkspace();
+        scrollToScoreTask();
+      }
+
+      function nextScoreAction(lotId, criterionKey) {
+        if (!criterionIsComplete(lotId, criterionKey)) return null;
+        var phase = scorePhase();
+        if (phase === 'dry_aroma') {
+          var nextAromaLot = nextLotNeedingCriterionAfter(lotId, 'aroma');
+          if (nextAromaLot) {
+            return { type: 'lot', key: nextAromaLot.id, label: 'Оценить сухой аромат: ' + numberedLotTitleById(nextAromaLot.id, nextAromaLot.title) };
+          }
+        }
+        if (phase === 'break_aroma') {
+          var nextBreakLot = criterionKey === 'break_aroma'
+            ? nextLotNeedingCriterionAfter(lotId, 'break_aroma')
+            : firstLotNeedingCriterion('break_aroma');
+          if (nextBreakLot) {
+            return { type: 'lot', key: nextBreakLot.id, label: 'Оценить мокрый аромат: ' + numberedLotTitleById(nextBreakLot.id, nextBreakLot.title) };
+          }
+        }
+        var nextCriterion = nextCriterionAfter(lotId, criterionKey);
+        if (nextCriterion) {
+          return { type: 'criterion', key: nextCriterion.key, label: 'Оценить ' + nextCriterion.label.toLowerCase() };
+        }
+        var nextLot = nextLotAfter(lotId);
+        if (nextLot) {
+          return { type: 'lot', key: nextLot.id, label: 'Перейти к ' + numberedLotTitleById(nextLot.id, nextLot.title) };
+        }
+        var progress = scoresProgress();
+        if (progress.total > 0 && progress.done === progress.total) {
+          return { type: 'result', key: 'result', label: 'Посмотреть итог' };
+        }
+        return null;
+      }
+
+      function setActiveCriterion(criterionKey) {
+        if (!criterionIsUnlocked(activeLotId, criterionKey)) {
+          var phase = scorePhase();
+          var message = phase === 'dry_aroma'
+            ? 'Сначала оцените сухой аромат по всем лотам.'
+            : (phase === 'break_aroma'
+              ? 'Сначала оцените мокрый аромат по всем лотам.'
+              : 'Сначала заполните остальные параметры этого лота.');
+          setStatus(message, 'error');
+          return;
+        }
+        activeCriterionKey = criterionKey;
+        activeDescriptorMode = 'taste';
+        activeDescriptorGroupIndex = 0;
+        activeDefectGroupIndex = 0;
+        mobileDescriptorsOpen = false;
+        activeHelpKey = null;
+        setStatus('', '');
+        renderScoreWorkspace();
+      }
+
+      function renderCriterionSteps() {
+        var target = root.querySelector('[data-score-steps]');
+        if (!target) return;
+        target.innerHTML = criteria.map(function (criterion, index) {
+          var complete = criterionIsComplete(activeLotId, criterion.key);
+          var unlocked = criterionIsUnlocked(activeLotId, criterion.key);
+          var active = criterion.key === activeCriterionKey;
+          var marker = complete ? '✓' : (index + 1);
+          return '<button class="mbs-cs__criterion-step' + (active ? ' is-active' : '') + (complete ? ' is-complete' : '') + (!unlocked ? ' is-locked' : '') + '" type="button" data-score-criterion="' + escapeHtml(criterion.key) + '"' + (!unlocked ? ' aria-disabled="true"' : '') + '><i>' + marker + '</i>' + escapeHtml(criterion.label) + '</button>';
+        }).join('');
+      }
+
+      function renderScoreWorkspace() {
+        if (!activeLotId && lots[0]) activeLotId = lots[0].id;
+        if (!criterionIsUnlocked(activeLotId, activeCriterionKey)) activeCriterionKey = firstAvailableCriterion(activeLotId);
+        var lotCount = root.querySelector('[data-mbs-cs-lot-count]');
+        if (lotCount) lotCount.textContent = lots.length + ' лотов';
+        renderLotEditor();
+        renderLotNav();
+        updateActiveLotNav();
+        renderLotDetails();
+        renderScoreTask();
+        renderCriterionSteps();
+        renderScoreWheel();
+        renderScoreDescriptorPanel();
+        syncActiveCommentField();
+        updateProgress();
+        scrollActiveCriterionIntoView();
+      }
+
+      function renderLotDetails() {
+        var target = root.querySelector('[data-lot-details]');
+        if (!target) return;
+        var lot = lots.find(function (item) { return item.id === activeLotId; }) || lots[0];
+        if (!lot) {
+          target.innerHTML = '';
+          return;
+        }
+        var meta = String(lot.meta || '').trim();
+        target.innerHTML = meta
+          ? '<p class="mbs-cs__lot-details">' + escapeHtml(meta) + '</p>'
+          : '';
+      }
+
+      function scrollActiveCriterionIntoView() {
+        var activeStep = root.querySelector('[data-score-criterion="' + activeCriterionKey + '"]');
+        var container = root.querySelector('[data-score-steps]');
+        if (!activeStep || !container) return;
+        var targetLeft = activeStep.offsetLeft - (container.clientWidth - activeStep.offsetWidth) / 2;
+        container.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+      }
+
+      function scrollToScoreTask() {
+        var task = root.querySelector('[data-score-task]');
+        if (!task || !task.scrollIntoView) return;
+        window.setTimeout(function () {
+          task.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 40);
+      }
+
+      function scrollToLotNav() {
+        var lotNav = root.querySelector('[data-mbs-cs-lot-nav]');
+        if (!lotNav || !lotNav.scrollIntoView) return;
+        window.setTimeout(function () {
+          lotNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 40);
+      }
+
+      function criterionByKey(key) {
+        return criteria.find(function (criterion) { return criterion.key === key; }) || null;
+      }
+
+      function descriptorPaletteForLabel(label) {
+        return descriptorPalette[label] || descriptorPalette.default;
+      }
+
+      function descriptorGroupsForMode(criterion) {
+        return activeDescriptorMode === 'defect'
+          ? defectDescriptorGroups
+          : (descriptorGroups[criterion.descriptorGroup] || []);
+      }
+
+      function activeDescriptorIndexForMode() {
+        return activeDescriptorMode === 'defect' ? activeDefectGroupIndex : activeDescriptorGroupIndex;
+      }
+
+      function setDescriptorIndexForMode(index) {
+        if (activeDescriptorMode === 'defect') {
+          activeDefectGroupIndex = Math.max(0, Number(index) || 0);
+        } else {
+          activeDescriptorGroupIndex = Math.max(0, Number(index) || 0);
+        }
+      }
+
+      function descriptorToneStyle(tone) {
+        return ' style="--mbs-cs-tone-bg:' + tone.bg + ';--mbs-cs-tone-border:' + tone.border + ';--mbs-cs-tone-text:' + tone.text + ';--mbs-cs-tone-strong:' + tone.strong + ';"';
+      }
+
+      function hexToRgb(hex) {
+        var match = String(hex || '').match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+        if (!match) return null;
+        return {
+          r: parseInt(match[1], 16),
+          g: parseInt(match[2], 16),
+          b: parseInt(match[3], 16)
+        };
+      }
+
+      function rgbToHex(rgb) {
+        return '#' + [rgb.r, rgb.g, rgb.b].map(function (value) {
+          return Math.max(0, Math.min(255, Math.round(value))).toString(16).padStart(2, '0');
+        }).join('');
+      }
+
+      function mixHex(baseHex, overlayHex, overlayWeight) {
+        var base = hexToRgb(baseHex);
+        var overlay = hexToRgb(overlayHex);
+        if (!base || !overlay) return baseHex || overlayHex || '#E7F2E3';
+        var weight = Math.max(0, Math.min(1, Number(overlayWeight)));
+        return rgbToHex({
+          r: base.r * (1 - weight) + overlay.r * weight,
+          g: base.g * (1 - weight) + overlay.g * weight,
+          b: base.b * (1 - weight) + overlay.b * weight
+        });
+      }
+
+      function descriptorToneFromAccent(accent, baseTone) {
+        var base = baseTone || descriptorPalette.default;
+        return {
+          bg: mixHex(accent, '#FFFFFF', .62),
+          border: mixHex(accent, base.border, .38),
+          text: mixHex(accent, '#1F1F1F', .76),
+          strong: mixHex(accent, base.strong, .32)
+        };
+      }
+
+      function descriptorToneForItem(groupLabel, value, index) {
+        var key = String(value || '').trim().toLowerCase();
+        if (descriptorValuePalette[key]) return descriptorValuePalette[key];
+        var baseTone = descriptorPaletteForLabel(groupLabel);
+        var accents = descriptorToneAccents;
+        var accentIndex = Math.abs((String(groupLabel || '').length * 3) + Number(index || 0)) % accents.length;
+        return descriptorToneFromAccent(accents[accentIndex], baseTone);
+      }
+
+      function descriptorToneForValue(groupKey, value) {
+        var groups = descriptorGroups[groupKey] || [];
+        for (var groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
+          var itemIndex = (groups[groupIndex].items || []).indexOf(value);
+          if (itemIndex !== -1) {
+            return descriptorToneForItem(groups[groupIndex].label, value, itemIndex);
+          }
+        }
+        for (var defectGroupIndex = 0; defectGroupIndex < defectDescriptorGroups.length; defectGroupIndex += 1) {
+          var defectItemIndex = (defectDescriptorGroups[defectGroupIndex].items || []).indexOf(value);
+          if (defectItemIndex !== -1) {
+            return descriptorToneForItem(defectDescriptorGroups[defectGroupIndex].label, value, defectItemIndex);
+          }
+        }
+        return descriptorPalette.default;
+      }
+
+      function descriptorToneForFieldValue(field, value) {
+        var criterion = criterionByKey(field);
+        return descriptorToneForValue(criterion ? criterion.descriptorGroup : '', value);
+      }
+
+      function scoreTaskHtml(criterion) {
+        var groups = descriptorGroups[criterion.descriptorGroup] || [];
+        var tone = descriptorPaletteForLabel(criterionToneLabels[criterion.key] || (groups[0] && groups[0].label));
+        var helpOpen = activeHelpKey === criterion.key;
+        return '<div class="mbs-cs__score-task"' + descriptorToneStyle(tone) + '>' +
+          '<div class="mbs-cs__score-task-title"><h3>' + escapeHtml(criterion.label) + '</h3>' +
+            '<button class="mbs-cs__help-btn" type="button" data-criterion-help="' + escapeHtml(criterion.key) + '" aria-expanded="' + (helpOpen ? 'true' : 'false') + '" aria-label="Подсказка по параметру">?</button></div>' +
+          '<p>Сначала поставьте оценку этому параметру. Дескриптор ниже можно выбрать по желанию.</p>' +
+          (helpOpen ? '<div class="mbs-cs__hint-popover">' + escapeHtml(criterion.help || '') + '</div>' : '') +
+        '</div>';
+      }
+
+      function renderScoreTask() {
+        var target = root.querySelector('[data-score-task]');
+        if (!target) return;
+        target.innerHTML = scoreTaskHtml(criterionByKey(activeCriterionKey) || criteria[0]);
+      }
+
+      function wheelPoint(cx, cy, radius, angle) {
+        var radians = (angle - 90) * Math.PI / 180;
+        return {
+          x: cx + radius * Math.cos(radians),
+          y: cy + radius * Math.sin(radians)
+        };
+      }
+
+      function wheelSectorPath(cx, cy, innerRadius, outerRadius, startAngle, endAngle) {
+        var outerStart = wheelPoint(cx, cy, outerRadius, startAngle);
+        var outerEnd = wheelPoint(cx, cy, outerRadius, endAngle);
+        var innerEnd = wheelPoint(cx, cy, innerRadius, endAngle);
+        var innerStart = wheelPoint(cx, cy, innerRadius, startAngle);
+        var largeArc = endAngle - startAngle > 180 ? 1 : 0;
+        return [
+          'M', outerStart.x.toFixed(2), outerStart.y.toFixed(2),
+          'A', outerRadius, outerRadius, 0, largeArc, 1, outerEnd.x.toFixed(2), outerEnd.y.toFixed(2),
+          'L', innerEnd.x.toFixed(2), innerEnd.y.toFixed(2),
+          'A', innerRadius, innerRadius, 0, largeArc, 0, innerStart.x.toFixed(2), innerStart.y.toFixed(2),
+          'Z'
+        ].join(' ');
+      }
+
+      function shortWheelLabel(label) {
+        return ({
+          'Орехи и специи': 'Орехи',
+          'Травы и тёмные': 'Травы',
+          'Ферментация': 'Фермент',
+          'Плесень и сырость': 'Плесень',
+          'Бумага и старость': 'Бумага',
+          'Виноградные': 'Виноград',
+          'Цитрусовая': 'Цитрус',
+          'Зелёное': 'Зелёное',
+          'Жареное': 'Жар',
+          'Грязное': 'Грязь'
+        })[label] || label;
+      }
+
+      function descriptorModeTabsHtml() {
+        return '<div class="mbs-cs__descriptor-mode-tabs" role="tablist" aria-label="Тип дескрипторов">' +
+          '<button class="mbs-cs__descriptor-mode' + (activeDescriptorMode === 'taste' ? ' is-active' : '') + '" type="button" data-score-descriptor-mode="taste" role="tab" aria-selected="' + (activeDescriptorMode === 'taste' ? 'true' : 'false') + '">Вкусовые</button>' +
+          '<button class="mbs-cs__descriptor-mode' + (activeDescriptorMode === 'defect' ? ' is-active' : '') + '" type="button" data-score-descriptor-mode="defect" role="tab" aria-selected="' + (activeDescriptorMode === 'defect' ? 'true' : 'false') + '">Дефекты</button>' +
+        '</div>';
+      }
+
+      function renderScoreWheel() {
+        var wheelTarget = root.querySelector('[data-score-wheel]');
+        if (!wheelTarget) return;
+        var modeTarget = root.querySelector('[data-score-descriptor-mode-tabs]');
+        if (modeTarget) modeTarget.innerHTML = descriptorModeTabsHtml();
+        var criterion = criterionByKey(activeCriterionKey) || criteria[0];
+        var groups = descriptorGroupsForMode(criterion);
+        var activeGroupIndex = activeDescriptorIndexForMode();
+        var cx = 160;
+        var cy = 160;
+        var innerRadius = 58;
+        var outerRadius = 148;
+        var labelRadius = 105;
+        var step = 360 / Math.max(groups.length, 1);
+
+        wheelTarget.innerHTML = '<svg class="mbs-cs__wheel-svg" viewBox="0 0 320 320" role="img" aria-label="Колесо описаний: ' + escapeHtml(criterion.label) + '">' +
+          groups.map(function (group, index) {
+            var startAngle = index * step;
+            var endAngle = startAngle + step;
+            var labelPoint = wheelPoint(cx, cy, labelRadius, startAngle + step / 2);
+            var tone = descriptorPaletteForLabel(group.label);
+            return '<g class="mbs-cs__wheel-sector' + (index === activeGroupIndex ? ' is-active' : '') + '" tabindex="0" role="button" aria-label="' + escapeHtml(group.label) + '" data-score-descriptor-group-index="' + index + '"' + descriptorToneStyle(tone) + '>' +
+              '<path d="' + wheelSectorPath(cx, cy, innerRadius, outerRadius, startAngle, endAngle) + '"></path>' +
+              '<text x="' + labelPoint.x.toFixed(2) + '" y="' + labelPoint.y.toFixed(2) + '">' + escapeHtml(shortWheelLabel(group.label)) + '</text>' +
+            '</g>';
+          }).join('') +
+          '<circle class="mbs-cs__wheel-core" cx="' + cx + '" cy="' + cy + '" r="' + (innerRadius - 8) + '"></circle>' +
+          '<text class="mbs-cs__wheel-core-text" x="' + cx + '" y="' + (cy - 7) + '">MBS*</text>' +
+          '<text class="mbs-cs__wheel-core-text" x="' + cx + '" y="' + (cy + 11) + '">' + escapeHtml(criterion.label.split(' ')[0]) + '</text>' +
+        '</svg>';
+      }
+
+      function renderScoreDescriptorPanel() {
+        var panel = root.querySelector('[data-score-panel]');
+        var descriptorPanel = root.querySelector('[data-score-descriptor-panel]');
+        var descriptorTools = root.querySelector('[data-score-descriptor-tools]');
+        if (!panel || !descriptorPanel || !descriptorTools) return;
+        var lot = lots.find(function (item) { return item.id === activeLotId; }) || lots[0];
+        var criterion = criterionByKey(activeCriterionKey) || criteria[0];
+        var groups = descriptorGroupsForMode(criterion);
+        var activeGroupIndex = activeDescriptorIndexForMode();
+        var activeGroup = groups[activeGroupIndex] || groups[0] || { label: '', items: [] };
+        var selected = descriptorValues(activeLotId, criterion.key);
+        var currentScore = scoreValue(activeLotId, criterion.key);
+        var descriptorsLocked = currentScore <= 0;
+        var action = nextScoreAction(activeLotId, criterion.key);
+        var nextButtonHtml = action
+          ? '<button class="mbs-cs__score-next" type="button" data-score-next-action="' + escapeHtml(action.type) + '" data-score-next-key="' + escapeHtml(action.key) + '">' + escapeHtml(action.label) + '</button>'
+          : '';
+        var descriptorToggleText = selected.length
+          ? (mobileDescriptorsOpen ? 'Скрыть дескрипторы · ' : 'Изменить дескрипторы · ') + selected.length + ' выбрано'
+          : (mobileDescriptorsOpen ? 'Скрыть дескрипторы' : '+ Добавить дескрипторы');
+        descriptorTools.classList.toggle('is-open', mobileDescriptorsOpen);
+
+        panel.innerHTML = '<article class="mbs-cs__score-card">' +
+            '<div data-score-task>' + scoreTaskHtml(criterion) + '</div>' +
+            renderScoreScale(activeLotId, criterion.key, currentScore, false) +
+            '<p class="mbs-cs__score-help">' + (descriptorsLocked ? 'После оценки можно добавить дескриптор, если хочется уточнить впечатление.' : 'Дескрипторы ниже — подсказка для ваших ощущений.') + '</p>' +
+            '<button class="mbs-cs__descriptor-toggle" type="button" data-mobile-descriptor-toggle aria-expanded="' + (mobileDescriptorsOpen ? 'true' : 'false') + '">' + escapeHtml(descriptorToggleText) + '</button>' +
+          '</article>';
+
+        descriptorPanel.innerHTML = '<article class="mbs-cs__score-card">' +
+            '<div class="mbs-cs__score-card-head">' +
+              '<h3>Дескрипторы</h3>' +
+              '<p>Выберите подходящие дескрипторы. Можно отметить несколько.</p>' +
+            '</div>' +
+            '<p class="mbs-cs__score-scale-title">Оттенок / дескриптор: ' + escapeHtml(activeGroup.label || 'Описание') + '</p>' +
+            '<div class="mbs-cs__wheel-chips">' + (activeGroup.items || []).map(function (item, itemIndex) {
+              var isSelected = selected.indexOf(item) !== -1;
+              var isDisabled = descriptorsLocked;
+              var itemTone = descriptorToneForItem(activeGroup.label, item, itemIndex);
+              return '<button class="mbs-cs__descriptor-option' + (isSelected ? ' is-selected' : '') + (isDisabled ? ' is-disabled' : '') + '" type="button"' + descriptorToneStyle(itemTone) + ' data-score-descriptor-value="' + escapeHtml(item) + '"' + (isDisabled ? ' aria-disabled="true"' : '') + '>' + escapeHtml(item) + '</button>';
+            }).join('') + '</div>' +
+            '<div class="mbs-cs__score-picked">' + selected.map(function (value) {
+              return '<button class="mbs-cs__descriptor-chip" type="button"' + descriptorToneStyle(descriptorToneForFieldValue(criterion.key, value)) + ' data-score-descriptor-remove="' + escapeHtml(value) + '">' + escapeHtml(value) + ' <i aria-hidden="true">×</i></button>';
+            }).join('') + '</div>' +
+            '<label class="mbs-cs__field mbs-cs__note"><span class="mbs-cs__label">Короткая заметка по лоту</span><textarea class="mbs-cs__textarea" data-active-comment placeholder="Что запомнилось: аромат, вкус, ассоциация"></textarea></label>' +
+            nextButtonHtml +
+          '</article>';
+      }
+
+      function renderScoreScale(lotId, criterionKey, currentScore, isLocked) {
+        return '<div class="mbs-cs__score-scale" aria-label="Оценка от 1 до 5">' + [1, 2, 3, 4, 5].map(function (score) {
+          return '<button type="button" data-wheel-score="' + score + '" data-wheel-score-lot="' + escapeHtml(lotId) + '" data-wheel-score-field="' + escapeHtml(criterionKey) + '" class="' + (currentScore === score ? 'is-selected' : '') + '"' + (isLocked ? ' disabled' : '') + '>' + score + '</button>';
+        }).join('') + '</div>';
+      }
+
+      function setActiveDescriptorGroup(index) {
+        setDescriptorIndexForMode(index);
+        renderScoreWorkspace();
+      }
+
+      function setActiveDescriptorMode(mode) {
+        activeDescriptorMode = mode === 'defect' ? 'defect' : 'taste';
+        renderScoreWorkspace();
+      }
+
+      function setWheelDescriptor(lotId, criterionKey, value) {
+        if (!value) return;
+        var values = descriptorValues(lotId, criterionKey);
+        var index = values.indexOf(value);
+        if (index >= 0) {
+          values.splice(index, 1);
+        } else {
+          if (scoreValue(lotId, criterionKey) <= 0) {
+            setStatus('Сначала поставьте оценку, затем при желании выберите дескриптор.', 'error');
+            return;
+          }
+          values.push(value);
+        }
+        setDescriptorValues(lotId, criterionKey, values);
+        writeState();
+        renderScoreWorkspace();
+        scheduleAutoSaveCompleteScores(500);
+      }
+
+      function removeWheelDescriptor(lotId, criterionKey, value) {
+        var values = descriptorValues(lotId, criterionKey).filter(function (item) { return item !== value; });
+        setDescriptorValues(lotId, criterionKey, values);
+        writeState();
+        renderScoreWorkspace();
+        scheduleAutoSaveCompleteScores(500);
+      }
+
+      function setWheelScore(lotId, criterionKey, value) {
+        var previousPhase = scorePhase();
+        setHiddenScore(lotId, criterionKey, value);
+        var currentPhase = scorePhase();
+        if (criterionKey === 'aroma' && previousPhase === 'dry_aroma' && currentPhase === 'break_aroma' && lots[0]) {
+          activeLotId = lots[0].id;
+          activeCriterionKey = firstAvailableCriterion(activeLotId);
+          activeDescriptorMode = 'taste';
+          activeDescriptorGroupIndex = 0;
+          activeDefectGroupIndex = 0;
+          mobileDescriptorsOpen = false;
+          activeHelpKey = null;
+          setStatus('Сухой аромат по всем лотам заполнен. Переходим к мокрому аромату.', 'success');
+        } else if (criterionKey === 'break_aroma' && previousPhase === 'break_aroma' && currentPhase === 'free' && lots[0]) {
+          activeLotId = lots[0].id;
+          activeCriterionKey = firstAvailableCriterion(activeLotId);
+          activeDescriptorMode = 'taste';
+          activeDescriptorGroupIndex = 0;
+          activeDefectGroupIndex = 0;
+          mobileDescriptorsOpen = false;
+          activeHelpKey = null;
+          setStatus('Ароматы по всем лотам заполнены. Можно оценивать остальные параметры.', 'success');
+        } else {
+          setStatus('Оценка сохранена.', 'success');
+        }
+        writeState();
+        renderScoreWorkspace();
+        maybeAutoSaveCompleteScores();
+      }
+
+      function syncActiveCommentField() {
+        var visible = root.querySelector('[data-active-comment]');
+        var hidden = root.querySelector('[data-comment-lot="' + activeLotId + '"]');
+        if (visible && hidden) visible.value = hidden.value || '';
+      }
+
+      function syncActiveCommentValue(input) {
+        var hidden = root.querySelector('[data-comment-lot="' + activeLotId + '"]');
+        if (hidden) hidden.value = input.value;
+      }
+
+      function descriptorContainer(lotId, field) {
+        return root.querySelector('[data-descriptor-picked][data-descriptor-lot="' + lotId + '"][data-descriptor-field="' + field + '"]');
+      }
+
+      function descriptorValues(lotId, field) {
+        var container = descriptorContainer(lotId, field);
+        if (!container) return [];
+        try {
+          var values = JSON.parse(container.getAttribute('data-descriptors') || '[]');
+          return Array.isArray(values) ? values : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function setDescriptorValues(lotId, field, values) {
+        var container = descriptorContainer(lotId, field);
+        if (!container) return;
+        var cleanValues = Array.from(new Set((values || []).filter(Boolean))).slice(0, 3);
+        container.setAttribute('data-descriptors', JSON.stringify(cleanValues));
+        container.innerHTML = cleanValues.map(function (value) {
+          var tone = descriptorToneForFieldValue(field, value);
+          return '<button class="mbs-cs__descriptor-chip" type="button"' + descriptorToneStyle(tone) + ' data-descriptor-remove data-descriptor-lot="' + escapeHtml(lotId) + '" data-descriptor-field="' + escapeHtml(field) + '" data-descriptor-value="' + escapeHtml(value) + '">' + escapeHtml(value) + ' <i aria-hidden="true">×</i></button>';
+        }).join('');
+      }
+
+      function removeDescriptorValue(lotId, field, value) {
+        var values = descriptorValues(lotId, field).filter(function (item) { return item !== value; });
+        setDescriptorValues(lotId, field, values);
+        writeState();
+        if (descriptorModalState && descriptorModalState.lotId === lotId && descriptorModalState.field === field) {
+          renderDescriptorModal();
+        }
+      }
+
+      function clearDescriptorValues(lotId, field) {
+        setDescriptorValues(lotId, field, []);
+        writeState();
+        if (descriptorModalState && descriptorModalState.lotId === lotId && descriptorModalState.field === field) {
+          renderDescriptorModal();
+        }
+      }
+
+      function openDescriptorModal(lotId, field) {
+        var criterion = criterionByKey(field);
+        if (!criterion) return;
+        descriptorModalState = { lotId: lotId, field: field, groupIndex: 0 };
+        root.querySelector('[data-descriptor-modal]').hidden = false;
+        renderDescriptorModal();
+      }
+
+      function closeDescriptorModal() {
+        var modal = root.querySelector('[data-descriptor-modal]');
+        if (modal) modal.hidden = true;
+        descriptorModalState = null;
+      }
+
+      function renderDescriptorModal() {
+        if (!descriptorModalState) return;
+        var criterion = criterionByKey(descriptorModalState.field);
+        if (!criterion) return;
+        var groups = descriptorGroups[criterion.descriptorGroup] || [];
+        var selected = descriptorValues(descriptorModalState.lotId, descriptorModalState.field);
+        var activeGroup = groups[descriptorModalState.groupIndex] || groups[0] || { label: '', items: [] };
+
+        root.querySelector('[data-descriptor-title]').textContent = 'Что напоминает: ' + criterion.label;
+        root.querySelector('[data-descriptor-context]').textContent = 'Выберите подходящие дескрипторы. Можно отметить несколько.';
+        root.querySelector('[data-descriptor-count]').textContent = 'Выбрано ' + selected.length;
+
+        root.querySelector('[data-descriptor-groups]').innerHTML = groups.map(function (group, index) {
+          var tone = descriptorPaletteForLabel(group.label);
+          return '<button class="mbs-cs__descriptor-group' + (index === descriptorModalState.groupIndex ? ' is-active' : '') + '" type="button"' + descriptorToneStyle(tone) + ' data-descriptor-group-index="' + index + '">' + escapeHtml(group.label) + '</button>';
+        }).join('');
+
+        root.querySelector('[data-descriptor-options]').innerHTML = activeGroup.items.map(function (item, itemIndex) {
+          var isSelected = selected.indexOf(item) !== -1;
+          var tone = descriptorToneForItem(activeGroup.label, item, itemIndex);
+          return '<button class="mbs-cs__descriptor-option' + (isSelected ? ' is-selected' : '') + '" type="button"' + descriptorToneStyle(tone) + ' data-descriptor-value="' + escapeHtml(item) + '">' + escapeHtml(item) + '</button>';
+        }).join('');
+      }
+
+      function toggleDescriptorValue(value) {
+        if (!descriptorModalState || !value) return;
+        var values = descriptorValues(descriptorModalState.lotId, descriptorModalState.field);
+        var index = values.indexOf(value);
+        if (index >= 0) {
+          values.splice(index, 1);
+        } else {
+          values.push(value);
+        }
+        setDescriptorValues(descriptorModalState.lotId, descriptorModalState.field, values);
+        writeState();
+        renderDescriptorModal();
+      }
+
+      function applyScoresToForm(scores) {
+        Object.keys(scores || {}).forEach(function (lotId) {
+          var score = scores[lotId] || {};
+          criteria.forEach(function (criterion) {
+            var value = score[criterion.key];
+            var input = root.querySelector('[data-score-lot="' + lotId + '"][data-score-field="' + criterion.key + '"][value="' + value + '"]');
+            if (input) input.checked = true;
+          });
+          var comment = root.querySelector('[data-comment-lot="' + lotId + '"]');
+          if (comment && score.comment != null) comment.value = score.comment || '';
+          Object.keys(score.descriptors || {}).forEach(function (field) {
+            setDescriptorValues(lotId, field, score.descriptors[field] || []);
+          });
+        });
+      }
+
+      function restoreState() {
+        var state = readState();
+        if (!remoteEvent && Array.isArray(state.lots) && state.lots.length >= 1) {
+          lots = state.lots
+            .filter(function (lot) { return lot && lot.id && lot.title; })
+            .map(function (lot) {
+              return {
+                id: String(lot.id),
+                title: String(lot.title),
+                meta: String(lot.meta || '')
+              };
+            });
+          renderLots();
+        }
+        Object.keys(state.profile || {}).forEach(function (key) {
+          var input = root.querySelector('[name="' + key + '"]');
+          if (input) input.value = state.profile[key] || '';
+        });
+        Object.keys(remoteProfile || {}).forEach(function (key) {
+          var input = root.querySelector('[name="' + key + '"]');
+          if (input && !input.value) input.value = remoteProfile[key] || '';
+        });
+        renderCuppingInfo();
+        applyScoresToForm(remoteSubmissionScores);
+        var remoteRestoredSignature = remoteSubmissionScores ? scoresSaveSignature() : '';
+        applyScoresToForm(state.scores);
+        updateProgress();
+        applyProfileVisibility();
+        activeCriterionKey = firstAvailableCriterion(activeLotId);
+        renderScoreWorkspace();
+        if (remoteRestoredSignature && remoteRestoredSignature === scoresSaveSignature()) {
+          autoSavedSignature = remoteRestoredSignature;
+        }
+        maybeAutoSaveCompleteScores();
+      }
+
+      function collectProfile() {
+        var profile = {};
+        root.querySelectorAll('[data-mbs-cs-view="profile"] input, [data-mbs-cs-view="profile"] select').forEach(function (input) {
+          profile[input.name] = input.value.trim();
+        });
+        return profile;
+      }
+
+      function collectScores() {
+        var scores = {};
+        lots.forEach(function (lot, index) {
+          scores[lot.id] = { lot_id: lot.id, lot_title: cleanDisplayLotTitle(lot.title) || ('Лот ' + (index + 1)) };
+        });
+        root.querySelectorAll('[data-score-lot]').forEach(function (input) {
+          if (!input.checked) return;
+          var lotId = input.getAttribute('data-score-lot');
+          var field = input.getAttribute('data-score-field');
+          scores[lotId][field] = Number(input.value);
+        });
+        root.querySelectorAll('[data-comment-lot]').forEach(function (input) {
+          var lotId = input.getAttribute('data-comment-lot');
+          scores[lotId].comment = input.value.trim();
+        });
+        root.querySelectorAll('[data-descriptor-picked][data-descriptor-lot][data-descriptor-field]').forEach(function (container) {
+          var lotId = container.getAttribute('data-descriptor-lot');
+          var field = container.getAttribute('data-descriptor-field');
+          var values = descriptorValues(lotId, field);
+          if (!values.length) return;
+          if (!scores[lotId].descriptors) scores[lotId].descriptors = {};
+          scores[lotId].descriptors[field] = values;
+        });
+        return scores;
+      }
+
+      function collectState() {
+        return {
+          form_version: formVersion,
+          saved_at: new Date().toISOString(),
+          cupping: {
+            title: cuppingConfig.title,
+            date: cuppingConfig.date,
+            roaster: cuppingConfig.roaster,
+            location: cuppingConfig.location
+          },
+          lots: lots.map(function (lot, index) {
+            return { id: lot.id, title: cleanDisplayLotTitle(lot.title) || ('Лот ' + (index + 1)), meta: lot.meta || '' };
+          }),
+          profile: collectProfile(),
+          scores: collectScores()
+        };
+      }
+
+      function lotAverage(score) {
+        var values = criteria.map(function (criterion) { return Number(score[criterion.key] || 0); }).filter(Boolean);
+        if (values.length !== criteria.length) return null;
+        return Math.round(values.reduce(function (sum, value) { return sum + value; }, 0) / values.length * 100) / 100;
+      }
+
+      function scoreRows() {
+        var scores = collectScores();
+        return lots.map(function (lot) {
+          var score = scores[lot.id] || {};
+          return Object.assign({}, score, { average: lotAverage(score) });
+        });
+      }
+
+      function formatScore(value) {
+        return value == null ? '—' : String(value).replace('.', ',');
+      }
+
+      function strongestCriteria(row) {
+        return criteria
+          .map(function (criterion) {
+            return { label: criterion.label, value: Number(row[criterion.key] || 0) };
+          })
+          .filter(function (item) { return item.value > 0; })
+          .sort(function (a, b) { return b.value - a.value; })
+          .slice(0, 3);
+      }
+
+      function descriptorSummary(row) {
+        var descriptors = row.descriptors || {};
+        return criteria.map(function (criterion) {
+          var values = descriptors[criterion.key] || [];
+          return values.length ? criterion.label + ': ' + values.join(', ') : '';
+        }).filter(Boolean);
+      }
+
+      function closeResultLotModal() {
+        var modal = root.querySelector('[data-result-lot-modal]');
+        if (modal) modal.hidden = true;
+      }
+
+      function openGuideModal() {
+        var modal = root.querySelector('[data-guide-modal]');
+        if (!modal) return;
+        modal.hidden = false;
+        var closeButton = modal.querySelector('[data-guide-close]');
+        if (closeButton && closeButton.focus) closeButton.focus();
+      }
+
+      function closeGuideModal() {
+        var modal = root.querySelector('[data-guide-modal]');
+        if (modal) modal.hidden = true;
+      }
+
+      function renderResultLotModal(row) {
+        var body = root.querySelector('[data-result-lot-body]');
+        root.querySelector('[data-result-lot-title]').textContent = numberedLotTitleById(row.lot_id, row.lot_title);
+        root.querySelector('[data-result-lot-subtitle]').textContent = 'Средняя оценка: ' + formatScore(row.average) + ' из 5';
+
+        var descriptors = row.descriptors || {};
+        var descriptorHtml = criteria.map(function (criterion) {
+          var values = descriptors[criterion.key] || [];
+          if (!values.length) return '';
+          return '<article class="mbs-cs__result-group"><strong>' + escapeHtml(criterion.label) + '</strong><div class="mbs-cs__result-chips">' +
+            values.map(function (value) {
+              return '<span' + descriptorToneStyle(descriptorToneForFieldValue(criterion.key, value)) + '>' + escapeHtml(value) + '</span>';
+            }).join('') +
+            '</div></article>';
+        }).filter(Boolean).join('');
+
+        var noteHtml = row.comment
+          ? '<div class="mbs-cs__result-note"><strong>Заметка:</strong> ' + escapeHtml(row.comment) + '</div>'
+          : '';
+
+        body.innerHTML = descriptorHtml || noteHtml
+          ? descriptorHtml + noteHtml
+          : '<p class="mbs-cs__result-empty">Для этого лота пока нет описаний.</p>';
+      }
+
+      function openResultLotModal(lotId) {
+        var row = scoreRows().find(function (item) { return item.lot_id === lotId; });
+        if (!row) return;
+        renderResultLotModal(row);
+        root.querySelector('[data-result-lot-modal]').hidden = false;
+      }
+
+      function updateProgress() {
+        var total = lots.length * criteria.length;
+        var done = 0;
+        var scores = collectScores();
+        lots.forEach(function (lot) {
+          var score = scores[lot.id] || {};
+          var lotDone = 0;
+          criteria.forEach(function (criterion) {
+            if (criterionIsComplete(lot.id, criterion.key)) {
+              done += 1;
+              lotDone += 1;
+            }
+          });
+          var average = lotAverage(score);
+          var badge = root.querySelector('[data-lot-average="' + lot.id + '"]');
+          if (badge) badge.textContent = average == null ? 'не оценён' : String(average).replace('.', ',');
+          var navButton = root.querySelector('[data-lot-jump="' + lot.id + '"]');
+          if (navButton) {
+            navButton.classList.toggle('is-partial', lotDone > 0 && lotDone < criteria.length);
+            navButton.classList.toggle('is-complete', lotDone === criteria.length);
+          }
+        });
+        var percent = total ? Math.round(done / total * 100) : 0;
+        root.querySelector('[data-mbs-cs-progress-text]').textContent = done + ' из ' + total + ' · ' + percent + '%';
+        root.querySelector('[data-mbs-cs-progress-fill]').style.width = percent + '%';
+        return { done: done, total: total, percent: percent };
+      }
+
+      function validateScores() {
+        if (!validateProfile()) return false;
+        var progress = updateProgress();
+        if (progress.done !== progress.total) {
+          setStatus('Поставьте оценки по всем критериям для каждого лота.', 'error');
+          return false;
+        }
+        setStatus('Все оценки заполнены.', 'success');
+        return true;
+      }
+
+      function renderResult() {
+        var rows = scoreRows();
+        var completed = rows.filter(function (row) { return row.average != null; });
+        var ranked = completed.slice().sort(function (a, b) { return b.average - a.average; });
+        var favorite = ranked[0] || null;
+        var strengths = favorite ? strongestCriteria(favorite) : [];
+        var progress = scoresProgress();
+        var canSave = progress.done === progress.total;
+
+        root.querySelector('[data-mbs-cs-summary]').innerHTML =
+          '<article class="mbs-cs__summary-card"><span>Заполнено</span><strong>' + progress.done + ' из ' + progress.total + '</strong>' +
+            '<p>' + progress.percent + '% · ' + (canSave ? 'можно скопировать или скачать результат' : 'можно смотреть предварительный итог') + '</p>' +
+          '</article>' +
+          '<article class="mbs-cs__summary-card mbs-cs__summary-card--favorite"><span>Ваш фаворит</span><strong>' + escapeHtml(favorite ? numberedLotTitleById(favorite.lot_id, favorite.lot_title) : '—') + '</strong>' +
+            '<p>' + (favorite ? escapeHtml(formatScore(favorite.average)) + ' из 5 · самый высокий общий балл' : 'Появится после оценки всех лотов') + '</p>' +
+            (strengths.length ? '<div class="mbs-cs__strengths">' + strengths.map(function (item) { return '<span>' + escapeHtml(item.label) + ' ' + escapeHtml(item.value) + '</span>'; }).join('') + '</div>' : '') +
+          '</article>';
+
+        root.querySelector('[data-mbs-cs-top-list]').innerHTML = ranked.length
+          ? ranked.slice(0, 3).map(function (row, index) {
+            return '<article class="mbs-cs__top-card"><span>' + (index + 1) + '</span><div><strong>' + escapeHtml(numberedLotTitleById(row.lot_id, row.lot_title)) + '</strong>' + (row.comment ? '<p>' + escapeHtml(row.comment) + '</p>' : '') + '</div><div class="mbs-cs__top-score">' + escapeHtml(formatScore(row.average)) + '</div></article>';
+          }).join('')
+          : '<article class="mbs-cs__top-card"><span>1</span><div><strong>Топ появится после оценки</strong><p>Заполните оценки по лотам, чтобы увидеть первые три места.</p></div><div class="mbs-cs__top-score">—</div></article>';
+
+        root.querySelector('[data-mbs-cs-result-table]').innerHTML =
+          '<table class="mbs-cs__table"><thead><tr><th>Лот</th><th>Среднее</th>' +
+          criteria.map(function (criterion) { return '<th>' + escapeHtml(criterion.label) + '</th>'; }).join('') +
+          '</tr></thead><tbody>' +
+          rows.map(function (row) {
+            var mainRow = '<tr><td><button class="mbs-cs__table-lot" type="button" data-result-lot="' + escapeHtml(row.lot_id) + '">' + escapeHtml(numberedLotTitleById(row.lot_id, row.lot_title)) + '</button></td>' +
+              '<td><span class="mbs-cs__table-average">' + escapeHtml(formatScore(row.average)) + '</span></td>' +
+              criteria.map(function (criterion) { return '<td>' + escapeHtml(row[criterion.key] || '—') + '</td>'; }).join('') +
+              '</tr>';
+            return mainRow;
+          }).join('') +
+          '</tbody></table>';
+
+        var copyButton = root.querySelector('[data-mbs-cs-copy]');
+        if (copyButton) {
+          copyButton.disabled = !canSave;
+          copyButton.textContent = canSave ? 'Скопировать результаты' : 'Заполните все лоты';
+        }
+      }
+
+      function resultText() {
+        var state = collectState();
+        var profile = state.profile || {};
+        var rows = scoreRows();
+        var ranked = rows
+          .filter(function (row) { return row.average != null; })
+          .sort(function (a, b) { return b.average - a.average; });
+        var favorite = ranked[0] || null;
+        var lines = [
+          'Итоги каппинга',
+          'Каппинг: ' + currentCuppingTitle(profile),
+          'Имя: ' + (profile.participant_name || ''),
+          'Телефон: ' + (profile.participant_contact || ''),
+          'Опыт: ' + (profile.cupping_experience || ''),
+          favorite ? 'Лучший лот: ' + numberedLotTitleById(favorite.lot_id, favorite.lot_title) + ' — ' + formatScore(favorite.average) + ' из 5' : 'Лучший лот: —',
+          'Оценено лотов: ' + ranked.length + ' из ' + lots.length,
+          ''
+        ];
+
+        lines.push('Рейтинг лотов:');
+        (ranked.length ? ranked : rows).forEach(function (row, index) {
+          lines.push((index + 1) + '. ' + numberedLotTitleById(row.lot_id, row.lot_title) + ' — ' + (row.average == null ? '—' : formatScore(row.average)) + ' из 5');
+        });
+
+        lines.push('');
+        lines.push('Подробности:');
+        rows.forEach(function (row) {
+          lines.push(numberedLotTitleById(row.lot_id, row.lot_title));
+          lines.push('Среднее: ' + (row.average == null ? '—' : formatScore(row.average)) + ' из 5');
+          lines.push('Сухой аромат: ' + (row.aroma || '—'));
+          lines.push('Мокрый аромат / на сломе: ' + (row.break_aroma || '—'));
+          lines.push('Кислотность: ' + (row.acidity || '—'));
+          lines.push('Горечь: ' + (row.bitterness || '—'));
+          lines.push('Сладость: ' + (row.sweetness || '—'));
+          lines.push('Тело: ' + (row.body || '—'));
+          lines.push('Послевкусие: ' + (row.aftertaste || '—'));
+          lines.push('Общее впечатление: ' + (row.overall || '—'));
+          var descriptors = descriptorSummary(row);
+          if (descriptors.length) lines.push('Описания: ' + descriptors.join(' · '));
+          if (row.comment) lines.push('Заметка: ' + row.comment);
+          lines.push('');
+        });
+        return lines.join('\n');
+      }
+
+      function csvText() {
+        var profile = collectProfile();
+        var header = ['cupping_title', 'participant_name', 'participant_contact', 'coffee_role', 'coffee_frequency', 'cupping_experience', 'favorite_profile', 'lot', 'dry_aroma', 'break_aroma', 'acidity', 'bitterness', 'sweetness', 'body', 'aftertaste', 'overall', 'average', 'comment'];
+        var lines = [header.join(',')];
+        scoreRows().forEach(function (row) {
+          var values = [
+            currentCuppingTitle(profile),
+            profile.participant_name,
+            profile.participant_contact,
+            profile.coffee_role,
+            profile.coffee_frequency,
+            profile.cupping_experience,
+            profile.favorite_profile,
+            row.lot_title,
+            row.aroma,
+            row.break_aroma,
+            row.acidity,
+            row.bitterness,
+            row.sweetness,
+            row.body,
+            row.aftertaste,
+            row.overall,
+            row.average,
+            row.comment
+          ].map(function (value) {
+            return '"' + String(value == null ? '' : value).replace(/"/g, '""') + '"';
+          });
+          lines.push(values.join(','));
+        });
+        return lines.join('\n');
+      }
+
+      function exportPayload() {
+        return {
+          form_version: formVersion,
+          exported_at: new Date().toISOString(),
+          cupping: {
+            title: cuppingConfig.title,
+            date: cuppingConfig.date,
+            roaster: cuppingConfig.roaster,
+            location: cuppingConfig.location
+          },
+          lots: lots.map(function (lot) {
+            return { id: lot.id, title: lot.title, meta: lot.meta || '' };
+          }),
+          profile: collectProfile(),
+          scores: collectScores(),
+          rows: scoreRows()
+        };
+      }
+
+      function exportJsonText() {
+        return JSON.stringify(exportPayload(), null, 2);
+      }
+
+      function downloadTextFile(filename, text, type) {
+        var blob = new Blob([text], { type: type });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      function downloadResultCsv() {
+        downloadTextFile('public-cupping-result-' + new Date().toISOString().slice(0, 10) + '.csv', csvText(), 'text/csv;charset=utf-8');
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          var textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', 'readonly');
+          textarea.style.position = 'fixed';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          try {
+            document.execCommand('copy') ? resolve() : reject(new Error('copy_failed'));
+          } catch (error) {
+            reject(error);
+          } finally {
+            textarea.remove();
+          }
+        });
+      }
+
+      loadRemoteEvent().then(function () {
+        renderLots();
+        restoreState();
+        setStatus('Оценочный лист загружен.', 'success');
+      }).catch(function (error) {
+        if (error && error.message && !/missing_/.test(error.message)) {
+          shellMessage('Оценочный лист недоступен', error.message || 'Не удалось загрузить оценочный лист.', '');
+        }
+      });
+
+      root.addEventListener('change', function () {
+        updateProgress();
+        writeState();
+        scheduleAutoSaveCompleteScores(500);
+      });
+
+      root.addEventListener('input', function (event) {
+        var lotTitleInput = event.target.closest('[data-lot-title-input]');
+        if (lotTitleInput) {
+          renameLot(lotTitleInput.getAttribute('data-lot-title-input'), lotTitleInput.value);
+          return;
+        }
+        if (event.target.closest('[name="cupping_title"]')) {
+          renderCuppingInfo();
+        }
+        var activeComment = event.target.closest('[data-active-comment]');
+        if (activeComment) syncActiveCommentValue(activeComment);
+        updateProgress();
+        writeState();
+        scheduleAutoSaveCompleteScores(900);
+      });
+
+      root.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+          closeGuideModal();
+          closeResultLotModal();
+          closeDescriptorModal();
+          return;
+        }
+        var descriptorGroup = event.target.closest('[data-score-descriptor-group-index]');
+        if (!descriptorGroup || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        setActiveDescriptorGroup(descriptorGroup.getAttribute('data-score-descriptor-group-index'));
+      });
+
+      root.addEventListener('click', function (event) {
+        if (event.target.closest('[data-guide-open]')) {
+          openGuideModal();
+          return;
+        }
+
+        if (event.target.closest('[data-guide-close]')) {
+          closeGuideModal();
+          return;
+        }
+
+        if (event.target === root.querySelector('[data-guide-modal]')) {
+          closeGuideModal();
+          return;
+        }
+
+        var resultLot = event.target.closest('[data-result-lot]');
+        if (resultLot) {
+          openResultLotModal(resultLot.getAttribute('data-result-lot'));
+          return;
+        }
+
+        if (event.target.closest('[data-result-lot-close]')) {
+          closeResultLotModal();
+          return;
+        }
+
+        if (event.target === root.querySelector('[data-result-lot-modal]')) {
+          closeResultLotModal();
+          return;
+        }
+
+        var descriptorRemove = event.target.closest('[data-descriptor-remove]');
+        if (descriptorRemove) {
+          removeDescriptorValue(
+            descriptorRemove.getAttribute('data-descriptor-lot'),
+            descriptorRemove.getAttribute('data-descriptor-field'),
+            descriptorRemove.getAttribute('data-descriptor-value')
+          );
+          return;
+        }
+
+        var descriptorOpen = event.target.closest('[data-descriptor-open]');
+        if (descriptorOpen) {
+          openDescriptorModal(
+            descriptorOpen.getAttribute('data-descriptor-lot'),
+            descriptorOpen.getAttribute('data-descriptor-field')
+          );
+          return;
+        }
+
+        if (event.target.closest('[data-descriptor-close]') || event.target.closest('[data-descriptor-done]')) {
+          closeDescriptorModal();
+          return;
+        }
+
+        if (event.target.closest('[data-descriptor-clear]') && descriptorModalState) {
+          clearDescriptorValues(descriptorModalState.lotId, descriptorModalState.field);
+          return;
+        }
+
+        if (event.target === root.querySelector('[data-descriptor-modal]')) {
+          closeDescriptorModal();
+          return;
+        }
+
+        var descriptorGroup = event.target.closest('[data-descriptor-group-index]');
+        if (descriptorGroup && descriptorModalState) {
+          descriptorModalState.groupIndex = Number(descriptorGroup.getAttribute('data-descriptor-group-index') || 0);
+          renderDescriptorModal();
+          return;
+        }
+
+        var descriptorValue = event.target.closest('[data-descriptor-value]');
+        if (descriptorValue) {
+          toggleDescriptorValue(descriptorValue.getAttribute('data-descriptor-value'));
+          return;
+        }
+
+        var criterionHelp = event.target.closest('[data-criterion-help]');
+        if (criterionHelp) {
+          var helpKey = criterionHelp.getAttribute('data-criterion-help');
+          activeHelpKey = activeHelpKey === helpKey ? null : helpKey;
+          renderScoreTask();
+          return;
+        }
+
+        var scoreCriterion = event.target.closest('[data-score-criterion]');
+        if (scoreCriterion) {
+          setActiveCriterion(scoreCriterion.getAttribute('data-score-criterion'));
+          return;
+        }
+
+        if (event.target.closest('[data-mobile-descriptor-toggle]')) {
+          mobileDescriptorsOpen = !mobileDescriptorsOpen;
+          renderScoreDescriptorPanel();
+          return;
+        }
+
+        var scoreDescriptorMode = event.target.closest('[data-score-descriptor-mode]');
+        if (scoreDescriptorMode) {
+          setActiveDescriptorMode(scoreDescriptorMode.getAttribute('data-score-descriptor-mode'));
+          return;
+        }
+
+        if (event.target.closest('[data-score-continue]')) {
+          continueUnfinished();
+          return;
+        }
+
+        if (event.target.closest('[data-lot-editor-toggle]')) {
+          toggleLotEditor();
+          return;
+        }
+
+        var nextScoreAction = event.target.closest('[data-score-next-action]');
+        if (nextScoreAction) {
+          var actionType = nextScoreAction.getAttribute('data-score-next-action');
+          var actionKey = nextScoreAction.getAttribute('data-score-next-key');
+          if (actionType === 'criterion') {
+            setActiveCriterion(actionKey);
+            scrollToScoreTask();
+          } else if (actionType === 'lot') {
+            setActiveLot(actionKey);
+            scrollToLotNav();
+          } else if (actionType === 'result') {
+            saveAndShowResult();
+          }
+          return;
+        }
+
+        var scoreDescriptorGroup = event.target.closest('[data-score-descriptor-group-index]');
+        if (scoreDescriptorGroup) {
+          setActiveDescriptorGroup(scoreDescriptorGroup.getAttribute('data-score-descriptor-group-index'));
+          return;
+        }
+
+        var scoreDescriptorRemove = event.target.closest('[data-score-descriptor-remove]');
+        if (scoreDescriptorRemove) {
+          removeWheelDescriptor(activeLotId, activeCriterionKey, scoreDescriptorRemove.getAttribute('data-score-descriptor-remove'));
+          return;
+        }
+
+        var scoreDescriptorValue = event.target.closest('[data-score-descriptor-value]');
+        if (scoreDescriptorValue) {
+          setWheelDescriptor(activeLotId, activeCriterionKey, scoreDescriptorValue.getAttribute('data-score-descriptor-value'));
+          return;
+        }
+
+        var wheelScore = event.target.closest('[data-wheel-score]');
+        if (wheelScore) {
+          setWheelScore(
+            wheelScore.getAttribute('data-wheel-score-lot'),
+            wheelScore.getAttribute('data-wheel-score-field'),
+            Number(wheelScore.getAttribute('data-wheel-score'))
+          );
+          return;
+        }
+
+        var tab = event.target.closest('[data-mbs-cs-tab]');
+        if (tab) {
+          var tabName = tab.getAttribute('data-mbs-cs-tab');
+          if (tabName === 'result') {
+            if (profileRequired) {
+              if (!validateProfile()) return;
+              saveProfileStep().then(function () {
+                saveAndShowResult();
+              }).catch(function () {});
+              return;
+            }
+            saveAndShowResult();
+            return;
+          }
+          if (tabName !== 'profile') {
+            if (!validateProfile()) return;
+            saveProfileStep().then(function () {
+              switchView(tabName);
+            }).catch(function () {});
+            return;
+          }
+          switchView(tabName);
+          return;
+        }
+
+        var next = event.target.closest('[data-mbs-cs-next]');
+        if (next) {
+          var nextView = next.getAttribute('data-mbs-cs-next');
+          if (nextView === 'scores') {
+            if (!validateProfile()) return;
+            saveProfileStep().then(function () {
+              switchView(nextView);
+            }).catch(function () {});
+            return;
+          }
+          switchView(nextView);
+          return;
+        }
+
+        var lotJump = event.target.closest('[data-lot-jump]');
+        if (lotJump) {
+          setActiveLot(lotJump.getAttribute('data-lot-jump'));
+          setStatus('', '');
+          return;
+        }
+
+        if (event.target.closest('[data-lot-add]')) {
+          addLot();
+          return;
+        }
+
+        var lotDelete = event.target.closest('[data-lot-delete]');
+        if (lotDelete) {
+          deleteLot(lotDelete.getAttribute('data-lot-delete'));
+          return;
+        }
+
+        if (event.target.closest('[data-mbs-cs-copy]')) {
+          writeState();
+          renderResult();
+          copyText(resultText()).then(function () {
+            setResultStatus('Результат скопирован. Его можно отправить организатору.', 'success');
+          }).catch(function () {
+            setResultStatus('Не удалось скопировать автоматически. Попробуйте выделить результат вручную.', 'error');
+          });
+          return;
+        }
+
+        if (event.target.closest('[data-mbs-cs-download-csv]')) {
+          writeState();
+          downloadResultCsv();
+          setResultStatus('CSV-файл скачан. Его можно открыть в таблице или отправить организатору.', 'success');
+          return;
+        }
+
+        if (event.target.closest('[data-mbs-cs-print]')) {
+          writeState();
+          renderResult();
+          var details = root.querySelector('.mbs-cs__details');
+          if (details) details.open = true;
+          window.print();
+          setResultStatus('Открылось окно печати. Там можно выбрать принтер или сохранить в PDF.', 'success');
+          return;
+        }
+
+        if (event.target.closest('[data-mbs-cs-reset]')) {
+          var resetWord = window.prompt('Будут удалены название каппинга, анкета, лоты, оценки, описания и заметки на этом устройстве. Чтобы подтвердить очистку, введите СБРОС.');
+          if (resetWord !== 'СБРОС') return;
+          localStorage.removeItem(storageKey);
+          lots = defaultLots.map(function (lot) { return Object.assign({}, lot); });
+          activeLotId = lots[0] ? lots[0].id : null;
+          activeCriterionKey = 'aroma';
+          activeDescriptorMode = 'taste';
+          activeDescriptorGroupIndex = 0;
+          activeDefectGroupIndex = 0;
+          mobileDescriptorsOpen = false;
+          lotEditorOpen = false;
+          activeHelpKey = null;
+          var scoreState = root.querySelector('[data-score-state]');
+          if (scoreState) scoreState.innerHTML = '';
+          renderScoreState();
+          root.querySelectorAll('input[type="text"], input[type="tel"], textarea').forEach(function (input) { input.value = ''; });
+          root.querySelectorAll('select').forEach(function (input) { input.selectedIndex = 0; });
+          root.querySelectorAll('input[type="radio"]').forEach(function (input) { input.checked = false; });
+          root.querySelectorAll('[data-descriptor-picked][data-descriptor-lot][data-descriptor-field]').forEach(function (container) {
+            container.setAttribute('data-descriptors', '[]');
+            container.innerHTML = '';
+          });
+          closeDescriptorModal();
+          activeCriterionKey = firstAvailableCriterion(activeLotId);
+          activeDescriptorMode = 'taste';
+          activeDescriptorGroupIndex = 0;
+          activeDefectGroupIndex = 0;
+          mobileDescriptorsOpen = false;
+          renderCuppingInfo();
+          renderAdminPanel();
+          renderScoreWorkspace();
+          updateProgress();
+          renderResult();
+          setResultStatus('Данные очищены.', 'success');
+        }
+      });
+    })();
+  </script>
+</section>
