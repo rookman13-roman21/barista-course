@@ -43,6 +43,42 @@
     </div>
   </section>
 
+  <section class="mbs-capping-page__section mbs-capping-page__section--soft" aria-labelledby="mbs-capping-gallery-title">
+    <div class="mbs-capping-page__wrap">
+      <div class="mbs-capping-page__header">
+        <div class="mbs-capping-page__eyebrow">Фото</div>
+        <h2 class="mbs-capping-page__title" id="mbs-capping-gallery-title">Как проходят каппинги</h2>
+        <p class="mbs-capping-page__subtitle">Фотоальбомы помогают увидеть атмосферу встреч: дегустационный стол, обсуждение вкуса, работа с ароматом и спокойный формат без экзамена.</p>
+      </div>
+      <div class="mbs-capping-page__gallery-box">
+        <div
+          class="mbs-capping-page__gallery-root"
+          id="mbs-capping-gallery-root"
+          data-gallery-index-url="https://api.barista-school.ru/api/gallery-index.json"
+          data-fallback-gallery-index-url="https://159-194-202-120.sslip.io/api-fallback/api/gallery-index.json"
+          data-gallery-album-url-template="https://api.barista-school.ru/api/gallery-albums/{id}.json"
+          data-fallback-gallery-album-url-template="https://159-194-202-120.sslip.io/api-fallback/api/gallery-albums/{id}.json"
+          data-cupping-results-url="https://api.barista-school.ru/api/public/cuppings/results"
+          data-fallback-cupping-results-url="https://159-194-202-120.sslip.io/api-fallback/public-cuppings-results.json"
+          data-gallery-url="https://api.barista-school.ru/api/gallery.json"
+          data-fallback-gallery-url="https://159-194-202-120.sslip.io/api-fallback/api/gallery.json"
+        >
+          <div class="mbs-capping-page__gallery-skeleton" aria-hidden="true">
+            <div class="mbs-capping-page__gallery-skeleton-card"></div>
+            <div class="mbs-capping-page__gallery-skeleton-card"></div>
+            <div class="mbs-capping-page__gallery-skeleton-card"></div>
+          </div>
+          <noscript>
+            <section>
+              <h2>Фотоальбомы каппингов — Московская школа бариста</h2>
+              <p>Для просмотра галереи включите JavaScript.</p>
+            </section>
+          </noscript>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="mbs-capping-page__section mbs-capping-page__section--soft" id="mbs-capping-faq" aria-labelledby="mbs-capping-faq-title">
     <div class="mbs-capping-page__wrap">
       <div class="mbs-capping-page__faq">

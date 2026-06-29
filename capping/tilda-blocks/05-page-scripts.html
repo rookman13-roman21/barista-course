@@ -186,6 +186,845 @@
         });
       });
 
+      function initCappingGallery() {
+        var root = document.getElementById('mbs-capping-gallery-root');
+        if (!root || root.getAttribute('data-mbs-gallery-init')) return;
+        root.setAttribute('data-mbs-gallery-init', '1');
+
+        var activeAlbumIndex = 0;
+        var activePhotoIndex = 0;
+        var activeModalTab = 'photos';
+        var deepLinkedAlbumId = '';
+        var deepLinkOpened = false;
+        var galleryItemsAll = [];
+        var galleryItems = [];
+        var galleryMeta = { albumsCount: 0, companiesCount: 0 };
+        var gallerySearchQuery = '';
+        var modal = null;
+        var albumCache = {};
+        var albumPreloadQueue = {};
+        var preloadedImages = {};
+        var cuppingResultsById = {};
+        var indexUrls = [
+          root.getAttribute('data-gallery-index-url'),
+          root.getAttribute('data-fallback-gallery-index-url')
+        ].filter(Boolean);
+        var legacyUrls = [
+          root.getAttribute('data-gallery-url'),
+          root.getAttribute('data-fallback-gallery-url')
+        ].filter(Boolean);
+        var albumTemplates = [
+          root.getAttribute('data-gallery-album-url-template'),
+          root.getAttribute('data-fallback-gallery-album-url-template')
+        ].filter(Boolean);
+        var resultsUrls = [
+          root.getAttribute('data-cupping-results-url'),
+          root.getAttribute('data-fallback-cupping-results-url')
+        ].filter(Boolean);
+
+        var defaultCover = 'https://static.tildacdn.com/tild6565-3661-4436-b664-623133326635/DSC02931_copy.jpg';
+
+        function esc(value) {
+          return String(value == null ? '' : value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        }
+
+        function safeUrl(value, fallback) {
+          try {
+            var url = new URL(String(value || ''), window.location.href);
+            if (url.protocol !== 'https:') return fallback || '';
+            return url.href;
+          } catch (error) {
+            return fallback || '';
+          }
+        }
+
+        function safeImageUrl(value, fallback) {
+          var href = safeUrl(value, fallback);
+          if (!href) return fallback || '';
+          try {
+            var url = new URL(href);
+            var host = url.hostname;
+            var allowed = host === 'lh3.googleusercontent.com' ||
+              host === 'static.tildacdn.com' ||
+              host === 'drive.google.com' ||
+              host === 'api.barista-school.ru';
+            return allowed ? url.href : fallback || '';
+          } catch (error) {
+            return fallback || '';
+          }
+        }
+
+        function safeFileId(value) {
+          return String(value || '').trim().replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '') || '';
+        }
+
+        function fetchJson(url) {
+          return fetch(url, { cache: 'no-store' }).then(function (response) {
+            if (!response.ok) throw new Error('gallery status ' + response.status);
+            return response.json();
+          });
+        }
+
+        function fetchJsonFromUrls(fetchUrls, fallback) {
+          function tryOne(index) {
+            var url = fetchUrls[index];
+            if (!url) return fallback ? fallback() : Promise.reject(new Error('gallery urls empty'));
+            return fetchJson(url).catch(function () {
+              return tryOne(index + 1);
+            });
+          }
+          return tryOne(0);
+        }
+
+        function imageUrl(rawUrl, size) {
+          if (!rawUrl) return '';
+          var url = String(rawUrl).trim();
+          if (url.indexOf('lh3.googleusercontent.com') !== -1) {
+            url = url.split('?')[0].replace(/=(?:s|w)\d+.*$/, '');
+            return url + '=w' + size;
+          }
+          if (url.indexOf('drive.google.com') !== -1) {
+            var fileMatch = url.match(/\/file\/d\/([^/]+)/);
+            var idMatch = url.match(/[?&]id=([^&]+)/);
+            var id = fileMatch && fileMatch[1] ? fileMatch[1] : idMatch && idMatch[1];
+            if (id) return 'https://drive.google.com/thumbnail?id=' + encodeURIComponent(id) + '&sz=w' + size;
+          }
+          return url;
+        }
+
+        function getTitle(item) {
+          return item.company || item.title || item.name || item.topic || 'Каппинг кофе';
+        }
+
+        function normalizeSearchText(value) {
+          return String(value || '').toLowerCase().replace(/ё/g, 'е').trim();
+        }
+
+        function pluralRu(number, one, few, many) {
+          var n = Math.abs(Number(number) || 0);
+          var mod10 = n % 10;
+          var mod100 = n % 100;
+          if (mod10 === 1 && mod100 !== 11) return one;
+          if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return few;
+          return many;
+        }
+
+        function getCover(item) {
+          var firstPhoto = item && item.photos && item.photos[0];
+          var fromPhotos = typeof firstPhoto === 'string' ? firstPhoto : firstPhoto && firstPhoto.url;
+          return safeImageUrl(imageUrl(fromPhotos || item.cover_url || item.cover || item.image_url || item.logo_url || '', 480), defaultCover);
+        }
+
+        function getPhotos(item) {
+          var raw = item && Array.isArray(item.photos) ? item.photos : [];
+          var photos = raw.map(function (photo) {
+            return safeImageUrl(imageUrl(typeof photo === 'string' ? photo : photo && photo.url, 1400));
+          }).filter(Boolean);
+          var cover = getCover(item);
+          if (!photos.length && cover) photos.push(cover);
+          return photos;
+        }
+
+        function getPhotosCount(item) {
+          if (!item) return 0;
+          if (typeof item.photos_count === 'number') return item.photos_count;
+          return Array.isArray(item.photos) ? item.photos.length : 0;
+        }
+
+        function hasRealPhotos(item) {
+          return getPhotosCount(item) > 0 || (item && Array.isArray(item.photos) && item.photos.length > 0);
+        }
+
+        function getCuppingResult(item) {
+          var id = getAlbumId(item);
+          return id && cuppingResultsById[id] ? cuppingResultsById[id] : null;
+        }
+
+        function formatScore(value) {
+          var number = Number(value);
+          if (!Number.isFinite(number)) return '—';
+          return String(Math.round(number * 100) / 100).replace('.', ',');
+        }
+
+        function scorePercent(value) {
+          var number = Number(value);
+          if (!Number.isFinite(number)) return 0;
+          return Math.max(0, Math.min(100, (number / 5) * 100));
+        }
+
+        function normalizeCuppingResults(data) {
+          var items = data && Array.isArray(data.items) ? data.items : [];
+          var map = {};
+          items.forEach(function (item) {
+            var id = safeFileId(item && item.id);
+            var lots = item && Array.isArray(item.lots) ? item.lots.filter(function (lot) {
+              return lot && lot.average != null;
+            }) : [];
+            if (!id || !lots.length) return;
+            map[id] = item;
+          });
+          return map;
+        }
+
+        function loadCuppingResults() {
+          if (!resultsUrls.length) return Promise.resolve({});
+          return fetchJsonFromUrls(resultsUrls)
+            .then(normalizeCuppingResults)
+            .catch(function () {
+              return {};
+            });
+        }
+
+        function normalizeItems(data) {
+          var items = data && Array.isArray(data.items) ? data.items : data;
+          if (!Array.isArray(items) || !items.length) return [];
+          var filtered = items.filter(function (item) {
+            return item && getTitle(item) && getCover(item);
+          });
+          filtered.sort(function (a, b) {
+            var da = String(a && a.date || '');
+            var db = String(b && b.date || '');
+            return da < db ? 1 : da > db ? -1 : 0;
+          });
+          return filtered;
+        }
+
+        function getCompaniesCount(data, items) {
+          if (data && Array.isArray(data.companies) && data.companies.length) {
+            return data.companies.filter(Boolean).length;
+          }
+          var seen = {};
+          items.forEach(function (item) {
+            var company = normalizeSearchText(item && item.company);
+            if (company) seen[company] = true;
+          });
+          return Object.keys(seen).length;
+        }
+
+        function getGalleryStats(data, items) {
+          return {
+            albumsCount: items.length,
+            companiesCount: getCompaniesCount(data, items)
+          };
+        }
+
+        function matchesGallerySearch(item, query) {
+          if (!query) return true;
+          var haystack = [
+            item && item.company,
+            item && item.title,
+            item && item.name,
+            item && item.topic
+          ].join(' ');
+          return normalizeSearchText(haystack).indexOf(query) !== -1;
+        }
+
+        function filterGalleryItems(query) {
+          var normalizedQuery = normalizeSearchText(query);
+          return galleryItemsAll.filter(function (item) {
+            return matchesGallerySearch(item, normalizedQuery);
+          });
+        }
+
+        function getAlbumId(item) {
+          return safeFileId(item && item.id);
+        }
+
+        function getAlbumUrls(item) {
+          var id = getAlbumId(item);
+          var urls = [];
+          if (!id) return urls;
+          if (item && item.album_url) {
+            var albumPath = String(item.album_url || '').trim();
+            if (/^gallery-albums\/[a-zA-Z0-9_-]+\.json$/.test(albumPath)) {
+              urls.push(safeUrl(new URL(albumPath, root.getAttribute('data-gallery-index-url') || window.location.href).href));
+            }
+          }
+          albumTemplates.forEach(function (template) {
+            urls.push(safeUrl(String(template).replace('{id}', encodeURIComponent(id))));
+          });
+          return urls.filter(Boolean);
+        }
+
+        function mergeAlbumItem(indexItem, albumData) {
+          var item = albumData && albumData.item ? albumData.item : albumData;
+          if (!item || typeof item !== 'object') return indexItem;
+          var merged = {};
+          Object.keys(indexItem || {}).forEach(function (key) { merged[key] = indexItem[key]; });
+          Object.keys(item).forEach(function (key) { merged[key] = item[key]; });
+          merged._albumLoaded = true;
+          return merged;
+        }
+
+        function loadAlbum(item) {
+          var id = getAlbumId(item);
+          if (!id || item._albumLoaded || Array.isArray(item.photos)) {
+            item._albumLoaded = true;
+            return Promise.resolve(item);
+          }
+          if (albumCache[id]) return Promise.resolve(albumCache[id]);
+          if (albumPreloadQueue[id]) return albumPreloadQueue[id];
+
+          var urls = getAlbumUrls(item);
+          if (!urls.length) return Promise.resolve(item);
+
+          albumPreloadQueue[id] = fetchJsonFromUrls(urls).then(function (albumData) {
+            var merged = mergeAlbumItem(item, albumData);
+            albumCache[id] = merged;
+            return merged;
+          }).catch(function () {
+            return item;
+          }).finally(function () {
+            delete albumPreloadQueue[id];
+          });
+          return albumPreloadQueue[id];
+        }
+
+        function preloadImage(url) {
+          url = safeImageUrl(url);
+          if (!url || preloadedImages[url]) return;
+          preloadedImages[url] = true;
+          var img = new Image();
+          img.decoding = 'async';
+          img.src = url;
+        }
+
+        function preloadCovers(items, start, count) {
+          items.slice(start, start + count).forEach(function (item) {
+            preloadImage(getCover(item));
+          });
+        }
+
+        function preloadAlbumPhotos(item, count) {
+          loadAlbum(item).then(function (loaded) {
+            getPhotos(loaded).slice(0, count).forEach(preloadImage);
+          });
+        }
+
+        function getGallerySectionUrl() {
+          var base = window.location.origin + window.location.pathname;
+          return base.replace(/\/$/, '') + '#mbs-capping-gallery-title';
+        }
+
+        function getAlbumShareUrl(item) {
+          var id = getAlbumId(item);
+          var url = new URL(window.location.href);
+          url.hash = '';
+          if (id) url.searchParams.set('album', id);
+          return url.href;
+        }
+
+        function getRequestedAlbumId() {
+          try {
+            return safeFileId(new URL(window.location.href).searchParams.get('album'));
+          } catch (error) {
+            return '';
+          }
+        }
+
+        function copyTextToClipboard(text) {
+          if (navigator.clipboard && window.isSecureContext) {
+            return navigator.clipboard.writeText(text);
+          }
+          return new Promise(function (resolve, reject) {
+            var input = document.createElement('textarea');
+            input.value = text;
+            input.setAttribute('readonly', '');
+            input.style.position = 'fixed';
+            input.style.top = '-9999px';
+            input.style.left = '-9999px';
+            document.body.appendChild(input);
+            input.select();
+            try {
+              document.execCommand('copy') ? resolve() : reject(new Error('copy_failed'));
+            } catch (error) {
+              reject(error);
+            } finally {
+              document.body.removeChild(input);
+            }
+          });
+        }
+
+        function renderGalleryToolbar() {
+          var albumsLabel = pluralRu(galleryMeta.albumsCount, 'каппинг', 'каппинга', 'каппингов');
+          var companiesLabel = pluralRu(galleryMeta.companiesCount, 'компания', 'компании', 'компаний');
+          return '<div class="mbs-capping-page__gallery-toolbar">' +
+            '<div class="mbs-capping-page__gallery-stats" aria-label="Статистика фотоальбомов">' +
+              '<span class="mbs-capping-page__gallery-stat">' + galleryMeta.albumsCount + ' ' + albumsLabel + '</span>' +
+              '<span class="mbs-capping-page__gallery-stat">' + galleryMeta.companiesCount + ' ' + companiesLabel + '</span>' +
+            '</div>' +
+            '<div class="mbs-capping-page__gallery-actions">' +
+              '<label class="mbs-capping-page__gallery-search">' +
+                '<span class="sr-only">Найти компанию</span>' +
+                '<input type="search" data-mbs-capping-gallery-search placeholder="Найти компанию" value="' + esc(gallerySearchQuery) + '" autocomplete="off">' +
+                '<svg class="mbs-capping-page__gallery-search-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m20 20-4.4-4.4M18 11a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>' +
+              '</label>' +
+              '<button class="mbs-capping-page__gallery-copy" type="button" data-mbs-capping-gallery-copy data-copy-label="Скопировано" aria-label="Скопировать ссылку на фотоальбомы">' +
+                '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.2-1.2a4 4 0 0 1 5.7 5.7l-1.2 1.2M13 17.5l-1.2 1.2a4 4 0 0 1-5.7-5.7l1.2-1.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+              '</button>' +
+            '</div>' +
+          '</div>';
+        }
+
+        function initGallerySearch() {
+          var input = root.querySelector('[data-mbs-capping-gallery-search]');
+          if (input) {
+            input.addEventListener('input', function () {
+              gallerySearchQuery = input.value || '';
+              renderGalleryList(filterGalleryItems(gallerySearchQuery));
+            });
+          }
+
+          var copyButton = root.querySelector('[data-mbs-capping-gallery-copy]');
+          if (!copyButton) return;
+          copyButton.addEventListener('click', function () {
+            copyTextToClipboard(getGallerySectionUrl()).then(function () {
+              copyButton.classList.add('is-copied');
+              window.setTimeout(function () {
+                copyButton.classList.remove('is-copied');
+              }, 1400);
+            });
+          });
+        }
+
+        function showSkeleton() {
+          root.innerHTML =
+            '<div class="mbs-capping-page__gallery-skeleton" aria-hidden="true">' +
+              '<div class="mbs-capping-page__gallery-skeleton-card"></div>' +
+              '<div class="mbs-capping-page__gallery-skeleton-card"></div>' +
+              '<div class="mbs-capping-page__gallery-skeleton-card"></div>' +
+            '</div>';
+        }
+
+        function renderGalleryList(items) {
+          galleryItems = items;
+          var listRoot = root.querySelector('[data-mbs-capping-gallery-list-root]');
+          if (!listRoot) return;
+          if (!items.length) {
+            listRoot.innerHTML = '<div class="mbs-capping-page__gallery-empty">' +
+              (gallerySearchQuery ? 'Компании не найдены.' : 'Фотоальбомы временно не загрузились.') +
+            '</div>';
+            return;
+          }
+
+          var arrowLeft = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          var arrowRight = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          var linkIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9.5 14.5 14.5 9.5M11 6.5l1.2-1.2a4 4 0 0 1 5.7 5.7l-1.2 1.2M13 17.5l-1.2 1.2a4 4 0 0 1-5.7-5.7l1.2-1.2" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          var html = '<div class="mbs-capping-page__gallery-scroll">' +
+            '<button class="mbs-capping-page__gallery-control mbs-capping-page__gallery-control--prev" type="button" aria-label="Предыдущие фотоальбомы">' + arrowLeft + '</button>' +
+            '<div class="mbs-capping-page__gallery-list" tabindex="0" aria-label="Фотоальбомы каппингов. Листайте влево и вправо.">';
+
+          items.forEach(function (item, index) {
+            var title = getTitle(item);
+            var step = item.date_label || item.date || '';
+            var photosCount = getPhotosCount(item);
+            var result = getCuppingResult(item);
+            var text = photosCount
+              ? photosCount + ' фото в альбоме'
+              : (result ? 'Итоги каппинга уже доступны, фото появятся позже' : 'Фото с каппинга в Московской школе бариста');
+            var cover = getCover(item);
+            var loading = index < 3 ? 'eager' : 'lazy';
+            var fetchPriority = index === 0 ? 'high' : 'auto';
+            html += '<article class="mbs-capping-page__gallery-card" role="button" tabindex="0" data-gallery-index="' + index + '" aria-label="Открыть фотоальбом: ' + esc(title) + '">' +
+              '<div class="mbs-capping-page__gallery-img-wrap">' +
+                '<img class="mbs-capping-page__gallery-img" src="' + esc(cover) + '" alt="Каппинг ' + esc(title) + '" loading="' + loading + '" fetchpriority="' + fetchPriority + '" decoding="async" width="480" height="365">' +
+                '<button class="mbs-capping-page__gallery-share" type="button" data-gallery-share-index="' + index + '" data-copy-label="Ссылка скопирована" aria-label="Скопировать ссылку на фотоальбом ' + esc(title) + '">' + linkIcon + '</button>' +
+              '</div>' +
+              '<div class="mbs-capping-page__gallery-body">' +
+                (step ? '<span class="mbs-capping-page__gallery-step">' + esc(step) + '</span>' : '') +
+                '<h3 class="mbs-capping-page__gallery-title">' + esc(title) + '</h3>' +
+                '<p class="mbs-capping-page__gallery-text">' + esc(text) + '</p>' +
+              '</div>' +
+            '</article>';
+          });
+
+          html += '</div>' +
+            '<button class="mbs-capping-page__gallery-control mbs-capping-page__gallery-control--next" type="button" aria-label="Следующие фотоальбомы">' + arrowRight + '</button>' +
+          '</div>';
+          listRoot.innerHTML = html;
+          initGalleryScroll(root);
+          initGalleryCards(root);
+          preloadCovers(items, 3, 6);
+          if (items[0]) preloadAlbumPhotos(items[0], 3);
+          openDeepLinkedAlbum();
+        }
+
+        function render(data) {
+          var items = normalizeItems(data);
+          galleryItemsAll = items;
+          gallerySearchQuery = '';
+          galleryMeta = getGalleryStats(data, items);
+          root.innerHTML = renderGalleryToolbar() + '<div data-mbs-capping-gallery-list-root></div>';
+          initGallerySearch();
+          renderGalleryList(items);
+        }
+
+        function initGalleryScroll(scope) {
+          var scroll = scope.querySelector('.mbs-capping-page__gallery-scroll');
+          var list = scope.querySelector('.mbs-capping-page__gallery-list');
+          var prev = scope.querySelector('.mbs-capping-page__gallery-control--prev');
+          var next = scope.querySelector('.mbs-capping-page__gallery-control--next');
+          if (!scroll || !list || !prev || !next) return;
+
+          function getStep() {
+            var card = list.querySelector('.mbs-capping-page__gallery-card');
+            if (!card) return Math.max(260, Math.round(list.clientWidth * 0.8));
+            var styles = window.getComputedStyle(list);
+            var gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+            return Math.round(card.getBoundingClientRect().width + gap);
+          }
+
+          function updateState() {
+            var max = Math.max(0, list.scrollWidth - list.clientWidth - 2);
+            var atStart = list.scrollLeft <= 2;
+            var atEnd = list.scrollLeft >= max;
+            prev.disabled = atStart;
+            next.disabled = atEnd || max <= 0;
+          }
+
+          prev.addEventListener('click', function () {
+            list.scrollBy({ left: -getStep(), behavior: 'smooth' });
+          });
+          next.addEventListener('click', function () {
+            list.scrollBy({ left: getStep(), behavior: 'smooth' });
+          });
+          list.addEventListener('scroll', updateState, { passive: true });
+          window.addEventListener('resize', updateState);
+          setTimeout(updateState, 0);
+        }
+
+        function initGalleryCards(scope) {
+          Array.prototype.forEach.call(scope.querySelectorAll('.mbs-capping-page__gallery-card'), function (card) {
+            var index = parseInt(card.getAttribute('data-gallery-index') || '0', 10);
+            card.addEventListener('click', function () {
+              openGalleryModal(index, 0);
+            });
+            card.addEventListener('keydown', function (event) {
+              if (event.key !== 'Enter' && event.key !== ' ') return;
+              event.preventDefault();
+              openGalleryModal(index, 0);
+            });
+            card.addEventListener('mouseenter', function () {
+              preloadAlbumPhotos(galleryItems[index], 3);
+            });
+            card.addEventListener('focus', function () {
+              preloadAlbumPhotos(galleryItems[index], 3);
+            });
+          });
+
+          Array.prototype.forEach.call(scope.querySelectorAll('[data-gallery-share-index]'), function (button) {
+            button.addEventListener('click', function (event) {
+              event.preventDefault();
+              event.stopPropagation();
+              var index = parseInt(button.getAttribute('data-gallery-share-index') || '0', 10);
+              copyTextToClipboard(getAlbumShareUrl(galleryItems[index] || {})).then(function () {
+                button.classList.add('is-copied');
+                window.setTimeout(function () {
+                  button.classList.remove('is-copied');
+                }, 1400);
+              });
+            });
+          });
+        }
+
+        function openDeepLinkedAlbum() {
+          if (deepLinkOpened) return;
+          var id = deepLinkedAlbumId || getRequestedAlbumId();
+          if (!id || !galleryItems.length) return;
+          var targetIndex = -1;
+          galleryItems.some(function (item, index) {
+            if (getAlbumId(item) !== id) return false;
+            targetIndex = index;
+            return true;
+          });
+          if (targetIndex < 0) return;
+          deepLinkOpened = true;
+          window.setTimeout(function () {
+            openGalleryModal(targetIndex, 0);
+          }, 80);
+        }
+
+        function ensureModal() {
+          if (modal) return modal;
+          modal = document.createElement('div');
+          modal.className = 'mbs-capping-gallery-modal';
+          modal.setAttribute('role', 'dialog');
+          modal.setAttribute('aria-modal', 'true');
+          modal.setAttribute('aria-label', 'Просмотр фотоальбома');
+          document.body.appendChild(modal);
+          modal.addEventListener('click', function (event) {
+            if (event.target === modal) closeGalleryModal();
+          });
+          return modal;
+        }
+
+        function openGalleryModal(albumIndex, photoIndex) {
+          activeAlbumIndex = Math.max(0, Math.min(albumIndex || 0, galleryItems.length - 1));
+          activePhotoIndex = Math.max(0, photoIndex || 0);
+          activeModalTab = getCuppingResult(galleryItems[activeAlbumIndex] || {}) ? 'results' : 'photos';
+          ensureModal().classList.add('is-open');
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+          document.addEventListener('keydown', galleryKeyHandler);
+
+          var item = galleryItems[activeAlbumIndex] || {};
+          if (!item._albumLoaded && !Array.isArray(item.photos)) {
+            renderGalleryModalLoading(item);
+            loadAlbum(item).then(function (loaded) {
+              galleryItems[activeAlbumIndex] = loaded;
+              activePhotoIndex = 0;
+              renderGalleryModal();
+              getPhotos(loaded).slice(1, 4).forEach(preloadImage);
+            });
+            return;
+          }
+          renderGalleryModal();
+        }
+
+        function closeGalleryModal() {
+          if (!modal) return;
+          modal.classList.remove('is-open');
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          document.removeEventListener('keydown', galleryKeyHandler);
+        }
+
+        function galleryKeyHandler(event) {
+          if (event.key === 'Escape') closeGalleryModal();
+          if (activeModalTab !== 'photos') return;
+          if (event.key === 'ArrowLeft') showGalleryPhoto(activePhotoIndex - 1);
+          if (event.key === 'ArrowRight') showGalleryPhoto(activePhotoIndex + 1);
+        }
+
+        function showGalleryPhoto(index) {
+          var photos = getPhotos(galleryItems[activeAlbumIndex] || {});
+          if (!photos.length) return;
+          activeModalTab = 'photos';
+          activePhotoIndex = Math.max(0, Math.min(index, photos.length - 1));
+          renderGalleryModal();
+          photos.slice(activePhotoIndex + 1, activePhotoIndex + 3).forEach(preloadImage);
+        }
+
+        function renderGalleryModalLoading(item) {
+          var title = getTitle(item);
+          var step = item.date_label || item.date || '';
+          var cover = getCover(item);
+          var closeIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+          ensureModal().innerHTML =
+            '<div class="mbs-capping-gallery-modal__panel">' +
+              '<button class="mbs-capping-gallery-modal__close" type="button" aria-label="Закрыть">' + closeIcon + '</button>' +
+              '<div class="mbs-capping-gallery-modal__stage">' +
+                '<img class="mbs-capping-gallery-modal__img" src="' + esc(cover) + '" alt="' + esc(title) + '">' +
+              '</div>' +
+              '<div class="mbs-capping-gallery-modal__body">' +
+                (step ? '<p class="mbs-capping-gallery-modal__step">' + esc(step) + '</p>' : '') +
+                '<h3 class="mbs-capping-gallery-modal__title">' + esc(title) + '</h3>' +
+                '<p class="mbs-capping-gallery-modal__text">Загружаем фотографии...</p>' +
+              '</div>' +
+            '</div>';
+          modal.querySelector('.mbs-capping-gallery-modal__close').addEventListener('click', closeGalleryModal);
+        }
+
+        function renderScoreStars(value) {
+          return '<span class="mbs-capping-gallery-modal__stars" aria-label="Оценка ' + esc(formatScore(value)) + ' из 5">' +
+            '<span class="mbs-capping-gallery-modal__stars-base" aria-hidden="true">★★★★★</span>' +
+            '<span class="mbs-capping-gallery-modal__stars-fill" aria-hidden="true" style="width:' + scorePercent(value) + '%">★★★★★</span>' +
+          '</span>';
+        }
+
+        function renderModalTabs(hasResult, hasPhotos) {
+          if (!hasResult) return '';
+          return '<div class="mbs-capping-gallery-modal__tabs" role="tablist" aria-label="Материалы каппинга">' +
+            '<button class="' + (activeModalTab === 'results' ? 'is-active' : '') + '" type="button" role="tab" aria-selected="' + (activeModalTab === 'results' ? 'true' : 'false') + '" data-gallery-modal-tab="results">Итоги</button>' +
+            '<button class="' + (activeModalTab === 'photos' ? 'is-active' : '') + '" type="button" role="tab" aria-selected="' + (activeModalTab === 'photos' ? 'true' : 'false') + '" data-gallery-modal-tab="photos"' + (hasPhotos ? '' : ' disabled') + '>' + (hasPhotos ? 'Фото' : 'Фото скоро') + '</button>' +
+          '</div>';
+        }
+
+        function renderResultCard(lot, index) {
+          return '<article class="mbs-capping-gallery-modal__result-card">' +
+            '<div class="mbs-capping-gallery-modal__result-main">' +
+              '<span class="mbs-capping-gallery-modal__result-place">' + (index + 1) + '</span>' +
+              '<div class="mbs-capping-gallery-modal__result-title">' +
+                '<strong>' + esc(lot.title || 'Лот') + '</strong>' +
+                (lot.meta ? '<small>' + esc(lot.meta) + '</small>' : '') +
+                '<em>' + esc(lot.responses || 0) + ' оценок</em>' +
+              '</div>' +
+            '</div>' +
+            '<div class="mbs-capping-gallery-modal__result-score">' +
+              renderScoreStars(lot.average) +
+              '<b>' + esc(formatScore(lot.average)) + '</b>' +
+            '</div>' +
+          '</article>';
+        }
+
+        function renderCuppingResults(result) {
+          if (!result || !Array.isArray(result.lots) || !result.lots.length) return '';
+          var stats = result.stats || {};
+          var lots = result.lots.slice().sort(function (a, b) {
+            return Number(b.average || 0) - Number(a.average || 0);
+          });
+          var statsHtml = (stats.participants || stats.completedSheets)
+            ? '<p class="mbs-capping-gallery-modal__results-summary">Участвовало: <strong>' + esc(stats.participants || 0) + '</strong> · Заполнено листов: <strong>' + esc(stats.completedSheets || 0) + '</strong></p>'
+            : '';
+          return '<section class="mbs-capping-gallery-modal__results" aria-label="Итоги каппинга">' +
+            '<div class="mbs-capping-gallery-modal__results-head">' +
+              '<h4>Итоги каппинга</h4>' +
+              statsHtml +
+            '</div>' +
+            '<div class="mbs-capping-gallery-modal__top">' +
+              '<h5>Лидеры каппинга</h5>' +
+              '<div class="mbs-capping-gallery-modal__top-list">' + lots.slice(0, 3).map(function (lot, index) {
+                return '<div class="mbs-capping-gallery-modal__top-row">' +
+                  '<span>' + (index + 1) + '</span>' +
+                  '<strong>' + esc(lot.title || 'Лот') + '</strong>' +
+                  '<b>' + esc(formatScore(lot.average)) + '</b>' +
+                '</div>';
+              }).join('') + '</div>' +
+            '</div>' +
+            '<h5 class="mbs-capping-gallery-modal__result-list-title">Все лоты</h5>' +
+            '<div class="mbs-capping-gallery-modal__result-list">' + lots.map(renderResultCard).join('') + '</div>' +
+          '</section>';
+        }
+
+        function renderGalleryModal() {
+          var item = galleryItems[activeAlbumIndex] || {};
+          var photos = getPhotos(item);
+          if (!photos.length) return;
+          activePhotoIndex = Math.max(0, Math.min(activePhotoIndex, photos.length - 1));
+
+          var title = getTitle(item);
+          var step = item.date_label || item.date || '';
+          var text = item.description || item.subtitle || '';
+          var result = getCuppingResult(item);
+          var realPhotos = hasRealPhotos(item);
+          if (result && activeModalTab !== 'photos') activeModalTab = 'results';
+          if (result && activeModalTab === 'photos' && !realPhotos) activeModalTab = 'results';
+          var showPhotoPanel = !result || activeModalTab === 'photos';
+          var showPhotoGallery = showPhotoPanel && (realPhotos || !result);
+          var closeIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+          var leftIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          var rightIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+          var thumbs = '';
+          if (showPhotoGallery && photos.length > 1) {
+            thumbs = '<div class="mbs-capping-gallery-modal__thumbs">' + photos.slice(0, 24).map(function (photo, index) {
+              var thumb = safeImageUrl(imageUrl(photo, 180), photo);
+              return '<button class="mbs-capping-gallery-modal__thumb' + (index === activePhotoIndex ? ' is-active' : '') + '" type="button" data-photo-index="' + index + '" aria-label="Показать фото ' + (index + 1) + '">' +
+                '<img src="' + esc(thumb) + '" alt="" loading="lazy">' +
+              '</button>';
+            }).join('') + '</div>';
+          }
+          var statusPill = result && !realPhotos
+            ? '<span class="mbs-capping-gallery-modal__status-pill">Фото скоро · Итоги готовы</span>'
+            : '';
+          var resultsHtml = renderCuppingResults(result);
+          var tabsHtml = renderModalTabs(Boolean(result), realPhotos);
+          var descriptionHtml = text ? '<p class="mbs-capping-gallery-modal__text">' + esc(text) + '</p>' : '';
+          var detailsHtml = (!result || activeModalTab === 'photos')
+            ? (descriptionHtml + thumbs)
+            : (descriptionHtml + resultsHtml);
+          var headerHtml = result && activeModalTab === 'results'
+            ? '<div class="mbs-capping-gallery-modal__header">' +
+                '<div class="mbs-capping-gallery-modal__meta-row">' +
+                  (step ? '<p class="mbs-capping-gallery-modal__step">' + esc(step) + '</p>' : '') +
+                  statusPill +
+                '</div>' +
+                '<h3 class="mbs-capping-gallery-modal__title">' + esc(title) + '</h3>' +
+                tabsHtml +
+              '</div>'
+            : '';
+          var footerHtml = result && activeModalTab === 'results'
+            ? '<div class="mbs-capping-gallery-modal__footer">' +
+                '<div class="mbs-capping-gallery-modal__cta">' +
+                  '<a href="#mbs-capping-schedule" data-gallery-modal-close>Посмотреть ближайшие даты</a>' +
+                '</div>' +
+              '</div>'
+            : '';
+          var panelClass = 'mbs-capping-gallery-modal__panel' + (result ? ' mbs-capping-gallery-modal__panel--has-results' : '') + (result && activeModalTab === 'results' ? ' mbs-capping-gallery-modal__panel--results-active' : '');
+
+          ensureModal().innerHTML =
+            '<div class="' + panelClass + '">' +
+              '<button class="mbs-capping-gallery-modal__close" type="button" aria-label="Закрыть">' + closeIcon + '</button>' +
+              headerHtml +
+              (showPhotoPanel ?
+              '<div class="mbs-capping-gallery-modal__stage">' +
+                (showPhotoGallery ? '<button class="mbs-capping-gallery-modal__nav mbs-capping-gallery-modal__nav--prev" type="button" aria-label="Предыдущее фото"' + (activePhotoIndex === 0 ? ' disabled' : '') + '>' + leftIcon + '</button>' : '') +
+                '<img class="mbs-capping-gallery-modal__img" src="' + esc(photos[activePhotoIndex]) + '" alt="' + esc(title) + '">' +
+                (showPhotoGallery ? '<button class="mbs-capping-gallery-modal__nav mbs-capping-gallery-modal__nav--next" type="button" aria-label="Следующее фото"' + (activePhotoIndex >= photos.length - 1 ? ' disabled' : '') + '>' + rightIcon + '</button>' : '') +
+                (showPhotoGallery ? '<div class="mbs-capping-gallery-modal__counter">' + (activePhotoIndex + 1) + ' / ' + photos.length + '</div>' : '') +
+              '</div>' : '') +
+              '<div class="mbs-capping-gallery-modal__body">' +
+                (result && activeModalTab === 'results' ? '' :
+                  '<div class="mbs-capping-gallery-modal__meta-row">' +
+                    (step ? '<p class="mbs-capping-gallery-modal__step">' + esc(step) + '</p>' : '') +
+                    statusPill +
+                  '</div>' +
+                  '<h3 class="mbs-capping-gallery-modal__title">' + esc(title) + '</h3>' +
+                  tabsHtml
+                ) +
+                detailsHtml +
+              '</div>' +
+              footerHtml +
+            '</div>';
+
+          modal.querySelector('.mbs-capping-gallery-modal__close').addEventListener('click', closeGalleryModal);
+          var prevButton = modal.querySelector('.mbs-capping-gallery-modal__nav--prev');
+          var nextButton = modal.querySelector('.mbs-capping-gallery-modal__nav--next');
+          if (prevButton) {
+            prevButton.addEventListener('click', function () {
+              showGalleryPhoto(activePhotoIndex - 1);
+            });
+          }
+          if (nextButton) {
+            nextButton.addEventListener('click', function () {
+              showGalleryPhoto(activePhotoIndex + 1);
+            });
+          }
+          Array.prototype.forEach.call(modal.querySelectorAll('[data-gallery-modal-tab]'), function (button) {
+            button.addEventListener('click', function () {
+              if (button.disabled) return;
+              activeModalTab = button.getAttribute('data-gallery-modal-tab') || 'results';
+              renderGalleryModal();
+            });
+          });
+          Array.prototype.forEach.call(modal.querySelectorAll('[data-gallery-modal-close]'), function (link) {
+            link.addEventListener('click', closeGalleryModal);
+          });
+          Array.prototype.forEach.call(modal.querySelectorAll('.mbs-capping-gallery-modal__thumb'), function (thumb) {
+            thumb.addEventListener('click', function () {
+              showGalleryPhoto(parseInt(thumb.getAttribute('data-photo-index') || '0', 10));
+            });
+          });
+        }
+
+        function loadGallery() {
+          deepLinkedAlbumId = getRequestedAlbumId();
+          var galleryPromise = fetchJsonFromUrls(indexUrls, function () {
+            return fetchJsonFromUrls(legacyUrls);
+          });
+          var resultsPromise = loadCuppingResults();
+          galleryPromise.then(function (data) {
+            render(data);
+            resultsPromise.then(function (results) {
+              cuppingResultsById = results || {};
+              renderGalleryList(filterGalleryItems(gallerySearchQuery));
+              if (modal && modal.classList.contains('is-open')) renderGalleryModal();
+            });
+          }).catch(function () {
+            render({ items: [] });
+          });
+        }
+
+        showSkeleton();
+        loadGallery();
+      }
+
+      initCappingGallery();
+
       var overlay = document.querySelector('[data-mbs-capping-contact-overlay]');
       var openers = queryAll('[data-mbs-capping-contact]');
       var closeBtn = overlay ? overlay.querySelector('[data-mbs-capping-contact-close]') : null;
