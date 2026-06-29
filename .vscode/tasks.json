@@ -2,9 +2,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "deploy-barista-prod",
+			"label": "git-status",
 			"type": "shell",
-			"command": "bash /tmp/deploy-barista.sh"
+			"command": "git status --short --branch"
 		}
 	]
 }
