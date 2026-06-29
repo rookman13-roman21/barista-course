@@ -1,0 +1,71 @@
+<!--
+  БЛОК 09 — CTA (Финальный призыв к действию)
+  Страница: О школе (baristaschool.ru/company)
+  Содержимое: большая карточка на светло-зелёном фоне (#E7F2E3),
+  заголовок «Выберите свой путь в кофейный мир», два столбца —
+  слева текст, справа кнопки: красная «Смотреть события» + зелёный аутлайн «Для бизнеса».
+  Фон внешний: белый.
+  Зависимости: Mulish (подключён ниже). Phosphor Icons не нужен.
+-->
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<section class="mbs-cta">
+  <style>
+    .mbs-cta * { box-sizing: border-box; }
+    .mbs-cta { background: #FFFFFF; padding: 90px 20px 106px; font-family: 'Mulish', sans-serif; }
+    .mbs-cta__outer { max-width: 1100px; margin: 0 auto; }
+    .mbs-cta__card {
+      border-radius: 28px; padding: 72px 80px;
+      background:
+        radial-gradient(circle at 10% 90%, rgba(255,255,255,0.5) 0, rgba(255,255,255,0.5) 22%, transparent 23%),
+        radial-gradient(circle at 90% 10%, rgba(255,255,255,0.35) 0, rgba(255,255,255,0.35) 18%, transparent 19%),
+        #E7F2E3;
+      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+    }
+    .mbs-cta__label {
+      display: inline-flex; align-items: center; margin-bottom: 16px;
+      padding: 7px 16px; border-radius: 999px;
+      background: rgba(65,112,51,0.12); color: #417033; font-size: 13px; font-weight: 900; line-height: 1;
+    }
+    .mbs-cta__h2 { font-size: 38px; font-weight: 900; line-height: 1.05; letter-spacing: -0.04em; color: #1F1F1F; margin: 0 0 12px; }
+    .mbs-cta__sub { font-size: 17px; font-weight: 500; line-height: 1.5; color: #555555; margin: 0; max-width: 480px; }
+    .mbs-cta__actions { display: flex; flex-direction: column; align-items: center; gap: 14px; flex-shrink: 0; }
+    .mbs-cta__btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 58px; padding: 0 36px; border-radius: 999px;
+      background: #CC2841; color: #fff !important; text-decoration: none !important;
+      font-family: 'Mulish', sans-serif; font-size: 17px; font-weight: 900; line-height: 1;
+      transition: background 0.2s, transform 0.2s; white-space: nowrap;
+    }
+    .mbs-cta__btn-primary:hover { background: #D83D54; transform: translateY(-1px); }
+    .mbs-cta__btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-height: 52px; padding: 0 28px; border-radius: 999px;
+      background: transparent; border: 2px solid rgba(65,112,51,0.35);
+      color: #417033 !important; text-decoration: none !important;
+      font-family: 'Mulish', sans-serif; font-size: 15px; font-weight: 800; line-height: 1;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s; white-space: nowrap;
+    }
+    .mbs-cta__btn-secondary:hover { border-color: #417033; background: rgba(65,112,51,0.08); transform: translateY(-1px); }
+    @media (max-width: 900px) { .mbs-cta__card { grid-template-columns: 1fr; gap: 32px; } .mbs-cta__actions { align-items: flex-start; } }
+    @media (max-width: 820px) {
+      .mbs-cta { padding: 64px 14px 76px; }
+      .mbs-cta__card { padding: 40px 24px; }
+      .mbs-cta__h2 { font-size: 28px; }
+      .mbs-cta__btn-primary, .mbs-cta__btn-secondary { width: 100%; }
+    }
+  </style>
+  <div class="mbs-cta__outer">
+    <div class="mbs-cta__card">
+      <div>
+        <div class="mbs-cta__label">Готовы начать?</div>
+        <h2 class="mbs-cta__h2">Выберите свой путь<br>в кофейный мир</h2>
+        <p class="mbs-cta__sub">Курсы для себя, мастер-классы для удовольствия или бизнес-услуги для вашего заведения — мы работаем с любыми задачами.</p>
+      </div>
+      <div class="mbs-cta__actions">
+        <a href="https://baristaschool.ru/#events" class="mbs-cta__btn-primary">Смотреть события школы →</a>
+        <a href="#consalt" class="mbs-cta__btn-secondary">Обсудить задачу для бизнеса</a>
+      </div>
+    </div>
+  </div>
+</section>

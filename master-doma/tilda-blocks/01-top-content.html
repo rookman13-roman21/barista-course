@@ -1,0 +1,493 @@
+<div class="mbs-master-doma-page" data-mbs-master-doma-page>
+  <style>
+    .mbs-master-doma-page__hero {
+      padding: 48px 20px 90px;
+      background: #FFFFFF;
+    }
+
+    .mbs-master-doma-page__hero-card {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 72px 76px;
+      border: 8px solid #E7F2E3;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 17% 12%, rgba(231,242,227,.78) 0, rgba(231,242,227,.78) 18%, transparent 19%),
+        radial-gradient(circle at 88% 84%, rgba(231,242,227,.66) 0, rgba(231,242,227,.66) 16%, transparent 17%),
+        radial-gradient(circle at 58% 56%, rgba(231,242,227,.32) 0, rgba(231,242,227,.32) 13%, transparent 14%),
+        #F7F7F7;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 480px;
+      gap: 0 56px;
+      align-items: start;
+    }
+
+    .mbs-master-doma-page__hero-top {
+      grid-column: 1;
+    }
+
+    .mbs-master-doma-page__hero-media {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .mbs-master-doma-page__hero-bottom {
+      grid-column: 1;
+      margin-top: 32px;
+    }
+
+    .mbs-master-doma-page__hero-label {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(231,242,227,.95);
+      color: #417033;
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .mbs-master-doma-page__hero-title {
+      max-width: 660px;
+      margin: 0;
+      color: #1F1F1F;
+      font-size: 76px;
+      line-height: .94;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .mbs-master-doma-page__hero-lead {
+      max-width: 620px;
+      margin: 24px 0 0;
+      color: #1F1F1F;
+      font-size: 24px;
+      line-height: 1.28;
+      font-weight: 600;
+    }
+
+    .mbs-master-doma-page__hero-lead--mobile {
+      display: none;
+    }
+
+    .mbs-master-doma-page__hero-img {
+      height: 600px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #E7F2E3;
+    }
+
+    .mbs-master-doma-page__hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+
+    .mbs-master-doma-page__hero-badges {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 660px;
+      margin-bottom: 26px;
+    }
+
+    .mbs-master-doma-page__hero-badge {
+      min-height: 88px;
+      padding: 16px;
+      border-radius: 18px;
+      background: #FFFFFF;
+      border: 1px solid rgba(31,31,31,.08);
+    }
+
+    .mbs-master-doma-page__hero-badge strong {
+      display: block;
+      color: #1F1F1F;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .mbs-master-doma-page__hero-badge span {
+      display: block;
+      margin-top: 8px;
+      color: #555555;
+      font-size: 13px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .mbs-master-doma-page__hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .mbs-master-doma-page__hero-note {
+      margin: 16px 0 0;
+      color: #555555;
+      font-size: 13px;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .mbs-master-doma-page__intro-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .mbs-master-doma-page__intro-panel {
+      padding: 32px;
+      border-radius: 24px;
+      background: #FFFFFF;
+      border: 1px solid rgba(31,31,31,.08);
+    }
+
+    .mbs-master-doma-page__intro-panel--accent {
+      background: #E7F2E3;
+      border: 2px solid #B6D8AB;
+    }
+
+    .mbs-master-doma-page__intro-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mbs-master-doma-page__intro-list li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 12px;
+      align-items: start;
+      color: #1F1F1F;
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .mbs-master-doma-page__intro-list span {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #FFFFFF;
+      color: #417033;
+      font-weight: 900;
+    }
+
+    .mbs-master-doma-page__program-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mbs-master-doma-page__program-item {
+      padding: 22px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      border: 1px solid rgba(31,31,31,.08);
+    }
+
+    .mbs-master-doma-page__program-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 14px;
+      border-radius: 11px;
+      background: #E7F2E3;
+      color: #417033;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .mbs-master-doma-page__program-title {
+      margin: 0 0 8px;
+      color: #1F1F1F;
+      font-size: 17px;
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .mbs-master-doma-page__program-text {
+      margin: 0;
+      color: #555555;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .mbs-master-doma-page__schedule-head {
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .mbs-master-doma-page__schedule-note {
+      margin-top: 12px;
+      color: #417033;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    @media (max-width: 1180px) {
+      .mbs-master-doma-page__hero-card {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 56px;
+      }
+
+      .mbs-master-doma-page__hero-media,
+      .mbs-master-doma-page__hero-top,
+      .mbs-master-doma-page__hero-bottom {
+        grid-column: 1;
+        grid-row: auto;
+      }
+
+      .mbs-master-doma-page__hero-title {
+        font-size: 62px;
+      }
+
+      .mbs-master-doma-page__hero-img {
+        height: 460px;
+      }
+
+      .mbs-master-doma-page__program-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 820px) {
+      .mbs-master-doma-page__hero {
+        padding: 14px 12px 64px;
+      }
+
+      .mbs-master-doma-page__hero-card {
+        padding: 18px 16px 20px;
+        border-width: 6px;
+        border-radius: 24px;
+      }
+
+      .mbs-master-doma-page__hero-title {
+        font-size: 36px;
+        line-height: .98;
+      }
+
+      .mbs-master-doma-page__hero-lead {
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .mbs-master-doma-page__hero-lead--desktop {
+        display: none;
+      }
+
+      .mbs-master-doma-page__hero-lead--mobile {
+        display: block;
+        margin-top: 0;
+      }
+
+      .mbs-master-doma-page__hero-img {
+        height: 267px;
+      }
+
+      .mbs-master-doma-page__hero-badges {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 18px;
+      }
+
+      .mbs-master-doma-page__hero-badge {
+        min-height: 78px;
+        padding: 12px 8px;
+        text-align: center;
+      }
+
+      .mbs-master-doma-page__hero-badge strong {
+        font-size: 18px;
+      }
+
+      .mbs-master-doma-page__hero-badge span {
+        font-size: 11px;
+      }
+
+      .mbs-master-doma-page__hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-master-doma-page__intro-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-master-doma-page__intro-panel {
+        padding: 24px;
+      }
+
+      .mbs-master-doma-page__program-grid {
+        display: flex;
+        gap: 14px;
+        margin-right: -14px;
+        padding: 0 14px 6px 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .mbs-master-doma-page__program-grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mbs-master-doma-page__program-item {
+        flex: 0 0 min(82vw, 320px);
+        scroll-snap-align: start;
+      }
+
+    }
+
+    @media (max-width: 420px) {
+      .mbs-master-doma-page__hero-title {
+        font-size: 34px;
+      }
+
+      .mbs-master-doma-page__hero-img {
+        height: 300px;
+      }
+    }
+  </style>
+
+  <section class="mbs-master-doma-page__hero" aria-labelledby="mbs-master-doma-hero-title">
+    <div class="mbs-master-doma-page__hero-card">
+      <div class="mbs-master-doma-page__hero-top">
+        <span class="mbs-master-doma-page__hero-label">Мастер-класс для любителей кофе</span>
+        <h1 class="mbs-master-doma-page__hero-title" id="mbs-master-doma-hero-title">Домашнее заваривание кофе</h1>
+        <p class="mbs-master-doma-page__hero-lead mbs-master-doma-page__hero-lead--desktop">За 3 часа разберёте способы заваривания, воду, помол и выбор кофе. Будет практика, дегустация и обратная связь от тренера.</p>
+      </div>
+
+      <div class="mbs-master-doma-page__hero-media">
+        <div class="mbs-master-doma-page__hero-img">
+          <img src="https://static.tildacdn.com/tild3039-3832-4132-a637-633030376536/Asset_245.jpg" alt="Мастер-класс «Домашнее заваривание» в Московской школе бариста" loading="eager">
+        </div>
+      </div>
+
+      <p class="mbs-master-doma-page__hero-lead mbs-master-doma-page__hero-lead--mobile">За 3 часа разберёте способы заваривания, воду, помол и выбор кофе. Будет практика, дегустация и обратная связь от тренера.</p>
+
+      <div class="mbs-master-doma-page__hero-bottom">
+        <div class="mbs-master-doma-page__hero-badges" aria-label="Ключевые параметры мастер-класса">
+          <div class="mbs-master-doma-page__hero-badge"><strong>3 часа</strong><span>живой практики</span></div>
+          <div class="mbs-master-doma-page__hero-badge"><strong>до 8</strong><span>человек в группе</span></div>
+          <div class="mbs-master-doma-page__hero-badge"><strong>5 000 ₽</strong><span>за участника</span></div>
+        </div>
+        <div class="mbs-master-doma-page__hero-actions">
+          <a class="mbs-master-doma-page__btn" href="#mbs-master-doma-schedule">Выбрать дату</a>
+          <a class="mbs-master-doma-page__btn-secondary" href="#consalt">Оставить заявку</a>
+        </div>
+        <p class="mbs-master-doma-page__hero-note">Выберите дату в онлайн-расписании. Если дата не подходит, оставьте заявку - подскажем ближайшие варианты.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-master-doma-page__section mbs-master-doma-page__section--soft" aria-labelledby="mbs-master-doma-for-title">
+    <div class="mbs-master-doma-page__wrap">
+      <div class="mbs-master-doma-page__header">
+        <span class="mbs-master-doma-page__eyebrow">Для кого</span>
+        <h2 class="mbs-master-doma-page__title" id="mbs-master-doma-for-title">Для тех, кто хочет варить дома вкуснее</h2>
+        <p class="mbs-master-doma-page__subtitle">Мастер-класс помогает быстро собрать систему: что влияет на вкус, какие ошибки чаще всего портят чашку и как повторять удачную чашку дома.</p>
+      </div>
+      <div class="mbs-master-doma-page__cards">
+        <article class="mbs-master-doma-page__card">
+          <div class="mbs-master-doma-page__card-icon" aria-hidden="true">1</div>
+          <h3 class="mbs-master-doma-page__card-title">Готовите кофе дома</h3>
+          <p class="mbs-master-doma-page__card-text">Хотите разобраться в воронке, аэропрессе, френч-прессе, гейзере или джезве без хаотичных советов из интернета.</p>
+        </article>
+        <article class="mbs-master-doma-page__card">
+          <div class="mbs-master-doma-page__card-icon" aria-hidden="true">2</div>
+          <h3 class="mbs-master-doma-page__card-title">Выбираете оборудование</h3>
+          <p class="mbs-master-doma-page__card-text">Поймёте, где важна кофемолка, когда нужны весы, как выбрать воду и на чём можно не переплачивать.</p>
+        </article>
+        <article class="mbs-master-doma-page__card mbs-master-doma-page__card--accent">
+          <div class="mbs-master-doma-page__card-icon" aria-hidden="true">3</div>
+          <h3 class="mbs-master-doma-page__card-title">Любите дегустации</h3>
+          <p class="mbs-master-doma-page__card-text">Научитесь сравнивать чашки, замечать аромат, кислотность, сладость и тело кофе понятным языком.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-master-doma-page__section mbs-master-doma-page__section--soft" aria-labelledby="mbs-master-doma-program-title">
+    <div class="mbs-master-doma-page__wrap">
+      <div class="mbs-master-doma-page__header">
+        <span class="mbs-master-doma-page__eyebrow">Программа</span>
+        <h2 class="mbs-master-doma-page__title" id="mbs-master-doma-program-title">Что разберём за 3 часа</h2>
+        <p class="mbs-master-doma-page__subtitle">Программа построена вокруг практики: пробуем, сравниваем и сразу обсуждаем, почему чашка получилась именно такой.</p>
+      </div>
+      <div class="mbs-master-doma-page__program-grid">
+        <article class="mbs-master-doma-page__program-item">
+          <span class="mbs-master-doma-page__program-num">01</span>
+          <h3 class="mbs-master-doma-page__program-title">Способы заваривания</h3>
+          <p class="mbs-master-doma-page__program-text">От френч-пресса до воронки: чем отличаются методы и какой вкус они дают.</p>
+        </article>
+        <article class="mbs-master-doma-page__program-item">
+          <span class="mbs-master-doma-page__program-num">02</span>
+          <h3 class="mbs-master-doma-page__program-title">Вода и температура</h3>
+          <p class="mbs-master-doma-page__program-text">Почему вода меняет чашку и как подобрать подходящий вариант для дома.</p>
+        </article>
+        <article class="mbs-master-doma-page__program-item">
+          <span class="mbs-master-doma-page__program-num">03</span>
+          <h3 class="mbs-master-doma-page__program-title">Помол и кофемолка</h3>
+          <p class="mbs-master-doma-page__program-text">Как помол влияет на вкус и на что смотреть при выборе кофемолки.</p>
+        </article>
+        <article class="mbs-master-doma-page__program-item">
+          <span class="mbs-master-doma-page__program-num">04</span>
+          <h3 class="mbs-master-doma-page__program-title">Выбор кофе</h3>
+          <p class="mbs-master-doma-page__program-text">Как читать пачку, искать обжарщика и выбирать кофе под свой способ приготовления.</p>
+        </article>
+        <article class="mbs-master-doma-page__program-item">
+          <span class="mbs-master-doma-page__program-num">05</span>
+          <h3 class="mbs-master-doma-page__program-title">Ошибки рецепта</h3>
+          <p class="mbs-master-doma-page__program-text">Разберём горечь, водянистость, резкую кислотность и способы быстро исправить чашку.</p>
+        </article>
+        <article class="mbs-master-doma-page__program-item">
+          <span class="mbs-master-doma-page__program-num">06</span>
+          <h3 class="mbs-master-doma-page__program-title">Дегустация</h3>
+          <p class="mbs-master-doma-page__program-text">Сравните несколько чашек и потренируете кофейную осознанность без сложной терминологии.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-master-doma-page__section mbs-master-doma-page__section--green" id="mbs-master-doma-schedule" aria-labelledby="mbs-master-doma-schedule-title">
+    <div class="mbs-master-doma-page__wrap">
+      <div class="mbs-master-doma-page__schedule-head">
+        <div>
+          <span class="mbs-master-doma-page__eyebrow">Онлайн-запись</span>
+          <h2 class="mbs-master-doma-page__title" id="mbs-master-doma-schedule-title">Выберите удобную дату</h2>
+          <p class="mbs-master-doma-page__subtitle">В карточке показаны дата, время, тренер, стоимость и свободные места.</p>
+        </div>
+        <div class="mbs-master-doma-page__schedule-note">Если расписание не загрузилось, обновите страницу или оставьте заявку.</div>
+      </div>
+      <div id="mbs-homebrew-widget" class="mbs-hb"
+           data-api-url="https://api.barista-school.ru/api/homebrew.json"
+           data-fallback-api-url="https://159-194-202-120.sslip.io/api-fallback/api/homebrew.json">
+        <noscript>
+          <section class="mbs-hb-noscript">
+            <h2>Расписание мастер-класса «Домашнее заваривание» - Московская школа бариста</h2>
+            <p>Мастер-класс по домашнему завариванию кофе в Москве. Для просмотра расписания включите JavaScript.</p>
+            <p><a href="#consalt">Оставить заявку</a></p>
+          </section>
+        </noscript>
+      </div>
+    </div>
+  </section>
+</div>

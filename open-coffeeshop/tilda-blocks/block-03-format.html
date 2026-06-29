@@ -1,0 +1,82 @@
+<!-- ============================================================
+     БЛОК 03 — ФОРМАТ КУРСА
+     Страница: Курс по открытию кофейни с нуля
+     ──────────────────────────────────────────
+     Содержание: 6 карточек формата обучения — индивидуально,
+                 онлайн Zoom, гибкое расписание, ДЗ, поддержка,
+                 9 часов практики.
+     Фон: #F5F5F5
+     Якорь: id="format" — цель кнопки «Смотреть программу» в hero
+     Классы: .mbs-format, .mbs-format__card
+     ============================================================ -->
+<section class="mbs-format" id="format">
+  <style>
+    .mbs-format { background: #F5F5F5; padding: 56px 20px; font-family: 'Mulish', sans-serif; }
+    .mbs-format__wrap { max-width: 1100px; margin: 0 auto; }
+    .mbs-format__header { max-width: 640px; margin-bottom: 28px; }
+    .mbs-format__label {
+      display: inline-flex; align-items: center; margin-bottom: 10px;
+      padding: 7px 16px; border-radius: 999px;
+      background: rgba(231,242,227,0.95); color: #417033; font-size: 13px; font-weight: 900; line-height: 1;
+    }
+    .mbs-format__h2 { font-size: 34px; font-weight: 900; line-height: 1.05; letter-spacing: -0.04em; color: #1F1F1F; margin: 0 0 10px; }
+    .mbs-format__sub { font-size: 15px; font-weight: 500; color: #555555; line-height: 1.5; margin: 0; }
+    .mbs-format__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .mbs-format__card {
+      background: #fff; border-radius: 16px; padding: 22px 20px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .mbs-format__card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+    .mbs-format__icon { width: 40px; height: 40px; border-radius: 12px; background: #E7F2E3; color: #417033; display: grid; place-items: center; margin-bottom: 14px; }
+    .mbs-format__icon i { font-size: 20px; line-height: 1; }
+    .mbs-format__card-title { font-size: 16px; font-weight: 800; letter-spacing: -0.02em; color: #1F1F1F; margin: 0 0 6px; line-height: 1.2; }
+    .mbs-format__card-text { font-size: 13px; font-weight: 500; color: #555555; line-height: 1.55; margin: 0; }
+    @media (max-width: 820px) {
+      .mbs-format { padding: 48px 14px; }
+      .mbs-format__h2 { font-size: 26px; }
+      .mbs-format__grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 821px) and (max-width: 960px) {
+      .mbs-format__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+  <div class="mbs-format__wrap">
+    <div class="mbs-format__header">
+      <div class="mbs-format__label">Как устроен курс</div>
+      <h2 class="mbs-format__h2">Индивидуальное обучение<br>в удобное время</h2>
+      <p class="mbs-format__sub">Онлайн-занятия один на один с экспертом: 6 сессий по 1.5 часа в Zoom, домашние задания и поддержка до открытия.</p>
+    </div>
+    <div class="mbs-format__grid">
+      <div class="mbs-format__card">
+        <div class="mbs-format__icon"><i class="ph ph-user-circle"></i></div>
+        <h3 class="mbs-format__card-title">Индивидуально</h3>
+        <p class="mbs-format__card-text">Работаете напрямую с экспертом: программа адаптируется под вашу концепцию, бюджет и задачи.</p>
+      </div>
+      <div class="mbs-format__card">
+        <div class="mbs-format__icon"><i class="ph ph-video-camera"></i></div>
+        <h3 class="mbs-format__card-title">Онлайн в Zoom</h3>
+        <p class="mbs-format__card-text">Занятия из любой точки мира: из дома, офиса или в путешествии — нужен только ноутбук и интернет.</p>
+      </div>
+      <div class="mbs-format__card">
+        <div class="mbs-format__icon"><i class="ph ph-calendar-blank"></i></div>
+        <h3 class="mbs-format__card-title">Гибкое расписание</h3>
+        <p class="mbs-format__card-text">Выбираете удобное время для каждого занятия. 6 сессий по 1.5 часа — всего 9 часов обучения.</p>
+      </div>
+      <div class="mbs-format__card">
+        <div class="mbs-format__icon"><i class="ph ph-notepad"></i></div>
+        <h3 class="mbs-format__card-title">Домашние задания</h3>
+        <p class="mbs-format__card-text">После каждого занятия получаете конкретные задания: анализ рынка, расчёты, поиск помещения.</p>
+      </div>
+      <div class="mbs-format__card">
+        <div class="mbs-format__icon"><i class="ph ph-chat-circle-dots"></i></div>
+        <h3 class="mbs-format__card-title">Поддержка эксперта</h3>
+        <p class="mbs-format__card-text">Отвечаем на вопросы между занятиями в чате. Сопровождение продолжается до открытия вашего заведения.</p>
+      </div>
+      <div class="mbs-format__card">
+        <div class="mbs-format__icon"><i class="ph ph-chart-line-up"></i></div>
+        <h3 class="mbs-format__card-title">9 часов практики</h3>
+        <p class="mbs-format__card-text">Уходите не с теорией, а с готовыми инструментами: финансовой моделью, техкартами и планом действий.</p>
+      </div>
+    </div>
+  </div>
+</section>

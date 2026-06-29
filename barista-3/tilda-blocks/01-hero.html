@@ -1,0 +1,492 @@
+<!-- ============================================================
+   TILDA BLOCK 01 — HERO
+   «Бариста любитель» · Московская школа бариста
+   ============================================================ -->
+
+<!-- Шрифт + иконки (грузим один раз через guard) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  /* ─── HERO ─── */
+  .mbs-hb-hero {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 48px 20px;
+  }
+  .mbs-hb-hero * { box-sizing: border-box; }
+  .mbs-hb-hero__wrap { max-width: 1320px; margin: 0 auto; }
+  .mbs-hb-hero__card {
+    border: 8px solid #E7F2E3;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(231,242,227,0.75) 0, rgba(231,242,227,0.75) 18%, transparent 19%),
+      radial-gradient(circle at 86% 82%, rgba(231,242,227,0.60) 0, rgba(231,242,227,0.60) 15%, transparent 16%),
+      #F7F7F7;
+    padding: 72px 76px;
+    display: grid;
+    grid-template-columns: 1fr 480px;
+    grid-template-rows: auto auto;
+    gap: 0 56px;
+  }
+  .mbs-hb-hero__content-top  { grid-column: 1; grid-row: 1; }
+  .mbs-hb-hero__content-bottom {
+    grid-column: 1; grid-row: 2;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    gap: 0; padding-top: 28px;
+  }
+  .mbs-hb-hero__media {
+    grid-column: 2; grid-row: 1 / span 2;
+    display: flex; flex-direction: column; gap: 16px; align-self: stretch;
+  }
+  .mbs-hb-hero__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 16px; border-radius: 999px;
+    background: rgba(231,242,227,0.95); color: #417033;
+    font-size: 13px; font-weight: 900; margin-bottom: 20px;
+  }
+  .mbs-hb-hero__title {
+    font-size: 92px; font-weight: 900; line-height: 0.92;
+    letter-spacing: -0.07em; color: #1F1F1F; margin-bottom: 22px;
+  }
+  .mbs-hb-hero__subtitle {
+    font-size: 20px; font-weight: 500; line-height: 1.45; color: #555;
+  }
+  .mbs-hb-hero__subtitle--mobile { display: none; }
+  .mbs-hb-hero__facts {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
+  }
+  .mbs-hb-hero__fact {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 10px 18px; border-radius: 14px;
+    background: rgba(255,255,255,0.85); border: 1.5px solid #E7F2E3;
+    font-size: 14px; font-weight: 700; color: #1F1F1F;
+  }
+  .mbs-hb-hero__fact i { color: #417033; font-size: 16px; }
+  .mbs-hb-hero__price-card {
+    background: #fff; border: 1.5px solid #E7F2E3; border-radius: 14px;
+    display: flex; align-items: stretch; overflow: hidden;
+  }
+  .mbs-hb-hero__price-row-inner {
+    display: flex; flex-direction: column; align-items: flex-start;
+    gap: 2px; padding: 12px 16px; flex: 1;
+  }
+  .mbs-hb-hero__price-row-inner + .mbs-hb-hero__price-row-inner {
+    border-left: 1px solid #E7F2E3;
+  }
+  .mbs-hb-hero__price-who {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 600; color: #999; white-space: nowrap;
+  }
+  .mbs-hb-hero__price-who i { color: #417033; font-size: 13px; }
+  .mbs-hb-hero__price-val {
+    font-size: 17px; font-weight: 900; color: #1F1F1F;
+    white-space: nowrap; display: flex; align-items: baseline; gap: 6px;
+  }
+  .mbs-hb-hero__price-val--accent { color: #417033; }
+  .mbs-hb-hero__price-old { display: none; }
+  .mbs-hb-hero__price-badge { display: none; }
+  .mbs-hb-hero__btns {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    padding-top: 20px; border-top: 1.5px solid #E7F2E3;
+  }
+  .mbs-hb-hero__btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 28px; border-radius: 999px;
+    background: #CC2841; color: #fff !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 16px; font-weight: 900;
+    transition: background .2s, transform .15s;
+  }
+  .mbs-hb-hero__btn-primary:hover { background: #D83D54; transform: translateY(-2px); }
+  .mbs-hb-hero__btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 16px 28px; border-radius: 999px;
+    background: transparent; color: #417033 !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 16px; font-weight: 900;
+    border: 2.5px solid #417033; transition: background .2s, border-color .2s, transform .15s;
+  }
+  .mbs-hb-hero__btn-secondary:hover { background: #E7F2E3; border-color: #4F883E; transform: translateY(-2px); }
+  .mbs-hb-hero__img-wrap {
+    flex: 1; border-radius: 20px; overflow: hidden;
+    background: #E7F2E3; min-height: 320px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mbs-hb-hero__img-wrap img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block;
+  }
+  /* ─── Mobile ─── */
+  @media (max-width: 820px) {
+    .mbs-hb-hero { padding: 32px 14px 40px; }
+    .mbs-hb-hero__card {
+      padding: 36px 28px; border-width: 5px;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      gap: 8px 0;
+    }
+    .mbs-hb-hero__content-top  { grid-column: 1; grid-row: 1; }
+    .mbs-hb-hero__media         { grid-column: 1; grid-row: 2; }
+    .mbs-hb-hero__subtitle--mobile {
+      display: block; grid-column: 1; grid-row: 3;
+      font-size: 15px; line-height: 1.5; color: #555; font-weight: 500; padding-top: 4px;
+    }
+    .mbs-hb-hero__subtitle--desktop { display: none; }
+    .mbs-hb-hero__content-bottom { grid-column: 1; grid-row: 4; padding-top: 0; }
+    .mbs-hb-hero__title { font-size: 38px; margin-bottom: 14px; }
+    .mbs-hb-hero__img-wrap { min-height: 400px; height: 400px; }
+  }
+  @media (max-width: 420px) {
+    .mbs-hb-hero__title { font-size: 34px; }
+    .mbs-hb-hero__img-wrap { height: 300px; min-height: 300px; }
+  }
+
+  /* ─── BOOKING MODAL ─── */
+  .mbs-hb-booking-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(31,31,31,0.58);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+  .mbs-hb-booking-modal.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mbs-hb-booking-modal[hidden] { display: none; }
+  .mbs-hb-booking-modal,
+  .mbs-hb-booking-modal * {
+    box-sizing: border-box;
+    font-family: 'Mulish', sans-serif;
+  }
+  .mbs-hb-booking-modal__dialog {
+    width: min(100%, 560px);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    border-radius: 24px;
+    background: #fff;
+    border: 6px solid #E7F2E3;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+    padding: 28px;
+    position: relative;
+    transform: translateY(8px) scale(0.98);
+    transition: transform 0.2s ease;
+  }
+  .mbs-hb-booking-modal.is-open .mbs-hb-booking-modal__dialog {
+    transform: translateY(0) scale(1);
+  }
+  .mbs-hb-booking-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: #F7F7F7;
+    color: #1F1F1F;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .mbs-hb-booking-modal__close:hover {
+    background: #E7F2E3;
+    color: #417033;
+  }
+  .mbs-hb-booking-modal__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #E7F2E3;
+    color: #417033;
+    font-size: 13px;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+  .mbs-hb-booking-modal__title {
+    margin: 0 42px 10px 0;
+    color: #1F1F1F;
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+  .mbs-hb-booking-modal__text {
+    margin: 0 0 22px;
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .mbs-hb-booking-modal__options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .mbs-hb-booking-modal__option {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 182px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 2px solid #E7F2E3;
+    background: #F7F7F7;
+    color: #1F1F1F;
+    text-decoration: none;
+    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .mbs-hb-booking-modal__option:hover {
+    transform: translateY(-2px);
+    border-color: #4CAF50;
+    box-shadow: 0 12px 26px rgba(65,112,51,0.16);
+  }
+  .mbs-hb-booking-modal__option-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+    font-weight: 900;
+  }
+  .mbs-hb-booking-modal__option-head i {
+    color: #417033;
+    font-size: 21px;
+  }
+  .mbs-hb-booking-modal__price {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .mbs-hb-booking-modal__note {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+  .mbs-hb-booking-modal__go {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #417033;
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .mbs-hb-booking-modal__option--accent {
+    background: #E7F2E3;
+    border-color: #4CAF50;
+  }
+  .mbs-hb-booking-modal__saving {
+    display: inline-flex;
+    width: fit-content;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  @media (max-width: 620px) {
+    .mbs-hb-booking-modal { padding: 14px; align-items: flex-end; }
+    .mbs-hb-booking-modal__dialog { padding: 24px 18px 18px; border-radius: 22px; }
+    .mbs-hb-booking-modal__title { font-size: 25px; }
+    .mbs-hb-booking-modal__options { grid-template-columns: 1fr; }
+    .mbs-hb-booking-modal__option { min-height: 0; }
+  }
+</style>
+
+<section class="mbs-hb-hero" id="hero">
+  <div class="mbs-hb-hero__wrap">
+    <div class="mbs-hb-hero__card">
+
+      <!-- Левая колонка: контент-верх -->
+      <div class="mbs-hb-hero__content-top">
+        <div class="mbs-hb-hero__label">
+          <i class="ph ph-coffee"></i>
+          Курс · Индивидуальный формат
+        </div>
+        <h1 class="mbs-hb-hero__title">Бариста<br>любитель</h1>
+        <p class="mbs-hb-hero__subtitle mbs-hb-hero__subtitle--desktop">
+          Попробуйте себя в роли настоящего бариста за 3 часа:
+          разберёте оборудование, приготовите эспрессо и капучино
+          и поймёте, хотите ли идти глубже.
+        </p>
+      </div>
+
+      <!-- Правая колонка: фото -->
+      <div class="mbs-hb-hero__media">
+        <div class="mbs-hb-hero__img-wrap">
+          <img src="https://static.tildacdn.com/tild3964-3363-4430-b065-656565333330/MBS_218_resized.jpg"
+               alt="Бариста любитель — курс за 3 часа" loading="eager" />
+        </div>
+      </div>
+
+      <!-- Subtitle под фото (только мобайл) -->
+      <p class="mbs-hb-hero__subtitle mbs-hb-hero__subtitle--mobile">
+        Попробуйте себя в роли настоящего бариста за 3 часа:
+        разберёте оборудование, приготовите эспрессо и капучино
+        и поймёте, хотите ли идти глубже.
+      </p>
+
+      <!-- Левая колонка: контент-низ -->
+      <div class="mbs-hb-hero__content-bottom">
+        <div class="mbs-hb-hero__facts">
+          <div class="mbs-hb-hero__fact"><i class="ph ph-clock"></i>1 день · 3 часа</div>
+          <div class="mbs-hb-hero__fact"><i class="ph ph-user"></i>Индивидуально</div>
+          <div class="mbs-hb-hero__fact"><i class="ph ph-calendar-blank"></i>В удобное время</div>
+        </div>
+        <div class="mbs-hb-hero__price-card">
+          <div class="mbs-hb-hero__price-row-inner">
+            <div class="mbs-hb-hero__price-who"><i class="ph ph-user"></i>Один участник</div>
+            <div class="mbs-hb-hero__price-val">10 000 ₽</div>
+          </div>
+          <div class="mbs-hb-hero__price-row-inner">
+            <div class="mbs-hb-hero__price-who"><i class="ph ph-users-two"></i>Вдвоём</div>
+            <div class="mbs-hb-hero__price-val mbs-hb-hero__price-val--accent">14 000 ₽</div>
+          </div>
+        </div>
+        <div class="mbs-hb-hero__btns">
+          <a href="https://n1964448.yclients.com"
+             target="_blank" rel="noopener noreferrer" class="mbs-hb-hero__btn-primary js-mbs-hb-booking-modal">
+            <i class="ph ph-calendar-check"></i>
+            Записаться онлайн
+          </a>
+          <a href="#consalt" class="mbs-hb-hero__btn-secondary">
+            <i class="ph ph-chat-dots"></i>
+            Оставить заявку
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="mbs-hb-booking-modal" id="mbs-hb-booking-modal" hidden>
+  <div class="mbs-hb-booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mbs-hb-booking-modal-title">
+    <button class="mbs-hb-booking-modal__close" type="button" aria-label="Закрыть окно выбора записи">
+      <i class="ph ph-x"></i>
+    </button>
+    <div class="mbs-hb-booking-modal__label">
+      <i class="ph ph-calendar-check"></i>
+      Онлайн-запись
+    </div>
+    <h2 class="mbs-hb-booking-modal__title" id="mbs-hb-booking-modal-title">Выберите формат участия</h2>
+    <p class="mbs-hb-booking-modal__text">Можно прийти одному или вдвоём со скидкой. После выбора откроется форма записи и оплаты.</p>
+    <div class="mbs-hb-booking-modal__options">
+      <a class="mbs-hb-booking-modal__option" href="https://n1964448.yclients.com" target="_blank" rel="noopener noreferrer">
+        <span class="mbs-hb-booking-modal__option-head"><i class="ph ph-user"></i>Один участник</span>
+        <span class="mbs-hb-booking-modal__price">10 000 ₽</span>
+        <span class="mbs-hb-booking-modal__note">Индивидуальный курс на удобную дату.</span>
+        <span class="mbs-hb-booking-modal__go">Перейти к записи <i class="ph ph-arrow-up-right"></i></span>
+      </a>
+      <a class="mbs-hb-booking-modal__option mbs-hb-booking-modal__option--accent" href="https://n2230746.yclients.com" target="_blank" rel="noopener noreferrer">
+        <span class="mbs-hb-booking-modal__option-head"><i class="ph ph-users-two"></i>Вдвоём</span>
+        <span class="mbs-hb-booking-modal__price">14 000 ₽</span>
+        <span class="mbs-hb-booking-modal__saving">скидка 6 000 ₽</span>
+        <span class="mbs-hb-booking-modal__note">Оплата сразу за двух участников.</span>
+        <span class="mbs-hb-booking-modal__go">Перейти к записи <i class="ph ph-arrow-up-right"></i></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    if (window.__mbsHbBookingModalInitialized) return;
+    window.__mbsHbBookingModalInitialized = true;
+
+    var modal = document.getElementById('mbs-hb-booking-modal');
+    if (!modal) return;
+
+    var closeButton = modal.querySelector('.mbs-hb-booking-modal__close');
+    var previousActiveElement = null;
+    var lockedScrollY = 0;
+    var previousBodyStyles = {};
+
+    function lockPageScroll() {
+      lockedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      previousBodyStyles = {
+        position: document.body.style.position,
+        top: document.body.style.top,
+        left: document.body.style.left,
+        right: document.body.style.right,
+        width: document.body.style.width,
+        overflow: document.body.style.overflow
+      };
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + lockedScrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function unlockPageScroll() {
+      document.body.style.position = previousBodyStyles.position || '';
+      document.body.style.top = previousBodyStyles.top || '';
+      document.body.style.left = previousBodyStyles.left || '';
+      document.body.style.right = previousBodyStyles.right || '';
+      document.body.style.width = previousBodyStyles.width || '';
+      document.body.style.overflow = previousBodyStyles.overflow || '';
+      window.scrollTo(0, lockedScrollY);
+    }
+
+    function openModal() {
+      if (!modal.hidden) return;
+      previousActiveElement = document.activeElement;
+      modal.hidden = false;
+      lockPageScroll();
+      requestAnimationFrame(function () {
+        modal.classList.add('is-open');
+        if (closeButton) closeButton.focus();
+      });
+    }
+
+    function closeModal() {
+      if (modal.hidden) return;
+      modal.classList.remove('is-open');
+      window.setTimeout(function () {
+        modal.hidden = true;
+        unlockPageScroll();
+        if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+          previousActiveElement.focus();
+        }
+      }, 200);
+    }
+
+    document.addEventListener('click', function (event) {
+      var trigger = event.target.closest('.js-mbs-hb-booking-modal');
+      if (trigger) {
+        event.preventDefault();
+        openModal();
+        return;
+      }
+      if (event.target === modal) closeModal();
+    });
+
+    if (closeButton) {
+      closeButton.addEventListener('click', closeModal);
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !modal.hidden) closeModal();
+    });
+  })();
+</script>

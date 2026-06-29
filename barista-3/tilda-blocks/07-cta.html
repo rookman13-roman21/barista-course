@@ -1,0 +1,124 @@
+<!-- ============================================================
+   TILDA BLOCK 07 — FINAL CTA
+   Финальный призыв к действию: запись + заявка + контакты
+   ============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  /* ─── FINAL CTA ─── */
+  .mbs-hb-cta {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 90px 20px;
+  }
+  .mbs-hb-cta * { box-sizing: border-box; }
+  .mbs-hb-cta__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-hb-cta__card {
+    background: #E7F2E3; border-radius: 28px; padding: 64px 72px;
+    display: flex; align-items: center; gap: 60px;
+  }
+  .mbs-hb-cta__body { flex: 1; }
+  .mbs-hb-cta__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 16px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(255,255,255,0.9); color: #417033;
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-hb-cta__title {
+    font-size: 40px; font-weight: 900; letter-spacing: -0.04em;
+    color: #1F1F1F; line-height: 1.1; margin-bottom: 14px;
+  }
+  .mbs-hb-cta__sub {
+    font-size: 16px; font-weight: 500; color: #555; line-height: 1.55;
+  }
+  .mbs-hb-cta__actions {
+    flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; min-width: 260px;
+  }
+  .mbs-hb-cta__btn-primary {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 18px 28px; border-radius: 999px;
+    background: #CC2841; color: #fff !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 16px; font-weight: 900;
+    transition: background .2s, transform .15s; text-align: center;
+  }
+  .mbs-hb-cta__btn-primary:hover { background: #D83D54; transform: translateY(-2px); }
+  .mbs-hb-cta__btn-secondary {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 18px 28px; border-radius: 999px;
+    background: rgba(255,255,255,0.85); color: #417033 !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 16px; font-weight: 900;
+    border: 2px solid rgba(65,112,51,.2);
+    transition: background .2s, border-color .2s, transform .15s; text-align: center;
+  }
+  .mbs-hb-cta__btn-secondary:hover { background: #fff; border-color: #417033; transform: translateY(-2px); }
+  .mbs-hb-cta__contacts {
+    margin-top: 20px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .mbs-hb-cta__contact-link {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-weight: 700; color: #555;
+    text-decoration: none !important; transition: color .2s;
+  }
+  .mbs-hb-cta__contact-link i { color: #417033; font-size: 16px; }
+  .mbs-hb-cta__contact-link:hover { color: #417033; }
+
+  @media (max-width: 900px) {
+    .mbs-hb-cta { padding: 64px 14px; }
+    .mbs-hb-cta__card { flex-direction: column; gap: 36px; padding: 44px 28px; }
+    .mbs-hb-cta__title { font-size: 30px; }
+    .mbs-hb-cta__actions { width: 100%; }
+  }
+</style>
+
+<section class="mbs-hb-cta">
+  <div class="mbs-hb-cta__wrap">
+    <div class="mbs-hb-cta__card">
+      <div class="mbs-hb-cta__body">
+        <div class="mbs-hb-cta__label">
+          <i class="ph ph-coffee"></i>
+          Начните прямо сейчас
+        </div>
+          <h2 class="mbs-hb-cta__title">Попробуйте себя<br>за стойкой бариста</h2>
+          <p class="mbs-hb-cta__sub">
+            Запишитесь онлайн сами или оставьте заявку — мы ответим на вопросы
+            и поможем выбрать удобное время.
+        </p>
+      </div>
+      <div class="mbs-hb-cta__actions">
+        <a href="https://n1964448.yclients.com"
+           target="_blank" rel="noopener noreferrer" class="mbs-hb-cta__btn-primary js-mbs-hb-booking-modal">
+          <i class="ph ph-calendar-check"></i>
+          Записаться онлайн
+        </a>
+        <a href="#consalt" class="mbs-hb-cta__btn-secondary">
+          <i class="ph ph-chat-dots"></i>
+          Оставить заявку
+        </a>
+        <div class="mbs-hb-cta__contacts">
+          <a href="tel:+79959992836" class="mbs-hb-cta__contact-link">
+            <i class="ph ph-phone"></i>
+            +7 995 999 2836
+          </a>
+          <a href="https://t.me/Moscow_barista_school" class="mbs-hb-cta__contact-link"
+             target="_blank" rel="noopener noreferrer">
+            <i class="ph ph-telegram-logo"></i>
+            Написать в Telegram
+          </a>
+          <a href="https://wa.me/message/42GZ6YYBJTM5B1" class="mbs-hb-cta__contact-link"
+             target="_blank" rel="noopener noreferrer">
+            <i class="ph ph-whatsapp-logo"></i>
+            Написать в WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

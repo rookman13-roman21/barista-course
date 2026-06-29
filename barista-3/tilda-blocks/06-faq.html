@@ -1,0 +1,205 @@
+<!-- ============================================================
+   TILDA BLOCK 06 — FAQ
+   Частые вопросы: sticky-левый панель + аккордеон справа
+   JS: DS §15 accordion (height animation)
+   ============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  /* ─── FAQ ─── */
+  .mbs-hb-faq {
+    font-family: 'Mulish', sans-serif;
+    background: #F5F5F5;
+    padding: 90px 20px;
+  }
+  .mbs-hb-faq * { box-sizing: border-box; }
+  .mbs-hb-faq__wrap {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 320px 1fr; gap: 72px; align-items: start;
+  }
+  .mbs-hb-faq__left { position: sticky; top: 80px; }
+  .mbs-hb-faq__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 14px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(231,242,227,0.95); color: #417033;
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-hb-faq__title {
+    font-size: 34px; font-weight: 900; letter-spacing: -0.04em; color: #1F1F1F; margin-bottom: 14px;
+  }
+  .mbs-hb-faq__sub {
+    font-size: 15px; font-weight: 500; color: #666; line-height: 1.55; margin-bottom: 28px;
+  }
+  .mbs-hb-faq__contact-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 22px; border-radius: 999px;
+    background: #CC2841; color: #fff !important; text-decoration: none !important;
+    font-family: 'Mulish', sans-serif; font-size: 14px; font-weight: 900;
+    transition: background .2s, transform .15s;
+  }
+  .mbs-hb-faq__contact-btn:hover { background: #D83D54; transform: translateY(-1px); }
+  .mbs-hb-faq__list { display: flex; flex-direction: column; gap: 8px; }
+  .mbs-hb-faq__item { background: #fff; border-radius: 16px; }
+  .mbs-hb-faq__body {
+    overflow: hidden; height: 0;
+    transition: height .32s cubic-bezier(.4,0,.2,1);
+  }
+  .mbs-hb-faq__summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 22px 24px; cursor: pointer; list-style: none; user-select: none;
+    font-size: 16px; font-weight: 800; color: #1F1F1F; line-height: 1.35;
+    transition: color .2s;
+  }
+  .mbs-hb-faq__summary::-webkit-details-marker { display: none; }
+  .mbs-hb-faq__summary:hover { color: #417033; }
+  .mbs-hb-faq__chevron {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: #F5F5F5; display: grid; place-items: center; flex-shrink: 0;
+    transition: background .2s, transform .3s; font-size: 16px; color: #417033;
+  }
+  details[open] .mbs-hb-faq__chevron { background: #E7F2E3; transform: rotate(45deg); }
+  .mbs-hb-faq__answer {
+    padding: 0 24px 22px;
+    font-size: 15px; font-weight: 500; color: #555; line-height: 1.6; overflow: visible;
+  }
+
+  @media (max-width: 820px) {
+    .mbs-hb-faq { padding: 64px 14px; }
+    .mbs-hb-faq__wrap { grid-template-columns: 1fr; gap: 36px; }
+    .mbs-hb-faq__left { position: static; }
+    .mbs-hb-faq__title { font-size: 26px; }
+  }
+</style>
+
+<section class="mbs-hb-faq" id="faq">
+  <div class="mbs-hb-faq__wrap">
+    <div class="mbs-hb-faq__left">
+      <div class="mbs-hb-faq__label">
+        <i class="ph ph-question"></i>
+        FAQ
+      </div>
+      <h2 class="mbs-hb-faq__title">Частые вопросы</h2>
+      <p class="mbs-hb-faq__sub">
+        Если не нашли ответ — напишите нам, ответим быстро.
+      </p>
+      <a href="#consalt" class="mbs-hb-faq__contact-btn">
+        <i class="ph ph-chat-dots"></i>
+        Задать вопрос
+      </a>
+    </div>
+    <div class="mbs-hb-faq__list" id="faq-list">
+      <details class="mbs-hb-faq__item">
+        <summary class="mbs-hb-faq__summary">
+          Нужно ли что-то брать с собой?
+          <span class="mbs-hb-faq__chevron"><i class="ph ph-plus"></i></span>
+        </summary>
+        <div class="mbs-hb-faq__body">
+          <div class="mbs-hb-faq__answer">
+            Нет, всё необходимое уже есть в школе: профессиональная кофемашина, кофемолки, зерно, молоко и инвентарь. Вам нужно только приехать.
+          </div>
+        </div>
+      </details>
+      <details class="mbs-hb-faq__item">
+        <summary class="mbs-hb-faq__summary">
+          Как записаться на курс?
+          <span class="mbs-hb-faq__chevron"><i class="ph ph-plus"></i></span>
+        </summary>
+        <div class="mbs-hb-faq__body">
+          <div class="mbs-hb-faq__answer">
+            Два способа. Первый — самостоятельно через форму онлайн-записи: нажмите «Записаться онлайн», выберите формат участия, дату и время. Второй — оставьте заявку: мы перезвоним и согласуем время вместе.
+          </div>
+        </div>
+      </details>
+      <details class="mbs-hb-faq__item">
+        <summary class="mbs-hb-faq__summary">
+          Можно ли прийти вдвоём?
+          <span class="mbs-hb-faq__chevron"><i class="ph ph-plus"></i></span>
+        </summary>
+        <div class="mbs-hb-faq__body">
+          <div class="mbs-hb-faq__answer">
+            Да, можно прийти вдвоём. При записи нажмите «Записаться онлайн» и выберите формат, который вам больше подходит: один участник за 10&thinsp;000 ₽ или двое участников за 14&thinsp;000 ₽.
+          </div>
+        </div>
+      </details>
+      <details class="mbs-hb-faq__item">
+        <summary class="mbs-hb-faq__summary">
+          Что я буду уметь после занятия?
+          <span class="mbs-hb-faq__chevron"><i class="ph ph-plus"></i></span>
+        </summary>
+        <div class="mbs-hb-faq__body">
+          <div class="mbs-hb-faq__answer">
+            Вы поймёте, как работает оборудование, приготовите эспрессо и капучино на профессиональной кофемашине и сможете решить, хотите ли идти в обучение глубже.
+          </div>
+        </div>
+      </details>
+      <details class="mbs-hb-faq__item">
+        <summary class="mbs-hb-faq__summary">
+          Нужна ли какая-то подготовка?
+          <span class="mbs-hb-faq__chevron"><i class="ph ph-plus"></i></span>
+        </summary>
+        <div class="mbs-hb-faq__body">
+          <div class="mbs-hb-faq__answer">
+            Никакой. Курс рассчитан на новичков и любителей кофе, которые хотят попробовать себя в роли бариста без долгого обучения.
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function closeItem(details) {
+      var body = details.querySelector('.mbs-hb-faq__body');
+      if (!body || details._faqBusy) return;
+      details._faqBusy = true;
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight; // forced reflow
+      body.style.height = '0px';
+      body.addEventListener('transitionend', function done(ev) {
+        if (ev.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details._faqBusy = false;
+      });
+    }
+
+    document.querySelectorAll('.mbs-hb-faq__item').forEach(function (details) {
+      details.querySelector('summary').addEventListener('click', function (e) {
+        e.preventDefault();
+        if (details._faqBusy) return;
+
+        if (details.open) {
+          closeItem(details);
+        } else {
+          // закрыть все остальные
+          document.querySelectorAll('.mbs-hb-faq__item').forEach(function (d) {
+            if (d !== details && d.open) closeItem(d);
+          });
+          // открыть
+          details._faqBusy = true;
+          details.open = true;
+          var body = details.querySelector('.mbs-hb-faq__body');
+          var targetH = body.scrollHeight;
+          body.style.height = '0px';
+          body.offsetHeight; // forced reflow
+          body.style.height = targetH + 'px';
+          body.addEventListener('transitionend', function done(ev) {
+            if (ev.propertyName !== 'height') return;
+            body.removeEventListener('transitionend', done);
+            body.style.height = 'auto';
+            details._faqBusy = false;
+          });
+        }
+      });
+    });
+  })();
+</script>

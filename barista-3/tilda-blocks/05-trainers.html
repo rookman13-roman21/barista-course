@@ -1,0 +1,324 @@
+<!-- ============================================================
+   TILDA BLOCK 05 — TRAINERS
+   Тренеры MBS: 5 карточек + popup-профили, grid 5→3→2
+   ============================================================ -->
+
+<script>
+  if (!window.__phIconsLoaded) {
+    window.__phIconsLoaded = true;
+    var s = document.createElement('script');
+    s.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+    document.head.appendChild(s);
+  }
+</script>
+
+<style>
+  /* ─── TRAINERS ─── */
+  .mbs-hb-trainers {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 90px 20px;
+  }
+  .mbs-hb-trainers * { box-sizing: border-box; }
+  .mbs-hb-trainers__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-hb-trainers__label {
+    display: inline-flex; align-items: center; gap: 7px;
+    margin-bottom: 14px; padding: 7px 16px; border-radius: 999px;
+    background: rgba(231,242,227,0.95); color: #417033;
+    font-size: 13px; font-weight: 900;
+  }
+  .mbs-hb-trainers__title {
+    font-size: 34px; font-weight: 900; letter-spacing: -0.04em; color: #1F1F1F; margin-bottom: 10px;
+  }
+  .mbs-hb-trainers__sub {
+    font-size: 16px; font-weight: 500; color: #555; line-height: 1.55; margin-bottom: 44px;
+  }
+  .mbs-hb-trainers__grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+  }
+  .mbs-hb-trainer {
+    background: #F5F5F5; border-radius: 20px; overflow: hidden;
+    display: flex; flex-direction: column; width: 100%; min-height: 100%;
+    padding: 0; border: 0; text-align: left; cursor: pointer;
+    font-family: 'Mulish', sans-serif;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .mbs-hb-trainer:hover,
+  .mbs-hb-trainer:focus-visible {
+    box-shadow: 0 10px 36px rgba(31,31,31,.1); transform: translateY(-2px);
+  }
+  .mbs-hb-trainer:focus-visible { outline: 3px solid #B6D8AB; outline-offset: 3px; }
+  .mbs-hb-trainer__photo {
+    aspect-ratio: 3/4; background: #E7F2E3; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mbs-hb-trainer__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mbs-hb-trainer__info {
+    padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .mbs-hb-trainer__name  { font-size: 15px; font-weight: 800; color: #1F1F1F; line-height: 1.25; }
+  .mbs-hb-trainer__role  { font-size: 12px; font-weight: 600; color: #4F883E; line-height: 1.4; }
+  .mbs-hb-trainer__fact  { font-size: 11px; font-weight: 500; color: #888; line-height: 1.45; margin-top: 2px; }
+  .mbs-hb-trainer__more {
+    display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+    margin-top: 10px; color: #417033; font-size: 12px; font-weight: 900;
+  }
+  .mbs-hb-trainer__more i { font-size: 14px; transition: transform .2s; }
+  .mbs-hb-trainer:hover .mbs-hb-trainer__more i,
+  .mbs-hb-trainer:focus-visible .mbs-hb-trainer__more i { transform: translateX(2px); }
+
+  @media (max-width: 900px) {
+    .mbs-hb-trainers { padding: 64px 14px; }
+    .mbs-hb-trainers__title { font-size: 26px; }
+    .mbs-hb-trainers__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .mbs-hb-trainers__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<section class="mbs-hb-trainers" id="trainers">
+  <div class="mbs-hb-trainers__wrap">
+    <div class="mbs-hb-trainers__label">
+      <i class="ph ph-chalkboard-teacher"></i>
+      Тренеры
+    </div>
+    <h2 class="mbs-hb-trainers__title">Ваши проводники в мир кофе</h2>
+    <p class="mbs-hb-trainers__sub">
+      Практикующие бариста и тренеры MBS проведут занятие на профессиональном оборудовании.
+    </p>
+    <div class="mbs-hb-trainers__grid">
+      <button class="mbs-hb-trainer js-mbs-trainer-open" type="button" data-trainer-id="denis" aria-label="Смотреть профиль: Денис Ефремов">
+        <div class="mbs-hb-trainer__photo">
+          <img src="https://static.tildacdn.com/tild3262-3866-4630-a232-303764376135/image.png" alt="Денис Ефремов" loading="lazy">
+        </div>
+        <div class="mbs-hb-trainer__info">
+          <div class="mbs-hb-trainer__name">Денис Ефремов</div>
+          <div class="mbs-hb-trainer__role">Главный тренер и миксолог MBS</div>
+          <div class="mbs-hb-trainer__fact">Призёр чемпионатов по миксологии, эксперт по авторским напиткам</div>
+          <span class="mbs-hb-trainer__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </button>
+      <button class="mbs-hb-trainer js-mbs-trainer-open" type="button" data-trainer-id="roman" aria-label="Смотреть профиль: Роман Лунгу">
+        <div class="mbs-hb-trainer__photo">
+          <img src="https://static.tildacdn.com/tild3266-3637-4432-a237-356538653835/image.png" alt="Роман Лунгу" loading="lazy">
+        </div>
+        <div class="mbs-hb-trainer__info">
+          <div class="mbs-hb-trainer__name">Роман Лунгу</div>
+          <div class="mbs-hb-trainer__role">Старший тренер MBS</div>
+          <div class="mbs-hb-trainer__fact">Эксперт по эспрессо и альтернативным методам, проводит каппинги</div>
+          <span class="mbs-hb-trainer__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </button>
+      <button class="mbs-hb-trainer js-mbs-trainer-open" type="button" data-trainer-id="sabrina" aria-label="Смотреть профиль: Сабрина Темурова">
+        <div class="mbs-hb-trainer__photo">
+          <img src="https://static.tildacdn.com/tild3037-3831-4661-a337-646264633939/__32.jpg" alt="Сабрина Темурова" loading="lazy">
+        </div>
+        <div class="mbs-hb-trainer__info">
+          <div class="mbs-hb-trainer__name">Сабрина Темурова</div>
+          <div class="mbs-hb-trainer__role">Тренер MBS</div>
+          <div class="mbs-hb-trainer__fact">Ведёт мастер-классы и кофейный клуб, развивает сенсорное восприятие</div>
+          <span class="mbs-hb-trainer__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </button>
+      <button class="mbs-hb-trainer js-mbs-trainer-open" type="button" data-trainer-id="nikita" aria-label="Смотреть профиль: Никита Баховский">
+        <div class="mbs-hb-trainer__photo">
+          <img src="https://static.tildacdn.com/tild3734-3763-4333-b938-643762323937/photo.jpg" alt="Никита Баховский" loading="lazy">
+        </div>
+        <div class="mbs-hb-trainer__info">
+          <div class="mbs-hb-trainer__name">Никита Баховский</div>
+          <div class="mbs-hb-trainer__role">Тренер MBS</div>
+          <div class="mbs-hb-trainer__fact">Ведёт классические курсы и выездные обучения, учит стабильной работе</div>
+          <span class="mbs-hb-trainer__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </button>
+      <button class="mbs-hb-trainer js-mbs-trainer-open" type="button" data-trainer-id="arkady" aria-label="Смотреть профиль: Аркадий Скалин">
+        <div class="mbs-hb-trainer__photo">
+          <img src="https://static.tildacdn.com/tild6539-6335-4461-a434-386534363563/_.jpg" alt="Аркадий Скалин" loading="lazy">
+        </div>
+        <div class="mbs-hb-trainer__info">
+          <div class="mbs-hb-trainer__name">Аркадий Скалин</div>
+          <div class="mbs-hb-trainer__role">Тренер MBS</div>
+          <div class="mbs-hb-trainer__fact">Специализируется на латте-арте — учит рисовать на пенке с нуля</div>
+          <span class="mbs-hb-trainer__more">Смотреть профиль <i class="ph ph-arrow-right"></i></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.__mbsTrainerProfilesInit) return;
+    window.__mbsTrainerProfilesInit = true;
+
+    var trainers = {
+      denis: {
+        name: 'Денис Ефремов',
+        role: 'Главный тренер и миксолог MBS',
+        photo: 'https://static.tildacdn.com/tild3262-3866-4630-a232-303764376135/image.png',
+        lead: 'Специалист по вкусу, авторским напиткам и работе с барной картой. Помогает разбирать напиток как систему: от идеи и баланса вкуса до стабильного повторения в сервисе.',
+        expertise: ['Авторские кофейные напитки', 'Миксология и баланс вкуса', 'Работа с меню', 'Соревновательная подготовка'],
+        facts: ['Участник и призёр чемпионатов по миксологии', 'Разрабатывает авторские напитки и сезонные предложения', 'Объясняет вкус через понятные практические ориентиры']
+      },
+      roman: {
+        name: 'Роман Лунгу',
+        role: 'Старший тренер MBS',
+        photo: 'https://static.tildacdn.com/tild3266-3637-4432-a237-356538653835/image.png',
+        lead: 'Системный тренер по эспрессо, альтернативным методам и сенсорике. Делает сложные процессы понятными и помогает выстроить аккуратную технику работы.',
+        expertise: ['Эспрессо и настройка вкуса', 'Альтернативные методы', 'Каппинги и сенсорика', 'Техника работы на оборудовании'],
+        facts: ['Проводит каппинги и практические разборы вкуса', 'Помогает находить и исправлять ошибки в приготовлении', 'Учит работать стабильно на разном оборудовании']
+      },
+      sabrina: {
+        name: 'Сабрина Темурова',
+        role: 'Тренер MBS',
+        photo: 'https://static.tildacdn.com/tild3037-3831-4661-a337-646264633939/__32.jpg',
+        lead: 'Тренер с сильной базой в продукте, сенсорике и практике кофейни. Работает спокойно и по делу, помогает студентам увереннее чувствовать вкус и технику.',
+        expertise: ['Сенсорика и органолептика', 'Альтернативное заваривание', 'Черный кофе', 'Базовый латте-арт'],
+        facts: ['Прошла путь от бариста до тренера', 'Участвовала в кофейных баттлах и чемпионатах', 'Развивает сенсорное восприятие через практику и понятные упражнения']
+      },
+      nikita: {
+        name: 'Никита Баховский',
+        role: 'Тренер MBS',
+        photo: 'https://static.tildacdn.com/tild3734-3763-4333-b938-643762323937/photo.jpg',
+        lead: 'Практикующий тренер с опытом в общепите, баре и запуске проектов. Делает акцент на устойчивой технике, понятной логике процессов и уверенной работе за стойкой.',
+        expertise: ['Классическая техника бариста', 'Эспрессо и молоко', 'Выездное обучение', 'Организация работы за баром'],
+        facts: ['Работает в сфере общепита около 9 лет', 'Руководил баром и тренинг-центром', 'Участвовал в проектировании и открытии заведений']
+      },
+      arkady: {
+        name: 'Аркадий Скалин',
+        role: 'Тренер MBS',
+        photo: 'https://static.tildacdn.com/tild6539-6335-4461-a434-386534363563/_.jpg',
+        lead: 'Тренер, который хорошо чувствует практику профессии бариста изнутри. Помогает преодолеть неуверенность, поставить движения и разобраться в нюансах молока, вкуса и сервиса.',
+        expertise: ['Латте-арт', 'Техника работы с молоком', 'Черный кофе и сенсорика', 'Практика за стойкой'],
+        facts: ['Более пяти лет в кофейной индустрии', 'Прошёл путь от бариста до управляющего кофейни и тренера', 'Участвовал в кофейных чемпионатах и баттлах']
+      }
+    };
+
+    var ui = null;
+    var lastTrigger = null;
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function (char) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char];
+      });
+    }
+
+    function listHtml(items) {
+      return items.map(function (item) { return '<li>' + escapeHtml(item) + '</li>'; }).join('');
+    }
+
+    function lockTouch(event) {
+      if (!ui || !ui.panel.contains(event.target)) event.preventDefault();
+    }
+
+    function createModal() {
+      if (ui) return ui;
+
+      var backdrop = document.createElement('div');
+      backdrop.id = 'mbs-trainer-profile-backdrop';
+      backdrop.style.cssText = 'position:fixed;inset:0;z-index:99998;background:rgba(31,31,31,.58);display:none;opacity:0;transition:opacity .22s ease;';
+
+      var modal = document.createElement('div');
+      modal.id = 'mbs-trainer-profile-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'mbs-trainer-profile-title');
+      modal.style.cssText = 'position:fixed;z-index:99999;top:50%;left:50%;width:min(1040px,calc(100vw - 80px));max-height:calc(100vh - 80px);overflow:auto;background:#fff;border:6px solid #E7F2E3;border-radius:24px;box-shadow:0 24px 80px rgba(0,0,0,.24);display:none;opacity:0;transform:translate(-50%,-50%) translateY(14px);transition:opacity .22s ease,transform .22s ease;font-family:Mulish,sans-serif;color:#1F1F1F;';
+
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.setAttribute('aria-label', 'Закрыть профиль тренера');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.style.cssText = 'position:absolute;top:14px;right:14px;z-index:2;width:38px;min-width:38px;height:38px;min-height:38px;box-sizing:border-box;padding:0;border:0;border-radius:50%;background:#F5F5F5;color:#1F1F1F;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;line-height:1;font-family:Arial,sans-serif;';
+
+      var content = document.createElement('div');
+      content.style.cssText = 'display:grid;grid-template-columns:340px minmax(0,1fr);gap:34px;align-items:start;padding:32px;';
+
+      modal.appendChild(closeBtn);
+      modal.appendChild(content);
+      document.body.appendChild(backdrop);
+      document.body.appendChild(modal);
+
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', closeModal);
+
+      ui = { backdrop: backdrop, modal: modal, panel: modal, content: content, closeBtn: closeBtn };
+      return ui;
+    }
+
+    function renderProfile(profile) {
+      var isMobile = window.matchMedia('(max-width: 680px)').matches;
+      var photoHeight = isMobile ? 260 : 460;
+      var photoFit = isMobile ? 'contain' : 'cover';
+      ui.modal.style.width = isMobile ? 'min(860px, calc(100vw - 32px))' : 'min(1040px, calc(100vw - 80px))';
+      ui.modal.style.maxHeight = isMobile ? 'calc(100vh - 32px)' : 'calc(100vh - 80px)';
+      ui.content.style.cssText = isMobile
+        ? 'display:grid;grid-template-columns:1fr;gap:18px;padding:18px 18px 22px;'
+        : 'display:grid;grid-template-columns:340px minmax(0,1fr);gap:34px;align-items:start;padding:32px;';
+
+      ui.modal.style.borderRadius = isMobile ? '22px' : '24px';
+      ui.content.innerHTML =
+        '<div style="border-radius:18px;overflow:hidden;background:#E7F2E3;height:' + photoHeight + 'px;">' +
+          '<img src="' + escapeHtml(profile.photo) + '" alt="' + escapeHtml(profile.name) + '" style="width:100%;height:100%;object-fit:' + photoFit + ';object-position:center top;display:block;">' +
+        '</div>' +
+        '<div style="padding:' + (isMobile ? '0 2px' : '10px 8px 6px 0') + ';">' +
+          '<div style="display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;padding:7px 14px;border-radius:999px;background:#E7F2E3;color:#417033;font-size:13px;font-weight:900;">Тренер MBS</div>' +
+          '<h3 id="mbs-trainer-profile-title" style="margin:0 44px 8px 0;color:#1F1F1F;font-size:' + (isMobile ? '28px' : '34px') + ';line-height:1;font-weight:900;letter-spacing:-.04em;">' + escapeHtml(profile.name) + '</h3>' +
+          '<div style="margin-bottom:16px;color:#4F883E;font-size:14px;font-weight:800;line-height:1.35;">' + escapeHtml(profile.role) + '</div>' +
+          '<p style="margin:0 0 20px;color:#555;font-size:15px;font-weight:500;line-height:1.6;">' + escapeHtml(profile.lead) + '</p>' +
+          '<div style="display:grid;grid-template-columns:' + (isMobile ? '1fr' : '1fr 1fr') + ';gap:14px;">' +
+            '<div style="background:#F5F5F5;border-radius:16px;padding:16px;">' +
+              '<div style="margin-bottom:8px;color:#1F1F1F;font-size:14px;font-weight:900;">Сильные стороны</div>' +
+              '<ul style="margin:0;padding-left:18px;color:#555;font-size:13px;font-weight:600;line-height:1.55;">' + listHtml(profile.expertise) + '</ul>' +
+            '</div>' +
+            '<div style="background:#F5F5F5;border-radius:16px;padding:16px;">' +
+              '<div style="margin-bottom:8px;color:#1F1F1F;font-size:14px;font-weight:900;">Факты и опыт</div>' +
+              '<ul style="margin:0;padding-left:18px;color:#555;font-size:13px;font-weight:600;line-height:1.55;">' + listHtml(profile.facts) + '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+    }
+
+    function openModal(profile, trigger) {
+      createModal();
+      lastTrigger = trigger || null;
+      renderProfile(profile);
+      ui.backdrop.style.display = 'block';
+      ui.modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('touchmove', lockTouch, { passive: false });
+      ui.backdrop.offsetHeight;
+      ui.backdrop.style.opacity = '1';
+      ui.modal.style.opacity = '1';
+      ui.modal.style.transform = 'translate(-50%,-50%) translateY(0)';
+      ui.closeBtn.focus();
+    }
+
+    function closeModal() {
+      if (!ui || ui.modal.style.display === 'none') return;
+      ui.backdrop.style.opacity = '0';
+      ui.modal.style.opacity = '0';
+      ui.modal.style.transform = 'translate(-50%,-50%) translateY(14px)';
+      document.body.style.overflow = '';
+      document.removeEventListener('touchmove', lockTouch);
+      setTimeout(function () {
+        ui.backdrop.style.display = 'none';
+        ui.modal.style.display = 'none';
+        if (lastTrigger) lastTrigger.focus();
+      }, 230);
+    }
+
+    document.addEventListener('click', function (event) {
+      var trigger = event.target.closest('.js-mbs-trainer-open');
+      if (!trigger) return;
+      var profile = trainers[trigger.getAttribute('data-trainer-id')];
+      if (!profile) return;
+      openModal(profile, trigger);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') closeModal();
+    });
+  })();
+</script>

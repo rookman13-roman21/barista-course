@@ -1,0 +1,404 @@
+<script>
+(function () {
+  var PAGE_URL = 'https://baristaschool.ru/master_doma';
+  var TITLE = 'Домашнее заваривание кофе - мастер-класс | Московская школа бариста';
+  var DESCRIPTION = 'Мастер-класс «Домашнее заваривание» в Москве: способы приготовления кофе, вода, помол, выбор кофе, практика и дегустация. 3 часа, 5 000 ₽.';
+  var IMAGE = 'https://static.tildacdn.com/tild3039-3832-4132-a637-633030376536/Asset_245.jpg';
+
+  function setMeta(name, content, attr) {
+    attr = attr || 'name';
+    var selector = 'meta[' + attr + '="' + name + '"]';
+    var node = document.querySelector(selector);
+    if (!node) {
+      node = document.createElement('meta');
+      node.setAttribute(attr, name);
+      document.head.appendChild(node);
+    }
+    node.setAttribute('content', content);
+  }
+
+  function setLink(rel, href) {
+    var node = document.querySelector('link[rel="' + rel + '"]');
+    if (!node) {
+      node = document.createElement('link');
+      node.setAttribute('rel', rel);
+      document.head.appendChild(node);
+    }
+    node.setAttribute('href', href);
+  }
+
+  function updateSeo() {
+    document.title = TITLE;
+    setMeta('description', DESCRIPTION);
+    setMeta('og:url', PAGE_URL, 'property');
+    setMeta('og:title', 'Мастер-класс «Домашнее заваривание»', 'property');
+    setMeta('og:description', DESCRIPTION, 'property');
+    setMeta('og:type', 'website', 'property');
+    setMeta('og:image', IMAGE, 'property');
+    setMeta('twitter:card', 'summary_large_image');
+    setMeta('twitter:title', 'Мастер-класс «Домашнее заваривание»');
+    setMeta('twitter:description', DESCRIPTION);
+    setMeta('twitter:image', IMAGE);
+    setLink('canonical', PAGE_URL);
+  }
+
+  function initSmoothScroll() {
+    var roots = document.querySelectorAll('[data-mbs-master-doma-page]');
+    if (!roots.length) return;
+    var reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    for (var i = 0; i < roots.length; i++) {
+      roots[i].addEventListener('click', function (event) {
+        var link = event.target.closest ? event.target.closest('a[href^="#"]') : null;
+        if (!link || !this.contains(link)) return;
+        var hash = link.getAttribute('href');
+        if (!hash || hash === '#') return;
+        var target = document.getElementById(hash.slice(1));
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({
+          behavior: reduceMotion ? 'auto' : 'smooth',
+          block: 'start'
+        });
+      });
+    }
+  }
+
+  function initFontGuard() {
+    if (document.documentElement) {
+      document.documentElement.style.setProperty('--t-text-font', 'Mulish');
+      document.documentElement.style.setProperty('--t-heading-font', 'Mulish');
+    }
+  }
+
+  function loadScript(primarySrc, fallbackSrc, onload) {
+    var script = document.createElement('script');
+    var fallbackStarted = false;
+    script.async = true;
+    script.src = primarySrc;
+    script.onload = function () {
+      if (typeof onload === 'function') onload();
+    };
+    script.onerror = function () {
+      if (!fallbackSrc || fallbackStarted) return;
+      fallbackStarted = true;
+      var fallback = document.createElement('script');
+      fallback.async = true;
+      fallback.src = fallbackSrc;
+      fallback.onload = function () {
+        if (typeof onload === 'function') onload();
+      };
+      document.head.appendChild(fallback);
+    };
+    document.head.appendChild(script);
+  }
+
+  function initTrainersWidget() {
+    var loaderEl = document.querySelector('[data-mbs-trainers-widget]');
+    if (!loaderEl) return;
+    if (window.__mbsTrainersWidgetLoading) return;
+    window.__mbsTrainersWidgetLoading = true;
+
+    setTimeout(function () {
+      var state = loaderEl.querySelector('.mbs-master-doma-page__loader-state');
+      if (!state) return;
+      state.innerHTML = 'Информация о тренерах временно недоступна. ' +
+        '<a href="#consalt" style="color:#417033;font-weight:900;text-decoration:underline">Оставить заявку</a> — ' +
+        'менеджер расскажет о преподавателях.';
+    }, 12000);
+
+    loadScript(
+      'https://api.barista-school.ru/trainers-widget.js?v=20260609-stable',
+      'https://159-194-202-120.sslip.io/api-fallback/trainers-widget.js?v=20260609-stable'
+    );
+  }
+
+  function initGallery() {
+    var root = document.getElementById('mbs-hbw-root');
+    if (!root) return;
+    if (root.getAttribute('data-mbs-gallery-init')) return;
+    root.setAttribute('data-mbs-gallery-init', '1');
+    var galleryItems = [];
+    var activeAlbumIndex = 0;
+    var activePhotoIndex = 0;
+    var modal = null;
+
+    var urls = [
+      'https://api.barista-school.ru/api/homebrew-gallery.json',
+      'https://159-194-202-120.sslip.io/api-fallback/api/homebrew-gallery.json'
+    ];
+
+    function esc(value) {
+      return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function safeUrl(value, fallback) {
+      try {
+        var url = new URL(String(value || ''), window.location.href);
+        if (url.protocol !== 'https:' && url.protocol !== 'http:') return fallback || '';
+        return url.href;
+      } catch (error) {
+        return fallback || '';
+      }
+    }
+
+    function lh3Url(rawUrl, size) {
+      if (!rawUrl) return '';
+      var url = String(rawUrl).trim();
+      if (url.indexOf('lh3.googleusercontent.com') !== -1) {
+        url = url.replace(/=s\d+[^&]*/, '').replace(/[?#].*$/, '');
+        return url + '=s' + size;
+      }
+      return url;
+    }
+
+    function getCover(item) {
+      var firstPhoto = item && item.photos && item.photos[0];
+      var fromPhotos = typeof firstPhoto === 'string' ? firstPhoto : firstPhoto && firstPhoto.url;
+      return safeUrl(
+        lh3Url(item.cover_url || item.cover || item.image_url || fromPhotos || '', 800),
+        'https://static.tildacdn.com/tild3039-3832-4132-a637-633030376536/Asset_245.jpg'
+      );
+    }
+
+    function getPhotos(item) {
+      var raw = item && Array.isArray(item.photos) ? item.photos : [];
+      var photos = raw.map(function (photo) {
+        return safeUrl(lh3Url(typeof photo === 'string' ? photo : photo && photo.url, 1600));
+      }).filter(Boolean);
+      var cover = getCover(item);
+      if (!photos.length && cover) photos.push(cover);
+      return photos;
+    }
+
+    function getItemTitle(item) {
+      return item.title || item.name || item.topic || 'Домашнее заваривание';
+    }
+
+    function render(data) {
+      var items = data && Array.isArray(data.items) ? data.items.slice(0, 6) : [];
+      if (!items.length) {
+        root.innerHTML = '<div class="mbs-master-doma-page__gallery-empty">Фотоальбомы пока пусты.</div>';
+        return;
+      }
+      galleryItems = items;
+
+      var arrowLeft = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var arrowRight = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var html = '<div class="mbs-master-doma-page__gallery-scroll is-at-start">' +
+        '<button class="mbs-master-doma-page__gallery-control mbs-master-doma-page__gallery-control--prev" type="button" aria-label="Предыдущие фотоальбомы">' + arrowLeft + '</button>' +
+        '<div class="mbs-master-doma-page__gallery-list" tabindex="0" aria-label="Фотоальбомы мастер-класса. Листайте влево и вправо.">';
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i] || {};
+        var title = getItemTitle(item);
+        var date = item.date_label || item.date || '';
+        var text = item.description || item.subtitle || 'Фото с мастер-класса в Московской школе бариста.';
+        var cover = getCover(item);
+        html += '<article class="mbs-master-doma-page__gallery-card" role="button" tabindex="0" data-gallery-index="' + i + '" aria-label="Открыть фотоальбом: ' + esc(title) + '">' +
+          '<div class="mbs-master-doma-page__gallery-img-wrap">' +
+          '<img class="mbs-master-doma-page__gallery-img" src="' + esc(cover) + '" alt="' + esc(title) + '" loading="lazy" decoding="async" width="800" height="608">' +
+          '</div>' +
+          '<div class="mbs-master-doma-page__gallery-body">' +
+          (date ? '<span class="mbs-master-doma-page__gallery-date">' + esc(date) + '</span>' : '') +
+          '<h3 class="mbs-master-doma-page__gallery-title">' + esc(title) + '</h3>' +
+          '<p class="mbs-master-doma-page__gallery-text">' + esc(text) + '</p>' +
+          '</div>' +
+          '</article>';
+      }
+      html += '</div>' +
+        '<button class="mbs-master-doma-page__gallery-control mbs-master-doma-page__gallery-control--next" type="button" aria-label="Следующие фотоальбомы">' + arrowRight + '</button>' +
+        '</div>';
+      root.innerHTML = html;
+      initGalleryScroll(root);
+      initGalleryCards(root);
+    }
+
+    function initGalleryScroll(scope) {
+      var scroll = scope.querySelector('.mbs-master-doma-page__gallery-scroll');
+      var list = scope.querySelector('.mbs-master-doma-page__gallery-list');
+      var prev = scope.querySelector('.mbs-master-doma-page__gallery-control--prev');
+      var next = scope.querySelector('.mbs-master-doma-page__gallery-control--next');
+      if (!scroll || !list || !prev || !next) return;
+
+      function getStep() {
+        var card = list.querySelector('.mbs-master-doma-page__gallery-card');
+        if (!card) return Math.max(260, Math.round(list.clientWidth * 0.8));
+        var gap = parseFloat(window.getComputedStyle(list).columnGap || window.getComputedStyle(list).gap || '0') || 0;
+        return Math.round(card.getBoundingClientRect().width + gap);
+      }
+
+      function updateState() {
+        var max = Math.max(0, list.scrollWidth - list.clientWidth - 2);
+        var atStart = list.scrollLeft <= 2;
+        var atEnd = list.scrollLeft >= max;
+        scroll.classList.toggle('is-at-start', atStart);
+        scroll.classList.toggle('is-at-end', atEnd);
+        prev.disabled = atStart;
+        next.disabled = atEnd || max <= 0;
+      }
+
+      prev.addEventListener('click', function () {
+        list.scrollBy({ left: -getStep(), behavior: 'smooth' });
+      });
+
+      next.addEventListener('click', function () {
+        list.scrollBy({ left: getStep(), behavior: 'smooth' });
+      });
+
+      list.addEventListener('scroll', updateState, { passive: true });
+      window.addEventListener('resize', updateState);
+      setTimeout(updateState, 0);
+    }
+
+    function initGalleryCards(scope) {
+      var cards = scope.querySelectorAll('.mbs-master-doma-page__gallery-card');
+      Array.prototype.forEach.call(cards, function (card) {
+        card.addEventListener('click', function () {
+          var index = parseInt(card.getAttribute('data-gallery-index') || '0', 10);
+          openGalleryModal(index, 0);
+        });
+        card.addEventListener('keydown', function (event) {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          var index = parseInt(card.getAttribute('data-gallery-index') || '0', 10);
+          openGalleryModal(index, 0);
+        });
+      });
+    }
+
+    function ensureModal() {
+      if (modal) return modal;
+      modal = document.createElement('div');
+      modal.className = 'mbs-master-doma-gallery-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', 'Просмотр фотоальбома');
+      document.body.appendChild(modal);
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) closeGalleryModal();
+      });
+      return modal;
+    }
+
+    function openGalleryModal(albumIndex, photoIndex) {
+      activeAlbumIndex = Math.max(0, Math.min(albumIndex || 0, galleryItems.length - 1));
+      activePhotoIndex = Math.max(0, photoIndex || 0);
+      renderGalleryModal();
+      ensureModal().classList.add('is-open');
+      document.documentElement.style.overflow = 'hidden';
+      document.addEventListener('keydown', galleryKeyHandler);
+    }
+
+    function closeGalleryModal() {
+      if (!modal) return;
+      modal.classList.remove('is-open');
+      document.documentElement.style.overflow = '';
+      document.removeEventListener('keydown', galleryKeyHandler);
+    }
+
+    function galleryKeyHandler(event) {
+      if (event.key === 'Escape') closeGalleryModal();
+      if (event.key === 'ArrowLeft') showGalleryPhoto(activePhotoIndex - 1);
+      if (event.key === 'ArrowRight') showGalleryPhoto(activePhotoIndex + 1);
+    }
+
+    function showGalleryPhoto(index) {
+      var item = galleryItems[activeAlbumIndex] || {};
+      var photos = getPhotos(item);
+      if (!photos.length) return;
+      activePhotoIndex = Math.max(0, Math.min(index, photos.length - 1));
+      renderGalleryModal();
+    }
+
+    function renderGalleryModal() {
+      var item = galleryItems[activeAlbumIndex] || {};
+      var photos = getPhotos(item);
+      if (!photos.length) return;
+      activePhotoIndex = Math.max(0, Math.min(activePhotoIndex, photos.length - 1));
+      var title = getItemTitle(item);
+      var date = item.date_label || item.date || '';
+      var text = item.description || item.subtitle || '';
+      var closeIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+      var leftIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var rightIcon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      var thumbs = '';
+      if (photos.length > 1) {
+        thumbs = '<div class="mbs-master-doma-gallery-modal__thumbs">' + photos.slice(0, 24).map(function (photo, index) {
+          return '<button class="mbs-master-doma-gallery-modal__thumb' + (index === activePhotoIndex ? ' is-active' : '') + '" type="button" data-photo-index="' + index + '" aria-label="Показать фото ' + (index + 1) + '">' +
+            '<img src="' + esc(photo) + '" alt="" loading="lazy">' +
+            '</button>';
+        }).join('') + '</div>';
+      }
+
+      ensureModal().innerHTML =
+        '<div class="mbs-master-doma-gallery-modal__panel">' +
+          '<button class="mbs-master-doma-gallery-modal__close" type="button" aria-label="Закрыть">' + closeIcon + '</button>' +
+          '<div class="mbs-master-doma-gallery-modal__stage">' +
+            '<button class="mbs-master-doma-gallery-modal__nav mbs-master-doma-gallery-modal__nav--prev" type="button" aria-label="Предыдущее фото"' + (activePhotoIndex === 0 ? ' disabled' : '') + '>' + leftIcon + '</button>' +
+            '<img class="mbs-master-doma-gallery-modal__img" src="' + esc(photos[activePhotoIndex]) + '" alt="' + esc(title) + '">' +
+            '<button class="mbs-master-doma-gallery-modal__nav mbs-master-doma-gallery-modal__nav--next" type="button" aria-label="Следующее фото"' + (activePhotoIndex >= photos.length - 1 ? ' disabled' : '') + '>' + rightIcon + '</button>' +
+            '<div class="mbs-master-doma-gallery-modal__counter">' + (activePhotoIndex + 1) + ' / ' + photos.length + '</div>' +
+          '</div>' +
+          '<div class="mbs-master-doma-gallery-modal__body">' +
+            (date ? '<p class="mbs-master-doma-gallery-modal__date">' + esc(date) + '</p>' : '') +
+            '<h3 class="mbs-master-doma-gallery-modal__title">' + esc(title) + '</h3>' +
+            (text ? '<p class="mbs-master-doma-gallery-modal__text">' + esc(text) + '</p>' : '') +
+            thumbs +
+          '</div>' +
+        '</div>';
+
+      modal.querySelector('.mbs-master-doma-gallery-modal__close').addEventListener('click', closeGalleryModal);
+      var prev = modal.querySelector('.mbs-master-doma-gallery-modal__nav--prev');
+      var next = modal.querySelector('.mbs-master-doma-gallery-modal__nav--next');
+      prev.addEventListener('click', function () { showGalleryPhoto(activePhotoIndex - 1); });
+      next.addEventListener('click', function () { showGalleryPhoto(activePhotoIndex + 1); });
+      Array.prototype.forEach.call(modal.querySelectorAll('.mbs-master-doma-gallery-modal__thumb'), function (thumb) {
+        thumb.addEventListener('click', function () {
+          showGalleryPhoto(parseInt(thumb.getAttribute('data-photo-index') || '0', 10));
+        });
+      });
+    }
+
+    function loadGallery(index) {
+      var url = urls[index];
+      if (!url) {
+        root.innerHTML = '<div class="mbs-master-doma-page__gallery-empty">Фотоальбомы временно не загрузились.</div>';
+        return;
+      }
+
+      fetch(url, { cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('gallery status ' + response.status);
+          return response.json();
+        })
+        .then(render)
+        .catch(function () {
+          loadGallery(index + 1);
+        });
+    }
+
+    root.innerHTML = '<div class="mbs-master-doma-page__gallery-empty">Загружаем фотоальбомы...</div>';
+    loadGallery(0);
+  }
+
+  function init() {
+    updateSeo();
+    initFontGuard();
+    initSmoothScroll();
+    initTrainersWidget();
+    initGallery();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
