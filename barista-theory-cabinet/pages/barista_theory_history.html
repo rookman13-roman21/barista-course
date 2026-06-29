@@ -352,11 +352,11 @@
     <!-- ─── Тест ─────────────────────────────────────────────── -->
     <div class="mbs-quiz" id="mbs-quiz-history">
       <h2 class="mbs-quiz-title">Тест: «История кофе»</h2>
-      <p class="mbs-quiz-subtitle">11 вопросов · выберите один вариант ответа</p>
+      <p class="mbs-quiz-subtitle">10 вопросов · выберите один вариант ответа</p>
 
       <div class="mbs-quiz-progress">
         <div class="mbs-quiz-progress-bar"><div class="mbs-quiz-progress-fill" id="mbs-quiz-fill" style="width:0%"></div></div>
-        <span class="mbs-quiz-progress-text" id="mbs-quiz-counter">1 / 11</span>
+        <span class="mbs-quiz-progress-text" id="mbs-quiz-counter">1 / 10</span>
         <span class="mbs-quiz-progress-text" id="mbs-quiz-score-live" style="color:var(--mbs-green-dark);">✓ 0</span>
       </div>
 
@@ -404,7 +404,7 @@
         <p class="mbs-quiz-q-text">4. В каком веке кофе распространился в Йемене и Египте?</p>
         <div class="mbs-quiz-options">
           <div class="mbs-quiz-option" data-ans="0"><span class="mbs-quiz-option-key">A</span>В XII веке</div>
-          <div class="mbs-quiz-option" data-ans="1"><span class="mbs-quiz-option-key">B</span>В XV веке</div>
+          <div class="mbs-quiz-option" data-ans="1"><span class="mbs-quiz-option-key">B</span>В XVI веке</div>
           <div class="mbs-quiz-option" data-ans="2"><span class="mbs-quiz-option-key">C</span>В XVII веке</div>
           <div class="mbs-quiz-option" data-ans="3"><span class="mbs-quiz-option-key">D</span>В XIX веке</div>
         </div>
@@ -453,20 +453,7 @@
 
       <!-- Вопрос 8 -->
       <div class="mbs-quiz-question" data-q="7">
-        <p class="mbs-quiz-q-text">8. Когда открылась первая кофейня в Санкт-Петербурге?</p>
-        <div class="mbs-quiz-options">
-          <div class="mbs-quiz-option" data-ans="0"><span class="mbs-quiz-option-key">A</span>В 1714 году</div>
-          <div class="mbs-quiz-option" data-ans="1"><span class="mbs-quiz-option-key">B</span>В 1720 году</div>
-          <div class="mbs-quiz-option" data-ans="2"><span class="mbs-quiz-option-key">C</span>В 1812 году</div>
-          <div class="mbs-quiz-option" data-ans="3"><span class="mbs-quiz-option-key">D</span>В 1905 году</div>
-        </div>
-        <div class="mbs-quiz-feedback"></div>
-        <button class="mbs-quiz-next">Следующий вопрос →</button>
-      </div>
-
-      <!-- Вопрос 9 -->
-      <div class="mbs-quiz-question" data-q="8">
-        <p class="mbs-quiz-q-text">9. Как называлась система эспрессо-машины, представленная в 1961 году?</p>
+        <p class="mbs-quiz-q-text">8. Как называлась система эспрессо-машины, представленная в 1961 году?</p>
         <div class="mbs-quiz-options">
           <div class="mbs-quiz-option" data-ans="0"><span class="mbs-quiz-option-key">A</span>Moka Express</div>
           <div class="mbs-quiz-option" data-ans="1"><span class="mbs-quiz-option-key">B</span>Faema E61</div>
@@ -477,9 +464,9 @@
         <button class="mbs-quiz-next">Следующий вопрос →</button>
       </div>
 
-      <!-- Вопрос 10 -->
-      <div class="mbs-quiz-question" data-q="9">
-        <p class="mbs-quiz-q-text">10. Как применяли первый кофе?</p>
+      <!-- Вопрос 9 -->
+      <div class="mbs-quiz-question" data-q="8">
+        <p class="mbs-quiz-q-text">9. Как применяли первый кофе?</p>
         <div class="mbs-quiz-options">
           <div class="mbs-quiz-option" data-ans="0"><span class="mbs-quiz-option-key">A</span>Как десерт</div>
           <div class="mbs-quiz-option" data-ans="1"><span class="mbs-quiz-option-key">B</span>Как лекарственное и бодрящее средство</div>
@@ -490,9 +477,9 @@
         <button class="mbs-quiz-next">Следующий вопрос →</button>
       </div>
 
-      <!-- Вопрос 11 -->
-      <div class="mbs-quiz-question" data-q="10">
-        <p class="mbs-quiz-q-text">11. Как переводится слово «эспрессо»?</p>
+      <!-- Вопрос 10 -->
+      <div class="mbs-quiz-question" data-q="9">
+        <p class="mbs-quiz-q-text">10. Как переводится слово «эспрессо»?</p>
         <div class="mbs-quiz-options">
           <div class="mbs-quiz-option" data-ans="0"><span class="mbs-quiz-option-key">A</span>Быстрый</div>
           <div class="mbs-quiz-option" data-ans="1"><span class="mbs-quiz-option-key">B</span>Крепкий</div>
@@ -515,16 +502,15 @@
 
     <script>
     (function() {
-      var CORRECT = [1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 2];
+      var CORRECT = [1, 1, 2, 1, 0, 1, 1, 1, 1, 2];
       var FEEDBACK = [
         'Правильно! Кофе родом из Эфиопии — именно там, по легенде, пастух Калди заметил бодрость коз.',
         'Верно! Пастуха звали Калди — его коза первой попробовала кофейные ягоды.',
         'Верно! Монахи готовили из ягод напиток, чтобы не засыпать на ночных молитвах.',
-        'Правильно! В XV веке кофе активно распространился по Аравийскому полуострову.',
+        'Правильно! В XVI веке кофе активно распространился в Йемене и Египте.',
         'Верно! Первая европейская кофейня открылась в Венеции в 1645 году.',
         'Правильно! Кофейни стали центрами политических дискуссий, что беспокоило власти.',
         'Верно! Пётр I познакомился с кофе в Нидерландах и ввёл его в моду при дворе.',
-        'Правильно! Первая кофейня в Петербурге открылась в 1720 году по указу Петра I.',
         'Верно! Faema E61 — легендарная машина 1961 года с помпой на горячей воде.',
         'Правильно! Изначально кофе использовали как лекарство и бодрящее средство.',
         'Верно! «Эспрессо» означает «выжатый» или «приготовленный под давлением».',
@@ -533,11 +519,10 @@
         'Кофе родом не из Бразилии. Правильный ответ: Эфиопия.',
         'Это не то имя. Пастуха звали Калди.',
         'Монахи нашли другое применение. Они готовили бодрящий напиток для ночных молитв.',
-        'Не совсем. Кофе распространился в XV веке.',
+        'Не совсем. Правильный ответ: в XVI веке.',
         'Не угадали. Первой европейской страной была Италия.',
         'Причина была другой. Власти боялись политических разговоров в кофейнях.',
         'Не тот правитель. Кофе в Россию привёз Пётр I.',
-        'Не тот год. Первая кофейня в Петербурге открылась в 1720 году.',
         'Не та машина. Это была Faema E61.',
         'Не совсем. Первоначально кофе применяли как лекарство и бодрящее средство.',
         'Не то значение. «Эспрессо» — выжатый / приготовленный под давлением.',
