@@ -1,9 +1,8 @@
 # PROJECT STATE — prepay (Tilda Zero Block)
 
 > Страница: **baristaschool.ru/prepay**
-> Preview: **https://prepay-rosy.vercel.app**
-> Deploy: `run_task "shell: deploy-prepay"` → `vercel --prod`
-> **Деплоить только по явному разрешению пользователя**
+> Preview: ПКМ на `index.html` → Show Preview (VS Code Live Preview)
+> Продакшн: вставить `tilda-block.html` в Tilda Zero Block
 
 ---
 
@@ -13,7 +12,7 @@
 |------|-----------|
 | `tilda-block.html` | **Единственный рабочий файл** (~729 строк). Вставляется в Tilda как Zero Block |
 | `index.html` | Локальная обёртка для тестирования в браузере |
-| `vercel.json` | Конфиг деплоя |
+| `vercel.json` | Конфиг маршрутизации (cleanUrls / trailingSlash) — Vercel не используется |
 
 ---
 
