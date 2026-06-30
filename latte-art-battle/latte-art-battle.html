@@ -1256,27 +1256,8 @@
   }
   .mbs-latte-battle-judges__grid {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(320px, 390px);
-    gap: 18px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 0 2px 18px;
-    scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-color: rgba(65,112,51,.42) rgba(65,112,51,.12);
-    scrollbar-width: thin;
-  }
-  .mbs-latte-battle-judges__grid::-webkit-scrollbar {
-    height: 8px;
-  }
-  .mbs-latte-battle-judges__grid::-webkit-scrollbar-track {
-    border-radius: 999px;
-    background: rgba(65,112,51,.12);
-  }
-  .mbs-latte-battle-judges__grid::-webkit-scrollbar-thumb {
-    border-radius: 999px;
-    background: rgba(65,112,51,.42);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
   }
   .mbs-latte-battle-judge {
     overflow: hidden;
@@ -1288,7 +1269,6 @@
     transition: transform .2s ease, box-shadow .2s ease;
     font-family: inherit;
     color: inherit;
-    scroll-snap-align: start;
   }
   .mbs-latte-battle-judge:hover,
   .mbs-latte-battle-judge:focus-visible {
@@ -1296,7 +1276,7 @@
     box-shadow: 0 18px 42px rgba(31, 31, 31, .12);
   }
   .mbs-latte-battle-judge:focus { outline: none; }
-  .mbs-latte-battle-judge:focus-visible { outline: 3px solid var(--mbs-green-light); outline-offset: 3px; }
+  .mbs-latte-battle-judge:focus-visible { outline: none; }
   button.mbs-latte-battle-judge {
     display: block;
     width: 100%;
@@ -1304,7 +1284,7 @@
   }
   .mbs-latte-battle-judge__photo {
     aspect-ratio: 1 / 1.02;
-    height: clamp(300px, 31vw, 390px);
+    height: clamp(220px, 21vw, 270px);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -1322,11 +1302,11 @@
   .mbs-latte-battle-judge__body {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 16px;
   }
   .mbs-latte-battle-judge h3 {
     margin: 0 0 6px;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.25;
     font-weight: 900;
   }
@@ -1334,7 +1314,7 @@
     margin: 0 0 10px;
     min-height: 32px;
     color: var(--mbs-green-dark);
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.35;
     font-weight: 900;
     display: -webkit-box;
@@ -1343,16 +1323,7 @@
     overflow: hidden;
   }
   .mbs-latte-battle-judge p {
-    margin: 0;
-    min-height: 57px;
-    color: var(--mbs-gray);
-    font-size: 13px;
-    line-height: 1.45;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: none;
   }
   .mbs-latte-battle-judge__more {
     display: inline-flex;
@@ -2207,6 +2178,7 @@
       order: 3;
     }
     .mbs-latte-battle-partners__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mbs-latte-battle-judges__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .mbs-latte-battle-rules__box,
     .mbs-latte-battle-final__box,
     .mbs-latte-battle-faq__grid { grid-template-columns: 1fr; }
@@ -2364,7 +2336,7 @@
       transform: scale(1.75);
     }
     .mbs-latte-battle-judges__grid {
-      grid-auto-columns: minmax(260px, 82vw);
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
     }
     .mbs-latte-battle-judge {
@@ -3596,11 +3568,6 @@
       }
       return esc((judge.name || 'M').charAt(0));
     }
-    function judgePreview(text) {
-      var value = String(text || '').replace(/\s+/g, ' ').trim();
-      if (!value) return '';
-      return value.length > 130 ? value.slice(0, 130).trim() + '...' : value;
-    }
     var JUDGE_CARD_COPY = {
       'Анастасия Кадушкина': {
         role: 'Управляющая MBS',
@@ -3652,12 +3619,6 @@
       });
       if (!sections.experience.length && lines.length) sections.experience.push(lines[0]);
       return sections;
-    }
-    function judgeCardDescription(judge) {
-      var copy = judgeCardCopy(judge);
-      if (copy && copy.description) return copy.description;
-      var sections = judgeDescriptionSections(judge.description);
-      return judgePreview(sections.experience.join(' '));
     }
     function judgeSectionHtml(title, lines) {
       if (!lines || !lines.length) return '';
@@ -3711,7 +3672,6 @@
           '<div class="mbs-latte-battle-judge__body">' +
             '<h3>' + esc(judge.name) + '</h3>' +
             '<div class="mbs-latte-battle-judge__role">' + esc(judgeCardRole(judge)) + '</div>' +
-            '<p>' + esc(judgeCardDescription(judge)) + '</p>' +
             '<span class="mbs-latte-battle-judge__more">Подробнее</span>' +
           '</div>' +
         '</button>';
