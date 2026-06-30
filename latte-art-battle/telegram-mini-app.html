@@ -951,9 +951,14 @@
         if (key && !map[key]) map[key] = info;
       }
 
+      function timingPairNumber(value) {
+        var match = String(value || '').match(/\d+/);
+        return match ? Number(match[0]) : Number.POSITIVE_INFINITY;
+      }
+
       function participantTimingIndex(data) {
         var map = {};
-        (data.timings || []).forEach(function (section) {
+        (data.timings || []).forEach(function (section, sectionIndex) {
           if (!section || section.type === 'break') return;
           (section.rows || []).forEach(function (row, rowIndex) {
             var info = {
@@ -962,13 +967,34 @@
               section: timingTitle(section),
               prep: row.prep_time || '',
               performance: row.performance_time || '',
-              cleanup: row.cleanup_time || ''
+              cleanup: row.cleanup_time || '',
+              pairNumber: timingPairNumber(row.pair),
+              rowOrder: sectionIndex * 1000 + rowIndex
             };
-            addParticipantTiming(map, row.participant_a, info);
-            addParticipantTiming(map, row.participant_b, info);
+            addParticipantTiming(map, row.participant_a, Object.assign({ participantOrder: 0 }, info));
+            addParticipantTiming(map, row.participant_b, Object.assign({ participantOrder: 1 }, info));
           });
         });
         return map;
+      }
+
+      function sortParticipantsByTiming(items, timings) {
+        return items.map(function (item, originalIndex) {
+          var name = [item.first_name, item.last_name].filter(Boolean).join(' ') || 'Участник';
+          return {
+            item: item,
+            name: name,
+            timing: timings[normalizeParticipantName(name)],
+            originalIndex: originalIndex
+          };
+        }).sort(function (a, b) {
+          if (!!a.timing !== !!b.timing) return a.timing ? -1 : 1;
+          if (!a.timing || !b.timing) return a.originalIndex - b.originalIndex;
+          if (a.timing.pairNumber !== b.timing.pairNumber) return a.timing.pairNumber - b.timing.pairNumber;
+          if (a.timing.rowOrder !== b.timing.rowOrder) return a.timing.rowOrder - b.timing.rowOrder;
+          if (a.timing.participantOrder !== b.timing.participantOrder) return a.timing.participantOrder - b.timing.participantOrder;
+          return a.originalIndex - b.originalIndex;
+        });
       }
 
       function renderParticipantTiming(info) {
@@ -985,13 +1011,13 @@
       function renderParticipants(data) {
         var items = data.participants || [];
         var timings = participantTimingIndex(data);
-        var rows = items.length ? items.map(function (item, index) {
-          var name = [item.first_name, item.last_name].filter(Boolean).join(' ') || 'Участник';
-          var timing = timings[normalizeParticipantName(name)];
+        var sortedItems = sortParticipantsByTiming(items, timings);
+        var rows = sortedItems.length ? sortedItems.map(function (entry, index) {
+          var item = entry.item;
           return '<div class="participant">' +
             '<div class="participant__num">' + esc(index + 1) + '</div>' +
-            '<div class="participant__body"><div><strong>' + esc(name) + '</strong><span>' + esc(item.project_name || 'Проект не указан') + '</span></div>' +
-            renderParticipantTiming(timing) + '</div>' +
+            '<div class="participant__body"><div><strong>' + esc(entry.name) + '</strong><span>' + esc(item.project_name || 'Проект не указан') + '</span></div>' +
+            renderParticipantTiming(entry.timing) + '</div>' +
           '</div>';
         }).join('') : '<div class="card"><h3>Список скоро появится</h3><p>Участники появляются после подтверждения места.</p></div>';
         return '<section class="section" data-section="participants">' +
