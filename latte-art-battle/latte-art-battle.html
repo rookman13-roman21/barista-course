@@ -1256,8 +1256,27 @@
   }
   .mbs-latte-battle-judges__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(320px, 390px);
     gap: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 2px 18px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-color: rgba(65,112,51,.42) rgba(65,112,51,.12);
+    scrollbar-width: thin;
+  }
+  .mbs-latte-battle-judges__grid::-webkit-scrollbar {
+    height: 8px;
+  }
+  .mbs-latte-battle-judges__grid::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgba(65,112,51,.12);
+  }
+  .mbs-latte-battle-judges__grid::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(65,112,51,.42);
   }
   .mbs-latte-battle-judge {
     overflow: hidden;
@@ -1269,6 +1288,7 @@
     transition: transform .2s ease, box-shadow .2s ease;
     font-family: inherit;
     color: inherit;
+    scroll-snap-align: start;
   }
   .mbs-latte-battle-judge:hover,
   .mbs-latte-battle-judge:focus-visible {
@@ -2187,7 +2207,6 @@
       order: 3;
     }
     .mbs-latte-battle-partners__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .mbs-latte-battle-judges__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .mbs-latte-battle-rules__box,
     .mbs-latte-battle-final__box,
     .mbs-latte-battle-faq__grid { grid-template-columns: 1fr; }
@@ -2345,7 +2364,7 @@
       transform: scale(1.75);
     }
     .mbs-latte-battle-judges__grid {
-      grid-template-columns: minmax(0, 1fr);
+      grid-auto-columns: minmax(260px, 82vw);
       gap: 16px;
     }
     .mbs-latte-battle-judge {
@@ -3587,13 +3606,17 @@
         role: 'Управляющая MBS',
         description: '10+ лет в кофейной индустрии. Работала бариста, шеф-бариста, бренд-шеф и управляющей кофейных проектов.'
       },
-      'Елена Гущина': {
-        role: 'Судья национальных чемпионатов',
-        description: 'Судья национальных чемпионатов бариста с 2010 года. Бренд-бариста Лакталис, призёр российских чемпионатов.'
-      },
       'Владимир Матвейчук': {
         role: 'Сертифицированный судья latte-art',
         description: 'Сертифицированный судья latte-art LORD OF LATTE ART CHAMPIONSHIP. Эксперт по sensory skill и оценке рисунка.'
+      },
+      'Кристмас Ли': {
+        role: 'Сертифицированный судья чемпионатов Бариста',
+        description: 'Сертифицированный судья чемпионатов Бариста с 2019 года. Главный судья Dalla Corte Cup и Бариста Года.'
+      },
+      'Николай Хюпенен': {
+        role: 'Кофейный брокер и судья чемпионатов',
+        description: 'Кофейный брокер, владелец обжарки Obzharka.com, чемпион России по каптестингу, судья кофейных чемпионатов с 2004 года.'
       }
     };
     function judgeCardCopy(judge) {
