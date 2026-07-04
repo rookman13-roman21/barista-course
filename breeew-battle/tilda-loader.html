@@ -1,0 +1,85 @@
+<!-- MBS Breeew Battle — hosted loader for Tilda -->
+<div id="mbs-breeew-battle-hosted-root">
+  <section style="padding:56px 20px;font-family:Mulish,Arial,sans-serif;background:#fff;color:#1F1F1F">
+    <div style="max-width:960px;margin:0 auto">
+      <div style="display:inline-flex;margin:0 0 14px;padding:7px 16px;border-radius:999px;background:#E7F2E3;color:#417033;font-size:13px;line-height:1;font-weight:900">
+        Чемпионат по альтернативному завариванию кофе
+      </div>
+      <h1 style="margin:0 0 16px;font-size:42px;line-height:1.05;font-weight:900;letter-spacing:0">
+        MBS* Breeew battle — чемпионат по альтернативному завариванию кофе
+      </h1>
+      <p style="max-width:760px;margin:0 0 18px;color:#555;font-size:18px;line-height:1.5;font-weight:600">
+        Чемпионат Московской школы бариста по альтернативному завариванию кофе. Участники готовят напиток на Hario V60, выступают перед судьями и борются за призы от школы и партнёров.
+      </p>
+      <p style="margin:0;color:#1F1F1F;font-size:16px;line-height:1.5;font-weight:800">
+        Дата: 5 августа 2026, 10:00. Вступительный взнос: 3000 ₽. Место: скоро объявим.
+      </p>
+      <div style="margin-top:22px;color:#777;font-size:14px;line-height:1.4;font-weight:800">
+        Загружаем полную страницу чемпионата...
+      </div>
+    </div>
+  </section>
+  <noscript>
+    <section>
+      <h1>MBS* Breeew battle — чемпионат по альтернативному завариванию кофе</h1>
+      <p>Чемпионат Московской школы бариста по альтернативному завариванию кофе. Дата: 5 августа 2026, 10:00. Вступительный взнос: 3000 ₽. Место: скоро объявим.</p>
+      <p><a href="https://t.me/Moscow_barista_school">Написать в Telegram</a></p>
+    </section>
+  </noscript>
+</div>
+<script>
+  (function () {
+    var root = document.getElementById('mbs-breeew-battle-hosted-root');
+    if (!root) return;
+    var url = 'https://api.barista-school.ru/api/breeew-battle.html?v=20260530-1';
+    var LOAD_TIMEOUT_MS = 10000;
+
+    function runScripts(container) {
+      Array.prototype.slice.call(container.querySelectorAll('script')).forEach(function (oldScript) {
+        var script = document.createElement('script');
+        Array.prototype.slice.call(oldScript.attributes).forEach(function (attr) {
+          script.setAttribute(attr.name, attr.value);
+        });
+        script.text = oldScript.text || oldScript.textContent || '';
+        oldScript.parentNode.replaceChild(script, oldScript);
+      });
+    }
+
+    function fetchWithTimeout(requestUrl) {
+      var controller = window.AbortController ? new AbortController() : null;
+      var didTimeout = false;
+      var timeoutId;
+      var timeoutPromise = new Promise(function (_, reject) {
+        timeoutId = window.setTimeout(function () {
+          didTimeout = true;
+          if (controller) controller.abort();
+          reject(new Error('Timeout'));
+        }, LOAD_TIMEOUT_MS);
+      });
+      var fetchOptions = { cache: 'no-store' };
+      if (controller) fetchOptions.signal = controller.signal;
+      return Promise.race([fetch(requestUrl, fetchOptions), timeoutPromise]).then(function (response) {
+        window.clearTimeout(timeoutId);
+        return response;
+      }, function (error) {
+        window.clearTimeout(timeoutId);
+        if (didTimeout) throw new Error('Timeout');
+        throw error;
+      });
+    }
+
+    fetchWithTimeout(url)
+      .then(function (response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return response.text();
+      })
+      .then(function (html) {
+        root.innerHTML = html;
+        runScripts(root);
+      })
+      .catch(function (error) {
+        console.error('[mbs-breeew-battle] hosted block load failed', error);
+        root.innerHTML = `<div style="padding:56px 20px;text-align:center;font-family:Mulish,Arial,sans-serif;color:#1F1F1F"><div style="max-width:520px;margin:0 auto;padding:28px 22px;border:1px solid #E7F2E3;border-radius:16px;background:#F5F5F5"><div style="margin-bottom:8px;color:#CC2841;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.04em">Страница не загрузилась</div><div style="margin-bottom:10px;font-size:24px;line-height:1.2;font-weight:900">Напишите нам в Telegram</div><div style="margin-bottom:20px;color:#555;font-size:16px;line-height:1.45;font-weight:700">Мы поможем с регистрацией на чемпионат и ответим на вопросы.</div><a href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:999px;background:#417033;color:#fff;text-decoration:none;font-size:16px;font-weight:900">Написать в Telegram</a><div style="margin-top:14px"><button type="button" onclick="window.location.reload()" style="border:0;background:transparent;color:#417033;text-decoration:underline;font:inherit;font-size:14px;font-weight:800;cursor:pointer">Обновить страницу</button></div></div></div>`;
+      });
+  })();
+</script>
