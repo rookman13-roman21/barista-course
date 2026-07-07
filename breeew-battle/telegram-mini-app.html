@@ -701,6 +701,17 @@
       text-decoration: none;
     }
 
+    .faq__image {
+      display: block;
+      width: calc(100% - 28px);
+      max-height: 260px;
+      margin: 0 14px 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      object-fit: contain;
+    }
+
     .empty,
     .access {
       display: grid;
@@ -793,7 +804,7 @@
   <script>
     (function () {
       var API_URL = 'https://api.barista-school.ru/api/course-booking/breeew-battle/telegram-mini-app-data';
-      var MAP_URL = '';
+      var MAP_URL = 'https://yandex.ru/maps/org/moskovskaya_shkola_barista/206204133172/?ll=37.674068%2C55.774689&z=16';
       var REFRESH_INTERVAL_MS = 60 * 1000;
       var app = document.getElementById('app');
       var nav = document.getElementById('nav');
@@ -885,20 +896,23 @@
             renderHero(data, content) +
             '<div class="section__head"><h2>Что важно помнить</h2><p>Короткая версия правил перед днём чемпионата.</p></div>' +
             '<div class="card card--green"><h3>Для бариста от 18 лет</h3><p>Ограничения по опыту работы нет. Главное — готовность выступить по регламенту и приготовить напиток на Hario V60.</p></div>' +
-            '<div class="card"><h3>Формат</h3>' + list(['Соревнование проходит в 2 этапа.', 'Отборочный этап — пары участников и батлы на вылет.', 'На выступление: 4 минуты подготовки, 10 минут приготовления и 5 минут уборки станции.', 'Финал — личный зачёт с самопрезентацией, рецептом и описанием ожидаемого вкуса.']) + '</div>' +
+            '<div class="card"><h3>Формат</h3>' + list(['Жеребьёвку и индивидуальные тайминги выступлений отправим заранее.', 'Соревнование проходит в 2 этапа.', 'Отборочный этап — пары участников и батлы на вылет.', 'На выступление: 4 минуты подготовки, 10 минут приготовления и 5 минут уборки станции.', 'В финал проходят 10 участников. Перед финалом — 20 минут на рецепт и речь.', 'Финал — личный зачёт с самопрезентацией, рецептом и описанием ожидаемого вкуса.']) + '</div>' +
             '<div class="section__head"><h2>На чём выступаем</h2><p>Основные материалы и правила подготовки на чемпионате.</p></div>' +
             '<div class="participation">' +
               '<article class="asset-card">' +
-                '<div class="asset-card__body"><strong>Hario V60</strong><span>Все этапы проходят на воронке Hario V60 с бумажным фильтром организаторов.</span></div>' +
+                '<div class="asset-card__body"><strong>Hario V60 02</strong><span>Все этапы проходят на пластиковой воронке Hario V60 классического размера 02 и оригинальном отбелённом бумажном фильтре Hario.</span></div>' +
               '</article>' +
               '<article class="asset-card">' +
-                '<div class="asset-card__body"><strong>Зерно для подготовки</strong><span>После оплаты участнику подготовят и вышлют бокс с зерном для подготовки.</span></div>' +
+                '<div class="asset-card__body"><strong>Кофе</strong><span>250 г кофе №1 для подготовки и 100 г кофе №1 на первый этап относятся к одной партии обжарки. Кофе для дня выступления хранится замороженным до чемпионата.</span></div>' +
               '</article>' +
               '<article class="asset-card">' +
-                '<div class="asset-card__body"><strong>Своя вода</strong><span>Участник может использовать свою воду. Воду на площадке также предоставит партнёр.</span></div>' +
+                '<div class="asset-card__body"><strong>Своя вода и инструменты</strong><span>Можно использовать свою воду, кофемолку, чайник, весы, сито, Paragon, LilyDrip, рыхлители, ложки, спреи, блокнот и полотенца.</span></div>' +
+              '</article>' +
+              '<article class="asset-card">' +
+                '<div class="asset-card__body"><strong>Без замен</strong><span>Вспомогательные инструменты не должны заменять обязательную воронку, бумажный фильтр и чашку для подачи.</span></div>' +
               '</article>' +
             '</div>' +
-            '<div class="card"><h3>Как оцениваем</h3>' + list(['Первый этап проходит в парах и определяется слепой дегустацией.', 'В финале участник презентует рецепт, ожидаемый букет, баланс и тактильные ощущения.', 'Победитель финального этапа определяется по балльной системе оценки.']) + '</div>' +
+            '<div class="card"><h3>Как оцениваем</h3>' + list(['Первый этап проходит в парах и определяется слепой дегустацией.', 'Судьи оценивают букет, сладость, кислотность, тактильность, послевкусие и баланс.', 'Победитель финального этапа определяется по балльной системе оценки. При равенстве баллов приоритет у вкуса, затем у самопрезентации.']) + '</div>' +
           '</section>';
       }
 
@@ -958,9 +972,15 @@
         return map;
       }
 
+      function participantName(item) {
+        var firstName = String(item && item.first_name || '').trim();
+        var lastName = String(item && item.last_name || '').trim();
+        return [firstName, lastName].filter(Boolean).join(' ') || 'Участник';
+      }
+
       function sortParticipantsByTiming(items, timings) {
         return items.map(function (item, originalIndex) {
-          var name = [item.first_name, item.last_name].filter(Boolean).join(' ') || 'Участник';
+          var name = participantName(item);
           return {
             item: item,
             name: name,
@@ -1198,10 +1218,18 @@
         return '<section class="section" data-section="faq">' +
           '<div class="section__head"><h2>FAQ</h2><p>Короткие ответы по участию в чемпионате.</p></div>' +
           '<div class="faq">' + items.map(function (item) {
-            var mapLink = MAP_URL && /где проходит/i.test(String(item.q || ''))
-              ? '<a class="faq__link" href="' + esc(MAP_URL) + '" target="_blank" rel="noopener">Открыть карту</a>'
-              : '';
-            return '<details><summary>' + esc(item.q) + '</summary><p>' + textWithBreaks(item.a) + '</p>' + mapLink + '</details>';
+            var links = [];
+            if (MAP_URL && /где проходит/i.test(String(item.q || ''))) {
+              links.push('<a class="faq__link" href="' + esc(MAP_URL) + '" target="_blank" rel="noopener">Открыть карту</a>');
+            }
+            if (item.link_url) {
+              if (/\.(?:png|jpe?g|webp|gif)(?:\?|$)/i.test(String(item.link_url))) {
+                links.push('<img class="faq__image" src="' + esc(item.link_url) + '" alt="' + esc(item.link_label || item.q || 'Изображение') + '" loading="lazy">');
+              } else {
+                links.push('<a class="faq__link" href="' + esc(item.link_url) + '" target="_blank" rel="noopener">' + esc(item.link_label || 'Открыть ссылку') + '</a>');
+              }
+            }
+            return '<details><summary>' + esc(item.q) + '</summary><p>' + textWithBreaks(item.a) + '</p>' + links.join('') + '</details>';
           }).join('') + '</div>' +
         '</section>';
       }
