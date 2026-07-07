@@ -6,10 +6,7 @@
 (function () {
   var API_URL = 'https://api.barista-school.ru/api/coffee-accounting-webinar.json';
   var FALLBACK_API_URL = 'https://159-194-202-120.sslip.io/api/coffee-accounting-webinar.json';
-  var FALLBACK_EVENT_START_ISO = '2026-07-04T19:30:00+03:00';
-  var FALLBACK_DATE_LABEL = '4 июля';
-  var FALLBACK_TIME_LABEL = '19:30';
-  var FALLBACK_BOOKING_URL = 'https://b829827.yclients.com/company/453962/activity/info/44746455?o=m-1act2026-07-04aid44746455c1';
+  var DATE_PENDING_LABEL = 'Дата уточняется';
   var WAITING_LIST = '#waiting_list';
 
   function isSafeYclientsUrl(url) {
@@ -22,15 +19,15 @@
   }
 
   function getDateTimeLabel(data) {
-    var date = data.dateLabel || FALLBACK_DATE_LABEL;
-    var time = data.timeLabel || FALLBACK_TIME_LABEL;
-    return data.dateTimeLabel || (date && time ? date + ', ' + time : date || time || '');
+    var date = data.dateLabel || '';
+    var time = data.timeLabel || '';
+    return data.dateTimeLabel || (date && time ? date + ', ' + time : date || time || DATE_PENDING_LABEL);
   }
 
   function getEventStartMs(data) {
-    var value = data.eventStartIso || data.startDate || FALLBACK_EVENT_START_ISO;
+    var value = data.eventStartIso || data.startDate || '';
     var ms = new Date(value).getTime();
-    return isNaN(ms) ? new Date(FALLBACK_EVENT_START_ISO).getTime() : ms;
+    return isNaN(ms) ? null : ms;
   }
 
   function applyDateLabels(data) {
@@ -43,8 +40,10 @@
   }
 
   function updateMetaDescription(data) {
-    var date = data.dateLabel || FALLBACK_DATE_LABEL;
-    var description = 'Вебинар ' + date + ' для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.';
+    var date = data.dateLabel || '';
+    var description = date
+      ? 'Вебинар ' + date + ' для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.'
+      : 'Вебинар для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.';
     var nodes = [
       document.querySelector('meta[name="description"]'),
       document.querySelector('meta[property="og:description"]'),
@@ -86,10 +85,12 @@
     var buttons = document.querySelectorAll('.js-mbs-caw-booking');
     if (!buttons.length) return;
 
-    var isPast = data.isPast === true || Date.now() >= getEventStartMs(data);
-    var bookingUrl = data.bookingUrl || FALLBACK_BOOKING_URL;
+    var eventStartMs = getEventStartMs(data);
+    var hasEventStart = typeof eventStartMs === 'number';
+    var isPast = data.isPast === true || (hasEventStart && Date.now() >= eventStartMs);
+    var bookingUrl = data.bookingUrl || WAITING_LIST;
     var safeBookingUrl = isSafeYclientsUrl(bookingUrl) ? bookingUrl : WAITING_LIST;
-    var shouldWait = data.found === false || data.soldOut === true || isPast || safeBookingUrl === WAITING_LIST;
+    var shouldWait = data.found === false || data.soldOut === true || !hasEventStart || isPast || safeBookingUrl === WAITING_LIST;
 
     buttons.forEach(function (button) {
       if (shouldWait) {
@@ -104,6 +105,24 @@
         button.textContent = button.getAttribute('data-before-text') || 'Записаться на вебинар';
       }
     });
+  }
+
+  function handleBookingClick(event) {
+    var button = event.target && event.target.closest ? event.target.closest('.js-mbs-caw-booking') : null;
+    if (!button) return;
+
+    var href = button.getAttribute('href') || WAITING_LIST;
+    if (!isSafeYclientsUrl(href)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var opened = window.open(href, '_blank');
+    if (opened) {
+      opened.opener = null;
+    } else {
+      window.location.href = href;
+    }
   }
 
   function applyEventData(data) {
@@ -143,5 +162,7 @@
   } else {
     loadEventData();
   }
+
+  document.addEventListener('click', handleBookingClick, true);
 })();
 </script>

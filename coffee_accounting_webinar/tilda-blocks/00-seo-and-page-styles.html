@@ -15,7 +15,7 @@
       "@id": "https://baristaschool.ru/coffee_accounting_webinar#webpage",
       "url": "https://baristaschool.ru/coffee_accounting_webinar",
       "name": "Налоги и финансы в общепите в 2026 — вебинар для владельцев",
-      "description": "Вебинар 4 июля для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт в 2026 году.",
+      "description": "Вебинар для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт в 2026 году.",
       "inLanguage": "ru-RU",
       "isPartOf": {
         "@type": "WebSite",
@@ -41,9 +41,8 @@
       "@type": "Event",
       "@id": "https://baristaschool.ru/coffee_accounting_webinar#event",
       "name": "Налоги и финансы в общепите в 2026: как владельцу кофейни избежать штрафов, блокировок и финансового хаоса",
-      "description": "Практический вебинар 4 июля в 19:30 с главным бухгалтером и налоговым консультантом Андреем Лаврищевым для владельцев кофеен, кафе, ресторанов и пекарен.",
+      "description": "Практический вебинар с главным бухгалтером и налоговым консультантом Андреем Лаврищевым для владельцев кофеен, кафе, ресторанов и пекарен.",
       "image": "https://static.tildacdn.com/tild6266-6338-4136-b462-383734383864/image.png",
-      "startDate": "2026-07-04T19:30:00+03:00",
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "eventStatus": "https://schema.org/EventScheduled",
       "location": {
@@ -66,7 +65,7 @@
       },
       "offers": {
         "@type": "Offer",
-        "url": "https://b829827.yclients.com/company/453962/activity/info/44746455?o=m-1act2026-07-04aid44746455c1",
+        "url": "https://baristaschool.ru/coffee_accounting_webinar",
         "price": "5000",
         "priceCurrency": "RUB",
         "availability": "https://schema.org/InStock",
@@ -236,20 +235,33 @@
 
   .mbs-coffee-accounting-webinar__hero-wrap {
     --mbs-coffee-accounting-webinar-hero-image: url('https://static.tildacdn.com/tild6266-6338-4136-b462-383734383864/image.png');
+    position: relative;
     max-width: 1320px;
     margin: 0 auto;
     padding: 58px 64px;
     border: 8px solid var(--mbs-bg-green);
     border-radius: 28px;
     background:
-      linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 42%, rgba(255, 255, 255, 0.56) 66%, rgba(255, 255, 255, 0.14) 100%),
       var(--mbs-coffee-accounting-webinar-hero-image) right center / cover no-repeat,
       linear-gradient(135deg, #F7F7F7 0%, #FFFFFF 58%, #F8DDE1 100%);
     overflow: hidden;
     isolation: isolate;
   }
 
+  .mbs-coffee-accounting-webinar__hero-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 42%, rgba(255, 255, 255, 0.62) 66%, rgba(255, 255, 255, 0.20) 100%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.08));
+  }
+
   .mbs-coffee-accounting-webinar__hero-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.58fr);
     gap: 34px;
@@ -300,6 +312,8 @@
   }
 
   .mbs-coffee-accounting-webinar__actions {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-wrap: wrap;
     grid-column: 1;
@@ -326,6 +340,7 @@
     transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
     white-space: nowrap;
     overflow-wrap: anywhere;
+    pointer-events: auto;
   }
 
   .mbs-coffee-accounting-webinar__btn {

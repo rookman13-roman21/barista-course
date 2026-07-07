@@ -218,9 +218,12 @@ scripts/tilda-fetch.js
 - Продакшн URL: `https://baristaschool.ru/coffee_accounting_webinar`.
 - Tilda page: `https://tilda.ru/page/?pageid=148220666&projectid=1009188`.
 - Источник события: yClients activity `44746455` (`Вебинар | Бухгалтерия для кофеен`).
+- Актуальная дата на 7 июля 2026: `14 июля, 19:30`; дата берётся из публичного JSON, а не из статического HTML.
 - Публичный JSON синхронизации сейчас работает через fallback `https://159-194-202-120.sslip.io/api/coffee-accounting-webinar.json`; основной `https://api.barista-school.ru/api/coffee-accounting-webinar.json` пока отдаёт 404.
 - Sync находится в соседнем проекте `schedule-online/coffee-accounting-webinar-sync/` и развёрнут на `159.194.202.120` с cron каждые 5 минут.
 - Tilda-страница читает JSON в блоке `03`, обновляет дату/ссылку и переключает CTA на `#waiting_list`, если событие прошло, не найдено или мест нет.
+- Статический fallback даты — `Дата уточняется`; не возвращать конкретную дату в HTML/fallback JS, чтобы переносы в yClients не требовали правки Tilda-блоков.
+- Hero overlay живёт в блоке `00` как `.mbs-coffee-accounting-webinar__hero-wrap::before` с `pointer-events: none`; блок `03` страхует клик по `.js-mbs-caw-booking`.
 - Блок эксперта содержит фото Андрея Лаврищева, смысловые бейджи экспертности и раскрывающуюся карточку с местами работы и компетенциями.
 
 ### 4.11. Платформа для открытия кофейни `/open_cafe_app`
