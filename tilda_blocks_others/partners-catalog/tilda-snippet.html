@@ -86,7 +86,7 @@
       background: var(--mbs-white);
       color: var(--mbs-text);
       font: inherit;
-      font-size: 15px;
+      font-size: 16px;
       outline: none;
       padding: 0 14px;
     }
@@ -252,6 +252,10 @@
       text-transform: uppercase;
     }
 
+    .mbs-partners-listing__eyebrow:empty {
+      display: none;
+    }
+
     .mbs-partners-listing__topline {
       display: flex;
       flex-wrap: wrap;
@@ -261,17 +265,17 @@
     }
 
     .mbs-partners-listing__back {
-      min-height: 30px;
-      border: 1px solid var(--mbs-line);
+      min-height: 36px;
+      border: 1px solid rgba(65, 112, 51, .28);
       border-radius: 999px;
-      background: var(--mbs-white);
+      background: var(--mbs-mint);
       color: var(--mbs-green);
       cursor: pointer;
       font: inherit;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 900;
       line-height: 1;
-      padding: 6px 10px;
+      padding: 9px 14px;
     }
 
     .mbs-partners-listing__back:hover,
@@ -661,6 +665,11 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .mbs-partners-category,
+      .mbs-partners-category__content {
+        min-height: 220px;
+      }
+
       .mbs-partners__grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -704,16 +713,17 @@
 
       .mbs-partners-category {
         flex: 0 0 min(76vw, 280px);
-        min-height: 132px;
+        min-height: 220px;
         scroll-snap-align: start;
       }
 
       .mbs-partners-category__content {
-        min-height: 132px;
+        min-height: 220px;
+        padding: 18px;
       }
 
       .mbs-partners-category__name {
-        font-size: 16px;
+        font-size: 18px;
       }
 
       .mbs-partners-category__meta {
@@ -724,11 +734,12 @@
 
       .mbs-partners__filters {
         flex-wrap: nowrap;
+        justify-content: flex-start;
         gap: 6px;
         overflow-x: auto;
-        margin-left: -12px;
-        margin-right: -12px;
-        padding: 0 12px 8px;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 0 8px;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
       }
@@ -1418,7 +1429,7 @@
           return;
         }
         var title = categoryLabel(state.activeCategory);
-        els.sectionKicker.textContent = 'Выбранная категория';
+        els.sectionKicker.textContent = '';
         els.sectionTitle.textContent = title;
         els.sectionNote.textContent = categoryNotes[state.activeCategory] || 'Партнёры выбранного направления.';
       }
@@ -1426,7 +1437,7 @@
       function renderCards() {
         var partners = filteredPartners();
         els.count.textContent = partners.length
-          ? 'Показано партнёров: ' + partners.length
+          ? ''
           : 'Партнёры не найдены';
         els.updated.textContent = formatDate(state.data.updated_at);
         if (!partners.length) {
@@ -1463,7 +1474,7 @@
                 useful ? '<ul class="mbs-partners-card__list">' + useful + '</ul>' : '',
               '</div>',
               '<div class="mbs-partners-card__actions">',
-                '<button class="mbs-partners__btn mbs-partners__btn--ghost" type="button" data-partner-open="' + esc(partner.slug) + '">Детали</button>',
+                '<button class="mbs-partners__btn mbs-partners__btn--ghost" type="button" data-partner-open="' + esc(partner.slug) + '">Открыть карточку</button>',
                 cta,
               '</div>',
             '</article>'
