@@ -1028,6 +1028,10 @@
 
       var emptySearchSuggestions = ['кофемашина', 'касса', 'вода', 'посуда', 'молоко', 'сиропы'];
 
+      var seoBaseUrl = 'https://baristaschool.ru/all-partners';
+      var seoSiteName = 'Московская школа бариста';
+      var seoDefaultImage = 'https://api.barista-school.ru/partners-catalog/assets/categories/equipment.jpg';
+
       var categoryImages = {
         coffee: 'assets/categories/coffee-roasters.jpg',
         equipment: 'assets/categories/equipment.jpg',
@@ -1044,7 +1048,8 @@
         uniform: 'assets/categories/uniform.jpg',
         bar: 'assets/categories/bar-ergonomics.jpg',
         pos: 'assets/categories/pos-automation.jpg',
-        latteart: 'assets/categories/latte-art-tools.jpg'
+        latteart: 'assets/categories/latte-art-tools.jpg',
+        complex: 'assets/categories/complex-supplier.jpg'
       };
 
       function esc(value) {
@@ -1083,6 +1088,140 @@
         } catch (error) {
           return slug === 'all' ? window.location.pathname : '?category=' + encodeURIComponent(slug);
         }
+      }
+
+      function absoluteCategoryUrl(category) {
+        var slug = normalizeCategorySlug(category);
+        return slug === 'all' ? seoBaseUrl : seoBaseUrl + '?category=' + encodeURIComponent(slug);
+      }
+
+      function seoForCategory(category) {
+        var slug = normalizeCategorySlug(category);
+        var label = slug === 'all' ? 'Партнёры для открытия кофейни' : categoryLabel(slug);
+        var note = categoryNotes[slug] || 'Проверенные партнёры для запуска и развития кофейни.';
+        var description = slug === 'all'
+          ? 'Проверенные поставщики и сервисы для открытия кофейни: кофе, оборудование, вода, POS, посуда, расходники и услуги партнёров MBS.'
+          : label + ': ' + note + ' Список партнёров Московской школы бариста для запуска кофейни.';
+        var image = categoryImages[slug] ? assetUrl(categoryImages[slug]) : seoDefaultImage;
+        return {
+          title: slug === 'all'
+            ? 'Партнёры для открытия кофейни — Московская школа бариста'
+            : label + ' для кофейни — партнёры MBS',
+          description: description,
+          url: absoluteCategoryUrl(slug),
+          image: image
+        };
+      }
+
+      function setMeta(selector, attrs) {
+        var tag = document.head.querySelector(selector);
+        if (!tag) {
+          tag = document.createElement('meta');
+          document.head.appendChild(tag);
+        }
+        Object.keys(attrs).forEach(function (name) {
+          tag.setAttribute(name, attrs[name]);
+        });
+      }
+
+      function setCanonical(url) {
+        var link = document.head.querySelector('link[rel="canonical"]');
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'canonical';
+          document.head.appendChild(link);
+        }
+        link.href = url;
+      }
+
+      function partnerListForSeo(category) {
+        var slug = normalizeCategorySlug(category);
+        return (state.data.partners || []).filter(function (partner) {
+          return slug === 'all' || (partner.categories || []).indexOf(slug) !== -1;
+        });
+      }
+
+      function applySeo() {
+        var seo = seoForCategory(state.activeCategory);
+        var partners = partnerListForSeo(state.activeCategory);
+        document.title = seo.title;
+        setCanonical(seo.url);
+        setMeta('meta[name="description"]', { name: 'description', content: seo.description });
+        setMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow,max-image-preview:large' });
+        setMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+        setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: seoSiteName });
+        setMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'ru_RU' });
+        setMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
+        setMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
+        setMeta('meta[property="og:url"]', { property: 'og:url', content: seo.url });
+        setMeta('meta[property="og:image"]', { property: 'og:image', content: seo.image });
+        setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+        setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
+        setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });
+        setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: seo.image });
+        upsertStructuredData(seo, partners);
+      }
+
+      function upsertStructuredData(seo, partners) {
+        var script = document.head.querySelector('script[data-mbs-partners-schema]');
+        if (!script) {
+          script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.setAttribute('data-mbs-partners-schema', 'true');
+          document.head.appendChild(script);
+        }
+        var listItems = partners.slice(0, 30).map(function (partner, index) {
+          var item = {
+            '@type': 'Organization',
+            name: partner.name
+          };
+          if (partner.website_url) item.url = partner.website_url;
+          if (partner.logo_url) item.logo = partner.logo_url;
+          if (partner.summary) item.description = partner.summary;
+          return {
+            '@type': 'ListItem',
+            position: index + 1,
+            item: item
+          };
+        });
+        script.text = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'CollectionPage',
+              '@id': seo.url + '#webpage',
+              url: seo.url,
+              name: seo.title,
+              description: seo.description,
+              inLanguage: 'ru-RU',
+              isPartOf: {
+                '@type': 'WebSite',
+                name: seoSiteName,
+                url: 'https://baristaschool.ru/'
+              },
+              publisher: {
+                '@type': 'EducationalOrganization',
+                name: seoSiteName,
+                url: 'https://baristaschool.ru/'
+              }
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://baristaschool.ru/' },
+                { '@type': 'ListItem', position: 2, name: 'Партнёры', item: seoBaseUrl }
+              ].concat(state.activeCategory === 'all' ? [] : [
+                { '@type': 'ListItem', position: 3, name: categoryLabel(state.activeCategory), item: seo.url }
+              ])
+            },
+            {
+              '@type': 'ItemList',
+              name: seo.title,
+              numberOfItems: partners.length,
+              itemListElement: listItems
+            }
+          ]
+        });
       }
 
       function syncCategoryUrl(category, replace) {
@@ -1212,7 +1351,6 @@
       function filteredPartners() {
         return basePartners().filter(function (partner) {
           if (state.activeQuickFilter === 'special') return Boolean(partner.special_terms);
-          if (state.activeQuickFilter === 'website') return Boolean(partner.website_url || (partner.cta && partner.cta.url));
           return true;
         });
       }
@@ -1244,8 +1382,7 @@
         var partners = basePartners();
         return {
           all: partners.length,
-          special: partners.filter(function (partner) { return Boolean(partner.special_terms); }).length,
-          website: partners.filter(function (partner) { return Boolean(partner.website_url || (partner.cta && partner.cta.url)); }).length
+          special: partners.filter(function (partner) { return Boolean(partner.special_terms); }).length
         };
       }
 
@@ -1253,8 +1390,7 @@
         var counts = quickFilterCounts();
         var buttons = [
           { key: 'all', label: 'Все' },
-          { key: 'special', label: 'Со спецусловиями' },
-          { key: 'website', label: 'С сайтом' }
+          { key: 'special', label: 'Со спецусловиями' }
         ].map(function (item) {
           return '<button class="mbs-partners__filter' + (state.activeQuickFilter === item.key ? ' is-active' : '') + '" type="button" data-quick-filter="' + item.key + '">' +
             esc(item.label) + ' <span>' + counts[item.key] + '</span>' +
@@ -1336,6 +1472,7 @@
       }
 
       function render() {
+        applySeo();
         var showCategoryPicker = state.activeCategory === 'all' && !state.query.trim();
         els.categoriesPanel.hidden = !showCategoryPicker;
         if (showCategoryPicker) renderCategories();

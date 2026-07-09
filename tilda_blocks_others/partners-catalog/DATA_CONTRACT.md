@@ -106,6 +106,7 @@ https://api.barista-school.ru/api/partners.json
 
 - телефоны из CRM;
 - обычные email из CRM-поля `EMAIL`;
+- email-адреса, случайно вписанные в публичные текстовые поля;
 - внутренние условия, скидки, инструкции менеджеру;
 - Google Drive ссылки;
 - Bitrix24 / Bitrix Disk ссылки;
@@ -116,6 +117,8 @@ https://api.barista-school.ru/api/partners.json
 - webhook URL, токены и значения из `.env`.
 
 Новые описательные поля не используются. Если партнёру нужен email на сайте, это отдельное решение; обычный CRM-email не публикуется автоматически.
+
+Telegram и Instagram публикуются только как обычные публичные ссылки на доменах `t.me`, `telegram.me` и `instagram.com`. Ссылки на `web.telegram.org` и другие web-клиентские URL не публикуются.
 
 ## Frontend fallback
 
