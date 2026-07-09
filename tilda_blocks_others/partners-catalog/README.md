@@ -76,13 +76,20 @@ partners-catalog.html?category=water
 scp tilda_blocks_others/partners-catalog/hosted-partners-catalog.html root@5.35.93.225:/var/www/html/api/partners-catalog.html
 ```
 
-После правок данных в Битрикс:
+После правок данных в Битрикс production JSON обновляет cron на сервере:
+
+```text
+/etc/cron.d/mbs-public-partners
+```
+
+Локально можно пересобрать только безопасный `mock/partners.json` для проверки интерфейса:
 
 ```bash
 cd /Users/Romka/Downloads/All_Code/bitrix-tools
 .venv/bin/python scripts/export_public_partners.py --output ../barista-course/tilda_blocks_others/partners-catalog/mock/partners.json
-scp ../barista-course/tilda_blocks_others/partners-catalog/mock/partners.json root@5.35.93.225:/var/www/html/api/partners.json
 ```
+
+Не выкладывать `mock/partners.json` вручную в production: живой `/api/partners.json` должен писать серверный cron из актуального Битрикс-экспорта.
 
 Если менялись изображения категорий:
 

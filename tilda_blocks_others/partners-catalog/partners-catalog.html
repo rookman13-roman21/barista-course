@@ -1399,10 +1399,21 @@
 
       function renderFilters() {
         var counts = quickFilterCounts();
-        var buttons = [
-          { key: 'all', label: 'Все' },
-          { key: 'special', label: 'Со спецусловиями' }
-        ].map(function (item) {
+        if (counts.all <= 1) {
+          state.activeQuickFilter = 'all';
+          els.filters.innerHTML = '';
+          return;
+        }
+        if (state.activeQuickFilter === 'special' && !counts.special) {
+          state.activeQuickFilter = 'all';
+        }
+        var items = [
+          { key: 'all', label: 'Все' }
+        ];
+        if (counts.special) {
+          items.push({ key: 'special', label: 'Со спецусловиями' });
+        }
+        var buttons = items.map(function (item) {
           return '<button class="mbs-partners__filter' + (state.activeQuickFilter === item.key ? ' is-active' : '') + '" type="button" data-quick-filter="' + item.key + '">' +
             esc(item.label) + ' <span>' + counts[item.key] + '</span>' +
           '</button>';
