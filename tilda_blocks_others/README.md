@@ -26,6 +26,20 @@
   - yClients управляет видимостью через `specialization` со словом `тренер`, отзывами и описанием `staff.information`;
   - фото, порядок и скрытие управляются через `trainers/overrides.json` на backend-стороне.
 
+- `partners-catalog/` — публичный каталог партнёров для `https://baristaschool.ru/all-partners`:
+  - в Tilda один раз вставляется короткий loader `tilda-loader.html`;
+  - актуальная вёрстка грузится с hosted HTML `https://api.barista-school.ru/api/partners-catalog.html`;
+  - `hosted-partners-catalog.html` — исходник hosted HTML для деплоя в `/var/www/html/api/partners-catalog.html`;
+  - `partners-catalog.html` — локальный прототип с поиском, категориями и подробными карточками;
+  - данные берутся из публичного JSON `https://api.barista-school.ru/api/partners.json`;
+  - изображения категорий отдаются с `https://api.barista-school.ru/partners-catalog/assets/categories/...`;
+  - read-only JSON собирает `bitrix-tools/scripts/export_public_partners.py` из компаний Битрикс `COMPANY_TYPE=PARTNER`;
+  - в Битрикс используются три публичных поля: разрешение публикации, описание партнёра и чем он полезен при открытии кофейни;
+  - в публичный JSON нельзя отдавать телефоны, CRM-email, внутренние условия, Drive/Bitrix-ссылки, служебные ID и `UF_CRM_*` ключи напрямую;
+  - `/all-partners` показывает категории, `/all-partners?category=...` показывает список компаний выбранной категории без сетки категорий;
+  - поиск на странице категории ищет внутри категории и не сбрасывает пользователя обратно ко всем категориям;
+  - локальный `mock/partners.json` нужен только для прототипа и проверки интерфейса.
+
 - `capping/` — оценочные листы каппинга:
   - `cupping-score-sheet-loader.html` + `cupping-score-sheet.html` — оценочный лист из личного кабинета;
   - `public-cupping-score-sheet-loader.html` + `public-cupping-score-sheet.html` — публичный оценочный лист каппинга;

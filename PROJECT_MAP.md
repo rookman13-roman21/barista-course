@@ -80,6 +80,7 @@ barista-course/
 | 404 | `404/tilda-block.html` | `404/index.html` |
 | Универсальный блок тренеров | `tilda_blocks_others/trainers-widget/tilda-block.html` | hosted: `https://api.barista-school.ru/api/trainers-widget.html` |
 | Публичный оценочный лист каппинга | `tilda_blocks_others/capping/public-cupping-score-sheet-loader.html` | hosted: `https://api.barista-school.ru/api/public-cupping-score-sheet.html` |
+| Каталог партнёров | `tilda_blocks_others/partners-catalog/tilda-loader.html` | hosted: `https://api.barista-school.ru/api/partners-catalog.html` |
 
 ### Правило двух файлов
 В большинстве проектов существуют **два файла**:
@@ -138,6 +139,21 @@ scripts/tilda-fetch.js
 - Данные: `https://api.barista-school.ru/api/trainers.json`.
 - Backend/cron находится в соседнем проекте `schedule-online/basic-barista-booking/scripts/update_trainers.py`.
 - Логика показа: сотрудник попадает в блок, если в yClients `specialization` содержит `тренер`, не скрыт в overrides, фото берётся только из overrides, отзывы привязываются по `master_id`, описание берётся из `staff.information`.
+
+### 4.4.1. Каталог партнёров
+- Локальный проект: `tilda_blocks_others/partners-catalog/`.
+- Продакшн-страница: `https://baristaschool.ru/all-partners`.
+- В Tilda вставляется один раз короткий loader `tilda_blocks_others/partners-catalog/tilda-loader.html`.
+- Актуальная вёрстка, CSS и JS подгружаются с hosted HTML `https://api.barista-school.ru/api/partners-catalog.html`; правки интерфейса деплоить на сервер в `/var/www/html/api/partners-catalog.html`, Tilda после установки loader не трогать.
+- Исходник hosted HTML: `tilda_blocks_others/partners-catalog/hosted-partners-catalog.html`; локальный прототип: `partners-catalog.html`; `tilda-snippet.html` оставлен как архивный полный вариант для ручной вставки.
+- Данные страницы: `https://api.barista-school.ru/api/partners.json`.
+- Изображения категорий: `https://api.barista-school.ru/partners-catalog/assets/categories/...`, исходники лежат в `tilda_blocks_others/partners-catalog/assets/categories/`.
+- URL-логика: `/all-partners` показывает карточки категорий; `/all-partners?category=equipment` показывает отдельный вид категории сразу со списком компаний, без большой сетки категорий; кнопка `← Все категории` возвращает на `/all-partners`.
+- Поиск внутри выбранной категории не должен сбрасывать категорию и URL; после очистки поля пользователь остаётся в выбранной категории.
+- Backend-экспорт находится в соседнем проекте `bitrix-tools/scripts/export_public_partners.py`.
+- Источник в Битрикс: компании `COMPANY_TYPE=PARTNER`; новые поля — `Разрешить публикацию на сайте` (`UF_CRM_MBS_PARTNER_PUBLISH`), `Публичная заметка / описание партнёра` (`UF_CRM_MBS_PARTNER_PUBLIC_DESCRIPTION`) и `Чем полезен при открытии кофейни` (`UF_CRM_MBS_PARTNER_USEFUL_FOR`); остальные данные берутся из существующих полей `TITLE`, `LOGO`, `WEB`, Telegram `UF_CRM_1755378655628`, Instagram `UF_CRM_1766177865141`.
+- В публичный JSON не отдавать телефоны, обычные CRM-email, внутренние условия, Drive/Bitrix-ссылки, служебные ID и `UF_CRM_*` ключи напрямую.
+- Настройка поля публикации, подсказки userfields и контракт описаны в `tilda_blocks_others/partners-catalog/DATA_CONTRACT.md` и `bitrix-tools/docs/public-partners-catalog.md`.
 
 ### 4.5. Онлайн-запись базового курса
 - Popup-обвязка страницы курса находится в `barista-courses/tilda-blocks/09-online-booking-popup.html`.
