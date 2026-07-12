@@ -1,0 +1,533 @@
+{
+  "updated_at": "2026-07-09T12:48:43.871605+00:00",
+  "categories": {
+    "coffee": "Кофе и обжарка",
+    "equipment": "Оборудование",
+    "water": "Вода и фильтрация",
+    "milk": "Молоко и альтернативное молоко",
+    "pos": "POS, учет и автоматизация",
+    "bar": "Бар, мебель и эргономика",
+    "tableware": "Посуда и сервировка",
+    "uniform": "Форма и текстиль",
+    "chemical": "Химия для кофемашин",
+    "ice": "Лёд",
+    "drinks": "Напитки",
+    "spices": "Специи и сиропы",
+    "cacao": "Какао и шоколад",
+    "matcha": "Матча",
+    "food": "Готовая еда и десерты",
+    "latteart": "Инвентарь для латте-арт",
+    "complex": "Комплексный поставщик",
+    "consumables": "Расходники и ингредиенты",
+    "consulting": "Обучение и консалтинг",
+    "other": "Другое для кофейни"
+  },
+  "partners": [
+    {
+      "slug": "barista-gear",
+      "name": "Barista gear",
+      "categories": [
+        "equipment"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fbaristagear.ru%2F&sz=128",
+      "summary": "Barista gear поставляет профессиональное оборудование, посуду и инвентарь для HoReCa с быстрыми отгрузками и сервисной поддержкой.",
+      "description": "Barista gear поставляет профессиональное оборудование, посуду и инвентарь для HoReCa с быстрыми отгрузками и сервисной поддержкой.",
+      "useful_for": [
+        "подобрать кофейное и барное оборудование под формат",
+        "закрыть посуду, инвентарь и аксессуары для запуска",
+        "организовать поставку, гарантию и сервисное сопровождение"
+      ],
+      "website_url": "https://baristagear.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://baristagear.ru/"
+      }
+    },
+    {
+      "slug": "barista-line",
+      "name": "Barista line",
+      "categories": [
+        "chemical"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fbaristaline.ru%2F&sz=128",
+      "summary": "Barista Line производит профессиональные средства для очистки кофемашин, кофейного оборудования и кухонных зон.",
+      "description": "Barista Line производит профессиональные средства для очистки кофемашин, кофейного оборудования и кухонных зон.",
+      "useful_for": [
+        "поддерживать кофемашину и инвентарь в рабочем состоянии",
+        "удалять кофейные масла, накипь и загрязнения",
+        "закрыть регулярную закупку кофейной химии для команды"
+      ],
+      "website_url": "https://baristaline.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://baristaline.ru/"
+      }
+    },
+    {
+      "slug": "cafestore",
+      "name": "CafeStore",
+      "categories": [
+        "complex"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fcafe.store&sz=128",
+      "summary": "CafeStore помогает кофейне собрать закупки и сервисы в одном месте: зерно, молоко, расходники, десерты, оборудование и операционные решения.",
+      "description": "CafeStore помогает кофейне собрать закупки и сервисы в одном месте: зерно, молоко, расходники, десерты, оборудование и операционные решения.",
+      "useful_for": [
+        "закупить основные позиции для старта кофейни у одного поставщика",
+        "сократить время на поиск подрядчиков и согласование условий",
+        "подключить дополнительные сервисы для учёта и операционной работы"
+      ],
+      "website_url": "https://cafe.store",
+      "instagram_url": "https://www.instagram.com/cafestore.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://cafe.store"
+      }
+    },
+    {
+      "slug": "carimali",
+      "name": "Carimali",
+      "categories": [
+        "equipment"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fcarimali.ru&sz=128",
+      "summary": "Carimali — официальный дистрибьютор профессиональных кофемашин, кофемолок и аксессуаров для кофеен и HoReCa.",
+      "description": "Carimali — официальный дистрибьютор профессиональных кофемашин, кофемолок и аксессуаров для кофеен и HoReCa.",
+      "useful_for": [
+        "подобрать рожковую или автоматическую кофемашину под формат",
+        "укомплектовать кофейную зону кофемолкой и аксессуарами",
+        "получить сервис, гарантию и консультацию по оборудованию"
+      ],
+      "website_url": "https://carimali.ru",
+      "telegram_url": "https://t.me/carimalirussia",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://carimali.ru"
+      }
+    },
+    {
+      "slug": "gourmet-style",
+      "name": "GOURMET STYLE",
+      "categories": [
+        "equipment"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fgourmetstyle.ru%2F&sz=128",
+      "summary": "GOURMET STYLE помогает подобрать оборудование и технические решения для запуска кофейни.",
+      "description": "GOURMET STYLE помогает подобрать оборудование и технические решения для запуска кофейни.",
+      "useful_for": [
+        "подобрать оборудование под формат и бюджет",
+        "сравнить решения для кофейной зоны и кухни",
+        "подготовить техническую основу для открытия"
+      ],
+      "website_url": "https://gourmetstyle.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://gourmetstyle.ru/"
+      }
+    },
+    {
+      "slug": "hi-water",
+      "name": "Hi water",
+      "categories": [
+        "water"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fhiwater.ru%2F&sz=128",
+      "summary": "HIWATER подбирает системы фильтрации воды для кофеен и ресторанов на основе обратного осмоса, реминерализации и нанофильтрации.",
+      "description": "HIWATER подбирает системы фильтрации воды для кофеен и ресторанов на основе обратного осмоса, реминерализации и нанофильтрации.",
+      "useful_for": [
+        "проанализировать воду на объекте",
+        "подобрать фильтрацию для стабильного вкуса кофе",
+        "снизить риск накипи и защитить кофейное оборудование"
+      ],
+      "special_terms": "Скидка 10% на первый заказ по промокоду «MoscowBaristaSchool» (для новых клиентов)",
+      "website_url": "https://hiwater.ru/",
+      "telegram_url": "https://t.me/hihiwater",
+      "instagram_url": "https://www.instagram.com/hiwatersystem/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://hiwater.ru/"
+      }
+    },
+    {
+      "slug": "horeca-machines",
+      "name": "Horeca Machines",
+      "categories": [
+        "equipment"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.horeca-machines.com%2F&sz=128",
+      "summary": "Horeca Machines помогает подобрать профессиональное оборудование для кофейни, бара и кухни.",
+      "description": "Horeca Machines помогает подобрать профессиональное оборудование для кофейни, бара и кухни.",
+      "useful_for": [
+        "укомплектовать кофейную и барную зону",
+        "сравнить оборудование под бюджет и проходимость",
+        "подготовить поставку техники к открытию"
+      ],
+      "website_url": "https://www.horeca-machines.com/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://www.horeca-machines.com/"
+      }
+    },
+    {
+      "slug": "iiko",
+      "name": "Iiko",
+      "categories": [
+        "pos"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fiiko.ru&sz=128",
+      "summary": "iiko — система автоматизации для кафе, кофеен, баров и ресторанов: касса, склад, техкарты, аналитика, доставка и лояльность.",
+      "description": "iiko — система автоматизации для кафе, кофеен, баров и ресторанов: касса, склад, техкарты, аналитика, доставка и лояльность.",
+      "useful_for": [
+        "настроить кассу и учёт продаж",
+        "вести склад, техкарты и себестоимость",
+        "подключить аналитику, доставку и программы лояльности"
+      ],
+      "website_url": "https://iiko.ru",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://iiko.ru"
+      }
+    },
+    {
+      "slug": "insane-latte-art",
+      "name": "Insane latte art",
+      "categories": [
+        "latteart"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Finsanelatteart.ru%2F&sz=128",
+      "summary": "INSANE LATTE ART делает продукты для тренировки латте-арт: концентрат для взбивания, обучающие карточки и материалы для бариста.",
+      "description": "INSANE LATTE ART делает продукты для тренировки латте-арт: концентрат для взбивания, обучающие карточки и материалы для бариста.",
+      "useful_for": [
+        "тренировать латте-арт без большого расхода молока",
+        "дать команде понятные материалы для отработки рисунков",
+        "поддержать обучение бариста и подготовку к чемпионатам"
+      ],
+      "website_url": "https://insanelatteart.ru/",
+      "telegram_url": "https://t.me/insane_latte_art",
+      "instagram_url": "https://www.instagram.com/insane_latte_art/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://insanelatteart.ru/"
+      }
+    },
+    {
+      "slug": "ledocool",
+      "name": "Ledocool",
+      "categories": [
+        "ice"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fledocool.ru%2F&sz=128",
+      "summary": "Ledocool производит и доставляет пищевой лёд, сухой лёд, барное стекло и инвентарь для баров, кафе и мероприятий.",
+      "description": "Ledocool производит и доставляет пищевой лёд, сухой лёд, барное стекло и инвентарь для баров, кафе и мероприятий.",
+      "useful_for": [
+        "закрыть лёд для холодных напитков и коктейлей",
+        "организовать доставку льда для кофейни или события",
+        "подобрать барное стекло и сопутствующий инвентарь"
+      ],
+      "website_url": "https://ledocool.ru/",
+      "instagram_url": "https://www.instagram.com/ledocool",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://ledocool.ru/"
+      }
+    },
+    {
+      "slug": "mowe",
+      "name": "Mowe",
+      "categories": [
+        "tableware"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fmowe-chaika.ru&sz=128",
+      "summary": "Mowe помогает закрыть посуду и сопутствующие позиции для подачи напитков и работы кофейни.",
+      "description": "Mowe помогает закрыть посуду и сопутствующие позиции для подачи напитков и работы кофейни.",
+      "useful_for": [
+        "подобрать посуду под стиль кофейни",
+        "закрыть позиции для сервиса и витрины",
+        "собрать аккуратную подачу напитков и десертов"
+      ],
+      "website_url": "https://mowe-chaika.ru",
+      "instagram_url": "https://www.instagram.com/mowe_chaika/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://mowe-chaika.ru"
+      }
+    },
+    {
+      "slug": "notails",
+      "name": "NoTails",
+      "categories": [
+        "spices"
+      ],
+      "summary": "NoTails помогает закрыть сопутствующие расходные позиции для кофейного бара.",
+      "description": "NoTails помогает закрыть сопутствующие расходные позиции для кофейного бара.",
+      "useful_for": [
+        "подобрать расходники для ежедневной работы",
+        "закрыть недостающие позиции перед открытием",
+        "собрать базовый набор для стабильной операционной работы"
+      ]
+    },
+    {
+      "slug": "planto",
+      "name": "Planto",
+      "categories": [
+        "milk"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fhnrus.com%2Fbeverages%2F&sz=128",
+      "summary": "Planto For Professionals — растительные напитки, созданные для бариста: для капучино, латте и стабильной молочной пены.",
+      "description": "Planto For Professionals — растительные напитки, созданные для бариста: для капучино, латте и стабильной молочной пены.",
+      "useful_for": [
+        "добавить растительные напитки в кофейное меню",
+        "получать стабильную пену для капучино и латте",
+        "закрыть альтернативу молоку для гостей кофейни"
+      ],
+      "website_url": "https://hnrus.com/beverages/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://hnrus.com/beverages/"
+      }
+    },
+    {
+      "slug": "quick-resto",
+      "name": "Quick Resto",
+      "categories": [
+        "pos"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fquickresto.ru%2F&sz=128",
+      "summary": "Quick Resto — платформа автоматизации для кофейни: кассовый терминал, склад, меню, техкарты, CRM, аналитика и доставка.",
+      "description": "Quick Resto — платформа автоматизации для кофейни: кассовый терминал, склад, меню, техкарты, CRM, аналитика и доставка.",
+      "useful_for": [
+        "запустить кассу и продажи с первого дня",
+        "вести меню, склад и техкарты в одной системе",
+        "подключить доставку, лояльность и управленческие отчёты"
+      ],
+      "website_url": "https://quickresto.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://quickresto.ru/"
+      }
+    },
+    {
+      "slug": "rocket-tonic",
+      "name": "Rocket Tonic",
+      "categories": [
+        "drinks"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Frocket-tonic.com%2F&sz=128",
+      "summary": "Rocket Tonic производит тоники, лимонады и кордиалы для напитков, коктейлей и авторского меню.",
+      "description": "Rocket Tonic производит тоники, лимонады и кордиалы для напитков, коктейлей и авторского меню.",
+      "useful_for": [
+        "расширить меню холодных напитков и коктейлей",
+        "подобрать тоники, лимонады и кордиалы для бара",
+        "закрыть B2B-поставку напитков для кофейни"
+      ],
+      "website_url": "https://rocket-tonic.com/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://rocket-tonic.com/"
+      }
+    },
+    {
+      "slug": "rockets-coffee",
+      "name": "Rockets.coffee",
+      "categories": [
+        "coffee"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Frockets.coffee%2F&sz=128",
+      "summary": "Rockets.coffee помогает кофейням с подбором и поставкой свежеобжаренного кофе для стабильной работы меню.",
+      "description": "Rockets.coffee помогает кофейням с подбором и поставкой свежеобжаренного кофе для стабильной работы меню.",
+      "useful_for": [
+        "подобрать зерно под формат кофейни",
+        "собрать регулярные поставки кофе",
+        "обсудить B2B-заказ для запуска или обновления меню"
+      ],
+      "special_terms": "Скидка 10% на первый заказ",
+      "website_url": "https://rockets.coffee/",
+      "telegram_url": "https://t.me/rocketscoffee",
+      "instagram_url": "https://www.instagram.com/rockets.roasters/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://rockets.coffee/"
+      }
+    },
+    {
+      "slug": "tasty-coffee",
+      "name": "Tasty coffee",
+      "categories": [
+        "coffee"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fshop.tastycoffee.ru%2F&sz=128",
+      "summary": "Tasty Coffee ежедневно обжаривает кофе и предлагает зерно для эспрессо, фильтра и оптовых поставок.",
+      "description": "Tasty Coffee ежедневно обжаривает кофе и предлагает зерно для эспрессо, фильтра и оптовых поставок.",
+      "useful_for": [
+        "подобрать кофе для эспрессо и фильтра",
+        "организовать регулярные поставки свежеобжаренного зерна",
+        "получить ассортимент под разные вкусовые профили меню"
+      ],
+      "website_url": "https://shop.tastycoffee.ru/",
+      "telegram_url": "https://t.me/roastedinizhevsk",
+      "instagram_url": "https://www.instagram.com/tastycoffeeroasters/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://shop.tastycoffee.ru/"
+      }
+    },
+    {
+      "slug": "unicava",
+      "name": "Unicava",
+      "categories": [
+        "cacao"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.cacava-opt.ru%2F&sz=128",
+      "summary": "Unicava помогает закрыть какао, шоколадные и сопутствующие ингредиенты для напитков и десертов.",
+      "description": "Unicava помогает закрыть какао, шоколадные и сопутствующие ингредиенты для напитков и десертов.",
+      "useful_for": [
+        "подобрать какао и шоколадные позиции для меню",
+        "расширить карту горячих и холодных напитков",
+        "закрыть ингредиенты для десертов и витрины"
+      ],
+      "website_url": "https://www.cacava-opt.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://www.cacava-opt.ru/"
+      }
+    },
+    {
+      "slug": "vkusov-lab",
+      "name": "Вкусов Лаб",
+      "categories": [
+        "spices"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fvkusovlab.ru&sz=128",
+      "summary": "Вкусов Лаб поставляет натуральную ваниль, специи, перцы, соль и ингредиенты для напитков, десертов и кухни.",
+      "description": "Вкусов Лаб поставляет натуральную ваниль, специи, перцы, соль и ингредиенты для напитков, десертов и кухни.",
+      "useful_for": [
+        "подобрать ингредиенты для авторских напитков",
+        "добавить ваниль, специи и вкусовые акценты в меню",
+        "закрыть закупку редких ингредиентов для кухни и витрины"
+      ],
+      "website_url": "https://vkusovlab.ru",
+      "telegram_url": "https://t.me/vkusovlab",
+      "instagram_url": "https://www.instagram.com/vkusov.lab/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://vkusovlab.ru"
+      }
+    },
+    {
+      "slug": "gustomatika",
+      "name": "Густоматика",
+      "categories": [
+        "equipment"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fgustomatica.ru%2F&sz=128",
+      "summary": "Густоматика поставляет кофейные автоматы, кофемашины, кофе-корнеры, кофемолки, платёжные системы и сопутствующее оборудование.",
+      "description": "Густоматика поставляет кофейные автоматы, кофемашины, кофе-корнеры, кофемолки, платёжные системы и сопутствующее оборудование.",
+      "useful_for": [
+        "подобрать кофейное оборудование или кофе-корнер",
+        "закрыть автоматизацию выдачи напитков и оплату",
+        "рассмотреть лизинг, запчасти и сервисные решения"
+      ],
+      "website_url": "https://gustomatica.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://gustomatica.ru/"
+      }
+    },
+    {
+      "slug": "derevens-aya-zhizn",
+      "name": "Деревенсĸая жизнь",
+      "categories": [
+        "milk"
+      ],
+      "summary": "Деревенская жизнь помогает закрыть молочные продукты для кофейного меню.",
+      "description": "Деревенская жизнь помогает закрыть молочные продукты для кофейного меню.",
+      "useful_for": [
+        "подобрать молочные позиции для капучино и латте",
+        "закрыть базовую поставку молока для кофейни",
+        "собрать стабильную основу для молочных напитков"
+      ]
+    },
+    {
+      "slug": "kochevnik",
+      "name": "Кочевник",
+      "categories": [
+        "spices"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.instagram.com%2Fnomad_11.11&sz=128",
+      "summary": "Кочевник помогает закрыть сопутствующие позиции для кофейного бара и подачи напитков.",
+      "description": "Кочевник помогает закрыть сопутствующие позиции для кофейного бара и подачи напитков.",
+      "useful_for": [
+        "подобрать позиции для сервиса и подачи",
+        "добавить детали, которые поддерживают стиль кофейни",
+        "закрыть часть расходных задач перед запуском"
+      ],
+      "website_url": "https://www.instagram.com/nomad_11.11",
+      "telegram_url": "https://t.me/nomad_11_11",
+      "instagram_url": "https://www.instagram.com/nomad_11.11",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://www.instagram.com/nomad_11.11"
+      }
+    },
+    {
+      "slug": "petmol",
+      "name": "Петмол",
+      "categories": [
+        "milk"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fmypetmol.ru%2F&sz=128",
+      "summary": "ПЕТМОЛ выпускает сливки и молочные продукты для профессионалов, подходящие для кофейного и кулинарного меню.",
+      "description": "ПЕТМОЛ выпускает сливки и молочные продукты для профессионалов, подходящие для кофейного и кулинарного меню.",
+      "useful_for": [
+        "подобрать молочные продукты для кофейных напитков",
+        "закрыть сливки и молочную базу для кухни и витрины",
+        "собрать стабильную поставку для профессионального меню"
+      ],
+      "website_url": "https://mypetmol.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://mypetmol.ru/"
+      }
+    },
+    {
+      "slug": "restomaniya",
+      "name": "Рестомания",
+      "categories": [
+        "bar"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fprof-rest.ru%2F&sz=128",
+      "summary": "Рестомания поставляет профессиональное кухонное и ресторанное оборудование, помогает с проектированием, поставкой, монтажом и запуском.",
+      "description": "Рестомания поставляет профессиональное кухонное и ресторанное оборудование, помогает с проектированием, поставкой, монтажом и запуском.",
+      "useful_for": [
+        "подобрать оборудование для кухни, бара и кофейной зоны",
+        "подготовить проект и состав оборудования под формат",
+        "организовать доставку, монтаж, пусконаладку и обучение персонала"
+      ],
+      "website_url": "https://prof-rest.ru/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://prof-rest.ru/"
+      }
+    },
+    {
+      "slug": "roba-pro",
+      "name": "Роба Про",
+      "categories": [
+        "uniform"
+      ],
+      "logo_url": "https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Froba.pro%2F&sz=128",
+      "summary": "ROBA UNIFORM делает стильную и функциональную униформу, текстиль и аксессуары для HoReCa-команд.",
+      "description": "ROBA UNIFORM делает стильную и функциональную униформу, текстиль и аксессуары для HoReCa-команд.",
+      "useful_for": [
+        "подобрать форму для бариста и команды кофейни",
+        "собрать единый визуальный стиль персонала",
+        "добавить брендирование и текстильные аксессуары"
+      ],
+      "website_url": "https://roba.pro/",
+      "cta": {
+        "text": "Перейти на сайт",
+        "url": "https://roba.pro/"
+      }
+    }
+  ]
+}

@@ -1,0 +1,3949 @@
+<!-- ============================================================
+  HOSTED TILDA BLOCK — MBS BREEEW BATTLE
+  Public data: https://api.barista-school.ru/api/breeew-battle-data.json
+  Booking:     https://api.barista-school.ru/api/course-booking/breeew-battle
+============================================================ -->
+
+<script>
+  (function () {
+    var eventSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: 'MBS* Breeew battle — чемпионат по альтернативному завариванию кофе',
+      description: 'Чемпионат Московской школы бариста по альтернативному завариванию кофе. Участники готовят напиток на Hario V60, выступают перед судьями и борются за призы от школы и партнёров.',
+      url: 'https://baristaschool.ru/breeew-battle',
+      image: 'https://static.tildacdn.com/tild3139-6138-4461-a238-303466366633/IMG_9096.PNG',
+      startDate: '2026-08-05T10:00:00+03:00',
+      endDate: '2026-08-05T13:00:00+03:00',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      eventStatus: 'https://schema.org/EventScheduled',
+      location: {
+        '@type': 'Place',
+        name: 'Московская школа бариста',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'ул. Нижняя Красносельская, 35, стр. 50',
+          addressLocality: 'Москва',
+          addressCountry: 'RU'
+        }
+      },
+      organizer: {
+        '@type': 'Organization',
+        name: 'Московская школа бариста',
+        url: 'https://baristaschool.ru'
+      },
+      offers: {
+        '@type': 'Offer',
+        url: 'https://baristaschool.ru/breeew-battle',
+        price: '3000',
+        priceCurrency: 'RUB',
+        availability: 'https://schema.org/InStock',
+        validFrom: '2026-06-07T00:00:00+03:00'
+      }
+    };
+
+    function removeOldCourseSchema() {
+      Array.prototype.slice.call(document.querySelectorAll('script[type="application/ld+json"]')).forEach(function (script) {
+        if (/Продвинутый курс/.test(script.textContent || '')) {
+          script.parentNode.removeChild(script);
+        }
+      });
+    }
+
+    function addEventSchemaToHead() {
+      if (document.querySelector('script[data-mbs-breeew-battle-event-schema]')) return;
+      var script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.setAttribute('data-mbs-breeew-battle-event-schema', 'true');
+      script.text = JSON.stringify(eventSchema);
+      document.head.appendChild(script);
+    }
+
+    removeOldCourseSchema();
+    addEventSchemaToHead();
+
+    if (window.location.hostname !== 'api.barista-school.ru') return;
+    var robotsMeta = document.createElement('meta');
+    robotsMeta.name = 'robots';
+    robotsMeta.content = 'noindex,follow';
+    document.head.appendChild(robotsMeta);
+
+    var canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
+    canonicalLink.href = 'https://baristaschool.ru/breeew-battle';
+    document.head.appendChild(canonicalLink);
+  })();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "MBS* Breeew battle — чемпионат по альтернативному завариванию кофе",
+  "description": "Чемпионат Московской школы бариста по альтернативному завариванию кофе. Участники готовят напиток на Hario V60, выступают перед судьями и борются за призы от школы и партнёров.",
+  "url": "https://baristaschool.ru/breeew-battle",
+  "image": "https://static.tildacdn.com/tild3139-6138-4461-a238-303466366633/IMG_9096.PNG",
+  "startDate": "2026-08-05T10:00:00+03:00",
+  "endDate": "2026-08-05T13:00:00+03:00",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "location": {
+    "@type": "Place",
+    "name": "Московская школа бариста",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ул. Нижняя Красносельская, 35, стр. 50",
+      "addressLocality": "Москва",
+      "addressCountry": "RU"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "Московская школа бариста",
+    "url": "https://baristaschool.ru"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://baristaschool.ru/breeew-battle",
+    "price": "3000",
+    "priceCurrency": "RUB",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2026-06-07T00:00:00+03:00"
+  }
+}
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
+
+  .mbs-breeew-battle {
+    --mbs-green-dark: #417033;
+    --mbs-green: #4F883E;
+    --mbs-green-light: #B6D8AB;
+    --mbs-bg-green: #E7F2E3;
+    --mbs-red: #CC2841;
+    --mbs-red-soft: #D83D54;
+    --mbs-bg: #F5F5F5;
+    --mbs-black: #1F1F1F;
+    --mbs-gray: #555555;
+    --mbs-white: #FFFFFF;
+    font-family: 'Mulish', Arial, sans-serif;
+    color: var(--mbs-black);
+    background: var(--mbs-white);
+  }
+  .mbs-breeew-battle * { box-sizing: border-box; }
+  .mbs-breeew-battle a { text-decoration: none !important; }
+  .mbs-breeew-battle__wrap {
+    width: min(1100px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+  .mbs-breeew-battle__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, .95);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle__title {
+    margin: 0 0 10px;
+    color: var(--mbs-black);
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+  .mbs-breeew-battle__sub {
+    max-width: 720px;
+    margin: 0 0 36px;
+    color: var(--mbs-gray);
+    font-size: 16px;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .mbs-breeew-battle__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    padding: 0 32px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--mbs-red);
+    color: #fff !important;
+    font-family: 'Mulish', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .2s, transform .2s, opacity .2s;
+    white-space: nowrap;
+  }
+  .mbs-breeew-battle__btn:hover { background: var(--mbs-red-soft); transform: translateY(-1px); }
+  .mbs-breeew-battle__btn[disabled],
+  .mbs-breeew-battle__btn.is-disabled {
+    background: #C9C9C9;
+    color: #fff !important;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .mbs-breeew-battle__btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 58px;
+    padding: 0 30px;
+    border: 2px solid var(--mbs-green-dark);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--mbs-green-dark) !important;
+    font-size: 16px;
+    font-weight: 900;
+    transition: background .2s, color .2s, transform .2s;
+  }
+  .mbs-breeew-battle__btn-secondary:hover {
+    background: var(--mbs-green-dark);
+    color: #fff !important;
+    transform: translateY(-1px);
+  }
+  .mbs-breeew-battle-waitlist-cta { display: none; }
+  .mbs-breeew-battle-waitlist-cta.is-visible { display: inline-flex; }
+  .mbs-breeew-battle-hero {
+    padding: 48px 20px;
+    background: #fff;
+  }
+  .mbs-breeew-battle-hero__card {
+    --mbs-breeew-hero-image: url('https://static.tildacdn.com/tild3862-3962-4866-b064-623761353436/e7c4683e79750cc310df.jpg');
+    position: relative;
+    width: min(1320px, 100%);
+    min-height: 580px;
+    margin: 0 auto;
+    padding: 62px 70px;
+    border-radius: 28px;
+    background:
+      linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.9) 42%, rgba(255,255,255,.48) 70%, rgba(255,255,255,.18) 100%),
+      var(--mbs-breeew-hero-image) right center / cover no-repeat,
+      linear-gradient(135deg, #F7F7F7 0%, #FFFFFF 58%, #F8DDE1 100%);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .mbs-breeew-battle-hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+    gap: 46px;
+    align-items: center;
+    min-height: 438px;
+  }
+  .mbs-breeew-battle-hero__kicker {
+    display: inline-flex;
+    margin: 0 0 18px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-hero h1 {
+    max-width: 760px;
+    margin: 0;
+    color: var(--mbs-black);
+    font-size: 68px;
+    line-height: .94;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+  .mbs-breeew-battle-hero__lead {
+    max-width: 720px;
+    margin: 20px 0 0;
+    color: var(--mbs-black);
+    font-size: 24px;
+    line-height: 1.27;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+  .mbs-breeew-battle-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .mbs-breeew-battle-hero__panel {
+    display: grid;
+    gap: 10px;
+    align-self: center;
+  }
+  .mbs-breeew-battle-hero__stat {
+    min-height: 76px;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .88);
+    border: 1px solid rgba(65, 112, 51, .12);
+    box-shadow: 0 14px 34px rgba(31, 31, 31, .08);
+  }
+  .mbs-breeew-battle-hero__stat span {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--mbs-gray);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .mbs-breeew-battle-hero__stat strong {
+    display: block;
+    color: var(--mbs-black);
+    font-size: 27px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-info,
+  .mbs-breeew-battle-flow,
+  .mbs-breeew-battle-participants,
+  .mbs-breeew-battle-judges,
+  .mbs-breeew-battle-prizes,
+  .mbs-breeew-battle-rules,
+  .mbs-breeew-battle-faq,
+  .mbs-breeew-battle-final {
+    padding: 90px 20px;
+  }
+  .mbs-breeew-battle-info,
+  .mbs-breeew-battle-participants,
+  .mbs-breeew-battle-prizes,
+  .mbs-breeew-battle-faq { background: var(--mbs-bg); }
+  .mbs-breeew-battle-flow,
+  .mbs-breeew-battle-judges,
+  .mbs-breeew-battle-rules,
+  .mbs-breeew-battle-final { background: #fff; }
+  .mbs-breeew-battle-prizes {
+    padding-top: 86px;
+    padding-bottom: 96px;
+    background: var(--mbs-white);
+  }
+  .mbs-breeew-battle-info__grid,
+  .mbs-breeew-battle-flow__grid,
+  .mbs-breeew-battle-prizes__grid,
+  .mbs-breeew-battle-partners__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .mbs-breeew-battle-card {
+    min-height: 100%;
+    padding: 26px;
+    border-radius: 20px;
+    background: #fff;
+  }
+  .mbs-breeew-battle-card--green { background: var(--mbs-bg-green); }
+  .mbs-breeew-battle-card__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: var(--mbs-green-dark);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-card h3 {
+    margin: 0 0 10px;
+    color: var(--mbs-black);
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-card p {
+    margin: 0;
+    color: var(--mbs-gray);
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-prizes .mbs-breeew-battle__title {
+    max-width: 760px;
+    font-size: 38px;
+  }
+  .mbs-breeew-battle-prizes .mbs-breeew-battle__sub {
+    margin-bottom: 14px;
+  }
+  .mbs-breeew-battle-prizes__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 30px;
+    align-items: center;
+  }
+  .mbs-breeew-battle-prize-card {
+    position: relative;
+    min-height: 720px;
+    padding: 52px 30px 32px;
+    border: 2px solid rgba(216, 61, 84, .6);
+    border-radius: 20px;
+    background: var(--mbs-white);
+    overflow: visible;
+  }
+  .mbs-breeew-battle-prize-card--first {
+    min-height: 790px;
+    padding-top: 58px;
+  }
+  .mbs-breeew-battle-prize-card__place {
+    margin: 0 0 18px;
+    color: rgba(216, 61, 84, .76);
+    font-size: 86px;
+    line-height: .9;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place {
+    color: var(--mbs-red-soft);
+    font-size: 104px;
+  }
+  .mbs-breeew-battle-prize-card__place span {
+    display: block;
+    margin-top: 6px;
+    font-size: 48px;
+    line-height: .9;
+  }
+  .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place span {
+    font-size: 58px;
+  }
+  .mbs-breeew-battle-prize-card__badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    margin: 0 0 24px;
+    padding: 0 24px;
+    border-radius: 999px;
+    background: var(--mbs-green);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-prize-group + .mbs-breeew-battle-prize-group {
+    margin-top: 18px;
+  }
+  .mbs-breeew-battle-prize-group h3 {
+    margin: 0 0 8px;
+    color: var(--mbs-black);
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-prize-group ul {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--mbs-black);
+    font-size: 14px;
+    line-height: 1.32;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-prize-group li + li {
+    margin-top: 4px;
+  }
+  .mbs-breeew-battle-prize-card__note {
+    display: inline-flex;
+    margin-top: 16px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-counter {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .mbs-breeew-battle-counter__item {
+    padding: 22px;
+    border-radius: 20px;
+    background: #fff;
+  }
+  .mbs-breeew-battle-counter__item span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--mbs-gray);
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .mbs-breeew-battle-counter__item strong {
+    color: var(--mbs-black);
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-counter__notice {
+    display: none;
+    margin: 0 0 24px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: #F8DDE1;
+    color: var(--mbs-red);
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-counter__notice.is-visible { display: block; }
+  .mbs-breeew-battle-table {
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+  }
+  .mbs-breeew-battle-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .mbs-breeew-battle-table th,
+  .mbs-breeew-battle-table td {
+    padding: 16px 18px;
+    border-bottom: 1px solid #ECECEC;
+    text-align: left;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+  .mbs-breeew-battle-table th {
+    color: var(--mbs-green-dark);
+    font-weight: 900;
+    background: var(--mbs-bg-green);
+  }
+  .mbs-breeew-battle-table td { color: var(--mbs-black); font-weight: 700; }
+  .mbs-breeew-battle-table tr:last-child td { border-bottom: 0; }
+  .mbs-breeew-battle-participants-card {
+    overflow: hidden;
+    border: 1.5px solid var(--mbs-green-light);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 18px 48px rgba(65, 112, 51, .08);
+  }
+  .mbs-breeew-battle-participants-card__head {
+    padding: 28px 30px 24px;
+    border-bottom: 1px solid var(--mbs-bg-green);
+  }
+  .mbs-breeew-battle-participants-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .mbs-breeew-battle-participants-card__title {
+    margin: 0 0 6px;
+    color: #263B2A;
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-participants-card__sub {
+    margin: 0;
+    color: var(--mbs-gray);
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+  .mbs-breeew-battle-participants-card__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .mbs-breeew-battle-participants-card__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    line-height: 1.15;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-participants-card__badge.is-red {
+    background: #F8DDE1;
+    color: var(--mbs-red);
+  }
+  .mbs-breeew-battle-participants-card__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mbs-green);
+  }
+  .mbs-breeew-battle-participants-card__search {
+    padding: 16px 18px 0;
+  }
+  .mbs-breeew-battle-participants-card__search input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1.5px solid #DDE8D8;
+    border-radius: 12px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='17' fill='%23667061' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") 14px center no-repeat;
+    color: var(--mbs-black);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    outline: none;
+  }
+  .mbs-breeew-battle-participants-card__search input:focus {
+    border-color: var(--mbs-green-light);
+    box-shadow: 0 0 0 3px rgba(79, 136, 62, .1);
+  }
+  .mbs-breeew-battle-participants-card__meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 18px 0;
+  }
+  .mbs-breeew-battle-participants-card__progress {
+    height: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--mbs-bg-green);
+  }
+  .mbs-breeew-battle-participants-card__progress span {
+    display: block;
+    width: var(--progress, 0%);
+    height: 100%;
+    border-radius: inherit;
+    background: var(--mbs-red);
+  }
+  .mbs-breeew-battle-participants-card__updated {
+    color: var(--mbs-gray);
+    opacity: .65;
+    font-size: 11px;
+    line-height: 1.25;
+    font-weight: 800;
+    text-align: right;
+  }
+  .mbs-breeew-battle-participants-list {
+    position: relative;
+    max-height: 530px;
+    overflow: hidden;
+    padding: 12px 18px 18px;
+  }
+  .mbs-breeew-battle-participants-list.is-expanded { max-height: none; }
+  .mbs-breeew-battle-participants-list:not(.is-expanded)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    height: 82px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+    pointer-events: none;
+  }
+  .mbs-breeew-battle-participants-head,
+  .mbs-breeew-battle-participants-row {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr) minmax(160px, .9fr);
+    gap: 16px;
+    align-items: center;
+  }
+  .mbs-breeew-battle-participants-head {
+    padding: 10px 18px;
+    border-bottom: 2px solid var(--mbs-green-light);
+    color: var(--mbs-red);
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .mbs-breeew-battle-participants-row {
+    margin-top: 4px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    color: var(--mbs-black);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: mbs-breeew-battle-row-in .34s ease forwards;
+    transition: background .2s, box-shadow .2s;
+  }
+  .mbs-breeew-battle-participants-row:hover {
+    background: rgba(231, 242, 227, .58);
+    box-shadow: 0 8px 20px rgba(65, 112, 51, .08);
+  }
+  .mbs-breeew-battle-participants-row:nth-child(even) { background: rgba(231, 242, 227, .32); }
+  @keyframes mbs-breeew-battle-row-in {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .mbs-breeew-battle-participants-row__num {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-participants-row__name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-participants-row__project {
+    min-width: 0;
+  }
+  .mbs-breeew-battle-participants-row__project span {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 12px;
+    line-height: 1.15;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-participants-card__toggle {
+    display: flex;
+    justify-content: center;
+    padding: 0 18px 18px;
+  }
+  .mbs-breeew-battle-participants-card__toggle button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 24px;
+    border: 1.5px solid #DDE8D8;
+    border-radius: 13px;
+    background: #fff;
+    color: var(--mbs-green-dark);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-participants-card__toggle button:hover {
+    border-color: var(--mbs-green-light);
+    background: var(--mbs-bg-green);
+  }
+  .mbs-breeew-battle-participants-card__toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform .2s ease;
+  }
+  .mbs-breeew-battle-participants-card__toggle button.is-expanded svg { transform: rotate(180deg); }
+  .mbs-breeew-battle-participants-list.is-filtered,
+  .mbs-breeew-battle-participants-list.is-empty {
+    max-height: none;
+  }
+  .mbs-breeew-battle-participants-list.is-filtered::after,
+  .mbs-breeew-battle-participants-list.is-empty::after {
+    display: none;
+  }
+  .mbs-breeew-battle-participants-noresult {
+    padding: 34px 18px 42px;
+    text-align: center;
+    color: var(--mbs-gray);
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 800;
+  }
+  .mbs-breeew-battle-state {
+    padding: 28px;
+    border-radius: 20px;
+    background: #fff;
+    color: var(--mbs-gray);
+    text-align: center;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+  .mbs-breeew-battle-participants-widget {
+    --mbs-green-dark: #417033;
+    --mbs-green: #4F883E;
+    --mbs-green-light: #B6D8AB;
+    --mbs-green-pale: #E7F2E3;
+    --mbs-red-dark: #CC2841;
+    --mbs-red: #D83D54;
+    --mbs-text: #243024;
+    --mbs-muted: #667061;
+    --mbs-border: #d8e2d3;
+    --mbs-shadow: 0 10px 28px rgba(65, 112, 51, 0.06);
+    font-family: "Mulish", Arial, sans-serif;
+    color: var(--mbs-text);
+  }
+  .mbs-breeew-battle-participants-widget * { box-sizing: border-box; }
+  .mbs-breeew-battle-participants-widget .mbs-cup-wrap {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 12px 20px 28px;
+    scroll-margin-top: 80px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-card {
+    width: 100%;
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    border: 2px solid var(--mbs-border);
+    box-shadow: var(--mbs-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-head {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid var(--mbs-border);
+    flex-shrink: 0;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--mbs-text);
+    margin-bottom: 4px;
+    letter-spacing: -0.3px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-sub {
+    font-size: 13px;
+    color: var(--mbs-muted);
+    font-weight: 500;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-head-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-head-left {
+    flex: 1;
+    min-width: 0;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-reg {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 18px;
+    background: #fff;
+    color: var(--mbs-red) !important;
+    border: 1.5px solid var(--mbs-red);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-reg:hover {
+    background: rgba(216, 61, 84, 0.06);
+    transform: translateY(-1px);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-reg.is-disabled {
+    color: var(--mbs-muted) !important;
+    border-color: var(--mbs-line);
+    background: var(--mbs-soft);
+    cursor: default;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-reg.is-disabled:hover {
+    transform: none;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-reg:active { transform: translateY(0); }
+  .mbs-breeew-battle-participants-widget .mbs-cup-reg svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--mbs-red);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-waitlist {
+    display: none;
+    border-color: var(--mbs-green-dark);
+    color: var(--mbs-green-dark) !important;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-waitlist.is-visible {
+    display: inline-flex;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-waitlist svg {
+    stroke: var(--mbs-green-dark);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--mbs-green-pale);
+    color: var(--mbs-green-dark);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-badge-proj {
+    background: rgba(216, 61, 84, 0.08);
+    color: var(--mbs-red-dark);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-share {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background: none;
+    border: 1.5px solid var(--mbs-border);
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--mbs-muted);
+    opacity: 0.45;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+    margin-left: 2px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-share:hover {
+    opacity: 1;
+    border-color: var(--mbs-green-light);
+    color: var(--mbs-green-dark);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-share svg {
+    width: 13px;
+    height: 13px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-share-tip {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--mbs-green-dark);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-share-tip.mbs-cup-tip-show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--mbs-green);
+    animation: mbsCupPulse 2s ease-in-out infinite;
+  }
+  @keyframes mbsCupPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-search {
+    padding: 12px 16px 0;
+    flex-shrink: 0;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-search input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border: 1.5px solid var(--mbs-border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mbs-text);
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23667061' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E") 12px center no-repeat;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-search input:focus {
+    border-color: var(--mbs-green-light);
+    box-shadow: 0 0 0 3px rgba(79, 136, 62, 0.1);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-search input::placeholder {
+    color: var(--mbs-muted);
+    opacity: 0.6;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-updated {
+    text-align: right;
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-updated span {
+    font-size: 10px;
+    color: var(--mbs-muted);
+    opacity: 0.5;
+    font-weight: 500;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-noresult {
+    padding: 32px 16px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--mbs-muted);
+    opacity: 0.7;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-proj-tag {
+    display: inline-block;
+    background: var(--mbs-green-pale);
+    color: var(--mbs-green-dark);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-row-new {
+    animation: mbsCupHighlight 2s ease-out forwards;
+  }
+  @keyframes mbsCupHighlight {
+    0% {
+      background: rgba(79, 136, 62, 0.15);
+      box-shadow: inset 0 0 0 1px rgba(79, 136, 62, 0.25);
+    }
+    100% {
+      background: transparent;
+      box-shadow: inset 0 0 0 1px transparent;
+    }
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-body-wrap {
+    position: relative;
+    max-height: 520px;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-body-wrap.mbs-cup-expanded { max-height: none; }
+  .mbs-breeew-battle-participants-widget .mbs-cup-body-wrap:not(.mbs-cup-expanded)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-toggle {
+    display: flex;
+    justify-content: center;
+    padding: 0 16px 16px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-toggle button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 24px;
+    border: 1.5px solid var(--mbs-border);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--mbs-green-dark);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-toggle button:hover {
+    background: var(--mbs-green-pale);
+    border-color: var(--mbs-green-light);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-toggle button svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-expanded + .mbs-cup-toggle button svg { transform: rotate(180deg); }
+  .mbs-breeew-battle-participants-widget .mbs-cup-scroll {
+    flex: 1;
+    padding: 4px 16px 16px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-scroll::-webkit-scrollbar { width: 5px; }
+  .mbs-breeew-battle-participants-widget .mbs-cup-scroll::-webkit-scrollbar-thumb {
+    background: var(--mbs-green-light);
+    border-radius: 10px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-scroll::-webkit-scrollbar-thumb:hover { background: var(--mbs-green); }
+  .mbs-breeew-battle-participants-widget .mbs-cup-scroll::-webkit-scrollbar-track { background: transparent; }
+  .mbs-breeew-battle-participants-widget .mbs-cup-th {
+    display: grid;
+    grid-template-columns: 42px 1fr 1.1fr;
+    gap: 12px;
+    padding: 10px 16px;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+    border-bottom: 2px solid var(--mbs-green-light);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-th span {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--mbs-red);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-row {
+    display: grid;
+    grid-template-columns: 42px 1fr 1.1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 13px 16px;
+    border-radius: 10px;
+    transition: background 0.2s;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: mbsCupFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-row:nth-child(odd) { background: rgba(231, 242, 227, 0.25); }
+  .mbs-breeew-battle-participants-widget .mbs-cup-row:hover { background: rgba(182, 216, 171, 0.18); }
+  @keyframes mbsCupFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-num {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--mbs-green-pale);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    font-weight: 800;
+    border-radius: 9px;
+    flex-shrink: 0;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--mbs-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .mbs-cup-name-float {
+    position: fixed;
+    background: #243024;
+    color: #fff;
+    font-family: "Mulish", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .mbs-cup-name-float::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    border: 5px solid transparent;
+    border-top-color: #243024;
+  }
+  .mbs-cup-name-float.mbs-cup-tip-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-proj {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mbs-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-empty-ico {
+    font-size: 44px;
+    margin-bottom: 14px;
+    opacity: 0.55;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-empty-txt {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--mbs-muted);
+    line-height: 1.5;
+    max-width: 260px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-sk {
+    padding: 12px 16px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-sk-r {
+    display: grid;
+    grid-template-columns: 42px 1fr 1.1fr;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: 10px;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-sk-r:nth-child(odd) { background: rgba(231, 242, 227, 0.18); }
+  .mbs-breeew-battle-participants-widget .mbs-cup-sk-c {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(110deg, #edf2e8 30%, #f5f8f2 50%, #edf2e8 70%);
+    background-size: 200% 100%;
+    animation: mbsCupShimmer 1.4s ease-in-out infinite;
+  }
+  .mbs-breeew-battle-participants-widget .mbs-cup-sk-l {
+    height: 14px;
+    border-radius: 7px;
+    background: linear-gradient(110deg, #edf2e8 30%, #f5f8f2 50%, #edf2e8 70%);
+    background-size: 200% 100%;
+    animation: mbsCupShimmer 1.4s ease-in-out infinite;
+  }
+  @keyframes mbsCupShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .mbs-breeew-battle-judges__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .mbs-breeew-battle-judge {
+    overflow: hidden;
+    border: 0;
+    border-radius: 20px;
+    background: var(--mbs-bg);
+    text-align: left;
+    cursor: pointer;
+    transition: transform .2s ease, box-shadow .2s ease;
+    font-family: inherit;
+    color: inherit;
+  }
+  .mbs-breeew-battle-judge:hover,
+  .mbs-breeew-battle-judge:focus-visible {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 42px rgba(31, 31, 31, .12);
+  }
+  .mbs-breeew-battle-judge:focus { outline: none; }
+  .mbs-breeew-battle-judge:focus-visible { outline: none; }
+  button.mbs-breeew-battle-judge {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+  .mbs-breeew-battle-judge__photo {
+    aspect-ratio: 1 / 1.02;
+    height: clamp(220px, 21vw, 270px);
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 42px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .mbs-breeew-battle-judge__body {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+  .mbs-breeew-battle-judge h3 {
+    margin: 0 0 6px;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge__role {
+    margin: 0 0 10px;
+    min-height: 32px;
+    color: var(--mbs-green-dark);
+    font-size: 11px;
+    line-height: 1.35;
+    font-weight: 900;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .mbs-breeew-battle-judge p {
+    display: none;
+  }
+  .mbs-breeew-battle-judge__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    color: var(--mbs-green-dark);
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge__more::after {
+    content: "→";
+    font-size: 14px;
+    transition: transform .2s ease;
+  }
+  .mbs-breeew-battle-judge:hover .mbs-breeew-battle-judge__more::after,
+  .mbs-breeew-battle-judge:focus-visible .mbs-breeew-battle-judge__more::after {
+    transform: translateX(2px);
+  }
+  .mbs-breeew-battle-judge__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .mbs-breeew-battle-judge__links a {
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--mbs-green-dark) !important;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-placeholder {
+    min-height: 420px;
+    padding: 24px;
+    border: 1px dashed var(--mbs-green-light);
+    border-radius: 20px;
+    background: linear-gradient(180deg, #fff, var(--mbs-bg));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .mbs-breeew-battle-judge-placeholder__mark {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: auto;
+    border-radius: 18px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 26px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-placeholder h3 {
+    margin: 22px 0 8px;
+    color: var(--mbs-black);
+    font-size: 17px;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-placeholder p {
+    margin: 0;
+    color: var(--mbs-gray);
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+  .mbs-breeew-battle-judge-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    font-family: Mulish, Arial, sans-serif;
+  }
+  .mbs-breeew-battle-judge-modal.is-open { display: block; }
+  .mbs-breeew-battle-judge-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(31, 31, 31, .58);
+  }
+  .mbs-breeew-battle-judge-modal__panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 34px;
+    width: min(1040px, calc(100vw - 80px));
+    max-height: calc(100vh - 80px);
+    padding: 32px 46px 32px 32px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 6px solid var(--mbs-bg-green);
+    border-radius: 24px;
+    background: #fff;
+    box-shadow: 0 24px 80px rgba(0,0,0,.24);
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+  }
+  .mbs-breeew-battle-judge-modal__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--mbs-bg);
+    color: var(--mbs-black);
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 26px;
+    line-height: 1;
+  }
+  .mbs-breeew-battle-judge-modal__close:focus-visible {
+    outline: 4px solid #A9C8FF;
+    outline-offset: 0;
+  }
+  .mbs-breeew-battle-judge-modal__photo {
+    height: 460px;
+    overflow: hidden;
+    border-radius: 18px;
+    background: var(--mbs-bg-green);
+  }
+  .mbs-breeew-battle-judge-modal__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .mbs-breeew-battle-judge-modal__placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--mbs-green-dark);
+    font-size: 64px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-modal__content {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 10px 0 6px;
+  }
+  .mbs-breeew-battle-judge-modal__badge {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #F8DDE1;
+    color: var(--mbs-red);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-modal h3 {
+    margin: 0 44px 8px 0;
+    color: var(--mbs-black);
+    font-size: 34px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-modal__role {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    max-width: 100%;
+    margin-bottom: 14px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-modal__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    max-width: 100%;
+  }
+  .mbs-breeew-battle-judge-modal__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(231, 242, 227, .78);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-modal__pill:nth-child(2) {
+    background: #F8DDE1;
+    color: var(--mbs-red);
+  }
+  .mbs-breeew-battle-judge-modal__pill:nth-child(3) {
+    background: #fff;
+    color: var(--mbs-green-dark);
+    box-shadow: inset 0 0 0 1.5px var(--mbs-green-light);
+  }
+  .mbs-breeew-battle-judge-modal__sections {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .mbs-breeew-battle-judge-modal__section {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    padding: 14px;
+    border-radius: 14px;
+    background: var(--mbs-bg);
+  }
+  .mbs-breeew-battle-judge-modal__section h4 {
+    margin: 0 0 6px;
+    color: var(--mbs-black);
+    font-size: 15px;
+    line-height: 1.25;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-judge-modal__section p {
+    margin: 0;
+    color: var(--mbs-gray);
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 600;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+  .mbs-breeew-battle-judge-modal__section ul {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--mbs-gray);
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-judge-modal__section li + li { margin-top: 4px; }
+  .mbs-breeew-battle-partners {
+    padding: 30px 20px 30px;
+    background: var(--mbs-white);
+  }
+  .mbs-breeew-battle-partners .mbs-breeew-battle__wrap {
+    width: min(1160px, calc(100% - 40px));
+  }
+  .mbs-breeew-battle-partners .mbs-breeew-battle__wrap::before,
+  .mbs-breeew-battle-partners .mbs-breeew-battle__wrap::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background: rgba(0, 0, 0, .2);
+  }
+  .mbs-breeew-battle-partners .mbs-breeew-battle__wrap::after {
+    margin-top: 62px;
+  }
+  .mbs-breeew-battle-partners .mbs-breeew-battle__title {
+    margin: 48px 0 68px;
+    font-size: 32px;
+    line-height: .95;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-partners__grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+    gap: 96px 82px;
+  }
+  .mbs-breeew-battle-partner-logo {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 88px;
+    background: transparent;
+  }
+  .mbs-breeew-battle-partner-logo img {
+    display: block;
+    max-width: 100%;
+    max-height: 82px;
+    object-fit: contain;
+    opacity: 1;
+    transition: opacity .2s ease, filter .2s ease, transform .2s ease;
+  }
+  @media (min-width: 981px) {
+    .mbs-breeew-battle-partners__grid[data-count="9"] .mbs-breeew-battle-partner-logo:nth-child(6) {
+      grid-column-start: 2;
+    }
+    .mbs-breeew-battle-partner-logo--petmol img {
+      max-width: 330px;
+      max-height: 112px;
+      transform: scale(1.28);
+    }
+    .mbs-breeew-battle-partner-logo--small img {
+      max-width: 260px;
+      max-height: 96px;
+      transform: scale(1.08);
+    }
+    .mbs-breeew-battle-partner-logo--mhw img {
+      max-width: 220px;
+      max-height: 96px;
+      transform: scale(1);
+    }
+    .mbs-breeew-battle-partner-logo--rockets img {
+      max-width: 360px;
+      max-height: 128px;
+      transform: scale(1.75);
+    }
+    .mbs-breeew-battle-partner-logo--vkusov img {
+      max-width: 330px;
+      max-height: 118px;
+      transform: scale(2.35);
+    }
+    .mbs-breeew-battle-partner-logo--unicava img {
+      max-width: 330px;
+      max-height: 118px;
+      transform: scale(1.68);
+    }
+    .mbs-breeew-battle-partner-logo--gourmet img {
+      max-width: 300px;
+      max-height: 110px;
+      transform: scale(1.78);
+    }
+    .mbs-breeew-battle-partner-logo--barista-gear img {
+      max-width: 230px;
+      max-height: 86px;
+      transform: scale(.95);
+    }
+  }
+  .mbs-breeew-battle-partner-logo:hover img,
+  .mbs-breeew-battle-partner-logo:focus-visible img {
+    opacity: 1;
+  }
+  .mbs-breeew-battle-partner-logo[href] {
+    cursor: pointer;
+  }
+  .mbs-breeew-battle-partners__empty {
+    color: var(--mbs-gray);
+    font-size: 15px;
+    line-height: 1.45;
+    font-weight: 900;
+    text-align: center;
+  }
+  .mbs-breeew-battle-rules__box,
+  .mbs-breeew-battle-final__box {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 56px;
+    align-items: center;
+    padding: 56px 62px;
+    border-radius: 28px;
+    background: var(--mbs-bg-green);
+  }
+  .mbs-breeew-battle-rules__box p,
+  .mbs-breeew-battle-final__box p {
+    margin: 0;
+    color: var(--mbs-gray);
+    font-size: 16px;
+    line-height: 1.55;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-final__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 0;
+  }
+  .mbs-breeew-battle-final__meta span {
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-final__actions {
+    display: grid;
+    gap: 12px;
+  }
+  .mbs-breeew-battle-final__contacts {
+    display: grid;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .mbs-breeew-battle-final__contacts a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--mbs-gray) !important;
+    text-decoration: none !important;
+    font-size: 13px;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+  .mbs-breeew-battle-final__contacts svg {
+    flex: 0 0 auto;
+    width: 18px;
+    height: 18px;
+    color: var(--mbs-green-dark);
+  }
+  .mbs-breeew-battle-final__contacts a:hover { color: var(--mbs-green-dark) !important; }
+  .mbs-breeew-battle-faq__grid {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 54px;
+    align-items: start;
+  }
+  .mbs-breeew-battle-faq__side h2 {
+    margin: 0 0 16px;
+    font-size: 52px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0;
+  }
+  .mbs-breeew-battle-faq__side p {
+    margin: 0;
+    color: var(--mbs-gray);
+    font-size: 18px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+  .mbs-breeew-battle-faq__list {
+    display: grid;
+    gap: 10px;
+  }
+  .mbs-breeew-battle-faq details {
+    border-radius: 18px;
+    background: #fff;
+  }
+  .mbs-breeew-battle-faq summary {
+    cursor: pointer;
+    padding: 22px 24px;
+    color: var(--mbs-black);
+    font-size: 18px;
+    font-weight: 900;
+    list-style: none;
+  }
+  .mbs-breeew-battle-faq summary::-webkit-details-marker { display: none; }
+  .mbs-breeew-battle-faq details p {
+    margin: 0;
+    padding: 0 24px 22px;
+    color: var(--mbs-gray);
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+  .mbs-breeew-battle-gallery-placeholder { display: none; }
+
+  .mbs-breeew-battle-popup {
+    --mbs-green-dark: #417033;
+    --mbs-green: #4F883E;
+    --mbs-green-light: #B6D8AB;
+    --mbs-bg-green: #E7F2E3;
+    --mbs-red: #CC2841;
+    --mbs-red-soft: #D83D54;
+    --mbs-bg: #F5F5F5;
+    --mbs-black: #1F1F1F;
+    --mbs-gray: #555555;
+    --mbs-white: #FFFFFF;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    background: rgba(31,31,31,.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    font-family: 'Mulish', Arial, sans-serif;
+  }
+  .mbs-breeew-battle-popup.is-open { display: block; }
+  .mbs-breeew-battle-popup * {
+    box-sizing: border-box;
+    font-family: 'Mulish', Arial, sans-serif !important;
+  }
+  .mbs-breeew-battle-popup__scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 22px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mbs-breeew-battle-popup__panel {
+    position: relative;
+    width: min(820px, 100%);
+    margin: auto;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 24px 80px rgba(0,0,0,.24);
+    overflow: hidden;
+  }
+  .mbs-breeew-battle-popup__close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--mbs-bg);
+    color: var(--mbs-black);
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 1;
+  }
+  .mbs-breeew-battle-popup__share {
+    position: absolute;
+    top: 14px;
+    right: 62px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--mbs-bg);
+    color: var(--mbs-black);
+    cursor: pointer;
+    transition: background .18s, color .18s, transform .18s;
+  }
+  .mbs-breeew-battle-popup__share:hover,
+  .mbs-breeew-battle-popup__close:hover {
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+  }
+  .mbs-breeew-battle-popup__share:active {
+    transform: scale(.96);
+  }
+  .mbs-breeew-battle-popup__share:focus-visible,
+  .mbs-breeew-battle-popup__close:focus-visible {
+    outline: 3px solid rgba(79,136,62,.22);
+    outline-offset: 2px;
+  }
+  .mbs-breeew-battle-popup__share svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+  .mbs-breeew-battle-popup__share .mbs-breeew-battle-popup__share-check {
+    display: none;
+  }
+  .mbs-breeew-battle-popup__share.is-copied {
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+  }
+  .mbs-breeew-battle-popup__share.is-copied .mbs-breeew-battle-popup__share-link {
+    display: none;
+  }
+  .mbs-breeew-battle-popup__share.is-copied .mbs-breeew-battle-popup__share-check {
+    display: block;
+  }
+  .mbs-breeew-battle-popup__content {
+    padding: 32px 38px 0;
+  }
+  .mbs-breeew-battle-popup__step {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    margin: 0 0 12px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  .mbs-breeew-battle-popup h2 {
+    margin: 0 102px 8px 0;
+    color: var(--mbs-black);
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-popup__note {
+    margin: 0 0 20px;
+    color: var(--mbs-gray);
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-popup__summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .mbs-breeew-battle-popup__summary > span {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-height: 70px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-popup__summary > span > span {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+  .mbs-breeew-battle-popup__summary svg {
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    border-radius: 50%;
+    background: var(--mbs-green-dark);
+    color: #fff;
+    display: block;
+  }
+  .mbs-breeew-battle-popup__summary strong {
+    display: block;
+    color: var(--mbs-green-dark);
+    font-size: 18px;
+    line-height: 1.1;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .mbs-breeew-battle-popup__summary small {
+    display: block;
+    color: rgba(65,112,51,.72);
+    font-size: 11px;
+    line-height: 1.1;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+  .mbs-breeew-battle-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+  }
+  .mbs-breeew-battle-form__field { display: grid; gap: 6px; }
+  .mbs-breeew-battle-form__field--full { grid-column: 1 / -1; }
+  .mbs-breeew-battle-form label {
+    color: var(--mbs-black);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-form input,
+  .mbs-breeew-battle-form select,
+  .mbs-breeew-battle-form textarea {
+    width: 100%;
+    border: 1px solid #E0E0E0;
+    border-radius: 13px;
+    background: #fff;
+    color: var(--mbs-black);
+    font-family: 'Mulish', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    outline: none;
+    transition: border-color .18s, box-shadow .18s, background .18s;
+  }
+  .mbs-breeew-battle-form input:focus,
+  .mbs-breeew-battle-form select:focus,
+  .mbs-breeew-battle-form textarea:focus {
+    border-color: var(--mbs-green);
+    box-shadow: 0 0 0 4px rgba(79,136,62,.13);
+  }
+  .mbs-breeew-battle-form__field.is-invalid input,
+  .mbs-breeew-battle-form__field.is-invalid select,
+  .mbs-breeew-battle-form__field.is-invalid textarea {
+    border-color: var(--mbs-red);
+    background: #FFF7F8;
+  }
+  .mbs-breeew-battle-form input,
+  .mbs-breeew-battle-form select { min-height: 44px; padding: 0 14px; }
+  .mbs-breeew-battle-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--mbs-gray) 50%),
+      linear-gradient(135deg, var(--mbs-gray) 50%, transparent 50%);
+    background-position:
+      calc(100% - 16px) 50%,
+      calc(100% - 10px) 50%;
+    background-repeat: no-repeat;
+    background-size: 6px 6px;
+    padding-right: 30px;
+  }
+  .mbs-breeew-battle-form__phone-row {
+    display: grid;
+    grid-template-columns: 94px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .mbs-breeew-battle-form textarea {
+    min-height: 70px;
+    resize: vertical;
+    padding: 12px 14px;
+  }
+  .mbs-breeew-battle-form__hint,
+  .mbs-breeew-battle-form__field-error {
+    min-height: 14px;
+    font-size: 11px;
+    line-height: 1.25;
+    font-weight: 700;
+  }
+  .mbs-breeew-battle-form__hint { color: var(--mbs-gray); }
+  .mbs-breeew-battle-form__field-error {
+    display: none;
+    color: var(--mbs-red);
+  }
+  .mbs-breeew-battle-form__field.is-invalid .mbs-breeew-battle-form__field-error { display: block; }
+  .mbs-breeew-battle-form__field.is-invalid .mbs-breeew-battle-form__hint { display: none; }
+  .mbs-breeew-battle-form__agreement-group {
+    display: grid;
+    gap: 9px;
+    padding-top: 2px;
+  }
+  .mbs-breeew-battle-form__agreement {
+    display: grid;
+    grid-template-columns: 18px minmax(0, 1fr);
+    gap: 9px;
+    align-items: start;
+    color: var(--mbs-gray);
+    font-size: 12px;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .mbs-breeew-battle-form__agreement input {
+    width: 18px;
+    min-height: 18px;
+    margin: 0;
+    accent-color: var(--mbs-green-dark);
+  }
+  .mbs-breeew-battle-form__agreement.is-invalid {
+    color: var(--mbs-red);
+  }
+  .mbs-breeew-battle-form__agreement a { color: var(--mbs-green-dark) !important; font-weight: 900; }
+  .mbs-breeew-battle-popup__error {
+    display: none;
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #F8DDE1;
+    color: var(--mbs-red);
+    font-size: 14px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-popup__error.is-visible { display: block; }
+  .mbs-breeew-battle-popup__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+    margin: 18px -38px 0;
+    padding: 18px 38px;
+    border-top: 1px solid #ECECEC;
+    background: #FAFAFA;
+  }
+  .mbs-breeew-battle-popup__small {
+    color: var(--mbs-gray);
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 600;
+  }
+  .mbs-breeew-battle-popup__footer .mbs-breeew-battle__btn {
+    min-width: 330px;
+    min-height: 54px;
+  }
+  .mbs-breeew-battle-success {
+    text-align: center;
+  }
+  .mbs-breeew-battle-success__icon {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: var(--mbs-bg-green);
+    color: var(--mbs-green-dark);
+    font-size: 34px;
+    font-weight: 900;
+  }
+  .mbs-breeew-battle-success__details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 24px 0;
+    text-align: left;
+  }
+  .mbs-breeew-battle-success__details div {
+    padding: 16px;
+    border-radius: 16px;
+    background: var(--mbs-bg);
+  }
+  .mbs-breeew-battle-success__details span {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--mbs-gray);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .mbs-breeew-battle-success__details strong {
+    color: var(--mbs-black);
+    font-size: 15px;
+    font-weight: 900;
+  }
+  body.mbs-breeew-battle-lock { overflow: hidden; }
+
+  @media (max-width: 980px) {
+    .mbs-breeew-battle-hero__card { padding: 46px 34px; }
+    .mbs-breeew-battle-hero__grid { grid-template-columns: 1fr; }
+    .mbs-breeew-battle-hero h1 { font-size: 48px; }
+    .mbs-breeew-battle-hero__lead { font-size: 20px; }
+    .mbs-breeew-battle-info__grid,
+    .mbs-breeew-battle-flow__grid,
+    .mbs-breeew-battle-counter { grid-template-columns: 1fr 1fr; }
+    .mbs-breeew-battle-prizes__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+    }
+    .mbs-breeew-battle-prize-card {
+      min-height: auto;
+    }
+    .mbs-breeew-battle-prize-card--first {
+      order: 1;
+    }
+    .mbs-breeew-battle-prize-card--second {
+      order: 2;
+    }
+    .mbs-breeew-battle-prize-card--third {
+      order: 3;
+    }
+    .mbs-breeew-battle-partners__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mbs-breeew-battle-judges__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .mbs-breeew-battle-rules__box,
+    .mbs-breeew-battle-final__box,
+    .mbs-breeew-battle-faq__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .mbs-breeew-battle__wrap { width: min(100% - 28px, 1100px); }
+    .mbs-breeew-battle-hero { padding: 14px 12px; }
+    .mbs-breeew-battle-hero__card {
+      min-height: 690px;
+      padding: 28px 18px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.94) 48%, rgba(255,255,255,.42) 78%, rgba(255,255,255,.14) 100%),
+        var(--mbs-breeew-hero-image) center bottom / cover no-repeat,
+        linear-gradient(135deg, #F7F7F7 0%, #FFFFFF 58%, #F8DDE1 100%);
+    }
+    .mbs-breeew-battle-hero__grid { min-height: 620px; align-content: start; }
+    .mbs-breeew-battle-hero h1 { font-size: 36px; line-height: .98; }
+    .mbs-breeew-battle-hero__lead { font-size: 16px; }
+    .mbs-breeew-battle-info,
+    .mbs-breeew-battle-flow,
+    .mbs-breeew-battle-participants,
+    .mbs-breeew-battle-judges,
+    .mbs-breeew-battle-rules,
+    .mbs-breeew-battle-faq,
+    .mbs-breeew-battle-final { padding: 64px 14px; }
+    .mbs-breeew-battle-flow {
+      padding-top: 46px;
+      padding-bottom: 46px;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle__label {
+      margin-bottom: 12px;
+      padding: 6px 14px;
+      font-size: 12px;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle__title {
+      margin-bottom: 12px;
+      font-size: 31px;
+      line-height: 1.05;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle__sub {
+      margin-bottom: 28px;
+      font-size: 17px;
+      line-height: 1.42;
+    }
+    .mbs-breeew-battle-flow__grid {
+      gap: 16px;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle-card {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      column-gap: 14px;
+      align-items: center;
+      padding: 18px 18px 20px;
+      border-radius: 18px;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle-card__num {
+      width: 38px;
+      height: 38px;
+      margin-bottom: 0;
+      font-size: 15px;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle-card h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.12;
+    }
+    .mbs-breeew-battle-flow .mbs-breeew-battle-card p {
+      grid-column: 2;
+      margin-top: 8px;
+      font-size: 16px;
+      line-height: 1.42;
+    }
+    .mbs-breeew-battle-prizes {
+      padding: 54px 14px 52px;
+    }
+    .mbs-breeew-battle-prizes .mbs-breeew-battle__title {
+      font-size: 31px;
+      line-height: 1.05;
+    }
+    .mbs-breeew-battle-prizes .mbs-breeew-battle__sub {
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+    .mbs-breeew-battle-prize-card {
+      padding: 34px 24px 28px;
+      border-radius: 18px;
+    }
+    .mbs-breeew-battle-prize-card--first {
+      padding-top: 38px;
+    }
+    .mbs-breeew-battle-prize-card__place {
+      margin-bottom: 16px;
+      font-size: 74px;
+    }
+    .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place {
+      font-size: 86px;
+    }
+    .mbs-breeew-battle-prize-card__place span,
+    .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place span {
+      font-size: 42px;
+    }
+    .mbs-breeew-battle-prize-card__badge {
+      min-height: 36px;
+      margin-bottom: 20px;
+      padding: 0 18px;
+      font-size: 18px;
+    }
+    .mbs-breeew-battle-prize-group h3 {
+      font-size: 15px;
+    }
+    .mbs-breeew-battle-prize-group ul {
+      font-size: 13px;
+    }
+    .mbs-breeew-battle__title { font-size: 26px; }
+    .mbs-breeew-battle-participants {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle__label {
+      margin-bottom: 12px;
+      padding: 6px 14px;
+      font-size: 12px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle__title {
+      max-width: 330px;
+      margin-bottom: 12px;
+      font-size: 31px;
+      line-height: 1.05;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle__sub {
+      margin-bottom: 24px;
+      font-size: 17px;
+      line-height: 1.42;
+    }
+    .mbs-breeew-battle-info__grid,
+    .mbs-breeew-battle-flow__grid,
+    .mbs-breeew-battle-prizes__grid,
+    .mbs-breeew-battle-partners__grid,
+    .mbs-breeew-battle-counter { grid-template-columns: 1fr; }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item {
+      min-height: 78px;
+      padding: 13px 12px;
+      border-radius: 16px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item span {
+      margin-bottom: 7px;
+      font-size: 10px;
+      line-height: 1.15;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item strong {
+      font-size: 28px;
+    }
+    .mbs-breeew-battle-partners {
+      padding: 30px 20px 30px;
+    }
+    .mbs-breeew-battle-partners .mbs-breeew-battle__wrap {
+      width: min(100% - 28px, 1100px);
+    }
+    .mbs-breeew-battle-partners .mbs-breeew-battle__wrap::after {
+      margin-top: 42px;
+    }
+    .mbs-breeew-battle-partners .mbs-breeew-battle__title {
+      margin: 28px 0 44px;
+      font-size: 24px;
+      line-height: .95;
+    }
+    .mbs-breeew-battle-partners__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 44px 28px;
+    }
+    .mbs-breeew-battle-partner-logo {
+      min-height: 74px;
+    }
+    .mbs-breeew-battle-partner-logo img {
+      max-width: min(150px, 100%);
+      max-height: 62px;
+    }
+    .mbs-breeew-battle-partner-logo--petmol img {
+      transform: scale(1.45);
+    }
+    .mbs-breeew-battle-partner-logo--vkusov img {
+      transform: scale(2.25);
+    }
+    .mbs-breeew-battle-partner-logo--rockets img {
+      transform: scale(1.55);
+    }
+    .mbs-breeew-battle-partner-logo--unicava img {
+      transform: scale(1.62);
+    }
+    .mbs-breeew-battle-partner-logo--gourmet img {
+      transform: scale(1.75);
+    }
+    .mbs-breeew-battle-judges__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+    .mbs-breeew-battle-judge {
+      display: block;
+      position: relative;
+      min-height: 0;
+      border-radius: 18px;
+      background: #fff;
+    }
+    .mbs-breeew-battle-judge__photo {
+      display: block;
+      position: relative;
+      z-index: 0;
+      aspect-ratio: 1 / .82;
+      min-height: 0;
+      height: auto;
+      overflow: hidden;
+      font-size: 34px;
+    }
+    .mbs-breeew-battle-judge__photo img {
+      display: block;
+      position: static;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .mbs-breeew-battle-judge__body {
+      position: relative;
+      z-index: 1;
+      min-width: 0;
+      margin: 0;
+      padding: 18px;
+      background: #fff;
+    }
+    .mbs-breeew-battle-judge h3 {
+      margin-bottom: 6px;
+      font-size: 19px;
+      line-height: 1.2;
+    }
+    .mbs-breeew-battle-judge__role {
+      margin-bottom: 10px;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+    .mbs-breeew-battle-judge p {
+      font-size: 13px;
+      line-height: 1.45;
+      -webkit-line-clamp: 3;
+    }
+    .mbs-breeew-battle-judge__more {
+      margin-top: 14px;
+      font-size: 12px;
+    }
+    .mbs-breeew-battle-judge-placeholder {
+      min-height: 260px;
+      padding: 18px;
+    }
+    .mbs-breeew-battle-table table,
+    .mbs-breeew-battle-table thead,
+    .mbs-breeew-battle-table tbody,
+    .mbs-breeew-battle-table tr,
+    .mbs-breeew-battle-table th,
+    .mbs-breeew-battle-table td { display: block; }
+    .mbs-breeew-battle-table thead { display: none; }
+    .mbs-breeew-battle-table tr { padding: 14px 16px; border-bottom: 1px solid #ECECEC; }
+    .mbs-breeew-battle-table td { padding: 4px 0; border: 0; }
+    .mbs-breeew-battle-table td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      color: var(--mbs-green-dark);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+    .mbs-breeew-battle-participants-card { border-radius: 16px; }
+    .mbs-breeew-battle-participants-card__head { padding: 22px 20px 16px; }
+    .mbs-breeew-battle-participants-card__top { display: block; }
+    .mbs-breeew-battle-participants-card__title { font-size: 22px; }
+    .mbs-breeew-battle-participants-card__badges { margin-top: 14px; }
+    .mbs-breeew-battle-participants-card__search { padding: 14px 12px 0; }
+    .mbs-breeew-battle-participants-card__meta {
+      grid-template-columns: 1fr;
+      padding: 10px 12px 0;
+    }
+    .mbs-breeew-battle-participants-card__updated { text-align: left; }
+    .mbs-breeew-battle-participants-list {
+      max-height: 460px;
+      padding: 10px 10px 14px;
+    }
+    .mbs-breeew-battle-participants-head,
+    .mbs-breeew-battle-participants-row {
+      grid-template-columns: 36px minmax(0, 1fr) minmax(0, .85fr);
+      gap: 8px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .mbs-breeew-battle-participants-row { padding-top: 12px; padding-bottom: 12px; }
+    .mbs-breeew-battle-participants-row__num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+    .mbs-breeew-battle-participants-row__name { font-size: 14px; }
+    .mbs-breeew-battle-participants-row__project span {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+    .mbs-breeew-battle-participants-card__toggle { padding: 0 12px 14px; }
+    .mbs-breeew-battle-rules__box,
+    .mbs-breeew-battle-final__box { padding: 34px 24px; border-radius: 22px; }
+    .mbs-breeew-battle-faq__side h2 { font-size: 36px; }
+    .mbs-breeew-battle-popup__scroll { display: block; padding: 0; }
+    .mbs-breeew-battle-popup__panel { width: 100%; min-height: 100vh; border-radius: 0; }
+    .mbs-breeew-battle-popup__content { padding: 28px 16px 0; }
+    .mbs-breeew-battle-popup h2 { margin-right: 102px; font-size: 28px; }
+    .mbs-breeew-battle-form,
+    .mbs-breeew-battle-success__details { grid-template-columns: 1fr; }
+    .mbs-breeew-battle-popup__summary {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .mbs-breeew-battle-popup__summary > span {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      align-items: start;
+      gap: 7px;
+      min-height: 0;
+      padding: 11px 8px 12px;
+      border-radius: 16px;
+      text-align: center;
+    }
+    .mbs-breeew-battle-popup__summary > span > span {
+      gap: 3px;
+    }
+    .mbs-breeew-battle-popup__summary svg {
+      width: 30px;
+      height: 30px;
+      padding: 7px;
+    }
+    .mbs-breeew-battle-popup__summary small {
+      font-size: 9px;
+      line-height: 1;
+    }
+    .mbs-breeew-battle-popup__summary strong {
+      font-size: 15px;
+      line-height: 1.05;
+    }
+    .mbs-breeew-battle-popup__footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+      display: grid;
+      margin: 16px -16px 0;
+      padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+      box-shadow: 0 -14px 30px rgba(31,31,31,.08);
+    }
+    .mbs-breeew-battle-popup__footer .mbs-breeew-battle__btn { width: 100%; min-width: 0; }
+    .mbs-breeew-battle-judge-modal__panel {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      width: calc(100vw - 32px);
+      max-height: calc(100vh - 32px);
+      padding: 18px;
+      border-radius: 22px;
+    }
+    .mbs-breeew-battle-judge-modal__photo { height: 260px; }
+    .mbs-breeew-battle-judge-modal__photo img { object-fit: contain; }
+    .mbs-breeew-battle-judge-modal__content { padding: 0; }
+    .mbs-breeew-battle-judge-modal h3 { margin-right: 44px; font-size: 28px; }
+    .mbs-breeew-battle-participants-widget .mbs-cup-wrap {
+      padding: 8px 0 20px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-card {
+      border-radius: 16px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-head {
+      padding: 22px 20px 16px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-head-top {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-reg {
+      padding: 7px 12px;
+      font-size: 11px;
+      border-radius: 8px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-title {
+      font-size: 21px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-th,
+    .mbs-breeew-battle-participants-widget .mbs-cup-row {
+      grid-template-columns: 34px 1fr 1fr;
+      gap: 8px;
+      padding: 11px 12px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-num {
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      border-radius: 7px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-name {
+      font-size: 14px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-proj {
+      font-size: 12px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-sk-r {
+      grid-template-columns: 34px 1fr 1fr;
+      gap: 8px;
+      padding: 11px 12px;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-search input {
+      font-size: 13px;
+      padding: 9px 12px 9px 34px;
+      background-position: 10px center;
+    }
+    .mbs-breeew-battle-participants-widget .mbs-cup-proj-tag {
+      font-size: 10px;
+      padding: 2px 8px;
+    }
+  }
+  @media (max-width: 420px) {
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter {
+      gap: 7px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item {
+      padding: 12px 9px;
+      border-radius: 14px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item strong {
+      font-size: 26px;
+    }
+    .mbs-breeew-battle-popup__summary {
+      gap: 6px;
+    }
+    .mbs-breeew-battle-popup__summary > span {
+      padding: 10px 5px 11px;
+      border-radius: 14px;
+    }
+    .mbs-breeew-battle-popup__summary svg {
+      width: 28px;
+      height: 28px;
+      padding: 7px;
+    }
+    .mbs-breeew-battle-popup__summary strong {
+      font-size: 14px;
+    }
+    .mbs-breeew-battle-participants-head,
+    .mbs-breeew-battle-participants-row {
+      grid-template-columns: 32px minmax(0, 1fr);
+    }
+    .mbs-breeew-battle-participants-head div:nth-child(3) { display: none; }
+    .mbs-breeew-battle-participants-row__project {
+      grid-column: 2;
+      margin-top: -4px;
+    }
+  }
+</style>
+
+<div class="mbs-breeew-battle" id="mbs-breeew-battle"
+     data-api-url="https://api.barista-school.ru/api/breeew-battle-data.json"
+     data-booking-url="https://api.barista-school.ru/api/course-booking/breeew-battle"
+     data-rules-url="https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/preview">
+  <section class="mbs-breeew-battle-hero">
+    <div class="mbs-breeew-battle-hero__card">
+      <div class="mbs-breeew-battle-hero__grid">
+        <div>
+          <div class="mbs-breeew-battle-hero__kicker" data-archive-hero-kicker>Чемпионат по альтернативному завариванию кофе</div>
+          <h1>MBS* Breeew battle — чемпионат по альтернативному завариванию кофе</h1>
+          <p class="mbs-breeew-battle-hero__lead" data-archive-hero-lead>Чемпионат по альтернативному завариванию кофе: Hario V60, батлы на вылет, финал с самопрезентацией и оценка судей.</p>
+          <div class="mbs-breeew-battle-hero__actions">
+            <button class="mbs-breeew-battle__btn js-mbs-breeew-battle-open" type="button">Участвовать</button>
+            <a class="mbs-breeew-battle__btn-secondary mbs-breeew-battle-waitlist-cta" href="#waiting_list" data-waitlist-cta aria-hidden="true">Лист ожидания</a>
+            <a class="mbs-breeew-battle__btn-secondary" href="#mbs-breeew-battle-participants">Смотреть участников</a>
+            <a class="mbs-breeew-battle__btn-secondary" href="https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/preview" target="_blank" rel="noopener">Регламент</a>
+          </div>
+        </div>
+        <div class="mbs-breeew-battle-hero__panel">
+          <div class="mbs-breeew-battle-hero__stat"><span>Дата и время</span><strong>5 августа, 10:00</strong></div>
+          <div class="mbs-breeew-battle-hero__stat"><span>Вступительный взнос</span><strong>3000 ₽</strong></div>
+          <div class="mbs-breeew-battle-hero__stat"><span data-counter-hero-capacity-label>Количество участников</span><strong data-counter-capacity>—</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-info">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle__label">О событии</div>
+      <h2 class="mbs-breeew-battle__title">Чемпионат для бариста, которые любят точность и драйв</h2>
+      <p class="mbs-breeew-battle__sub">MBS* Breeew battle — открытое соревнование Московской школы бариста по альтернативным способам заваривания кофе. Участники готовят напиток на Hario V60 и проходят два этапа чемпионата.</p>
+      <div class="mbs-breeew-battle-info__grid">
+        <article class="mbs-breeew-battle-card"><h3>Соревновательная атмосфера</h3><p>Живой формат чемпионата: жеребьёвка, выступления, оценки и финальное награждение.</p></article>
+        <article class="mbs-breeew-battle-card"><h3>Профессиональное судейство</h3><p>В отборе судьи оценивают букет, сладость, кислотность, тактильные ощущения, послевкусие и баланс напитка.</p></article>
+        <article class="mbs-breeew-battle-card mbs-breeew-battle-card--green"><h3>Призы и партнёры</h3><p>Партнёры поддерживают чемпионат, а победители получат призы от брендов кофейной индустрии.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-flow">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle__label">Механика</div>
+      <h2 class="mbs-breeew-battle__title">Как проходит чемпионат</h2>
+      <p class="mbs-breeew-battle__sub">Путь участника простой: регистрация, подтверждение места, выступление и оценка судей.</p>
+      <div class="mbs-breeew-battle-flow__grid">
+        <article class="mbs-breeew-battle-card"><span class="mbs-breeew-battle-card__num">1</span><h3>Регистрация и оплата</h3><p>Заполняете форму, оплачиваете взнос, и место закрепляется за вами после оплаты.</p></article>
+        <article class="mbs-breeew-battle-card"><span class="mbs-breeew-battle-card__num">2</span><h3>Приход на площадку</h3><p>Участник должен быть в пространстве чемпионата за 10 минут до своего выступления.</p></article>
+        <article class="mbs-breeew-battle-card"><span class="mbs-breeew-battle-card__num">3</span><h3>Отборочный этап</h3><p>Участники делятся на пары, готовят напиток на Hario V60, победитель определяется слепой дегустацией.</p></article>
+        <article class="mbs-breeew-battle-card"><span class="mbs-breeew-battle-card__num">4</span><h3>Проход в финал</h3><p>В финальный этап проходят 10 участников по итогам отборочного этапа.</p></article>
+        <article class="mbs-breeew-battle-card"><span class="mbs-breeew-battle-card__num">5</span><h3>Подготовка финала</h3><p>Финалистам выделяют 4 станции и 20 минут на поиск рецепта и подготовку речи.</p></article>
+        <article class="mbs-breeew-battle-card"><span class="mbs-breeew-battle-card__num">6</span><h3>Финал и оценка</h3><p>В финале участник выступает в личном зачёте, презентует рецепт и ожидаемый вкус чашки.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-info">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle__label">Для участника</div>
+      <h2 class="mbs-breeew-battle__title">Что важно знать перед регистрацией</h2>
+      <p class="mbs-breeew-battle__sub">Коротко собрали организационные условия, чтобы вы сразу понимали формат участия.</p>
+      <div class="mbs-breeew-battle-info__grid">
+        <article class="mbs-breeew-battle-card"><h3>Кто может участвовать</h3><p>Участвовать может бариста от 18 лет. Ограничения по опыту работы в этом чемпионате нет.</p></article>
+        <article class="mbs-breeew-battle-card"><h3>Площадка чемпионата</h3><p>Чемпионат пройдёт в Москве: ул. Нижняя Красносельская, 35, стр. 50.</p></article>
+        <article class="mbs-breeew-battle-card mbs-breeew-battle-card--green"><h3>Кофе для подготовки</h3><p>После оплаты участник получает 250 г спонсорского кофе №1 для домашней подготовки.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-rules">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle-rules__box">
+        <div>
+          <div class="mbs-breeew-battle__label">Регламент</div>
+          <h2 class="mbs-breeew-battle__title">Регламент чемпионата</h2>
+          <p>Перед регистрацией откройте регламент: там правила участия, требования к выступлению и порядок оценки.</p>
+        </div>
+        <a class="mbs-breeew-battle__btn-secondary" href="https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/preview" target="_blank" rel="noopener">Открыть регламент</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-participants" id="mbs-breeew-battle-participants">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle__label">Участники</div>
+      <h2 class="mbs-breeew-battle__title">Участники MBS* Breeew battle</h2>
+      <p class="mbs-breeew-battle__sub" data-archive-participants-sub>Здесь появляются участники, которые уже закрепили место на чемпионате. Проверьте, кто будет выступать вместе с вами.</p>
+      <div class="mbs-breeew-battle-counter">
+        <div class="mbs-breeew-battle-counter__item"><span data-counter-registered-label>Зарегистрировано</span><strong data-counter-registered>—</strong></div>
+        <div class="mbs-breeew-battle-counter__item"><span data-counter-remaining-label>Осталось мест</span><strong data-counter-remaining>—</strong></div>
+        <div class="mbs-breeew-battle-counter__item"><span data-counter-capacity-label>Всего мест</span><strong data-counter-capacity>—</strong></div>
+      </div>
+      <div class="mbs-breeew-battle-counter__notice" data-sold-out-message>Все места на чемпионат заняты</div>
+      <div data-participants-root><div class="mbs-breeew-battle-state">Загружаем участников...</div></div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-judges">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle__label">Судьи</div>
+      <h2 class="mbs-breeew-battle__title">Судейская команда</h2>
+      <p class="mbs-breeew-battle__sub">Работы участников оценивают практики кофейной индустрии.</p>
+      <div class="mbs-breeew-battle-judges__grid" data-judges-root>
+        <div class="mbs-breeew-battle-state">Загружаем судей...</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-prizes">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle__label">Призы</div>
+      <h2 class="mbs-breeew-battle__title">Призы объявим ближе к чемпионату</h2>
+      <p class="mbs-breeew-battle__sub">Партнёры чемпионата уже подключаются к проекту. Как только призовые наборы будут подтверждены, мы обновим страницу и памятку участников.</p>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-partners">
+    <div class="mbs-breeew-battle__wrap">
+      <h2 class="mbs-breeew-battle__title">Партнёры чемпионата</h2>
+      <div class="mbs-breeew-battle-partners__grid" data-partners-root>
+        <div class="mbs-breeew-battle-partners__empty">Загружаем партнёров...</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-faq">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle-faq__grid">
+        <div class="mbs-breeew-battle-faq__side">
+          <div class="mbs-breeew-battle__label">FAQ</div>
+          <h2>Частые вопросы</h2>
+          <p data-archive-faq-intro>Короткие ответы перед регистрацией. Если останутся вопросы, напишите менеджеру.</p>
+        </div>
+        <div class="mbs-breeew-battle-faq__list">
+          <details><summary>Кто может участвовать?</summary><p data-archive-faq-participant>Участвовать может бариста от 18 лет. Ограничения по опыту работы нет.</p></details>
+          <details><summary>Сколько стоит участие?</summary><p>Вступительный взнос — 3000 ₽. Место закрепляется после оплаты.</p></details>
+          <details><summary>Где проходит чемпионат?</summary><p>Чемпионат пройдёт в Москве по адресу: ул. Нижняя Красносельская, 35, стр. 50.</p></details>
+          <details><summary>Как проходит чемпионат?</summary><p>Соревнование проходит в 2 этапа. В отборочном этапе участники случайно делятся на пары и готовят Hario V60, победитель пары определяется слепой дегустацией. В финал проходят 10 участников, где каждый выступает в личном зачёте с самопрезентацией.</p></details>
+          <details><summary>Сколько времени даётся на выступление?</summary><p>На станции у участника есть 4 минуты на подготовку, 10 минут на приготовление напитка и 5 минут на уборку станции.</p></details>
+          <details><summary>Когда нужно быть на площадке?</summary><p>Участник должен быть в пространстве чемпионата минимум за 10 минут до своего выступления.</p></details>
+          <details><summary>На чём готовят участники?</summary><p>Все этапы проходят на воронке Hario V60. Воронка и бумажный фильтр предоставляются Организатором, использовать собственные воронки и фильтры нельзя.</p></details>
+          <details><summary>Какой напиток нужно приготовить?</summary><p>Участник готовит натуральный кофейный напиток без профессиональной кофе-машины. Объём напитка — не менее 150 мл в одной чашке.</p></details>
+          <details><summary>Можно ли использовать свою воду?</summary><p>Да, участник может использовать свою воду. Вода на площадке также будет предоставлена партнёром.</p></details>
+          <details><summary>Какой кофе используется?</summary><p>Для домашней подготовки участник получает 250 г спонсорского кофе №1. В день первого этапа выдаётся ещё 100 г кофе №1, а кофе №2 для финала участники узнают и получают за 30 минут до финала.</p></details>
+          <details><summary>Можно ли использовать своё оборудование?</summary><p>Можно использовать собственную кофемолку, чайник, весы, ложки, салфетки и другой не запрещённый инвентарь. Собственные чашки для подачи, воронки и фильтры не допускаются.</p></details>
+          <details><summary>Можно ли добавлять продукты или ароматизаторы?</summary><p>Нет. По регламенту запрещено использовать посторонние продукты, ароматизаторы и другие атрибуты для изменения вкуса напитка.</p></details>
+          <details><summary>Можно ли передать место другому участнику?</summary><p>После начала чемпионата замена участника не допускается. Вступительный взнос не возвращается после подтверждения участия и отправки набора для подготовки.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-final">
+    <div class="mbs-breeew-battle__wrap">
+      <div class="mbs-breeew-battle-final__box">
+        <div>
+          <div class="mbs-breeew-battle__label" data-archive-final-label>Следующий шаг</div>
+          <h2 class="mbs-breeew-battle__title" data-archive-final-title>Забронируйте место на чемпионате</h2>
+          <p data-archive-final-text>Заполните форму, перейдите к оплате и закрепите место участника.</p>
+          <div class="mbs-breeew-battle-final__meta"><span>5 августа</span><span>10:00</span><span>3000 ₽</span><span data-event-capacity>— участников</span></div>
+        </div>
+        <div class="mbs-breeew-battle-final__actions">
+          <button class="mbs-breeew-battle__btn js-mbs-breeew-battle-open" type="button">Участвовать</button>
+          <a class="mbs-breeew-battle__btn-secondary mbs-breeew-battle-waitlist-cta" href="#waiting_list" data-waitlist-cta aria-hidden="true">Лист ожидания</a>
+          <a class="mbs-breeew-battle__btn-secondary" href="#consalt">Оставить заявку</a>
+          <div class="mbs-breeew-battle-final__contacts">
+            <a href="tel:+79959992836"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.5 9 8.7l-2 1.45c1.15 2.35 2.9 4.1 5.25 5.25l1.45-2 4.2 1.8c.55.24.86.84.72 1.42l-.55 2.35c-.14.62-.7 1.03-1.33.98C9.7 19.35 4.15 13.8 3.55 6.76c-.05-.63.36-1.19.98-1.33l2.35-.55c.58-.14 1.18.17 1.42.72Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>+7 995 999 2836</a>
+            <a href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 4.5 3.8 11.15c-.8.32-.75 1.47.08 1.72l4.18 1.27 1.58 4.9c.25.78 1.25.98 1.78.35l2.25-2.67 4.35 3.16c.7.5 1.69.12 1.86-.72L22 5.82c.16-.9-.66-1.66-1.5-1.32Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m8.15 14.1 6.7-4.45-5.2 6.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Написать в Telegram</a>
+            <a href="https://wa.me/message/42GZ6YYBJTM5B1" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 19.5 5.75 16A8.2 8.2 0 1 1 9 19.25L4.5 19.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 8.6c.22-.5.48-.52.82-.52h.58c.2 0 .48.03.73.55l.55 1.23c.16.35.1.62-.08.84l-.43.5c-.13.15-.18.34-.06.55.36.65.9 1.22 1.55 1.66.22.15.43.12.6-.04l.58-.55c.2-.2.47-.25.74-.13l1.33.62c.42.2.48.46.43.74-.12.68-.8 1.45-1.58 1.48-1.17.05-2.6-.38-4.18-1.96-1.58-1.58-2.06-3.1-1.96-4.25.04-.42.16-.67.36-.72Z" fill="currentColor"/></svg>Написать в WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-breeew-battle-gallery-placeholder" aria-hidden="true">
+    <div data-future-gallery="championships"></div>
+  </section>
+</div>
+
+<div class="mbs-breeew-battle-popup" id="mbs-breeew-battle-popup" aria-hidden="true">
+  <div class="mbs-breeew-battle-popup__scroll" data-popup-close>
+    <div class="mbs-breeew-battle-popup__panel" role="dialog" aria-modal="true" aria-label="Регистрация на чемпионат">
+      <button class="mbs-breeew-battle-popup__share" type="button" data-popup-share aria-label="Скопировать ссылку на регистрацию" title="Скопировать ссылку">
+        <svg class="mbs-breeew-battle-popup__share-link" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M10 13.5a5 5 0 0 0 7.07 0l2.12-2.12a5 5 0 0 0-7.07-7.07l-1.21 1.21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 10.5a5 5 0 0 0-7.07 0L4.81 12.62a5 5 0 0 0 7.07 7.07l1.21-1.21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <svg class="mbs-breeew-battle-popup__share-check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="m5 12.5 4.2 4.2L19.5 6.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="mbs-breeew-battle-popup__close" type="button" data-popup-close aria-label="Закрыть">×</button>
+      <div class="mbs-breeew-battle-popup__content" data-popup-content></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('mbs-breeew-battle');
+    var popup = document.getElementById('mbs-breeew-battle-popup');
+    if (!root || !popup) return;
+
+    var DATA_URL = root.getAttribute('data-api-url');
+    var BOOKING_URL = root.getAttribute('data-booking-url');
+    var RULES_URL = root.getAttribute('data-rules-url') || 'https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/preview';
+    var EVENT_SLOT = { lesson_num: 1, date: '2026-08-05', time: '10:00', service_id: 30065058, staff_id: 1322836, seance_length: 10800 };
+    var WAITLIST_CLOSE_BEFORE_START_MS = 3 * 24 * 60 * 60 * 1000;
+    var STORAGE_KEY = 'mbs-breeew-battle-booking-client-v1';
+    var STORAGE_TTL_MS = 24 * 60 * 60 * 1000;
+    var PHONE_CODES = ['+7', '+375', '+380', '+374', '+995', '+998', '+996', '+992', '+90', '+49', '+44', '+1'];
+    var state = { data: null, soldOut: false, completed: false };
+    var participantsTable = {
+      currentList: [],
+      searchQuery: '',
+      firstLoad: true,
+      isExpanded: false,
+      searchTimer: null,
+      activeTip: null,
+      tipTimer: null
+    };
+    var judgesById = {};
+    var judgeModalLastTrigger = null;
+    var popupHashHandled = false;
+    var shareCopiedTimer = null;
+
+    function esc(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char];
+      });
+    }
+    function setText(selector, value) {
+      root.querySelectorAll(selector).forEach(function (item) { item.textContent = value; });
+    }
+    function pluralRu(value, one, few, many) {
+      var n = Math.abs(Number(value) || 0) % 100;
+      var n1 = n % 10;
+      if (n > 10 && n < 20) return many;
+      if (n1 > 1 && n1 < 5) return few;
+      if (n1 === 1) return one;
+      return many;
+    }
+    function formatUpdatedAt(value) {
+      if (!value) return '';
+      var date = new Date(value);
+      if (Number.isNaN(date.getTime())) return '';
+      return 'Обновлено ' + date.toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Moscow'
+      });
+    }
+    function participantName(item) {
+      return [item.first_name, item.last_name].map(function (value) {
+        return String(value || '').trim();
+      }).filter(Boolean).join(' ');
+    }
+    function normalizeTelegram(value) {
+      var username = String(value || '').trim()
+        .replace(/^https?:\/\/(?:www\.)?(?:t\.me|telegram\.me)\//i, '')
+        .replace(/^tg:\/\//i, '')
+        .replace(/\?.*$/, '')
+        .replace(/\s+/g, '')
+        .replace(/^@+/, '');
+      return username ? '@' + username : '';
+    }
+    function phoneCodeOptions(selected) {
+      return PHONE_CODES.map(function (code) {
+        return '<option value="' + esc(code) + '"' + (selected === code ? ' selected' : '') + '>' + esc(code) + '</option>';
+      }).join('');
+    }
+    function formatPhoneInput(phoneField, phoneCode) {
+      if (!phoneField) return;
+      var value = phoneField.value.replace(/\D/g, '');
+      if (phoneCode === '+7') {
+        if (value.charAt(0) === '8') value = value.slice(1);
+        if (value.charAt(0) === '7') value = value.slice(1);
+        value = value.slice(0, 10);
+        var formatted = '';
+        if (value.length >= 1) formatted = '(' + value.slice(0, 3);
+        if (value.length >= 4) formatted += ') ' + value.slice(3, 6);
+        if (value.length >= 7) formatted += '-' + value.slice(6, 8);
+        if (value.length >= 9) formatted += '-' + value.slice(8, 10);
+        phoneField.value = formatted;
+      } else {
+        phoneField.value = value.slice(0, 15);
+      }
+    }
+    function readStoredClient() {
+      try {
+        var stored = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || 'null') || {};
+        var savedAt = Number(stored.savedAt || 0);
+        if (savedAt && Date.now() - savedAt > STORAGE_TTL_MS) {
+          window.localStorage.removeItem(STORAGE_KEY);
+          return {};
+        }
+        return stored;
+      } catch (err) {
+        return {};
+      }
+    }
+    function clearStoredClient() {
+      try {
+        window.localStorage.removeItem(STORAGE_KEY);
+      } catch (err) {}
+    }
+    function writeStoredClient(client) {
+      try {
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          firstName: client.firstName || '',
+          lastName: client.lastName || '',
+          phoneCode: client.phoneCode || '+7',
+          phone: client.phone || '',
+          email: client.email || '',
+          telegram: client.telegram || '',
+          projectName: client.projectName || '',
+          comment: client.comment || '',
+          savedAt: Date.now()
+        }));
+      } catch (err) {}
+    }
+    function fillFormFromStorage(form) {
+      var stored = readStoredClient();
+      ['firstName', 'lastName', 'phoneCode', 'phone', 'email', 'telegram', 'projectName', 'comment'].forEach(function (name) {
+        var field = form.elements[name];
+        if (field && stored[name]) field.value = stored[name];
+      });
+      formatPhoneInput(form.elements.phone, form.elements.phoneCode ? form.elements.phoneCode.value : '+7');
+    }
+    function bindFormStorage(form) {
+      form.addEventListener('input', function (event) {
+        hideError();
+        var invalidWrap = event.target && (event.target.closest('.mbs-breeew-battle-form__field') || event.target.closest('.mbs-breeew-battle-form__agreement'));
+        if (invalidWrap) {
+          invalidWrap.classList.remove('is-invalid');
+          var fieldError = invalidWrap.querySelector('[data-field-error]');
+          if (fieldError) fieldError.textContent = '';
+        }
+        writeStoredClient(formData());
+      });
+      var telegramField = form.elements.telegram;
+      if (telegramField) {
+        telegramField.addEventListener('blur', function () {
+          telegramField.value = normalizeTelegram(telegramField.value);
+          writeStoredClient(formData());
+        });
+      }
+      var phoneField = form.elements.phone;
+      if (phoneField) {
+        phoneField.addEventListener('input', function () {
+          formatPhoneInput(phoneField, form.elements.phoneCode ? form.elements.phoneCode.value : '+7');
+          writeStoredClient(formData());
+        });
+      }
+      var phoneCodeField = form.elements.phoneCode;
+      if (phoneCodeField) {
+        phoneCodeField.addEventListener('change', function () {
+          formatPhoneInput(phoneField, phoneCodeField.value);
+          writeStoredClient(formData());
+        });
+      }
+    }
+    function eventStartDate(event) {
+      var eventData = event || {};
+      if (eventData.starts_at) {
+        var startsAt = new Date(eventData.starts_at);
+        if (!Number.isNaN(startsAt.getTime())) return startsAt;
+      }
+      var date = String(eventData.date || EVENT_SLOT.date || '').trim();
+      var time = String(eventData.time || EVENT_SLOT.time || '').trim();
+      if (!date || !time) return null;
+      var fallback = new Date(date + 'T' + time + ':00+03:00');
+      return Number.isNaN(fallback.getTime()) ? null : fallback;
+    }
+    function eventEndDate(event) {
+      var eventData = event || {};
+      var date = String(eventData.date || EVENT_SLOT.date || '').trim();
+      var time = String(eventData.time || EVENT_SLOT.time || '').trim();
+      if (!date || !time) return null;
+      var duration = Number(eventData.duration_seconds || eventData.seance_length || EVENT_SLOT.seance_length || 0);
+      var end = new Date(date + 'T' + time + ':00+03:00');
+      if (Number.isNaN(end.getTime())) return null;
+      end.setSeconds(end.getSeconds() + Math.max(duration, 0));
+      return end;
+    }
+    function isEventCompleted(data) {
+      var event = (data && data.event) || {};
+      var status = String(event.status || '').trim().toLowerCase();
+      if (status === 'completed' || status === 'past') return true;
+      if (event.is_past === true || event.completed === true) return true;
+      var end = eventEndDate(event);
+      return end ? Date.now() >= end.getTime() : false;
+    }
+    function isWaitlistOpen(data) {
+      var start = eventStartDate((data && data.event) || {});
+      return Boolean(start && Date.now() < start.getTime() - WAITLIST_CLOSE_BEFORE_START_MS);
+    }
+    function updateArchiveCopy(completed) {
+      setText('[data-archive-hero-kicker]', completed ? 'Чемпионат завершён' : 'Чемпионат по альтернативному завариванию кофе');
+      setText('[data-archive-hero-lead]', completed
+        ? 'Чемпионат прошёл 5 августа. На странице сохраняем информацию о событии, участниках, судьях, партнёрах и регламенте.'
+        : 'Чемпионат по альтернативному завариванию кофе: Hario V60, батлы на вылет, финал с самопрезентацией и оценка судей.');
+      setText('[data-archive-participants-sub]', completed
+        ? 'Список бариста, которые были подтверждены к участию в чемпионате.'
+        : 'Здесь появляются участники, которые уже закрепили место на чемпионате. Проверьте, кто будет выступать вместе с вами.');
+      setText('[data-counter-registered-label]', completed ? 'Участников' : 'Зарегистрировано');
+      setText('[data-counter-remaining-label]', completed ? 'Статус' : 'Осталось мест');
+      setText('[data-counter-hero-capacity-label]', completed ? 'Лимит участников' : 'Количество участников');
+      setText('[data-counter-capacity-label]', completed ? 'Лимит' : 'Всего мест');
+      setText('[data-archive-faq-intro]', completed
+        ? 'Короткие ответы по прошедшему чемпионату. Если останутся вопросы, напишите менеджеру.'
+        : 'Короткие ответы перед регистрацией. Если останутся вопросы, напишите менеджеру.');
+      setText('[data-archive-faq-participant]', completed
+        ? 'В чемпионате могли участвовать бариста от 18 лет. Ограничения по опыту работы не было.'
+        : 'Участвовать может бариста от 18 лет. Ограничения по опыту работы нет.');
+      setText('[data-archive-final-label]', completed ? 'Архив события' : 'Следующий шаг');
+      setText('[data-archive-final-title]', completed ? 'Чемпионат завершён' : 'Забронируйте место на чемпионате');
+      setText('[data-archive-final-text]', completed
+        ? 'Спасибо участникам, судьям и партнёрам. Если хотите попасть на следующий чемпионат или провести событие вместе с Московской школой бариста, оставьте заявку.'
+        : 'Заполните форму, перейдите к оплате и закрепите место участника.');
+    }
+    function updateParticipantsRegisterLink() {
+      root.querySelectorAll('[data-participants-register]').forEach(function (link) {
+        var disabled = state.completed || state.soldOut;
+        var label = link.querySelector('[data-participants-register-label]');
+        link.classList.toggle('is-disabled', disabled);
+        link.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+        if (label) label.textContent = state.completed ? 'Завершён' : (state.soldOut ? 'Мест нет' : 'Регистрация');
+      });
+    }
+    function updateWaitlistCtas() {
+      var waitlistVisible = state.soldOut && !state.completed && isWaitlistOpen(state.data);
+      root.querySelectorAll('[data-waitlist-cta]').forEach(function (link) {
+        link.classList.toggle('is-visible', waitlistVisible);
+        link.setAttribute('aria-hidden', waitlistVisible ? 'false' : 'true');
+      });
+      return waitlistVisible;
+    }
+    function setCtaState(soldOut, completed) {
+      state.soldOut = soldOut;
+      state.completed = completed;
+      var waitlistVisible = updateWaitlistCtas();
+      root.querySelectorAll('.js-mbs-breeew-battle-open').forEach(function (button) {
+        var disabled = soldOut || completed;
+        button.disabled = disabled;
+        button.classList.toggle('is-disabled', disabled);
+        button.textContent = completed ? 'Чемпионат завершён' : (soldOut ? 'Мест нет' : 'Участвовать');
+      });
+      var message = root.querySelector('[data-sold-out-message]');
+      if (message) {
+        message.textContent = completed
+          ? 'Чемпионат завершён. Регистрация закрыта.'
+          : (waitlistVisible
+            ? 'Все места на чемпионат заняты. До старта могут освободиться места. Оставьте заявку в лист ожидания.'
+            : 'Все места на чемпионат заняты');
+        message.classList.toggle('is-visible', soldOut || completed);
+      }
+      updateArchiveCopy(completed);
+      updateParticipantsRegisterLink();
+    }
+    function renderParticipants(items) {
+      var target = root.querySelector('[data-participants-root]');
+      if (!target) return;
+      ensureParticipantsWidget(target);
+      processParticipantsData(toCupParticipants(items), target);
+    }
+    function renderPartners(items) {
+      var target = root.querySelector('[data-partners-root]');
+      if (!target) return;
+      var partners = (Array.isArray(items) ? items : []).filter(function (item) {
+        return item && (item.logo_url || item.name);
+      });
+      if (!partners.length) {
+        target.removeAttribute('data-count-mod');
+        target.removeAttribute('data-count');
+        target.innerHTML = '<div class="mbs-breeew-battle-partners__empty">Партнёры скоро появятся.</div>';
+        return;
+      }
+      target.setAttribute('data-count-mod', String(partners.length % 6));
+      target.setAttribute('data-count', String(partners.length));
+      target.innerHTML = partners.map(function (partner) {
+        var name = String(partner.name || 'Партнёр чемпионата').trim();
+        var logo = String(partner.logo_url || '').trim();
+        var url = String(partner.website_url || '').trim();
+        var partnerKey = (name + ' ' + logo).toLowerCase();
+        var extraClass = '';
+        if (partnerKey.indexOf('петмол') !== -1 || partnerKey.indexOf('asset_355') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--petmol';
+        else if (partnerKey.indexOf('vkus') !== -1 || partnerKey.indexOf('вкусов') !== -1 || partnerKey.indexOf('_405') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--vkusov';
+        else if (partnerKey.indexOf('unicava') !== -1 || partnerKey.indexOf('юникава') !== -1 || partnerKey.indexOf('asset_2') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--unicava';
+        else if (partnerKey.indexOf('gourmet') !== -1 || partnerKey.indexOf('_406') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--gourmet';
+        else if (partnerKey.indexOf('rockets') !== -1 || partnerKey.indexOf('_407') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--rockets';
+        else if (partnerKey.indexOf('barista') !== -1 || partnerKey.indexOf('gear') !== -1 || partnerKey.indexOf('barista_gear') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--barista-gear';
+        else if (partnerKey.indexOf('mhw-3bomber') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--mhw';
+        else if (partnerKey.indexOf('wibe') !== -1) extraClass = ' mbs-breeew-battle-partner-logo--small';
+        var content = logo
+          ? '<img src="' + esc(logo) + '" alt="' + esc(name) + '" loading="lazy">'
+          : '<span class="mbs-breeew-battle-partners__empty">' + esc(name) + '</span>';
+        if (url) {
+          return '<a class="mbs-breeew-battle-partner-logo' + extraClass + '" href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + esc(name) + '">' + content + '</a>';
+        }
+        return '<div class="mbs-breeew-battle-partner-logo' + extraClass + '" aria-label="' + esc(name) + '">' + content + '</div>';
+      }).join('');
+    }
+    function ensureParticipantsWidget(target) {
+      if (target.querySelector('.mbs-cup-card')) return;
+      target.innerHTML =
+        '<div class="mbs-breeew-battle-participants-widget">' +
+          '<div class="mbs-cup-wrap" id="participants">' +
+            '<div class="mbs-cup-card">' +
+              '<div class="mbs-cup-head">' +
+                '<div class="mbs-cup-head-top">' +
+                  '<div class="mbs-cup-head-left">' +
+                    '<div class="mbs-cup-title">MBS* Breeew battle</div>' +
+                    '<div class="mbs-cup-sub">Участники чемпионата</div>' +
+                  '</div>' +
+                  '<div class="mbs-cup-actions">' +
+                    '<a href="#mbs-breeew-battle-popup" class="mbs-cup-reg" data-participants-register>' +
+                      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>' +
+                      '<span data-participants-register-label>Регистрация</span>' +
+                    '</a>' +
+                    '<a href="#waiting_list" class="mbs-cup-reg mbs-cup-waitlist" data-waitlist-cta aria-hidden="true">' +
+                      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>' +
+                      '<span>Лист ожидания</span>' +
+                    '</a>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="mbs-cup-badges" data-mbs-cup-badges style="display:none;">' +
+                  '<div class="mbs-cup-badge">' +
+                    '<span class="mbs-cup-dot"></span>' +
+                    '<span data-mbs-cup-count></span>' +
+                  '</div>' +
+                  '<div class="mbs-cup-badge mbs-cup-badge-proj" data-mbs-cup-proj></div>' +
+                  '<button class="mbs-cup-share" type="button" data-mbs-cup-share title="Поделиться">' +
+                    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>' +
+                    '<span class="mbs-cup-share-tip" data-mbs-cup-share-tip>Скопировано!</span>' +
+                  '</button>' +
+                '</div>' +
+              '</div>' +
+              '<div class="mbs-cup-search" data-mbs-cup-search style="display:none;">' +
+                '<input type="text" placeholder="Поиск по имени или проекту…" data-mbs-cup-input>' +
+              '</div>' +
+              '<div class="mbs-cup-updated" data-mbs-cup-updated style="display:none;">' +
+                '<span data-mbs-cup-time></span>' +
+              '</div>' +
+              '<div class="mbs-cup-body-wrap" data-mbs-cup-body-wrap>' +
+                '<div data-mbs-cup-body>' + buildParticipantsSkeleton() + '</div>' +
+              '</div>' +
+              '<div class="mbs-cup-toggle" data-mbs-cup-toggle style="display:none;">' +
+                '<button type="button" data-mbs-cup-toggle-btn>' +
+                  '<span data-mbs-cup-toggle-text>Показать всех</span>' +
+                  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+                '</button>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      var input = target.querySelector('[data-mbs-cup-input]');
+      var toggleBtn = target.querySelector('[data-mbs-cup-toggle-btn]');
+      var shareBtn = target.querySelector('[data-mbs-cup-share]');
+      var registerLink = target.querySelector('[data-participants-register]');
+      var body = target.querySelector('[data-mbs-cup-body]');
+
+      input.addEventListener('input', function (event) {
+        clearTimeout(participantsTable.searchTimer);
+        participantsTable.searchTimer = setTimeout(function () {
+          participantsTable.searchQuery = event.target.value.toLowerCase().trim();
+          renderParticipantsRows(participantsTable.currentList, false, {}, target);
+        }, 200);
+      });
+      toggleBtn.addEventListener('click', function () {
+        participantsTable.isExpanded = !participantsTable.isExpanded;
+        var wrap = target.querySelector('[data-mbs-cup-body-wrap]');
+        var txt = target.querySelector('[data-mbs-cup-toggle-text]');
+        if (participantsTable.isExpanded) {
+          wrap.classList.add('mbs-cup-expanded');
+          txt.textContent = 'Свернуть';
+        } else {
+          wrap.classList.remove('mbs-cup-expanded');
+          txt.textContent = 'Показать всех (' + participantsTable.currentList.length + ')';
+          var card = wrap.closest('.mbs-cup-card');
+          if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+      shareBtn.addEventListener('click', function () {
+        shareParticipants(target);
+      });
+      registerLink.addEventListener('click', openPopup);
+      updateParticipantsRegisterLink();
+      updateWaitlistCtas();
+      body.addEventListener('click', function (event) {
+        var nameEl = event.target.closest('.mbs-cup-name');
+        closeParticipantsTip();
+        if (!nameEl) return;
+        var fullName = nameEl.getAttribute('data-full') || nameEl.textContent;
+        if (nameEl.scrollWidth <= nameEl.clientWidth) return;
+        var tip = document.createElement('div');
+        tip.className = 'mbs-cup-name-float';
+        tip.textContent = fullName;
+        document.body.appendChild(tip);
+        var rect = nameEl.getBoundingClientRect();
+        tip.style.left = rect.left + 'px';
+        tip.style.top = (rect.top - tip.offsetHeight - 8) + 'px';
+        var tipRect = tip.getBoundingClientRect();
+        if (tipRect.right > window.innerWidth - 8) {
+          tip.style.left = (window.innerWidth - 8 - tipRect.width) + 'px';
+        }
+        if (tipRect.left < 8) tip.style.left = '8px';
+        tip.offsetWidth;
+        tip.classList.add('mbs-cup-tip-visible');
+        participantsTable.activeTip = tip;
+        participantsTable.tipTimer = setTimeout(closeParticipantsTip, 2000);
+      });
+      document.addEventListener('click', function (event) {
+        if (participantsTable.activeTip && !event.target.closest('.mbs-cup-name')) closeParticipantsTip();
+      });
+      window.addEventListener('scroll', closeParticipantsTip, true);
+    }
+    function toCupParticipants(items) {
+      return (Array.isArray(items) ? items : []).map(function (item, index) {
+        return {
+          n: String(index + 1),
+          f: String(item.first_name || '').trim(),
+          l: String(item.last_name || '').trim(),
+          p: String(item.project_name || '').trim()
+        };
+      }).filter(function (item) {
+        return item.f || item.l || item.p;
+      });
+    }
+    function processParticipantsData(newList, target) {
+      var newKeys = {};
+      if (!participantsTable.firstLoad) {
+        var oldKeys = {};
+        participantsTable.currentList.forEach(function (item) {
+          oldKeys[item.f + '|' + item.l + '|' + item.p] = true;
+        });
+        newList.forEach(function (item) {
+          var key = item.f + '|' + item.l + '|' + item.p;
+          if (!oldKeys[key]) newKeys[key] = true;
+        });
+      }
+      participantsTable.currentList = newList;
+      renderParticipantsHeader(newList, target);
+      renderParticipantsRows(newList, participantsTable.firstLoad, newKeys, target);
+      updateParticipantsTimestamp(target);
+      participantsTable.firstLoad = false;
+    }
+    function renderParticipantsHeader(list, target) {
+      var badges = target.querySelector('[data-mbs-cup-badges]');
+      var search = target.querySelector('[data-mbs-cup-search]');
+      var updated = target.querySelector('[data-mbs-cup-updated]');
+      var toggle = target.querySelector('[data-mbs-cup-toggle]');
+      var wrap = target.querySelector('[data-mbs-cup-body-wrap]');
+      if (!list.length) {
+        badges.style.display = 'none';
+        search.style.display = 'none';
+        updated.style.display = 'none';
+        toggle.style.display = 'none';
+        wrap.classList.add('mbs-cup-expanded');
+        return;
+      }
+      badges.style.display = 'flex';
+      var n = list.length;
+      var countEl = target.querySelector('[data-mbs-cup-count]');
+      if (participantsTable.firstLoad && n > 0) {
+        animateParticipantsCount(countEl, 0, n, 600, function (value) { return value + ' ' + pluralizeParticipants(value); });
+      } else {
+        countEl.textContent = n + ' ' + pluralizeParticipants(n);
+      }
+      var projects = {};
+      list.forEach(function (item) {
+        var project = item.p.trim();
+        if (project) projects[project] = (projects[project] || 0) + 1;
+      });
+      var projCount = Object.keys(projects).length;
+      var projBadge = target.querySelector('[data-mbs-cup-proj]');
+      if (projCount > 0) {
+        projBadge.style.display = 'inline-flex';
+        if (participantsTable.firstLoad) {
+          animateParticipantsCount(projBadge, 0, projCount, 600, function (value) { return value + ' ' + pluralizeProjects(value); });
+        } else {
+          projBadge.textContent = projCount + ' ' + pluralizeProjects(projCount);
+        }
+      } else {
+        projBadge.style.display = 'none';
+      }
+      search.style.display = n >= 5 ? 'block' : 'none';
+      updated.style.display = 'block';
+      if (n > 10) {
+        toggle.style.display = 'flex';
+        if (!participantsTable.isExpanded) target.querySelector('[data-mbs-cup-toggle-text]').textContent = 'Показать всех (' + n + ')';
+      } else {
+        toggle.style.display = 'none';
+        wrap.classList.add('mbs-cup-expanded');
+      }
+    }
+    function renderParticipantsRows(list, animate, newKeys, target) {
+      var body = target.querySelector('[data-mbs-cup-body]');
+      newKeys = newKeys || {};
+      if (!list.length) {
+        body.innerHTML =
+          '<div class="mbs-cup-empty">' +
+            '<div class="mbs-cup-empty-ico">☕</div>' +
+            '<div class="mbs-cup-empty-txt">Список участников скоро появится</div>' +
+          '</div>';
+        return;
+      }
+      var filtered = [];
+      for (var i = 0; i < list.length; i++) {
+        var item = list[i];
+        if (participantsTable.searchQuery) {
+          var hay = (item.f + ' ' + item.l + ' ' + item.p).toLowerCase();
+          if (hay.indexOf(participantsTable.searchQuery) === -1) continue;
+        }
+        filtered.push(item);
+      }
+      if (!filtered.length) {
+        body.innerHTML = '<div class="mbs-cup-noresult">Ничего не найдено</div>';
+        return;
+      }
+      var html = '<div class="mbs-cup-scroll">' +
+        '<div class="mbs-cup-th"><span>№</span><span>Участник</span><span>Проект</span></div>';
+      for (var j = 0; j < filtered.length; j++) {
+        var p = filtered[j];
+        var name = esc(p.f) + (p.f && p.l ? ' ' : '') + esc(p.l);
+        var rowKey = p.f + '|' + p.l + '|' + p.p;
+        var cls = 'mbs-cup-row';
+        if (newKeys[rowKey]) cls += ' mbs-cup-row-new';
+        var delay = animate ? Math.min(j * 45, 1400) : 0;
+        html += '<div class="' + cls + '" style="animation-delay:' + delay + 'ms;">';
+        html += '<div class="mbs-cup-num">' + esc(String(p.n)) + '</div>';
+        html += '<div class="mbs-cup-name" data-full="' + esc(p.f + (p.f && p.l ? ' ' : '') + p.l) + '">' + (name || '—') + '</div>';
+        html += '<div class="mbs-cup-proj">' + (p.p ? '<span class="mbs-cup-proj-tag">' + esc(p.p) + '</span>' : '—') + '</div>';
+        html += '</div>';
+      }
+      html += '</div>';
+      body.innerHTML = html;
+    }
+    function updateParticipantsTimestamp(target) {
+      var el = target.querySelector('[data-mbs-cup-time]');
+      if (!el) return;
+      var date = new Date();
+      var hh = String(date.getHours()).padStart(2, '0');
+      var mm = String(date.getMinutes()).padStart(2, '0');
+      el.textContent = 'обновлено в ' + hh + ':' + mm;
+    }
+    function buildParticipantsSkeleton() {
+      var html = '<div class="mbs-cup-sk">';
+      var widths = [['100%','60%'],['85%','50%'],['70%','75%'],['90%','55%'],['65%','80%']];
+      for (var i = 0; i < widths.length; i++) {
+        html += '<div class="mbs-cup-sk-r">' +
+          '<div class="mbs-cup-sk-c"></div>' +
+          '<div class="mbs-cup-sk-l" style="width:' + widths[i][0] + '"></div>' +
+          '<div class="mbs-cup-sk-l" style="width:' + widths[i][1] + '"></div>' +
+        '</div>';
+      }
+      html += '</div>';
+      return html;
+    }
+    function renderParticipantsError() {
+      var target = root.querySelector('[data-participants-root]');
+      if (!target) return;
+      ensureParticipantsWidget(target);
+      target.querySelector('[data-mbs-cup-body]').innerHTML =
+        '<div class="mbs-cup-empty">' +
+          '<div class="mbs-cup-empty-ico">⏳</div>' +
+          '<div class="mbs-cup-empty-txt">Не удалось загрузить список.<br>Попробуйте обновить страницу.</div>' +
+        '</div>';
+    }
+    function shareParticipants(target) {
+      var url = 'https://baristaschool.ru/breeew-battle#mbs-breeew-battle-participants';
+      var count = participantsTable.currentList.length;
+      var shareText = count
+        ? 'Уже ' + count + ' ' + pluralizeParticipants(count) + ' чемпионата по альтернативному завариванию кофе от Московской школы бариста!'
+        : 'Список участников чемпионата по альтернативному завариванию кофе от Московской школы бариста';
+      var tip = target.querySelector('[data-mbs-cup-share-tip]');
+      var copyText = shareText + '\n' + url;
+      if (navigator.share) {
+        navigator.share({ title: 'MBS* Breeew battle', text: shareText, url: url }).catch(function () {});
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(copyText).then(showTip).catch(fallbackCopy);
+      } else {
+        fallbackCopy();
+      }
+      function fallbackCopy() {
+        var textarea = document.createElement('textarea');
+        textarea.value = copyText;
+        textarea.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try { document.execCommand('copy'); showTip(); } catch (err) {}
+        document.body.removeChild(textarea);
+      }
+      function showTip() {
+        tip.classList.add('mbs-cup-tip-show');
+        setTimeout(function () { tip.classList.remove('mbs-cup-tip-show'); }, 1800);
+      }
+    }
+    function closeParticipantsTip() {
+      if (!participantsTable.activeTip) return;
+      var tip = participantsTable.activeTip;
+      tip.classList.remove('mbs-cup-tip-visible');
+      setTimeout(function () { if (tip.parentNode) tip.parentNode.removeChild(tip); }, 200);
+      participantsTable.activeTip = null;
+      clearTimeout(participantsTable.tipTimer);
+    }
+    function animateParticipantsCount(el, from, to, duration, formatter) {
+      var start = null;
+      function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        var ease = 1 - (1 - progress) * (1 - progress);
+        var value = Math.round(from + (to - from) * ease);
+        el.textContent = formatter ? formatter(value) : value;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    function pluralizeParticipants(value) {
+      return pluralRu(value, 'участник', 'участника', 'участников');
+    }
+    function pluralizeProjects(value) {
+      return pluralRu(value, 'проект', 'проекта', 'проектов');
+    }
+    function judgePhoto(judge) {
+      if (judge.photo_url) {
+        return '<img src="' + esc(judge.photo_url) + '" alt="' + esc(judge.name) + '" loading="lazy">';
+      }
+      return esc((judge.name || 'M').charAt(0));
+    }
+    var JUDGE_CARD_COPY = {
+      'Анастасия Кадушкина': {
+        role: 'Управляющая MBS',
+        description: '10+ лет в кофейной индустрии. Работала бариста, шеф-бариста, бренд-шеф и управляющей кофейных проектов.'
+      },
+      'Владимир Матвейчук': {
+        role: 'Судья кофейных чемпионатов',
+        description: 'Эксперт по sensory skill, соревновательным форматам и оценке кофейных напитков.'
+      },
+      'Кристмас Ли': {
+        role: 'Сертифицированный судья чемпионатов Бариста',
+        description: 'Сертифицированный судья чемпионатов Бариста с 2019 года. Главный судья Dalla Corte Cup и Бариста Года.'
+      },
+      'Николай Хюпенен': {
+        role: 'Кофейный брокер и судья чемпионатов',
+        description: 'Кофейный брокер, владелец обжарки Obzharka.com, чемпион России по каптестингу, судья кофейных чемпионатов с 2004 года.'
+      }
+    };
+    function judgeCardCopy(judge) {
+      return JUDGE_CARD_COPY[String(judge.name || '').trim()] || null;
+    }
+    function judgeCardRole(judge) {
+      var copy = judgeCardCopy(judge);
+      return copy && copy.role ? copy.role : (judge.role || 'Судья чемпионата');
+    }
+    function judgeDescriptionSections(text) {
+      var lines = String(text || '').split(/\n+/).map(function (line) {
+        return line.trim();
+      }).filter(Boolean);
+      var sections = {
+        experience: [],
+        management: [],
+        championships: []
+      };
+      lines.forEach(function (line) {
+        if (/^(7\s*лет|Помогла|запуст)/i.test(line)) {
+          sections.management.push(line);
+        } else if (/^Судья и организатор/i.test(line)) {
+          sections.championships.push(line.replace(/^Судья и организатор:?\s*/i, ''));
+        } else if (/^(Участник|Breeew|Bree|Uzbekistan|Barista|MBS|Drip)/i.test(line)) {
+          sections.championships.push(line);
+        } else {
+          sections.experience.push(line);
+        }
+      });
+      sections.championships = sections.championships.flatMap(function (line) {
+        if (!/,/.test(line)) return [line];
+        return line.split(',').map(function (item) { return item.trim(); }).filter(Boolean);
+      });
+      if (!sections.experience.length && lines.length) sections.experience.push(lines[0]);
+      return sections;
+    }
+    function judgeSectionHtml(title, lines) {
+      if (!lines || !lines.length) return '';
+      var isList = title === 'Чемпионаты и судейство';
+      var html = isList
+        ? '<ul>' + lines.map(function (line) { return '<li>' + esc(line) + '</li>'; }).join('') + '</ul>'
+        : '<p>' + esc(lines.join('\n')) + '</p>';
+      return '<div class="mbs-breeew-battle-judge-modal__section">' +
+        '<h4>' + esc(title) + '</h4>' +
+        html +
+      '</div>';
+    }
+    function judgePillsHtml(judge, sections) {
+      var source = String(judge.description || '');
+      var pills = [];
+      var years = source.match(/(\d+\+?)\s*лет/i);
+      if (years) pills.push(years[1] + ' лет в индустрии');
+      var projects = source.match(/более\s+(\d+)[-\s]*(?:ти)?\s*проект/i);
+      if (projects) pills.push(projects[1] + '+ проектов');
+      var teams = source.match(/до\s+(\d+)\s*человек/i);
+      if (sections.championships.length) pills.push('Судейство');
+      if (teams && pills.length < 3) pills.push('Команды до ' + teams[1] + ' человек');
+      if (!pills.length && sections.championships.length) pills.push('Чемпионатный опыт');
+      if (!pills.length) return '';
+      return '<div class="mbs-breeew-battle-judge-modal__pills">' +
+        pills.slice(0, 3).map(function (pill) {
+          return '<span class="mbs-breeew-battle-judge-modal__pill">' + esc(pill) + '</span>';
+        }).join('') +
+      '</div>';
+    }
+    function renderJudges(items) {
+      var target = root.querySelector('[data-judges-root]');
+      if (!target) return;
+      if (!items || !items.length) {
+        target.innerHTML = '<div class="mbs-breeew-battle-state">Список судей появится после заполнения таблицы.</div>';
+        return;
+      }
+      judgesById = {};
+      target.innerHTML = items.map(function (judge, index) {
+        var id = 'judge-' + index;
+        judgesById[id] = judge;
+        return '<button class="mbs-breeew-battle-judge js-mbs-breeew-battle-judge-open" type="button" data-judge-id="' + esc(id) + '" aria-label="Открыть карточку судьи: ' + esc(judge.name) + '">' +
+          '<div class="mbs-breeew-battle-judge__photo">' + judgePhoto(judge) + '</div>' +
+          '<div class="mbs-breeew-battle-judge__body">' +
+            '<h3>' + esc(judge.name) + '</h3>' +
+            '<div class="mbs-breeew-battle-judge__role">' + esc(judgeCardRole(judge)) + '</div>' +
+            '<span class="mbs-breeew-battle-judge__more">Подробнее</span>' +
+          '</div>' +
+        '</button>';
+      }).join('');
+    }
+    function judgeModalPhoto(judge) {
+      if (judge.photo_url) {
+        return '<img src="' + esc(judge.photo_url) + '" alt="' + esc(judge.name) + '">';
+      }
+      return '<div class="mbs-breeew-battle-judge-modal__placeholder">' + esc((judge.name || 'M').charAt(0)) + '</div>';
+    }
+    function ensureJudgeModal() {
+      var modal = document.getElementById('mbs-breeew-battle-judge-modal');
+      if (modal) return modal;
+      modal = document.createElement('div');
+      modal.id = 'mbs-breeew-battle-judge-modal';
+      modal.className = 'mbs-breeew-battle-judge-modal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.innerHTML = '' +
+        '<div class="mbs-breeew-battle-judge-modal__backdrop" data-judge-modal-close></div>' +
+        '<div class="mbs-breeew-battle-judge-modal__panel" role="dialog" aria-modal="true" aria-labelledby="mbs-breeew-battle-judge-modal-title">' +
+          '<button class="mbs-breeew-battle-judge-modal__close" type="button" data-judge-modal-close aria-label="Закрыть">×</button>' +
+          '<div class="mbs-breeew-battle-judge-modal__photo" data-judge-modal-photo></div>' +
+          '<div class="mbs-breeew-battle-judge-modal__content" data-judge-modal-content></div>' +
+        '</div>';
+      document.body.appendChild(modal);
+      modal.querySelectorAll('[data-judge-modal-close]').forEach(function (item) {
+        item.addEventListener('click', closeJudgeModal);
+      });
+      return modal;
+    }
+    function openJudgeModal(judge, trigger) {
+      var modal = ensureJudgeModal();
+      judgeModalLastTrigger = trigger || null;
+      var links = [
+        judge.telegram_url ? '<a href="' + esc(judge.telegram_url) + '" target="_blank" rel="noopener">Telegram</a>' : '',
+        judge.instagram_url ? '<a href="' + esc(judge.instagram_url) + '" target="_blank" rel="noopener">Instagram</a>' : ''
+      ].filter(Boolean).join('');
+      modal.querySelector('[data-judge-modal-photo]').innerHTML = judgeModalPhoto(judge);
+      var sections = judgeDescriptionSections(judge.description);
+      modal.querySelector('[data-judge-modal-content]').innerHTML = '' +
+        '<div class="mbs-breeew-battle-judge-modal__badge">Судья чемпионата</div>' +
+        '<h3 id="mbs-breeew-battle-judge-modal-title">' + esc(judge.name) + '</h3>' +
+        '<div class="mbs-breeew-battle-judge-modal__role">' + esc(judge.role || 'Судья чемпионата') + '</div>' +
+        judgePillsHtml(judge, sections) +
+        '<div class="mbs-breeew-battle-judge-modal__sections">' +
+          judgeSectionHtml('Опыт', sections.experience) +
+          judgeSectionHtml('Управление и проекты', sections.management) +
+          judgeSectionHtml('Чемпионаты и судейство', sections.championships) +
+        '</div>' +
+        (links ? '<div class="mbs-breeew-battle-judge__links">' + links + '</div>' : '');
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-breeew-battle-lock');
+      var closeBtn = modal.querySelector('.mbs-breeew-battle-judge-modal__close');
+      if (closeBtn) closeBtn.focus();
+    }
+    function closeJudgeModal() {
+      var modal = document.getElementById('mbs-breeew-battle-judge-modal');
+      if (!modal || !modal.classList.contains('is-open')) return;
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('mbs-breeew-battle-lock');
+      if (judgeModalLastTrigger) judgeModalLastTrigger.focus();
+      judgeModalLastTrigger = null;
+    }
+    function applyData(data) {
+      state.data = data || {};
+      var completed = isEventCompleted(state.data);
+      var counters = state.data.counters || {};
+      var capacity = counters.capacity || (state.data.event && state.data.event.capacity);
+      setText('[data-counter-registered]', counters.registered == null ? '0' : String(counters.registered));
+      setText('[data-counter-remaining]', completed ? 'завершён' : (counters.remaining == null ? '—' : String(counters.remaining)));
+      setText('[data-counter-capacity]', capacity ? String(capacity) : '—');
+      setText('[data-event-capacity]', capacity ? String(capacity) + ' участников' : '— участников');
+      setCtaState(Boolean(counters.sold_out), completed);
+      renderParticipants(state.data.participants || []);
+      renderPartners(state.data.partners || []);
+      renderJudges(state.data.judges || []);
+      openPopupFromHash();
+    }
+    function loadData() {
+      fetch(DATA_URL + (DATA_URL.indexOf('?') === -1 ? '?' : '&') + '_=' + Date.now(), { cache: 'no-store' })
+        .then(function (response) {
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          return response.json();
+        })
+        .then(applyData)
+        .catch(function (error) {
+          console.error('[mbs-breeew-battle] data load failed', error);
+          renderParticipantsError();
+          root.querySelector('[data-judges-root]').innerHTML = '<div class="mbs-breeew-battle-state">Не удалось загрузить список судей.</div>';
+          setCtaState(false, isEventCompleted({}));
+          setText('[data-counter-registered]', '—');
+          setText('[data-counter-remaining]', state.completed ? 'завершён' : '—');
+          setText('[data-counter-capacity]', '—');
+          setText('[data-event-capacity]', '— участников');
+          openPopupFromHash();
+        });
+    }
+    function popupContent() {
+      return popup.querySelector('[data-popup-content]');
+    }
+    function hasPopupHash() {
+      return window.location.hash === '#mbs-breeew-battle-popup';
+    }
+    function popupShareUrl() {
+      var url = window.location.href.split('#')[0];
+      if (/\/api\/breeew-battle\.html/i.test(url)) {
+        url = 'https://baristaschool.ru/breeew-battle';
+      }
+      return url + '#mbs-breeew-battle-popup';
+    }
+    function fallbackCopyText(text) {
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', 'readonly');
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      textarea.style.top = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+    function markShareCopied(button) {
+      if (!button) return;
+      window.clearTimeout(shareCopiedTimer);
+      button.classList.add('is-copied');
+      button.setAttribute('aria-label', 'Ссылка скопирована');
+      button.setAttribute('title', 'Ссылка скопирована');
+      shareCopiedTimer = window.setTimeout(function () {
+        button.classList.remove('is-copied');
+        button.setAttribute('aria-label', 'Скопировать ссылку на регистрацию');
+        button.setAttribute('title', 'Скопировать ссылку');
+      }, 1800);
+    }
+    function copyPopupLink() {
+      var button = popup.querySelector('[data-popup-share]');
+      var url = popupShareUrl();
+      var copied = window.navigator && window.navigator.clipboard && window.navigator.clipboard.writeText
+        ? window.navigator.clipboard.writeText(url)
+        : Promise.resolve().then(function () { fallbackCopyText(url); });
+      copied.then(function () {
+        markShareCopied(button);
+      }).catch(function () {
+        fallbackCopyText(url);
+        markShareCopied(button);
+      });
+    }
+    function openPopupFromHash() {
+      if (popupHashHandled || !hasPopupHash()) return;
+      popupHashHandled = true;
+      openPopup();
+    }
+    function openPopup(event) {
+      if (event) event.preventDefault();
+      if (state.completed || isEventCompleted(state.data || {})) {
+        state.completed = true;
+        renderRegistrationClosed();
+        popup.classList.add('is-open');
+        popup.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('mbs-breeew-battle-lock');
+        return;
+      }
+      if (state.soldOut) return;
+      renderForm();
+      popup.classList.add('is-open');
+      popup.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-breeew-battle-lock');
+    }
+    function closePopup() {
+      popup.classList.remove('is-open');
+      popup.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('mbs-breeew-battle-lock');
+    }
+    function showError(message) {
+      var error = popup.querySelector('[data-popup-error]');
+      if (!error) return;
+      error.textContent = message;
+      error.classList.add('is-visible');
+    }
+    function hideError() {
+      var error = popup.querySelector('[data-popup-error]');
+      if (!error) return;
+      error.textContent = '';
+      error.classList.remove('is-visible');
+    }
+    function clearValidation() {
+      hideError();
+      popup.querySelectorAll('.mbs-breeew-battle-form__field.is-invalid, .mbs-breeew-battle-form__agreement.is-invalid').forEach(function (item) {
+        item.classList.remove('is-invalid');
+      });
+      popup.querySelectorAll('[data-field-error]').forEach(function (item) { item.textContent = ''; });
+    }
+    function markFieldError(name, message) {
+      var field = popup.querySelector('[name="' + name + '"]');
+      if (!field) return message;
+      var wrap = field.closest('.mbs-breeew-battle-form__field') || field.closest('.mbs-breeew-battle-form__agreement');
+      if (wrap) wrap.classList.add('is-invalid');
+      var error = wrap && wrap.querySelector('[data-field-error]');
+      if (error) error.textContent = message;
+      return message;
+    }
+    function renderForm() {
+      popupContent().innerHTML = '' +
+        '<div class="mbs-breeew-battle-popup__step">Шаг 1 из 2 · данные участника</div>' +
+        '<h2>Регистрация на чемпионат</h2>' +
+        '<p class="mbs-breeew-battle-popup__note">После отправки формы мы забронируем место и покажем кнопку оплаты. Место закрепляется после оплаты взноса.</p>' +
+        '<div class="mbs-breeew-battle-popup__summary">' +
+          '<span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3v3M17 3v3M4.5 9h15M6.5 5h11A2.5 2.5 0 0 1 20 7.5v10A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-10A2.5 2.5 0 0 1 6.5 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><small>Дата</small><strong>5 августа</strong></span></span>' +
+          '<span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Старт</small><strong>10:00</strong></span></span>' +
+          '<span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5h6.2a3.8 3.8 0 1 1 0 7.6H8M8 5v14M6 15h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Взнос</small><strong>3000 ₽</strong></span></span>' +
+        '</div>' +
+        '<form class="mbs-breeew-battle-form" data-booking-form>' +
+          '<div class="mbs-breeew-battle-form__field"><label for="breeew-last-name">Фамилия *</label><input id="breeew-last-name" name="lastName" autocomplete="family-name" required><div class="mbs-breeew-battle-form__field-error" data-field-error></div></div>' +
+          '<div class="mbs-breeew-battle-form__field"><label for="breeew-first-name">Имя *</label><input id="breeew-first-name" name="firstName" autocomplete="given-name" required><div class="mbs-breeew-battle-form__field-error" data-field-error></div></div>' +
+          '<div class="mbs-breeew-battle-form__field"><label for="breeew-phone">Телефон *</label><div class="mbs-breeew-battle-form__phone-row"><select id="breeew-phone-code" name="phoneCode" autocomplete="tel-country-code">' + phoneCodeOptions('+7') + '</select><input id="breeew-phone" name="phone" type="tel" autocomplete="tel-national" inputmode="tel" placeholder="(999) 000-00-00" required></div><div class="mbs-breeew-battle-form__field-error" data-field-error></div></div>' +
+          '<div class="mbs-breeew-battle-form__field"><label for="breeew-email">Email *</label><input id="breeew-email" name="email" type="email" autocomplete="email" required><div class="mbs-breeew-battle-form__field-error" data-field-error></div></div>' +
+          '<div class="mbs-breeew-battle-form__field"><label for="breeew-telegram">Telegram *</label><input id="breeew-telegram" name="telegram" autocomplete="username" inputmode="text" placeholder="@username" required><div class="mbs-breeew-battle-form__hint">Можно без @, мы добавим автоматически.</div><div class="mbs-breeew-battle-form__field-error" data-field-error></div></div>' +
+          '<div class="mbs-breeew-battle-form__field"><label for="breeew-project">Проект / место работы *</label><input id="breeew-project" name="projectName" autocomplete="organization" required><div class="mbs-breeew-battle-form__hint">&nbsp;</div><div class="mbs-breeew-battle-form__field-error" data-field-error></div></div>' +
+          '<div class="mbs-breeew-battle-form__field mbs-breeew-battle-form__field--full"><label for="breeew-comment">Комментарий</label><textarea id="breeew-comment" name="comment" placeholder="Если нужно что-то уточнить"></textarea></div>' +
+          '<div class="mbs-breeew-battle-form__agreement-group mbs-breeew-battle-form__field--full">' +
+            '<label class="mbs-breeew-battle-form__agreement"><input name="rulesConsent" type="checkbox" required><span>Я ознакомлен(а) с <a href="' + esc(RULES_URL) + '" target="_blank" rel="noopener" type="application/pdf">регламентом чемпионата</a> и принимаю правила участия.</span></label>' +
+            '<label class="mbs-breeew-battle-form__agreement"><input name="personalDataConsent" type="checkbox" required><span>Я даю своё <a href="https://docs.google.com/document/d/13Q2Qwov_B2vzTI5qh2c3MNOZ-B3gVtDW9T3vyFkAKY0/export?format=pdf" target="_blank" rel="noopener">согласие на обработку персональных данных</a>, ознакомлен(а) с <a href="https://docs.google.com/document/d/1VvQ_XvR-FIq3Xaleas07I-9pfAomrfUNFqPqWFE4H1U/export?format=pdf" target="_blank" rel="noopener">политикой обработки персональных данных</a> и <a href="https://docs.google.com/document/d/1JgElyS6jSWw8L-h7ZnTpJRtDN56WyVzhm7m7buY-yJA/export?format=pdf" target="_blank" rel="noopener">офертой на заключение договора об оказании платных услуг</a>.</span></label>' +
+            '<label class="mbs-breeew-battle-form__agreement"><input name="marketingConsent" type="checkbox" required><span>Даю согласие ИНН 744517097939 на получение сообщений и информационно-рекламной рассылки.</span></label>' +
+          '</div>' +
+        '</form>' +
+        '<div class="mbs-breeew-battle-popup__error" data-popup-error></div>' +
+        '<div class="mbs-breeew-battle-popup__footer"><div class="mbs-breeew-battle-popup__small">Бронь действует 15 минут. Если оплата не поступит, место снова станет доступным.</div><button class="mbs-breeew-battle__btn" type="button" data-submit-booking>Забронировать и перейти к оплате</button></div>';
+      var form = popup.querySelector('[data-booking-form]');
+      fillFormFromStorage(form);
+      bindFormStorage(form);
+      popup.querySelector('[data-submit-booking]').addEventListener('click', submitBooking);
+    }
+    function renderRegistrationClosed() {
+      popupContent().innerHTML = '' +
+        '<div class="mbs-breeew-battle-popup__step">Регистрация закрыта</div>' +
+        '<h2>Чемпионат завершён</h2>' +
+        '<p class="mbs-breeew-battle-popup__note">Чемпионат уже прошёл. Если хотите узнать о следующих событиях Московской школы бариста, напишите нам в Telegram.</p>' +
+        '<div class="mbs-breeew-battle-popup__summary">' +
+          '<span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 3v3M17 3v3M4.5 9h15M6.5 5h11A2.5 2.5 0 0 1 20 7.5v10A2.5 2.5 0 0 1 17.5 20h-11A2.5 2.5 0 0 1 4 17.5v-10A2.5 2.5 0 0 1 6.5 5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><small>Дата</small><strong>5 августа</strong></span></span>' +
+          '<span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Старт</small><strong>10:00</strong></span></span>' +
+          '<span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span><small>Статус</small><strong>завершён</strong></span></span>' +
+        '</div>' +
+        '<div class="mbs-breeew-battle-popup__footer">' +
+          '<div class="mbs-breeew-battle-popup__small">Анонсы новых событий публикуем на сайте и в Telegram.</div>' +
+          '<a class="mbs-breeew-battle__btn" href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>' +
+        '</div>';
+    }
+    function formData() {
+      var form = popup.querySelector('[data-booking-form]');
+      var data = new FormData(form);
+      return {
+        firstName: String(data.get('firstName') || '').trim(),
+        lastName: String(data.get('lastName') || '').trim(),
+        phoneCode: String(data.get('phoneCode') || '+7').trim(),
+        phone: String(data.get('phone') || '').trim(),
+        email: String(data.get('email') || '').trim(),
+        telegram: normalizeTelegram(data.get('telegram')),
+        projectName: String(data.get('projectName') || '').trim(),
+        comment: String(data.get('comment') || '').trim(),
+        agreements: {
+          rules: Boolean(data.get('rulesConsent')),
+          personalData: Boolean(data.get('personalDataConsent')),
+          marketing: Boolean(data.get('marketingConsent'))
+        }
+      };
+    }
+    function validateClient(client) {
+      clearValidation();
+      if (!client.lastName) return markFieldError('lastName', 'Введите фамилию');
+      if (!client.firstName) return markFieldError('firstName', 'Введите имя');
+      var digits = client.phone.replace(/\D/g, '');
+      if ((client.phoneCode === '+7' && digits.length !== 10) || (client.phoneCode !== '+7' && digits.length < 6)) return markFieldError('phone', 'Введите номер телефона полностью');
+      if (!client.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client.email)) return markFieldError('email', 'Введите корректный email');
+      if (!client.telegram) return markFieldError('telegram', 'Введите Telegram');
+      if (!/^@[A-Za-z0-9_]{5,32}$/.test(client.telegram)) return markFieldError('telegram', 'Формат: @username');
+      if (!client.projectName) return markFieldError('projectName', 'Введите проект или место работы');
+      if (!client.agreements.rules) return markFieldError('rulesConsent', 'Подтвердите, что ознакомились с регламентом');
+      if (!client.agreements.personalData) return markFieldError('personalDataConsent', 'Подтвердите согласие на обработку персональных данных');
+      if (!client.agreements.marketing) return markFieldError('marketingConsent', 'Подтвердите согласие на рассылку');
+      return '';
+    }
+    function submitBooking() {
+      if (state.completed) {
+        renderRegistrationClosed();
+        return;
+      }
+      var client = formData();
+      var error = validateClient(client);
+      if (error) {
+        showError(error);
+        return;
+      }
+      var telegramField = popup.querySelector('[name="telegram"]');
+      if (telegramField) telegramField.value = client.telegram;
+      writeStoredClient(client);
+      var button = popup.querySelector('[data-submit-booking]');
+      button.disabled = true;
+      button.textContent = 'Создаём запись...';
+      fetch(BOOKING_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          variant_id: 'participant',
+          client: client,
+          schedule: { lesson_1: EVENT_SLOT }
+        })
+      })
+        .then(function (response) {
+          return response.json().then(function (json) {
+            if (!response.ok || !json.ok) throw new Error(json.error || (json.errors && json.errors[0] && json.errors[0].error) || 'Не удалось создать запись');
+            return json;
+          });
+        })
+        .then(renderSuccess)
+        .catch(function (err) {
+          console.error('[mbs-breeew-battle] booking failed', err);
+          button.disabled = false;
+          button.textContent = 'Забронировать и перейти к оплате';
+          showError(err.message || 'Не удалось создать запись. Попробуйте ещё раз или напишите нам.');
+        });
+    }
+    function renderSuccess(result) {
+      clearStoredClient();
+      var payment = result.payment || {};
+      var timeout = payment.timeout_minutes || 15;
+      popupContent().innerHTML = '' +
+        '<div class="mbs-breeew-battle-success">' +
+          '<div class="mbs-breeew-battle-success__icon">✓</div>' +
+          '<h2>Остался последний шаг</h2>' +
+          '<p class="mbs-breeew-battle-popup__note">Место предварительно забронировано. Чтобы закрепить участие в чемпионате, оплатите вступительный взнос.</p>' +
+          '<div class="mbs-breeew-battle-success__details">' +
+            '<div><span>Событие</span><strong>MBS* Breeew battle</strong></div>' +
+            '<div><span>Дата и время</span><strong>5 августа, 10:00</strong></div>' +
+            '<div><span>К оплате</span><strong>3000 ₽</strong></div>' +
+          '</div>' +
+          '<a class="mbs-breeew-battle__btn" href="' + esc(payment.url || '#') + '" target="_self" rel="noopener">Перейти к оплате</a>' +
+          '<p class="mbs-breeew-battle-popup__note" style="margin-top:18px">Бронь действует ' + esc(timeout) + ' минут. После оплаты участник появится в списке подтверждённых.</p>' +
+        '</div>';
+      loadData();
+    }
+
+    root.querySelectorAll('.js-mbs-breeew-battle-open').forEach(function (button) {
+      button.addEventListener('click', openPopup);
+    });
+    root.addEventListener('click', function (event) {
+      var trigger = event.target.closest('.js-mbs-breeew-battle-judge-open');
+      if (!trigger || !root.contains(trigger)) return;
+      var judge = judgesById[trigger.getAttribute('data-judge-id')];
+      if (!judge) return;
+      openJudgeModal(judge, trigger);
+    });
+    popup.querySelectorAll('[data-popup-close]').forEach(function (item) {
+      item.addEventListener('click', function (event) {
+        if (event.target === item || event.target.hasAttribute('data-popup-close')) closePopup();
+      });
+    });
+    var popupShareButton = popup.querySelector('[data-popup-share]');
+    if (popupShareButton) {
+      popupShareButton.addEventListener('click', copyPopupLink);
+    }
+    window.addEventListener('hashchange', function () {
+      popupHashHandled = false;
+      openPopupFromHash();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
+      if (event.key === 'Escape') closeJudgeModal();
+    });
+
+    loadData();
+    window.setInterval(loadData, 5 * 60 * 1000);
+  })();
+</script>

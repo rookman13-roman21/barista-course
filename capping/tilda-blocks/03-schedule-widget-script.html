@@ -1,0 +1,1052 @@
+<!--
+  MBS /capping — Tilda block 03 of 05
+  Назначение: JS виджета расписания — API, fallback, кэш, карточки событий, popup записи и Event JSON-LD.
+  Куда вставлять: сразу после блока 02.
+  Важно: использует #mbs-capping-widget из блока 01 и проверяет booking_url только на https + домены yClients.
+-->
+<script>
+(function () {
+var root = document.getElementById('mbs-capping-widget');
+if (!root) return;
+var apiUrl = root.getAttribute('data-api-url');
+var fallbackApiUrl = root.getAttribute('data-fallback-api-url') || '';
+if (!apiUrl) {
+root.innerHTML = '<div class="mbs-cap-empty">Не указан API URL.</div>';
+return;
+}
+var apiUrls = [apiUrl];
+if (fallbackApiUrl && fallbackApiUrl !== apiUrl) apiUrls.push(fallbackApiUrl);
+function fetchWithTimeout(url, options, ms) {
+return new Promise(function (resolve, reject) {
+var done = false;
+var timer = setTimeout(function () {
+if (done) return;
+done = true;
+reject(new Error('timeout'));
+}, ms || 4500);
+fetch(url, options || {}).then(function (resp) {
+if (done) return;
+done = true;
+clearTimeout(timer);
+resolve(resp);
+}, function (err) {
+if (done) return;
+done = true;
+clearTimeout(timer);
+reject(err);
+});
+});
+}
+function cacheBustedUrl(value) {
+var url = new URL(value, window.location.href);
+url.searchParams.set('_', String(Date.now()));
+return url.toString();
+}
+function fetchJsonFromUrls(urls, options) {
+function tryOne(index) {
+return fetchWithTimeout(cacheBustedUrl(urls[index]), options || { method: 'GET' }, 4500)
+.then(function (r) {
+if (!r.ok) throw new Error('HTTP ' + r.status);
+return r.json();
+})
+.catch(function (err) {
+if (index + 1 < urls.length) return tryOne(index + 1);
+throw err;
+});
+}
+return tryOne(0);
+}
+function esc(t) {
+return String(t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function getSafeYclientsUrl(value) {
+if (!value) return '';
+try {
+var url = new URL(String(value).trim());
+var host = url.hostname.toLowerCase();
+var isYclientsHost = host === 'yclients.com' || host.slice(-13) === '.yclients.com';
+return url.protocol === 'https:' && isYclientsHost ? url.toString() : '';
+} catch (error) {
+return '';
+}
+}
+/* ——— Короткое название месяца ——— */
+var MONTH_SHORT = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+function monthShort(dateStr) {
+if (!dateStr) return '';
+var parts = dateStr.split('-');
+var m = parseInt(parts[1], 10);
+return MONTH_SHORT[m - 1] || '';
+}
+var chevronSvg = '<svg class="mbs-cap-collapsed-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 8 10 13 15 8"></polyline></svg>';
+var galArrowLeft = '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>';
+var galArrowRight = '<svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>';
+var shareSvg = '<svg class="mbs-cap-share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
+var closeSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+var navPrevSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
+var navNextSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+/* ——— Render gallery (image slider) ——— */
+function renderGallery(images, alt) {
+if (!images || !images.length) return '<div class="mbs-cap-img-placeholder">☕</div>';
+if (images.length === 1) return '<img src="' + esc(images[0]) + '" alt="' + esc(alt) + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">';
+var h = '<div class="mbs-cap-gallery">';
+h += '<div class="mbs-cap-gallery-track">';
+for (var i = 0; i < images.length; i++) {
+h += '<div class="mbs-cap-gallery-slide"><img src="' + esc(images[i]) + '" alt="' + esc(alt) + '" loading="lazy"></div>';
+}
+h += '</div>';
+h += '<button class="mbs-cap-gallery-arrow prev" aria-label="Назад">' + galArrowLeft + '</button>';
+h += '<button class="mbs-cap-gallery-arrow next" aria-label="Вперёд">' + galArrowRight + '</button>';
+h += '<div class="mbs-cap-gallery-dots">';
+for (var d = 0; d < images.length; d++) {
+h += '<button class="mbs-cap-gallery-dot' + (d === 0 ? ' active' : '') + '" data-idx="' + d + '" aria-label="Слайд ' + (d+1) + '"></button>';
+}
+h += '</div></div>';
+return h;
+}
+/* ——— Init gallery touch/drag ——— */
+function initGalleries(container) {
+var gals = container.querySelectorAll('.mbs-cap-gallery');
+for (var g = 0; g < gals.length; g++) {
+(function(gal) {
+var track = gal.querySelector('.mbs-cap-gallery-track');
+var slides = gal.querySelectorAll('.mbs-cap-gallery-slide');
+var dots = gal.querySelectorAll('.mbs-cap-gallery-dot');
+var arrows = gal.querySelectorAll('.mbs-cap-gallery-arrow');
+if (!track || slides.length < 2) return;
+var cur = 0, startX = 0, dx = 0, dragging = false;
+function go(idx) {
+cur = Math.max(0, Math.min(idx, slides.length - 1));
+track.style.transform = 'translateX(-' + (cur * 100) + '%)';
+for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('active', i === cur);
+}
+for (var a = 0; a < arrows.length; a++) {
+arrows[a].addEventListener('click', function(e) {
+e.stopPropagation();
+go(cur + (this.classList.contains('prev') ? -1 : 1));
+});
+}
+for (var d = 0; d < dots.length; d++) {
+dots[d].addEventListener('click', function(e) {
+e.stopPropagation();
+go(parseInt(this.dataset.idx, 10));
+});
+}
+/* Touch swipe */
+gal.addEventListener('touchstart', function(e) {
+startX = e.touches[0].clientX; dx = 0; dragging = true;
+track.classList.add('dragging');
+}, { passive: true });
+gal.addEventListener('touchmove', function(e) {
+if (!dragging) return;
+dx = e.touches[0].clientX - startX;
+track.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + dx + 'px))';
+}, { passive: true });
+gal.addEventListener('touchend', function() {
+if (!dragging) return;
+dragging = false;
+track.classList.remove('dragging');
+if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1)); else go(cur);
+dx = 0;
+});
+/* Mouse drag */
+gal.addEventListener('mousedown', function(e) {
+e.preventDefault();
+startX = e.clientX; dx = 0; dragging = true;
+track.classList.add('dragging');
+});
+document.addEventListener('mousemove', function(e) {
+if (!dragging) return;
+dx = e.clientX - startX;
+track.style.transform = 'translateX(calc(-' + (cur * 100) + '% + ' + dx + 'px))';
+});
+document.addEventListener('mouseup', function() {
+if (!dragging) return;
+dragging = false;
+track.classList.remove('dragging');
+if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1)); else go(cur);
+dx = 0;
+});
+})(gals[g]);
+}
+}
+/* ——— Synthesize month key from date string ——— */
+var MONTH_FULL_NOM = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+function getMonthKey(dateStr) {
+if (!dateStr) return 'unknown';
+var p = dateStr.split('-');
+return p[0] + '-' + p[1]; /* e.g. "2025-07" */
+}
+function getMonthLabel(dateStr) {
+if (!dateStr) return '';
+var p = dateStr.split('-');
+var m = parseInt(p[1], 10);
+return MONTH_FULL_NOM[m - 1] || '';
+}
+/* ——— Форматирование длительности ——— */
+function formatDuration(minutes) {
+if (!minutes) return '';
+if (minutes < 60) return minutes + ' мин';
+var h = minutes / 60;
+if (h === Math.floor(h)) return h + ' ч';
+return h.toFixed(1).replace('.', ',').replace(/,0$/, '') + ' ч';
+}
+/* ——— Форматирование цены ——— */
+function formatPrice(price) {
+if (!price) return '';
+return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
+}
+/* ——— Склонение: 1 день, 2 дня, 5 дней ——— */
+function pluralize(n, one, few, many) {
+var abs = Math.abs(n) % 100;
+var n1 = abs % 10;
+if (abs > 10 && abs < 20) return many;
+if (n1 > 1 && n1 < 5) return few;
+if (n1 === 1) return one;
+return many;
+}
+/* ——— Счётчик дней до события ——— */
+function formatCountdown(dateStr) {
+if (!dateStr) return '';
+var parts = dateStr.split('-');
+var evDate = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+var now = new Date();
+var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+var diff = Math.round((evDate - today) / 86400000);
+if (diff < 0) return '';
+if (diff === 0) return '<span class="mbs-cap-countdown today">Сегодня</span>';
+if (diff === 1) return '<span class="mbs-cap-countdown soon">Завтра</span>';
+if (diff <= 3) return '<span class="mbs-cap-countdown soon">Через ' + diff + ' ' + pluralize(diff, 'день', 'дня', 'дней') + '</span>';
+if (diff <= 7) return '<span class="mbs-cap-countdown">Через ' + diff + ' ' + pluralize(diff, 'день', 'дня', 'дней') + '</span>';
+return '';
+}
+/* ——— Рендер карточки (доступной) — compact grid card ——— */
+function renderCard(ev, idx) {
+var images = ev.photos && ev.photos.length ? ev.photos : (ev.image_url ? [ev.image_url] : []);
+var galleryHtml = renderGallery(images, ev.title);
+var seatsBadgeHtml = '';
+if (ev.seats_total > 0 && ev.is_available) {
+var lowSeats = ev.seats_total > 0 && (ev.seats_free / ev.seats_total) <= 0.2;
+var seatsCls = lowSeats ? 'low' : 'available';
+seatsBadgeHtml = '<span class="mbs-cap-seats-badge ' + seatsCls + '">' + ev.seats_free + ' из ' + ev.seats_total + '</span>';
+} else if (!ev.is_available) {
+seatsBadgeHtml = '<span class="mbs-cap-seats-badge soldout">Мест нет</span>';
+}
+var mShort = monthShort(ev.date);
+var prc = formatPrice(ev.price);
+var dur = formatDuration(ev.duration_minutes);
+var subParts = [];
+if (dur) subParts.push(dur);
+if (prc) subParts.push(prc);
+var subHtml = subParts.length ? '<p class="mbs-cap-compact-sub">' + subParts.join(' · ') + '</p>' : '';
+return '' +
+'<article class="mbs-cap-card" data-idx="' + idx + '">' +
+'<div class="mbs-cap-img-wrap">' +
+galleryHtml +
+seatsBadgeHtml +
+'</div>' +
+'<div class="mbs-cap-body">' +
+'<time class="mbs-cap-date-row" datetime="' + esc(ev.date) + (ev.time ? 'T' + ev.time.replace(/[^0-9:]/g,'') : '') + '">' +
+'<div class="mbs-cap-day-block">' +
+'<span class="mbs-cap-day-num">' + ev.day_num + '</span>' +
+'<span class="mbs-cap-day-wd">' + esc(mShort) + '</span>' +
+'</div>' +
+'<div class="mbs-cap-time-info">' +
+'<span class="mbs-cap-time">' + esc(ev.time) + '</span>' +
+'<span class="mbs-cap-weekday">' + esc(ev.weekday) + '</span>' +
+formatCountdown(ev.date) +
+'</div>' +
+'</time>' +
+'<h3 class="mbs-cap-title">' + (ev.roaster_name ? esc(ev.title) + ' с компанией ' + esc(ev.roaster_name) : esc(ev.title)) + '</h3>' +
+subHtml +
+'</div>' +
+'</article>';
+}
+/* ——— Рендер свёрнутой карточки (мест нет) ——— */
+function renderCollapsedCard(ev) {
+/* Roaster block inside collapsed body */
+var roasterHtml = '';
+if (ev.roaster_name) {
+var descHtml = ev.roaster_description
+? '<span class="mbs-cap-roaster-desc">' + esc(ev.roaster_description) + '</span>'
+: '';
+roasterHtml = '<div class="mbs-cap-roaster">' +
+'<span class="mbs-cap-roaster-icon">🔥</span>' +
+'<div class="mbs-cap-roaster-info">' +
+'<span class="mbs-cap-roaster-label">Обжарочная компания</span>' +
+'<span class="mbs-cap-roaster-name">' + esc(ev.roaster_name) + '</span>' +
+descHtml +
+'</div>' +
+'</div>';
+}
+/* Meta */
+var metaHtml = '';
+var metaItems = '';
+var dur = formatDuration(ev.duration_minutes);
+var prc = formatPrice(ev.price);
+if (dur) metaItems += '<span class="mbs-cap-meta-item"><span class="mbs-cap-meta-icon">⏱</span> ' + dur + '</span>';
+if (prc) metaItems += '<span class="mbs-cap-meta-item">' + prc + '</span>';
+if (metaItems) metaHtml = '<div class="mbs-cap-meta">' + metaItems + '</div>';
+var fallbackImg = 'https://lh3.googleusercontent.com/d/1EeHN48i_-LKhE09afU51vcKrNdhHsv1A';
+var images = ev.photos && ev.photos.length ? ev.photos : (ev.image_url ? [ev.image_url] : []);
+var imgHtml = '';
+if (images.length) {
+imgHtml = '<div class="mbs-cap-collapsed-img">' + renderGallery(images, ev.title) + '</div>';
+}
+var trainerHtml = '';
+if (ev.trainer_name) {
+var avatarTag = ev.trainer_avatar
+? '<img class="mbs-cap-trainer-avatar" src="' + esc(ev.trainer_avatar) + '" alt="' + esc(ev.trainer_name) + '" loading="lazy">'
+: '';
+trainerHtml = '<div class="mbs-cap-trainer">' +
+avatarTag +
+'<div class="mbs-cap-trainer-info">' +
+'<span class="mbs-cap-trainer-role">Ведущий</span>' +
+'<span class="mbs-cap-trainer-name">' + esc(ev.trainer_name) + '</span>' +
+'</div>' +
+'</div>';
+}
+var mShort = monthShort(ev.date);
+var cardTitle = ev.roaster_name ? esc(ev.title) + ' с компанией ' + esc(ev.roaster_name) : esc(ev.title);
+return '' +
+'<article class="mbs-cap-card collapsed" role="button" tabindex="0" aria-expanded="false">' +
+'<div class="mbs-cap-collapsed-row">' +
+'<div class="mbs-cap-collapsed-left">' +
+'<div class="mbs-cap-collapsed-day">' +
+'<span class="mbs-cap-collapsed-day-num">' + ev.day_num + '</span>' +
+'<span class="mbs-cap-collapsed-day-wd">' + esc(mShort) + '</span>' +
+'</div>' +
+'<div class="mbs-cap-collapsed-info">' +
+'<span class="mbs-cap-collapsed-title">' + cardTitle + '</span>' +
+'<span class="mbs-cap-collapsed-time">' + esc(ev.time) + ' · ' + esc(ev.weekday) + '</span>' +
+'</div>' +
+'</div>' +
+'<div class="mbs-cap-collapsed-right">' +
+'<span class="mbs-cap-collapsed-badge">Мест нет</span>' +
+chevronSvg +
+'</div>' +
+'</div>' +
+'<div class="mbs-cap-collapsed-body">' +
+'<div class="mbs-cap-collapsed-body-inner">' +
+imgHtml +
+'<div class="mbs-cap-collapsed-content">' +
+roasterHtml +
+metaHtml +
+trainerHtml +
+'<div class="mbs-cap-soldout-banner">Все места заняты</div>' +
+'<a class="mbs-cap-btn mbs-cap-btn-waiting" href="#waiting_list">Лист ожидания</a>' +
+'</div>' +
+'</div>' +
+'</div>' +
+'</article>';
+}
+/* ——— Popup content (full detail for a cupping) ——— */
+function renderPopupContent(ev) {
+var images = ev.photos && ev.photos.length ? ev.photos : (ev.image_url ? [ev.image_url] : []);
+var galleryHtml = renderGallery(images, ev.title);
+var seatsBadgeHtml = '';
+if (ev.seats_total > 0 && ev.is_available) {
+var lowSeats = (ev.seats_free / ev.seats_total) <= 0.2;
+seatsBadgeHtml = '<span class="mbs-cap-seats-badge ' + (lowSeats ? 'low' : 'available') + '">' + ev.seats_free + ' из ' + ev.seats_total + '</span>';
+} else if (!ev.is_available) {
+seatsBadgeHtml = '<span class="mbs-cap-seats-badge soldout">Мест нет</span>';
+}
+/* Roaster */
+var roasterHtml = '';
+if (ev.roaster_name) {
+var descHtml = ev.roaster_description
+? '<span class="mbs-cap-roaster-desc">' + esc(ev.roaster_description) + '</span>' : '';
+roasterHtml = '<div class="mbs-cap-roaster">' +
+'<span class="mbs-cap-roaster-icon">🔥</span>' +
+'<div class="mbs-cap-roaster-info">' +
+'<span class="mbs-cap-roaster-label">Обжарочная компания</span>' +
+'<span class="mbs-cap-roaster-name">' + esc(ev.roaster_name) + '</span>' +
+descHtml +
+'</div></div>';
+} else {
+roasterHtml = '<p class="mbs-cap-roaster-pending">Обжарочная компания уточняется — следите за обновлениями</p>';
+}
+/* Meta */
+var metaItems = '';
+var dur = formatDuration(ev.duration_minutes);
+var prc = formatPrice(ev.price);
+if (dur) metaItems += '<span class="mbs-cap-meta-item"><span class="mbs-cap-meta-icon">⏱</span> ' + dur + '</span>';
+if (prc) metaItems += '<span class="mbs-cap-meta-item">' + prc + '</span>';
+var metaHtml = metaItems ? '<div class="mbs-cap-meta">' + metaItems + '</div>' : '';
+/* Trainer */
+var trainerHtml = '';
+if (ev.trainer_name) {
+var avatarTag = ev.trainer_avatar
+? '<img class="mbs-cap-trainer-avatar" src="' + esc(ev.trainer_avatar) + '" alt="' + esc(ev.trainer_name) + '" loading="lazy">' : '';
+trainerHtml = '<div class="mbs-cap-trainer">' + avatarTag +
+'<div class="mbs-cap-trainer-info">' +
+'<span class="mbs-cap-trainer-role">Ведущий</span>' +
+'<span class="mbs-cap-trainer-name">' + esc(ev.trainer_name) + '</span>' +
+'</div></div>';
+}
+/* Seats */
+var seatsHtml = '';
+if (ev.seats_total > 0 && ev.is_available) {
+var freeWord = pluralize(ev.seats_free, 'место', 'места', 'мест');
+var low2 = (ev.seats_free / ev.seats_total) <= 0.2;
+seatsHtml = '<div class="mbs-cap-seats"' + (low2 ? ' style="color:var(--danger);font-weight:600"' : '') + '>Свободно <strong>' + ev.seats_free + '</strong> ' + freeWord + ' из ' + ev.seats_total + '</div>';
+} else if (!ev.is_available) {
+seatsHtml = '<div class="mbs-cap-seats mbs-cap-seats-soldout">Все места заняты</div>';
+}
+/* Button */
+var bookUrl = getSafeYclientsUrl(ev.booking_url);
+var evUrl = (ev.event_url || '').trim();
+var btnHtml = '';
+if (ev.is_available && bookUrl) {
+btnHtml = '<a class="mbs-cap-btn" href="' + esc(bookUrl) + '" target="_blank" rel="noopener">Записаться онлайн</a>';
+} else if (ev.is_available && evUrl) {
+btnHtml = '<a class="mbs-cap-btn" href="' + esc(evUrl) + '" target="_blank" rel="noopener">Подробнее</a>';
+} else if (!ev.is_available) {
+btnHtml = '<a class="mbs-cap-btn mbs-cap-btn-waiting" href="#waiting_list">Лист ожидания</a>';
+}
+var mShort = monthShort(ev.date);
+/* Build scroll content: popup-img + popup-body (flat, like events) */
+var scrollContent = '<div class="mbs-cap-popup-img">' +
+galleryHtml +
+seatsBadgeHtml +
+'</div>' +
+'<div class="mbs-cap-popup-body">' +
+'<time class="mbs-cap-date-row" datetime="' + esc(ev.date) + (ev.time ? 'T' + ev.time.replace(/[^0-9:]/g,'') : '') + '">' +
+'<div class="mbs-cap-day-block">' +
+'<span class="mbs-cap-day-num">' + ev.day_num + '</span>' +
+'<span class="mbs-cap-day-wd">' + esc(mShort) + '</span>' +
+'</div>' +
+'<div class="mbs-cap-time-info">' +
+'<span class="mbs-cap-time">' + esc(ev.time) + '</span>' +
+'<span class="mbs-cap-weekday">' + esc(ev.weekday) + '</span>' +
+formatCountdown(ev.date) +
+'</div>' +
+'</time>' +
+'<h3 class="mbs-cap-title">' + (ev.roaster_name ? esc(ev.title) + ' с обжарочной компанией ' + esc(ev.roaster_name) : esc(ev.title)) + '</h3>' +
+roasterHtml +
+metaHtml +
+trainerHtml +
+'</div>';
+var footerContent = '<div class="mbs-cap-action">' + seatsHtml + btnHtml + '</div>';
+return { scroll: scrollContent, footer: footerContent };
+}
+/* ——— Popup state ——— */
+var currentCuppings = [];
+var popupOverlay = null;
+var popupEl, popupScroll, popupFooter, popupClose, popupWrap, popupCounter;
+var popupPrev, popupNext, popupCurrentIdx = 0;
+var isMobile = window.matchMedia('(max-width: 768px)');
+var popupParentScrollLocked = false;
+function createPopupDOM() {
+var div = document.createElement('div');
+div.className = 'mbs-cap-popup-overlay mbs-capping';
+div.setAttribute('role', 'dialog');
+div.setAttribute('aria-modal', 'true');
+div.innerHTML = '' +
+'<div class="mbs-cap-popup-backdrop"></div>' +
+'<div class="mbs-cap-popup-wrap">' +
+'<button class="mbs-cap-popup-nav prev" aria-label="Предыдущий каппинг">' + navPrevSvg + '</button>' +
+'<div class="mbs-cap-popup">' +
+'<div class="mbs-cap-popup-handle"><span></span></div>' +
+'<button class="mbs-cap-popup-close" aria-label="Закрыть">' + closeSvg + '</button>' +
+'<div class="mbs-cap-popup-scroll"></div>' +
+'<div class="mbs-cap-popup-footer"></div>' +
+'</div>' +
+'<button class="mbs-cap-popup-nav next" aria-label="Следующий каппинг">' + navNextSvg + '</button>' +
+'</div>';
+document.body.appendChild(div);
+popupOverlay = div;
+popupWrap = div.querySelector('.mbs-cap-popup-wrap');
+popupEl = div.querySelector('.mbs-cap-popup');
+popupScroll = div.querySelector('.mbs-cap-popup-scroll');
+popupFooter = div.querySelector('.mbs-cap-popup-footer');
+popupClose = div.querySelector('.mbs-cap-popup-close');
+popupCounter = div.querySelector('.mbs-cap-popup-counter');
+popupPrev = div.querySelector('.mbs-cap-popup-nav.prev');
+popupNext = div.querySelector('.mbs-cap-popup-nav.next');
+/* Close on overlay / wrap / backdrop click */
+div.addEventListener('click', function(e) {
+if (e.target === div || e.target === popupWrap || e.target.classList.contains('mbs-cap-popup-backdrop')) closePopup();
+});
+popupClose.addEventListener('click', closePopup);
+popupScroll.addEventListener('touchmove', function(e) {
+e.stopPropagation();
+}, { passive: true });
+/* Nav arrows */
+popupPrev.addEventListener('click', function(e) {
+e.stopPropagation();
+popupCurrentIdx = (popupCurrentIdx - 1 + currentCuppings.length) % currentCuppings.length;
+showPopupEvent(popupCurrentIdx);
+});
+popupNext.addEventListener('click', function(e) {
+e.stopPropagation();
+popupCurrentIdx = (popupCurrentIdx + 1) % currentCuppings.length;
+showPopupEvent(popupCurrentIdx);
+});
+/* Keyboard: Escape to close, arrows to navigate */
+document.addEventListener('keydown', function(e) {
+if (!popupOverlay || !popupOverlay.classList.contains('open')) return;
+if (e.key === 'Escape') closePopup();
+if (e.key === 'ArrowLeft') {
+popupCurrentIdx = (popupCurrentIdx - 1 + currentCuppings.length) % currentCuppings.length;
+showPopupEvent(popupCurrentIdx);
+}
+if (e.key === 'ArrowRight') {
+popupCurrentIdx = (popupCurrentIdx + 1) % currentCuppings.length;
+showPopupEvent(popupCurrentIdx);
+}
+});
+}
+function updatePopupViewport() {
+if (!popupOverlay) return;
+try {
+if (window.parent && window.parent !== window && window.frameElement && window.parent.document) {
+var frameRect = window.frameElement.getBoundingClientRect();
+var parentHeight = window.parent.innerHeight || window.innerHeight || 700;
+var visibleTop = Math.max(0, -frameRect.top);
+popupOverlay.style.position = 'absolute';
+popupOverlay.style.top = visibleTop + 'px';
+popupOverlay.style.left = '0';
+popupOverlay.style.right = '0';
+popupOverlay.style.bottom = 'auto';
+popupOverlay.style.width = '100%';
+popupOverlay.style.height = parentHeight + 'px';
+return;
+}
+} catch (error) {}
+popupOverlay.style.position = 'fixed';
+popupOverlay.style.top = '0';
+popupOverlay.style.left = '0';
+popupOverlay.style.right = '0';
+popupOverlay.style.bottom = '0';
+popupOverlay.style.width = '';
+popupOverlay.style.height = '';
+}
+function lockPopupScroll() {
+document.body.style.overflow = 'hidden';
+if (isMobile.matches) return;
+document.documentElement.style.overflow = 'hidden';
+try {
+if (window.parent && window.parent !== window && window.parent.document) {
+window.parent.document.documentElement.style.overflow = 'hidden';
+window.parent.document.body.style.overflow = 'hidden';
+popupParentScrollLocked = true;
+}
+} catch (error) {}
+}
+function unlockPopupScroll() {
+document.documentElement.style.overflow = '';
+document.body.style.overflow = '';
+if (popupParentScrollLocked) {
+try {
+window.parent.document.documentElement.style.overflow = '';
+window.parent.document.body.style.overflow = '';
+} catch (error) {}
+popupParentScrollLocked = false;
+}
+}
+function showPopupEvent(idx) {
+var ev = currentCuppings[idx];
+if (!ev) return;
+var content = renderPopupContent(ev);
+/* Toggle soldout class for border color */
+if (ev.is_available) {
+popupEl.classList.remove('soldout');
+} else {
+popupEl.classList.add('soldout');
+}
+if (!isMobile.matches) {
+/* Desktop: restructure body into 3 fixed zones */
+popupScroll.innerHTML = content.scroll;
+var bodyEl = popupScroll.querySelector('.mbs-cap-popup-body');
+if (bodyEl) {
+var dateRow = bodyEl.querySelector('.mbs-cap-date-row');
+var titleEl = bodyEl.querySelector('.mbs-cap-title');
+var roasterEl = bodyEl.querySelector('.mbs-cap-roaster') || bodyEl.querySelector('.mbs-cap-roaster-pending');
+var metaEl = bodyEl.querySelector('.mbs-cap-meta');
+var trainerEl = bodyEl.querySelector('.mbs-cap-trainer');
+bodyEl.innerHTML = '';
+/* Zone 1: top — date + title */
+var zoneTop = document.createElement('div');
+zoneTop.className = 'mbs-cap-popup-zone-top';
+if (dateRow) zoneTop.appendChild(dateRow);
+if (titleEl) zoneTop.appendChild(titleEl);
+bodyEl.appendChild(zoneTop);
+/* Zone 2: mid — roaster (scrollable) */
+var zoneMid = document.createElement('div');
+zoneMid.className = 'mbs-cap-popup-zone-mid';
+if (roasterEl) zoneMid.appendChild(roasterEl);
+bodyEl.appendChild(zoneMid);
+/* Zone 3: bot — meta + trainer + buttons */
+var zoneBot = document.createElement('div');
+zoneBot.className = 'mbs-cap-popup-zone-bot';
+if (metaEl) zoneBot.appendChild(metaEl);
+if (trainerEl) zoneBot.appendChild(trainerEl);
+var actionWrap = document.createElement('div');
+actionWrap.className = 'mbs-cap-popup-inline-action';
+actionWrap.innerHTML = content.footer;
+zoneBot.appendChild(actionWrap);
+bodyEl.appendChild(zoneBot);
+}
+popupFooter.innerHTML = '';
+popupFooter.style.display = 'none';
+} else {
+/* Mobile: scroll + sticky footer */
+popupScroll.innerHTML = content.scroll;
+popupFooter.innerHTML = content.footer;
+popupFooter.style.display = '';
+}
+/* Reset scroll */
+popupScroll.scrollTop = 0;
+popupScroll.style.overflowY = isMobile.matches ? 'auto' : '';
+popupScroll.style.webkitOverflowScrolling = isMobile.matches ? 'touch' : '';
+var midZone = popupScroll.querySelector('.mbs-cap-popup-zone-mid');
+if (midZone) midZone.scrollTop = 0;
+/* Update counter */
+if (popupCounter) {
+popupCounter.textContent = (popupCurrentIdx + 1) + ' / ' + currentCuppings.length;
+}
+/* Init galleries inside popup */
+initGalleries(popupScroll);
+}
+function openPopup(idx) {
+if (!popupOverlay) createPopupDOM();
+popupCurrentIdx = idx;
+var scrollX = window.pageXOffset || document.documentElement.scrollLeft || 0;
+var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+var parentScrollX = 0;
+var parentScrollY = 0;
+try {
+if (window.parent && window.parent !== window) {
+parentScrollX = window.parent.pageXOffset || window.parent.document.documentElement.scrollLeft || 0;
+parentScrollY = window.parent.pageYOffset || window.parent.document.documentElement.scrollTop || 0;
+}
+} catch (error) {}
+updatePopupViewport();
+showPopupEvent(popupCurrentIdx);
+popupOverlay.classList.add('open');
+lockPopupScroll();
+window.scrollTo(scrollX, scrollY);
+try {
+if (window.parent && window.parent !== window) window.parent.scrollTo(parentScrollX, parentScrollY);
+} catch (error) {}
+setTimeout(function() {
+try {
+popupClose.focus({ preventScroll: true });
+} catch (error) {
+popupClose.focus();
+window.scrollTo(scrollX, scrollY);
+}
+}, 100);
+}
+function closePopup() {
+if (!popupOverlay) return;
+popupOverlay.classList.remove('open');
+unlockPopupScroll();
+}
+/* Re-render on viewport change while open */
+isMobile.addEventListener('change', function() {
+if (popupOverlay && popupOverlay.classList.contains('open')) {
+showPopupEvent(popupCurrentIdx);
+}
+});
+/* ——— Share button logic ——— */
+function initShareButtons(container) {
+var btns = container.querySelectorAll('.mbs-cap-share');
+for (var i = 0; i < btns.length; i++) {
+(function(btn) {
+if (btn._shareInit) return;
+btn._shareInit = true;
+btn.addEventListener('click', function(e) {
+e.stopPropagation();
+var url = btn.dataset.url || window.location.href;
+if (navigator.share) {
+navigator.share({ url: url }).catch(function(){});
+} else if (navigator.clipboard) {
+navigator.clipboard.writeText(url).then(function() {
+btn.classList.add('copied');
+btn.querySelector('span').textContent = 'Скопировано';
+setTimeout(function() {
+btn.classList.remove('copied');
+btn.querySelector('span').textContent = 'Поделиться';
+}, 2000);
+});
+}
+});
+})(btns[i]);
+}
+}
+/* ——— Attach card clicks (tap-vs-swipe for gallery) ——— */
+function attachCardClicks(container) {
+var cards = container.querySelectorAll('.mbs-cap-card:not(.collapsed)');
+for (var i = 0; i < cards.length; i++) {
+(function(card) {
+var sx = 0, sy = 0;
+card.addEventListener('pointerdown', function(e) { sx = e.clientX; sy = e.clientY; }, { passive: true });
+card.addEventListener('click', function(e) {
+/* Don't open popup if clicking gallery arrow/dot or link */
+if (e.target.closest('.mbs-cap-gallery-arrow, .mbs-cap-gallery-dot, a')) return;
+var dx = Math.abs(e.clientX - sx), dy = Math.abs(e.clientY - sy);
+if (dx > 10 || dy > 10) return; /* was swipe/drag */
+var idx = parseInt(card.dataset.idx, 10);
+openPopup(idx);
+});
+})(cards[i]);
+}
+}
+/* ——— Рендер всего ——— */
+function render(cuppings) {
+if (!cuppings || !cuppings.length) {
+showScheduleFallback('empty');
+return;
+}
+/* Чайные каппинги отображаются на отдельной странице */
+cuppings = cuppings.filter(function (c) { return c.cupping_type !== 'tea'; });
+if (!cuppings.length) {
+showScheduleFallback('empty');
+return;
+}
+/* Store for popup */
+currentCuppings = cuppings;
+var avail = cuppings.filter(function (c) { return c.is_available; });
+var soldOut = cuppings.filter(function (c) { return !c.is_available; });
+/* ——— Group available by month ——— */
+var monthOrder = [];
+var monthMap = {};
+avail.forEach(function(c, i) {
+var mk = getMonthKey(c.date);
+if (!monthMap[mk]) {
+monthMap[mk] = { key: mk, label: getMonthLabel(c.date), items: [] };
+monthOrder.push(mk);
+}
+/* Store original index in currentCuppings for popup */
+var origIdx = cuppings.indexOf(c);
+monthMap[mk].items.push({ ev: c, idx: origIdx });
+});
+var html = '';
+/* Month tabs (only if 2+ months) */
+if (monthOrder.length > 1) {
+html += '<div class="mbs-cap-tabs">';
+monthOrder.forEach(function(mk, ti) {
+html += '<button class="mbs-cap-tab' + (ti === 0 ? ' active' : '') + '" data-month="' + mk + '">' + esc(monthMap[mk].label) + '</button>';
+});
+html += '</div>';
+}
+/* Month sections */
+monthOrder.forEach(function(mk, mi) {
+var m = monthMap[mk];
+html += '<div class="mbs-cap-month' + (mi === 0 ? ' active' : '') + '" data-month="' + mk + '">';
+html += '<div class="mbs-cap-grid">';
+m.items.forEach(function(item) { html += renderCard(item.ev, item.idx); });
+html += '</div>';
+html += '</div>';
+});
+/* Sold out — collapsed cards with waiting list */
+if (soldOut.length) {
+html += '<div class="mbs-cap-soldout-section">';
+html += '<p class="mbs-cap-soldout-heading">Запись закрыта</p>';
+html += '<div class="mbs-cap-soldout-list">';
+soldOut.forEach(function (c) { html += renderCollapsedCard(c); });
+html += '</div></div>';
+}
+/* Global waiting list button — only when NO available cuppings */
+if (avail.length === 0) {
+html += '<div class="mbs-cap-waiting-global">' +
+'<a class="mbs-cap-btn mbs-cap-btn-waiting mbs-cap-btn-global" href="#waiting_list">Добавиться в лист ожидания</a>' +
+'</div>';
+}
+/* Scroll to top */
+html += '<button class="mbs-cap-totop" id="mbs-cap-totop" aria-label="Наверх">' +
+'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>' +
+'</button>';
+/* ── Schema.org (SEO) ── */
+var schemaEvents = cuppings.map(function (ev) {
+var schema = {
+'@type': 'Event',
+'name': ev.title || 'Каппинг',
+'startDate': ev.date + (ev.time ? 'T' + ev.time.replace(/[^0-9:]/g,'') : ''),
+'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+'eventStatus': 'https://schema.org/EventScheduled',
+'location': { '@type': 'Place', 'name': 'Московская школа бариста', 'address': { '@type': 'PostalAddress', 'addressLocality': 'Москва', 'addressCountry': 'RU' } },
+'organizer': { '@type': 'Organization', 'name': 'Московская школа бариста', 'url': 'https://baristaschool.ru' }
+};
+if (ev.description) schema['description'] = ev.description;
+if (ev.image_url) schema['image'] = ev.image_url;
+var safeOfferUrl = getSafeYclientsUrl(ev.booking_url) || 'https://baristaschool.ru/capping';
+if (ev.price) schema['offers'] = { '@type': 'Offer', 'price': ev.price, 'priceCurrency': 'RUB', 'url': safeOfferUrl, 'availability': ev.is_available ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut' };
+if (ev.trainer_name) schema['performer'] = { '@type': 'Person', 'name': ev.trainer_name };
+return schema;
+});
+var ldJson = { '@context': 'https://schema.org', '@graph': schemaEvents };
+var existingLd = document.getElementById('mbs-cap-schema');
+if (existingLd) existingLd.remove();
+var scriptTag = document.createElement('script');
+scriptTag.type = 'application/ld+json';
+scriptTag.id = 'mbs-cap-schema';
+scriptTag.textContent = JSON.stringify(ldJson);
+document.head.appendChild(scriptTag);
+var h2Html = '<h2 class="mbs-cap-heading" style="font-size:0;height:0;margin:0;padding:0;overflow:hidden;position:absolute">Расписание каппингов — Московская школа бариста</h2>';
+root.innerHTML = h2Html + html;
+/* ——— Month tabs switching ——— */
+var tabs = root.querySelectorAll('.mbs-cap-tab');
+var months = root.querySelectorAll('.mbs-cap-month');
+for (var t = 0; t < tabs.length; t++) {
+(function(tab) {
+tab.addEventListener('click', function() {
+var mk = tab.dataset.month;
+for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+for (var j = 0; j < months.length; j++) months[j].classList.remove('active');
+tab.classList.add('active');
+var target = root.querySelector('.mbs-cap-month[data-month="' + mk + '"]');
+if (target) target.classList.add('active');
+});
+})(tabs[t]);
+}
+/* ——— Init galleries in cards ——— */
+initGalleries(root);
+/* ——— Attach card clicks (open popup) ——— */
+attachCardClicks(root);
+/* Toggle collapsed cards */
+var collapsedCards = root.querySelectorAll('.mbs-cap-card.collapsed');
+for (var c = 0; c < collapsedCards.length; c++) {
+(function (card) {
+var galleryInited = false;
+function toggleCard(e) {
+if (e && e.target.closest && e.target.closest('a, .mbs-cap-gallery-arrow, .mbs-cap-gallery-dot')) return;
+var isOpen = card.classList.toggle('open');
+card.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+if (isOpen && !galleryInited) {
+galleryInited = true;
+initGalleries(card);
+}
+}
+card.addEventListener('click', toggleCard);
+card.addEventListener('keydown', function (e) {
+if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(e); }
+});
+})(collapsedCards[c]);
+}
+/* Scroll to top button */
+var toTopBtn = document.getElementById('mbs-cap-totop');
+if (toTopBtn) {
+var ticking = false;
+function checkToTop() {
+var rect = root.getBoundingClientRect();
+toTopBtn.classList.toggle('visible', rect.top < -400);
+ticking = false;
+}
+window.addEventListener('scroll', function () {
+if (!ticking) { ticking = true; requestAnimationFrame(checkToTop); }
+}, { passive: true });
+toTopBtn.addEventListener('click', function () {
+root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+}
+}
+/* ——— URL sources for recommendations ——— */
+var EVENTS_API = 'https://api.barista-school.ru/api/events.json';
+var EVENTS_FALLBACK_API = 'https://159-194-202-120.sslip.io/api-fallback/api/events.json';
+var CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTiqqRfXEDPaF7owmS9DaihOQfl-zcDEd0maWkGgY_FncojjyBEikq8ld0LLZpE6Ydu-Px4baL5-3KQ/pub?gid=1943377641&single=true&output=csv';
+/* ——— Exclusion patterns for recommendations (partial, case-insensitive) ——— */
+var EXCLUDE_PATTERNS = ['групповой базовый курс', 'каппинг', 'дегустация кофе', 'дегустация чая', 'вебинар', 'чемпионат'];
+/* ——— Parse CSV into rows ——— */
+function parseCSV(text) {
+var lines = text.split('\n');
+var map = {};
+for (var i = 1; i < lines.length; i++) {
+var line = lines[i].trim();
+if (!line) continue;
+/* Simple CSV parse: split by comma, handle possible commas in URLs */
+var parts = line.match(/^([^,]+),([^,]*),([^,]*),?(.*)$/);
+if (!parts) continue;
+var name = parts[1].trim();
+var url = parts[2].trim();
+var img = parts[3].trim();
+if (name && url) {
+map[name] = { url: url, img: img };
+}
+}
+return map;
+}
+/* ——— Render recommendations block ——— */
+function renderRecommendations(events, csvMap) {
+/* Filter: available, not excluded, has URL in CSV */
+var filtered = events.filter(function (ev) {
+if (!ev.is_available || ev.seats_free <= 0) return false;
+var lower = (ev.title || '').toLowerCase();
+for (var e = 0; e < EXCLUDE_PATTERNS.length; e++) {
+if (lower.indexOf(EXCLUDE_PATTERNS[e]) !== -1) return false;
+}
+if (!csvMap[ev.title]) return false;
+return true;
+});
+/* Sort by date ascending */
+filtered.sort(function (a, b) {
+return (a.date || '').localeCompare(b.date || '');
+});
+/* Take top 3 */
+filtered = filtered.slice(0, 3);
+if (!filtered.length) return;
+var MONTH_FULL_GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+function formatDateLabel(dateStr) {
+if (!dateStr) return '';
+var p = dateStr.split('-');
+var d = parseInt(p[2], 10);
+var m = parseInt(p[1], 10);
+return d + ' ' + MONTH_FULL_GEN[m - 1];
+}
+var html = '<div class="mbs-cap-recommend">';
+html += '<div class="mbs-cap-recommend-cta">';
+html += '<p class="mbs-cap-recommend-text">На ближайший каппинг мест уже нет. Вы можете добавиться в лист ожидания или выбрать другое ближайшее мероприятие.</p>';
+html += '<a class="mbs-cap-recommend-btn" href="#waiting_list">Добавиться в лист ожидания</a>';
+html += '</div>';
+html += '<div class="mbs-cap-recommend-divider"></div>';
+html += '<p class="mbs-cap-recommend-heading">Ближайшие мероприятия</p>';
+html += '<div class="mbs-cap-recommend-list">';
+filtered.forEach(function (ev) {
+var info = csvMap[ev.title];
+var imgSrc = ev.image_url || info.img || '';
+var pageUrl = info.url;
+var dateLabel = formatDateLabel(ev.date);
+var timeStr = ev.time ? ', ' + esc(ev.time) : '';
+html += '<div class="mbs-cap-recommend-item">';
+if (imgSrc) {
+html += '<img class="mbs-cap-recommend-img" src="' + esc(imgSrc) + '" alt="' + esc(ev.title) + '" loading="lazy">';
+}
+html += '<div class="mbs-cap-recommend-info">';
+html += '<span class="mbs-cap-recommend-title">' + esc(ev.title) + '</span>';
+html += '<span class="mbs-cap-recommend-date">' + esc(dateLabel) + timeStr + '</span>';
+html += '</div>';
+html += '<a class="mbs-cap-recommend-link" href="' + esc(pageUrl) + '">Подробнее</a>';
+html += '</div>';
+});
+html += '</div></div>';
+/* Append to widget */
+var container = document.createElement('div');
+container.innerHTML = html;
+/* Insert before the scroll-to-top button */
+var toTop = root.querySelector('.mbs-cap-totop');
+if (toTop) {
+root.insertBefore(container.firstChild, toTop);
+} else {
+root.insertAdjacentHTML('beforeend', html);
+}
+}
+/* ——— Load recommendations if needed ——— */
+function maybeLoadRecommendations(cuppings) {
+/* Show only when ALL cuppings are soldout */
+if (!cuppings.length) return;
+for (var i = 0; i < cuppings.length; i++) {
+if (cuppings[i].is_available) return;
+}
+/* Fetch events API and CSV in parallel */
+Promise.all([
+fetchJsonFromUrls([EVENTS_API, EVENTS_FALLBACK_API]),
+fetchWithTimeout(CSV_URL, {}, 4500).then(function (r) { return r.text(); })
+]).then(function (results) {
+var eventsData = results[0];
+var csvText = results[1];
+var csvMap = parseCSV(csvText);
+var events = eventsData.events || [];
+renderRecommendations(events, csvMap);
+}).catch(function (err) {
+console.warn('Recommendations load error:', err);
+});
+}
+/* ——— Skeleton loader ——— */
+function showSkeleton() {
+var s = '<div class="mbs-cap-skeleton">';
+for (var j = 0; j < 3; j++) {
+s += '<div class="mbs-cap-skeleton-card">' +
+'<div class="mbs-cap-skeleton-img"></div>' +
+'<div class="mbs-cap-skeleton-body">' +
+'<div class="mbs-cap-skeleton-line w60 h20"></div>' +
+'<div class="mbs-cap-skeleton-line w80"></div>' +
+'<div class="mbs-cap-skeleton-line w40"></div>' +
+'<div class="mbs-cap-skeleton-line w60"></div>' +
+'</div>' +
+'</div>';
+}
+s += '</div>';
+root.innerHTML = s;
+}
+showSkeleton();
+/* ——— Load with localStorage cache (last successful response is usable as fallback for 7 days) ——— */
+var CACHE_KEY = 'mbs_cap_data';
+var CACHE_STALE_TTL = 7 * 24 * 60 * 60 * 1000; /* 7 days */
+function loadFromCache(maxAge) {
+try {
+var raw = localStorage.getItem(CACHE_KEY);
+if (!raw) return null;
+var cached = JSON.parse(raw);
+if (Date.now() - cached.ts > maxAge) { localStorage.removeItem(CACHE_KEY); return null; }
+return cached.data;
+} catch (e) { return null; }
+}
+function saveToCache(data) {
+try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) { /* quota */ }
+}
+var retrySvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>';
+var telegramUrl = 'https://t.me/Moscow_barista_school';
+var whatsappUrl = 'https://wa.me/message/42GZ6YYBJTM5B1';
+function afterRender(cuppings) {
+maybeLoadRecommendations(cuppings);
+/* Deep link: scroll to widget if hash matches */
+if (window.location.hash === '#mbs-capping-widget') {
+setTimeout(function() {
+root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}, 150);
+}
+}
+function showScheduleFallback(type) {
+var isEmpty = type === 'empty';
+var title = isEmpty ? 'Ближайшие даты уточняются' : 'Расписание временно не загрузилось';
+var text = isEmpty
+? 'Каппинги проходят регулярно: мы зовём разные обжарочные компании и каждый раз собираем новую подборку кофе. Оставьте заявку, и менеджер подскажет ближайшие варианты.'
+: 'Даже если расписание сейчас не открылось, вы можете оставить заявку или написать менеджеру. Мы подскажем ближайшие каппинги и поможем выбрать дату.';
+root.innerHTML = '<div class="mbs-cap-fallback" role="status">' +
+'<span class="mbs-cap-fallback-kicker">' + (isEmpty ? 'Расписание' : 'Связь') + '</span>' +
+'<h3 class="mbs-cap-fallback-title">' + title + '</h3>' +
+'<p class="mbs-cap-fallback-text">' + text + '</p>' +
+'<div class="mbs-cap-fallback-actions">' +
+'<a class="mbs-cap-fallback-btn primary" href="#waiting_list">Лист ожидания</a>' +
+'<a class="mbs-cap-fallback-btn secondary" href="' + telegramUrl + '" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>' +
+'<a class="mbs-cap-fallback-btn secondary" href="' + whatsappUrl + '" target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>' +
+'<button class="mbs-cap-retry" id="mbs-cap-retry-btn" type="button">' + retrySvg + 'Проверить расписание</button>' +
+'</div>' +
+'<p class="mbs-cap-fallback-note">Информация на странице остаётся доступной: ниже можно посмотреть формат каппинга, FAQ и контакты школы.</p>' +
+'</div>';
+var retryBtn = document.getElementById('mbs-cap-retry-btn');
+if (retryBtn) retryBtn.addEventListener('click', loadCuppings);
+}
+function loadCuppings() {
+var cached = loadFromCache(CACHE_STALE_TTL);
+if (cached) {
+/* stale-while-revalidate: render cached immediately, fetch in background */
+render(cached.cuppings || []);
+afterRender(cached.cuppings || []);
+fetchJsonFromUrls(apiUrls, { method: 'GET' })
+.then(function (fresh) {
+var oldJson = JSON.stringify(cached);
+var newJson = JSON.stringify(fresh);
+saveToCache(fresh);
+if (oldJson !== newJson) { render(fresh.cuppings || []); afterRender(fresh.cuppings || []); }
+})
+.catch(function () { /* silently keep stale data */ });
+} else {
+showSkeleton();
+fetchJsonFromUrls(apiUrls, { method: 'GET' })
+.then(function (data) { saveToCache(data); render(data.cuppings || []); afterRender(data.cuppings || []); })
+.catch(function (err) {
+console.error('Capping widget error:', err);
+showScheduleFallback('error');
+});
+}
+}
+loadCuppings();
+/* Auto-refresh every 5 minutes (silent background update) */
+setInterval(function () {
+if (!document.hidden) loadCuppings();
+}, 5 * 60 * 1000);
+})();
+</script>

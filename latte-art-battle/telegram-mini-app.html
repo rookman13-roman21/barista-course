@@ -128,6 +128,14 @@
       font-weight: 650;
     }
 
+    p a,
+    .pill a {
+      color: var(--green);
+      font-weight: 900;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     .hero__meta,
     .counter,
     .quick {
@@ -152,6 +160,10 @@
       line-height: 1.25;
     }
 
+    .pill a {
+      display: inline-block;
+    }
+
     .pill span,
     .counter__item span {
       display: block;
@@ -169,9 +181,10 @@
 
     .counter__item strong {
       display: block;
-      font-size: 28px;
-      line-height: 1;
+      font-size: 20px;
+      line-height: 1.08;
       font-weight: 1000;
+      overflow-wrap: anywhere;
     }
 
     .counter__item--wide { grid-column: 1 / -1; }
@@ -252,6 +265,7 @@
     }
 
     .participants,
+    .timings,
     .judges,
     .prizes,
     .faq {
@@ -321,7 +335,7 @@
       display: grid;
       grid-template-columns: 34px 1fr;
       gap: 10px;
-      align-items: center;
+      align-items: start;
       padding: 12px;
       border: 1px solid var(--border);
       border-radius: 14px;
@@ -338,6 +352,12 @@
       color: var(--green);
       font-size: 13px;
       font-weight: 1000;
+    }
+
+    .participant__body {
+      display: grid;
+      min-width: 0;
+      gap: 7px;
     }
 
     .participant strong,
@@ -357,6 +377,40 @@
       font-size: 13px;
       line-height: 1.3;
       font-weight: 700;
+    }
+
+    .participant__timing {
+      display: grid;
+      gap: 3px;
+      padding-top: 2px;
+    }
+
+    .participant__timing span {
+      margin-top: 0;
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .participant__timing small {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .participant__action {
+      justify-self: start;
+      min-height: 30px;
+      padding: 6px 10px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 950;
+      cursor: pointer;
     }
 
     .judge {
@@ -380,6 +434,173 @@
       border-radius: 12px;
       object-fit: cover;
       background: var(--green-soft);
+    }
+
+    .timing-section {
+      display: grid;
+      gap: 8px;
+    }
+
+    .timing-section__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 4px 2px;
+    }
+
+    .timing-section__head h3 {
+      font-size: 16px;
+    }
+
+    .timing-section__head span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .timing-jump {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .timing-jump::-webkit-scrollbar {
+      display: none;
+    }
+
+    .timing-jump button {
+      flex: 0 0 auto;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .timing-row,
+    .timing-break {
+      display: grid;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--card);
+    }
+
+    .timing-row__top {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    .timing-row__pair {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 28px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 1000;
+    }
+
+    .timing-row__people {
+      display: grid;
+      min-width: 0;
+      gap: 4px;
+    }
+
+    .timing-row__people strong {
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 950;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .timing-row__pending {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.3;
+      font-weight: 800;
+    }
+
+    .timing-row__times {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    .timing-row__times span {
+      display: grid;
+      gap: 3px;
+      min-height: 40px;
+      padding: 7px;
+      border-radius: 10px;
+      background: var(--green-soft);
+      color: var(--text);
+      font-size: 11px;
+      line-height: 1.18;
+      font-weight: 900;
+    }
+
+    .timing-row__times span.is-main {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .timing-row__times span.is-main small {
+      color: rgba(255, 255, 255, .78);
+    }
+
+    .timing-row__times small {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .timing-break {
+      align-items: center;
+      justify-items: center;
+      gap: 4px;
+      min-height: 54px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 15px;
+      font-weight: 1000;
+      text-align: center;
+    }
+
+    .timing-break strong {
+      display: block;
+      font-size: 15px;
+      line-height: 1.15;
+    }
+
+    .timing-break span {
+      display: block;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+      opacity: .82;
     }
 
     .modal {
@@ -522,19 +743,30 @@
       right: 0;
       bottom: 0;
       display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 4px;
-      padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+      grid-auto-flow: column;
+      grid-auto-columns: max-content;
+      justify-content: start;
+      gap: 6px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
       border-top: 1px solid var(--border);
       background: var(--nav);
       backdrop-filter: blur(16px);
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
       z-index: 5;
     }
 
+    .nav::-webkit-scrollbar {
+      display: none;
+    }
+
     .nav button {
-      min-width: 0;
+      min-width: 82px;
       min-height: 44px;
-      padding: 6px 4px;
+      padding: 6px 12px;
       border: 0;
       border-radius: 12px;
       background: transparent;
@@ -543,6 +775,8 @@
       font-weight: 900;
       line-height: 1.05;
       cursor: pointer;
+      scroll-snap-align: center;
+      white-space: nowrap;
     }
 
     .nav button.is-active {
@@ -570,6 +804,7 @@
     <button type="button" data-tab="home" class="is-active">Главное</button>
     <button type="button" data-tab="rules">Регламент</button>
     <button type="button" data-tab="participants">Участники</button>
+    <button type="button" data-tab="timing">Тайминг</button>
     <button type="button" data-tab="judges">Судьи</button>
     <button type="button" data-tab="prizes">Призы</button>
     <button type="button" data-tab="faq">FAQ</button>
@@ -580,11 +815,27 @@
   <script>
     (function () {
       var API_URL = 'https://api.barista-school.ru/api/course-booking/latte-art-battle/telegram-mini-app-data';
+      var MAP_URL = 'https://yandex.ru/maps/-/CPTXJM8V';
+      var REFRESH_INTERVAL_MS = 60 * 1000;
       var app = document.getElementById('app');
       var nav = document.getElementById('nav');
       var judgeModal = document.getElementById('judgeModal');
       var tg = window.Telegram && window.Telegram.WebApp;
-      var state = { payload: null, activeTab: 'home' };
+      var state = { payload: null, activeTab: 'home', refreshTimer: null };
+
+      function startParam() {
+        var unsafeParam = tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param;
+        if (unsafeParam) return String(unsafeParam);
+        var searchParam = new URLSearchParams(window.location.search || '').get('startapp');
+        if (searchParam) return String(searchParam);
+        var hash = String(window.location.hash || '').replace(/^#/, '');
+        return new URLSearchParams(hash).get('tgWebAppStartParam') || '';
+      }
+
+      if (startParam() === 'breeew_battle_info') {
+        window.location.replace('https://api.barista-school.ru/api/breeew-battle-mini-app.html' + window.location.search + window.location.hash);
+        return;
+      }
 
       function syncTheme() {
         document.documentElement.setAttribute('data-theme', tg && tg.colorScheme === 'dark' ? 'dark' : 'light');
@@ -632,21 +883,30 @@
         return match ? 'https://docs.google.com/document/d/' + encodeURIComponent(match[1]) + '/export?format=pdf' : source;
       }
 
+      function renderHeroMetaItem(item) {
+        var title = String(item.title || '').toLowerCase();
+        var value = esc(item.value);
+        var body = title === 'площадка' || title === 'адрес'
+          ? '<a href="' + esc(MAP_URL) + '" target="_blank" rel="noopener">' + value + '</a>'
+          : value;
+        return '<div class="pill"><span>' + esc(item.title) + '</span>' + body + '</div>';
+      }
+
       function renderHero(data, content) {
-        var counters = data.counters || {};
         var schedule = (content.schedule || []).filter(function (item) {
-          return String(item.title || '').toLowerCase() !== 'взнос';
+          var title = String(item.title || '').toLowerCase();
+          return title !== 'взнос' && title !== 'участники';
         });
         return '<section class="hero">' +
           '<div class="label">Памятка участника</div>' +
           '<h1>MBS* Latte-art x Петмол</h1>' +
-          '<p>Ключевая информация по чемпионату: регламент, участники, судьи, призы и частые вопросы.</p>' +
-          '<div class="hero__meta">' + schedule.map(function (item) {
-            return '<div class="pill"><span>' + esc(item.title) + '</span>' + esc(item.value) + '</div>';
-          }).join('') + '</div>' +
+          '<p>Состав участников набран. Здесь собрана актуальная информация на день чемпионата: регламент, <a href="#timing" data-tab-link="timing">тайминг</a>, судьи, призы и ответы на вопросы.</p>' +
+          '<div class="hero__meta">' + schedule.map(renderHeroMetaItem).join('') + '</div>' +
           '<div class="counter">' +
-            '<div class="counter__item"><span>Участники</span><strong>' + esc(counters.registered || 0) + '</strong></div>' +
-            '<div class="counter__item"><span>Осталось</span><strong>' + esc(counters.remaining || 0) + '</strong></div>' +
+            '<div class="counter__item"><span>Статус</span><strong>Состав набран</strong></div>' +
+            '<div class="counter__item"><span>Тайминг</span><strong>Обновляется</strong></div>' +
+            '<div class="counter__item"><span>Сбор</span><strong>Приходите заранее</strong></div>' +
+            '<div class="counter__item"><span>Участники</span><strong>30 человек</strong></div>' +
           '</div>' +
         '</section>';
       }
@@ -684,18 +944,258 @@
         '</section>';
       }
 
+      function normalizeParticipantName(value) {
+        return String(value || '')
+          .toLowerCase()
+          .replace(/ё/g, 'е')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      function timingRowKey(section, row, rowIndex) {
+        return [
+          section && section.type ? section.type : 'timing',
+          row && row.pair ? row.pair : rowIndex + 1,
+          rowIndex + 1
+        ].join('-').replace(/[^a-z0-9а-я_-]+/gi, '-');
+      }
+
+      function addParticipantTiming(map, name, info) {
+        var key = normalizeParticipantName(name);
+        if (key && !map[key]) map[key] = info;
+      }
+
+      function timingPairNumber(value) {
+        var match = String(value || '').match(/\d+/);
+        return match ? Number(match[0]) : Number.POSITIVE_INFINITY;
+      }
+
+      function participantTimingIndex(data) {
+        var map = {};
+        (data.timings || []).forEach(function (section, sectionIndex) {
+          if (!section || section.type === 'break') return;
+          (section.rows || []).forEach(function (row, rowIndex) {
+            var info = {
+              key: timingRowKey(section, row, rowIndex),
+              pair: row.pair || '',
+              section: timingTitle(section),
+              prep: row.prep_time || '',
+              performance: row.performance_time || '',
+              cleanup: row.cleanup_time || '',
+              pairNumber: timingPairNumber(row.pair),
+              rowOrder: sectionIndex * 1000 + rowIndex
+            };
+            addParticipantTiming(map, row.participant_a, Object.assign({ participantOrder: 0 }, info));
+            addParticipantTiming(map, row.participant_b, Object.assign({ participantOrder: 1 }, info));
+          });
+        });
+        return map;
+      }
+
+      function sortParticipantsByTiming(items, timings) {
+        return items.map(function (item, originalIndex) {
+          var name = [item.first_name, item.last_name].filter(Boolean).join(' ') || 'Участник';
+          return {
+            item: item,
+            name: name,
+            timing: timings[normalizeParticipantName(name)],
+            originalIndex: originalIndex
+          };
+        }).sort(function (a, b) {
+          if (!!a.timing !== !!b.timing) return a.timing ? -1 : 1;
+          if (!a.timing || !b.timing) return a.originalIndex - b.originalIndex;
+          if (a.timing.pairNumber !== b.timing.pairNumber) return a.timing.pairNumber - b.timing.pairNumber;
+          if (a.timing.rowOrder !== b.timing.rowOrder) return a.timing.rowOrder - b.timing.rowOrder;
+          if (a.timing.participantOrder !== b.timing.participantOrder) return a.timing.participantOrder - b.timing.participantOrder;
+          return a.originalIndex - b.originalIndex;
+        });
+      }
+
+      function renderParticipantTiming(info) {
+        if (!info) {
+          return '<div class="participant__timing"><small>Тайминг появится после жеребьёвки</small></div>';
+        }
+        return '<div class="participant__timing">' +
+          '<span>Пара ' + esc(info.pair || '—') + ' · ' + esc(info.section) + '</span>' +
+          '<small>Выступление ' + esc(info.performance || '—') + '</small>' +
+          '<button class="participant__action" type="button" data-timing-row-link="' + esc(info.key) + '">Открыть в тайминге</button>' +
+        '</div>';
+      }
+
       function renderParticipants(data) {
         var items = data.participants || [];
-        var rows = items.length ? items.map(function (item, index) {
-          var name = [item.first_name, item.last_name].filter(Boolean).join(' ') || 'Участник';
+        var timings = participantTimingIndex(data);
+        var sortedItems = sortParticipantsByTiming(items, timings);
+        var rows = sortedItems.length ? sortedItems.map(function (entry, index) {
+          var item = entry.item;
           return '<div class="participant">' +
             '<div class="participant__num">' + esc(index + 1) + '</div>' +
-            '<div><strong>' + esc(name) + '</strong><span>' + esc(item.project_name || 'Проект не указан') + '</span></div>' +
+            '<div class="participant__body"><div><strong>' + esc(entry.name) + '</strong><span>' + esc(item.project_name || 'Проект не указан') + '</span></div>' +
+            renderParticipantTiming(entry.timing) + '</div>' +
           '</div>';
         }).join('') : '<div class="card"><h3>Список скоро появится</h3><p>Участники появляются после подтверждения места.</p></div>';
         return '<section class="section" data-section="participants">' +
-          '<div class="section__head"><h2>Участники</h2><p>Список обновляется автоматически после подтверждения места.</p></div>' +
+          '<div class="section__head"><h2>Участники</h2><p>После жеребьёвки здесь появится пара и время выступления.</p></div>' +
           '<div class="participants">' + rows + '</div>' +
+        '</section>';
+      }
+
+      function timingTitle(section) {
+        if (section && section.title) return section.title;
+        if (section && section.type === 'qualifier') return 'Отборочный этап';
+        if (section && section.type === 'battle') return 'Батлы';
+        if (section && section.type === 'final') return 'Финал';
+        return 'Тайминг';
+      }
+
+      function timingParticipant(value, fallback) {
+        var text = String(value || '').trim();
+        return text || fallback;
+      }
+
+      function timingParticipantsHtml(row) {
+        var first = String(row.participant_a || '').trim();
+        var second = String(row.participant_b || '').trim();
+        if (!first && !second) {
+          return '<span class="timing-row__pending">Имена появятся после жеребьёвки</span>';
+        }
+        return '<strong>' + esc(timingParticipant(first, 'Участник A')) + '</strong>' +
+          '<strong>' + esc(timingParticipant(second, 'Участник B')) + '</strong>';
+      }
+
+      function renderTimingRow(row, section, rowIndex) {
+        return '<article class="timing-row" data-timing-row="' + esc(timingRowKey(section, row, rowIndex)) + '">' +
+          '<div class="timing-row__top">' +
+            '<span class="timing-row__pair">Пара ' + esc(row.pair || '—') + '</span>' +
+            '<div class="timing-row__people">' + timingParticipantsHtml(row) + '</div>' +
+          '</div>' +
+          '<div class="timing-row__times">' +
+            '<span><small>Подготовка</small>' + esc(row.prep_time || '—') + '</span>' +
+            '<span class="is-main"><small>Выступление</small>' + esc(row.performance_time || '—') + '</span>' +
+            '<span><small>Уборка</small>' + esc(row.cleanup_time || '—') + '</span>' +
+          '</div>' +
+        '</article>';
+      }
+
+      function timingRows(section) {
+        return section && Array.isArray(section.rows) ? section.rows : [];
+      }
+
+      function timingHasTime(row) {
+        return !!(row && (row.prep_time || row.performance_time || row.cleanup_time));
+      }
+
+      function lastTimingRowBefore(sections, index) {
+        for (var i = index - 1; i >= 0; i -= 1) {
+          var rows = timingRows(sections[i]);
+          for (var j = rows.length - 1; j >= 0; j -= 1) {
+            if (timingHasTime(rows[j])) return rows[j];
+          }
+        }
+        return null;
+      }
+
+      function firstTimingRowAfter(sections, index) {
+        for (var i = index + 1; i < sections.length; i += 1) {
+          var rows = timingRows(sections[i]);
+          for (var j = 0; j < rows.length; j += 1) {
+            if (timingHasTime(rows[j])) return rows[j];
+          }
+        }
+        return null;
+      }
+
+      function normalizeTime(value) {
+        var parts = String(value || '').replace('.', ':').split(':');
+        if (parts.length !== 2) return '';
+        var hours = Number(parts[0]);
+        var minutes = Number(parts[1]);
+        if (!Number.isFinite(hours) || !Number.isFinite(minutes)) return '';
+        return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0');
+      }
+
+      function timingRangeParts(value) {
+        var text = String(value || '').trim();
+        var match = text.match(/(\d{1,2}[:.]\d{2})\s*[–—-]\s*(\d{1,2}[:.]\d{2})/);
+        if (!match) return null;
+        return {
+          start: normalizeTime(match[1]),
+          end: normalizeTime(match[2])
+        };
+      }
+
+      function timeToMinutes(value) {
+        var parts = String(value || '').split(':');
+        if (parts.length !== 2) return NaN;
+        return Number(parts[0]) * 60 + Number(parts[1]);
+      }
+
+      function pluralMinutes(value) {
+        var mod10 = value % 10;
+        var mod100 = value % 100;
+        if (mod10 === 1 && mod100 !== 11) return value + ' минута';
+        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return value + ' минуты';
+        return value + ' минут';
+      }
+
+      function timingBreakInfo(sections, index) {
+        var before = lastTimingRowBefore(sections, index);
+        var after = firstTimingRowAfter(sections, index);
+        var beforeRange = timingRangeParts(before && before.cleanup_time);
+        var afterRange = timingRangeParts(after && after.prep_time);
+        if (!beforeRange || !afterRange || !beforeRange.end || !afterRange.start) return null;
+        var from = timeToMinutes(beforeRange.end);
+        var to = timeToMinutes(afterRange.start);
+        if (!Number.isFinite(from) || !Number.isFinite(to)) return null;
+        if (to < from) to += 24 * 60;
+        var duration = to - from;
+        if (duration <= 0) return null;
+        return {
+          duration: pluralMinutes(duration),
+          range: beforeRange.end + '–' + afterRange.start
+        };
+      }
+
+      function renderTimingSection(section, index, sections) {
+        if (section.type === 'break') {
+          var info = timingBreakInfo(sections || [], index);
+          return '<div class="timing-break"><strong>' + esc(section.title || 'Перерыв') + '</strong>' +
+            (info ? '<span>' + esc(info.duration + ' · ' + info.range) + '</span>' : '') +
+          '</div>';
+        }
+        var rows = section.rows || [];
+        return '<div class="timing-section" data-timing-section="' + esc(section.type || '') + '">' +
+          '<div class="timing-section__head"><h3>' + esc(timingTitle(section)) + '</h3><span>' + esc(rows.length) + '</span></div>' +
+          rows.map(function (row, rowIndex) {
+            return renderTimingRow(row, section, rowIndex);
+          }).join('') +
+        '</div>';
+      }
+
+      function renderTimingJump(sections) {
+        var seen = {};
+        var items = (sections || []).filter(function (section) {
+          if (!section || section.type === 'break' || seen[section.type]) return false;
+          seen[section.type] = true;
+          return true;
+        });
+        if (!items.length) return '';
+        return '<div class="timing-jump">' + items.map(function (section) {
+          return '<button type="button" data-timing-jump="' + esc(section.type) + '">' + esc(timingTitle(section)) + '</button>';
+        }).join('') + '</div>';
+      }
+
+      function renderTiming(data) {
+        var sections = data.timings || [];
+        var body = sections.length
+          ? sections.map(function (section, index) {
+            return renderTimingSection(section, index, sections);
+          }).join('')
+          : '<div class="card"><h3>Тайминг появится позже</h3><p>Тайминг появится после обновления таблицы организаторами.</p></div>';
+        return '<section class="section" data-section="timing">' +
+          '<div class="section__head"><h2>Тайминг</h2><p>Имена появятся после жеребьёвки.</p></div>' +
+          renderTimingJump(sections) +
+          '<div class="timings">' + body + '</div>' +
         '</section>';
       }
 
@@ -714,10 +1214,28 @@
       }
 
       function renderPrizes(content) {
+        var petmolPrizes = {
+          '1': 'подарочный сертификат в маркетплейсе Ozon на 25 000 ₽',
+          '2': 'подарочный сертификат в маркетплейсе Ozon на 20 000 ₽',
+          '3': 'подарочный сертификат в маркетплейсе Ozon на 15 000 ₽'
+        };
+        var prizes = (content.prizes || []).map(function (prize) {
+          var copy = Object.assign({}, prize);
+          var place = String(copy.place || '').match(/\d+/);
+          var petmolItem = place && petmolPrizes[place[0]];
+          var groups = (copy.groups || []).slice();
+          var hasPetmol = groups.some(function (group) {
+            return /петмол/i.test(String(group.title || ''));
+          });
+          if (petmolItem && !hasPetmol) {
+            groups.unshift({ title: 'Петмол', items: [petmolItem] });
+          }
+          copy.groups = groups;
+          return copy;
+        });
         return '<section class="section" data-section="prizes">' +
           '<div class="section__head"><h2>Призы</h2><p>Победители получат подарки от партнёров чемпионата.</p></div>' +
-          (content.prizes_note ? '<div class="card card--green"><p>' + esc(content.prizes_note) + '</p></div>' : '') +
-          '<div class="prizes">' + (content.prizes || []).map(function (prize) {
+          '<div class="prizes">' + prizes.map(function (prize) {
             return '<article class="prize">' +
               '<div class="prize__head"><h3>' + esc(prize.place) + '</h3>' + (prize.badge ? '<span class="label">' + esc(prize.badge) + '</span>' : '') + '</div>' +
               '<div class="prize__body">' + (prize.groups || []).map(function (group) {
@@ -731,14 +1249,17 @@
       function renderFaq(content) {
         var experienceFaq = {
           q: 'Кто может участвовать в чемпионате?',
-          a: 'Напоминаем, что чемпионат создан для бариста с опытом работы до 3 лет включительно.\n\nНам важно сохранить равные условия для всех участников, поэтому просим честно указывать свой опыт при регистрации.\n\nЕсли до начала чемпионата выяснится, что опыт работы превышает установленное ограничение, мы не сможем допустить участника к соревнованию, а вступительный взнос в этом случае не возвращается.\n\nЕсли несоответствие будет выявлено уже после чемпионата, результаты участника будут аннулированы, а титул перейдёт следующему по рейтингу участнику.'
+          a: 'Напоминаем, что чемпионат создан для бариста с опытом работы до 3 лет включительно. Участвовать можно с 18 лет.\n\nНам важно сохранить равные условия для всех участников, поэтому просим честно указывать свой опыт при регистрации.\n\nЕсли до начала чемпионата выяснится, что опыт работы превышает установленное ограничение, мы не сможем допустить участника к соревнованию, а вступительный взнос в этом случае не возвращается.\n\nЕсли несоответствие будет выявлено уже после чемпионата, результаты участника будут аннулированы, а титул перейдёт следующему по рейтингу участнику.'
         };
-        var items = [experienceFaq].concat(content.faq || []);
+        var faqItems = (content.faq || []).filter(function (item) {
+          return String(item.q || '').trim().toLowerCase() !== 'кто может участвовать?';
+        });
+        var items = [experienceFaq].concat(faqItems);
         return '<section class="section" data-section="faq">' +
           '<div class="section__head"><h2>FAQ</h2><p>Короткие ответы по участию в чемпионате.</p></div>' +
           '<div class="faq">' + items.map(function (item) {
             var mapLink = /где проходит/i.test(String(item.q || ''))
-              ? '<a class="faq__link" href="https://yandex.ru/maps/-/CPTXJM8V" target="_blank" rel="noopener">Открыть карту</a>'
+              ? '<a class="faq__link" href="' + esc(MAP_URL) + '" target="_blank" rel="noopener">Открыть карту</a>'
               : '';
             return '<details><summary>' + esc(item.q) + '</summary><p>' + textWithBreaks(item.a) + '</p>' + mapLink + '</details>';
           }).join('') + '</div>' +
@@ -767,16 +1288,20 @@
         judgeModal.innerHTML = '';
       }
 
-      function render(payload) {
+      function render(payload, options) {
+        options = options || {};
+        var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
         state.payload = payload;
         var data = payload.data || {};
         var content = payload.content || {};
-        app.innerHTML = renderHome(data, content) + renderRules(content) + renderParticipants(data) + renderJudges(data) + renderPrizes(content) + renderFaq(content);
+        app.innerHTML = renderHome(data, content) + renderRules(content) + renderParticipants(data) + renderTiming(data) + renderJudges(data) + renderPrizes(content) + renderFaq(content);
         nav.hidden = false;
-        setActiveTab(state.activeTab);
+        setActiveTab(state.activeTab, { keepScroll: options.keepScroll });
+        if (options.keepScroll) window.scrollTo({ top: scrollTop, behavior: 'auto' });
       }
 
-      function setActiveTab(tab) {
+      function setActiveTab(tab, options) {
+        options = options || {};
         state.activeTab = tab;
         app.querySelectorAll('[data-section]').forEach(function (section) {
           section.classList.toggle('is-active', section.getAttribute('data-section') === tab);
@@ -784,7 +1309,7 @@
         nav.querySelectorAll('button').forEach(function (button) {
           button.classList.toggle('is-active', button.getAttribute('data-tab') === tab);
         });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (!options.keepScroll) window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
       nav.addEventListener('click', function (event) {
@@ -793,6 +1318,28 @@
       });
 
       app.addEventListener('click', function (event) {
+        var tabLink = event.target.closest('[data-tab-link]');
+        if (tabLink) {
+          event.preventDefault();
+          setActiveTab(tabLink.getAttribute('data-tab-link'));
+          return;
+        }
+        var timingRowLink = event.target.closest('[data-timing-row-link]');
+        if (timingRowLink) {
+          var rowKey = timingRowLink.getAttribute('data-timing-row-link');
+          setActiveTab('timing');
+          window.requestAnimationFrame(function () {
+            var row = app.querySelector('[data-timing-row="' + rowKey + '"]');
+            if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+          return;
+        }
+        var jump = event.target.closest('[data-timing-jump]');
+        if (jump) {
+          var target = app.querySelector('[data-timing-section="' + jump.getAttribute('data-timing-jump') + '"]');
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
         var button = event.target.closest('[data-judge-index]');
         if (button) openJudgeModal(button.getAttribute('data-judge-index'));
       });
@@ -816,18 +1363,38 @@
 
       showLoading();
 
-      fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ initData: tg ? tg.initData : '' }),
-        cache: 'no-store'
-      }).then(function (response) {
-        return response.json().then(function (payload) {
-          if (!response.ok || !payload.ok) throw new Error(payload.error || 'Нет доступа');
-          render(payload);
+      function loadData(options) {
+        options = options || {};
+        return fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ initData: tg ? tg.initData : '' }),
+          cache: 'no-store'
+        }).then(function (response) {
+          return response.json().then(function (payload) {
+            if (!response.ok || !payload.ok) throw new Error(payload.error || 'Нет доступа');
+            render(payload, options);
+            return true;
+          });
+        }).catch(function (err) {
+          if (!options.silent) showAccess(err.message);
+          return false;
         });
-      }).catch(function (err) {
-        showAccess(err.message);
+      }
+
+      function startAutoRefresh() {
+        if (state.refreshTimer) return;
+        state.refreshTimer = window.setInterval(function () {
+          if (!document.hidden) loadData({ silent: true, keepScroll: true });
+        }, REFRESH_INTERVAL_MS);
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && state.payload) loadData({ silent: true, keepScroll: true });
+      });
+
+      loadData().then(function (ok) {
+        if (ok) startAutoRefresh();
       });
     })();
   </script>

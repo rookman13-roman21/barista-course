@@ -10,13 +10,20 @@
 ```
 barista-course/
 ├── 404/                      ← Страница ошибки 404
+├── _templates/                ← Шаблоны для новых Tilda-страниц
 ├── about-school/             ← Страница «О школе» (baristaschool.ru/company)
 ├── barista-interview/        ← Лендинг «Собеседование бариста» (baristaschool.ru/hr)
 ├── barista-theory-cabinet/   ← Личный кабинет: теория перед курсом (Tilda Members)
+├── breeew-battle/            ← Чемпионат MBS* Breeew battle (baristaschool.ru/breeew-battle)
+├── capping/                  ← Страница каппингов (baristaschool.ru/capping)
 ├── certificates/             ← Страница подарочных сертификатов (baristaschool.ru/sertifikat)
+├── coffee_accounting_webinar/ ← Вебинар «Налоги и финансы в общепите» (baristaschool.ru/coffee_accounting_webinar)
+├── excu/                     ← Страница экскурсии на обжарочное производство (baristaschool.ru/excu)
 ├── home-barista/             ← Лендинг курса «Домашний бариста» (baristaschool.ru/home_barista)
 ├── home-barista-online/      ← Онлайн-курс «Домашний бариста» (baristaschool.ru/home_barista_online)
+├── master-doma/              ← Мастер-класс «Домашнее заваривание» (baristaschool.ru/master_doma)
 ├── open-coffeeshop/          ← Курс «Открытие кофейни с нуля» (baristaschool.ru/open_coffeeshop)
+├── open_cafe_app/            ← Лендинг платформы для расчёта открытия кофейни (baristaschool.ru/open_cafe_app)
 ├── prepay/                   ← Страница предоплаты (baristaschool.ru/prepay)
 ├── tilda_blocks_others/      ← Разрозненные блоки для других страниц Tilda
 ├── scripts/                  ← Утилиты разработки (Tilda API, миграции)
@@ -34,15 +41,22 @@ barista-course/
 | Папка | Продакшн URL | Платформа | Краткое описание |
 |---|---|---|---|
 | `404/` | — | Tilda | Страница 404 — единственный `index.html` + `tilda-block.html` |
+| `_templates/` | — | Docs / HTML templates | Шаблоны для новых страниц; `tilda-event-page/` — стартовая структура событийной страницы и мастер-класса |
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
 | `barista-theory-cabinet/` | Tilda Members | Tilda Members | Личный кабинет: 11 теоретических уроков перед очным курсом |
+| `breeew-battle/` | `/breeew-battle` | Tilda hosted loader | Чемпионат MBS* Breeew battle: hosted HTML, popup записи в yClients group activity, public JSON, Telegram Mini App |
+| `capping/` | `/capping` | Tilda hosted loader | Страница каппингов: Tilda один раз вставляет loader, актуальный HTML страницы загружается с `api.barista-school.ru` |
 | `certificates/` | `/sertifikat` | Tilda Zero Block | Каталог подарочных сертификатов с модальным окном и API |
+| `coffee_accounting_webinar/` | `/coffee_accounting_webinar` | Tilda HTML Block | Вебинар «Налоги и финансы в общепите в 2026»: 6 блоков, дата/ссылка из публичного JSON `coffee-accounting-webinar.json`, fallback CTA → `#waiting_list` |
+| `excu/` | `/excu` | Tilda HTML Block | Страница экскурсии на обжарочное производство: landing + онлайн-запись из `excursions.json` |
 | `home-barista/` | `/home_barista` | Tilda Zero Block | Лендинг офлайн-курса «Домашний бариста»: 8 блоков |
 | `home-barista-online/` | `/home_barista_online` | Tilda Members | Онлайн-курс: лендинг + 11 уроков + личный кабинет |
+| `master-doma/` | `/master_doma` | Tilda HTML Block | Мастер-класс «Домашнее заваривание»: landing + онлайн-запись из `homebrew.json` |
 | `open-coffeeshop/` | `/open_coffeeshop` | Tilda Zero Block | Курс «Открытие кофейни»: 8 блоков, 2 ведущих, 2 тарифа |
+| `open_cafe_app/` | `/open_cafe_app` | Static HTML prototype | Лендинг платформы MBS* Coffee Menu для расчёта открытия кофейни: бюджет, продажи, рецепты, финмодель, поставщики, PDF/Excel и покупка через Tilda Shop |
 | `prepay/` | `/prepay` | Tilda Zero Block | Страница предоплаты: Hero + Курсы + Правила (1 файл `tilda-block.html`) |
-| `tilda_blocks_others/` | разные | Tilda | Отдельные Tilda-блоки и hosted-виджеты, включая универсальный блок тренеров |
+| `tilda_blocks_others/` | разные | Tilda | Отдельные Tilda-блоки и hosted-виджеты, включая универсальный блок тренеров и публичный оценочный лист каппинга |
 | `scripts/` | — | Node.js | Утилиты: скачивание из Tilda API, миграция уроков |
 
 ---
@@ -53,15 +67,23 @@ barista-course/
 |---|---|---|
 | О школе | `about-school/blocks/block-0*.html` | `about-school/index.html` |
 | Собеседование бариста | `barista-interview/index.html` | `barista-interview/index.html` |
+| Чемпионат MBS* Breeew battle | `breeew-battle/tilda-loader.html` | `breeew-battle/breeew-battle.html` |
+| Каппинг кофе | `capping/tilda-loader.html` | `capping/index.html` |
 | Подарочные сертификаты | `certificates/tilda-blocks/block-0*.html` | `certificates/index.html` |
+| Вебинар по налогам и финансам в общепите | `coffee_accounting_webinar/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html` | `coffee_accounting_webinar/index.html` |
+| Экскурсия на обжарочное производство | `excu/tilda-block.html` | `excu/index.html` |
 | Домашний бариста (офлайн) | `home-barista/tilda-blocks/*.html` | `home-barista/index.html` |
 | Домашний бариста (онлайн, лендинг) | `home-barista-online/blocks/*.html` | `home-barista-online/index.html` |
 | Домашний бариста (онлайн, уроки) | `home-barista-online/pages/lessons/lesson-*.html` | те же файлы |
+| Домашнее заваривание | `master-doma/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html` | `master-doma/index.html` |
 | Открытие кофейни | `open-coffeeshop/tilda-blocks/block-*.html` | `open-coffeeshop/index.html` |
+| Платформа для открытия кофейни | пока не нарезан на Tilda-блоки | `open_cafe_app/index.html` |
 | Предоплата | `prepay/tilda-block.html` | `prepay/index.html` |
 | Теоретическая подготовка | `barista-theory-cabinet/pages/barista_theory_*.html` | те же файлы |
 | 404 | `404/tilda-block.html` | `404/index.html` |
 | Универсальный блок тренеров | `tilda_blocks_others/trainers-widget/tilda-block.html` | hosted: `https://api.barista-school.ru/api/trainers-widget.html` |
+| Публичный оценочный лист каппинга | `tilda_blocks_others/capping/public-cupping-score-sheet-loader.html` | hosted: `https://api.barista-school.ru/api/public-cupping-score-sheet.html` |
+| Каталог партнёров | `tilda_blocks_others/partners-catalog/tilda-loader.html` | hosted: `https://api.barista-school.ru/api/partners-catalog.html` |
 
 ### Правило двух файлов
 В большинстве проектов существуют **два файла**:
@@ -69,6 +91,15 @@ barista-course/
 - `index.html` — **обёртка для локального просмотра** (не деплоится)
 
 > ⚠️ При любом изменении редактировать **оба файла**.
+
+### Шаблон новых событийных страниц
+Для новых страниц мастер-классов и событий стартовать с:
+
+```
+_templates/tilda-event-page/
+```
+
+Шаблон задаёт разбиение на Tilda-блоки `00 → 05`, локальное превью `index.html`, паспорт `PROJECT_STATE.md` и README с порядком вставки. Перед созданием страницы всё равно нужно забрать свежий HTML и pageid через Tilda Back, а механику записи определить отдельно: yClients, Tilda Shop, hosted widget или статичная кнопка.
 
 ---
 
@@ -90,6 +121,11 @@ scripts/tilda-fetch.js
 
 ### 4.2. Бэкенд сертификатов (внешний сервер)
 - Сервер: `root@159.194.202.120`, порт 3010, PM2 (`yclients-dashboard`)
+- Primary публичный endpoint для страницы `/sertifikat`: `https://api.barista-school.ru/api/public/certificates`
+- Fallback endpoint: `https://159-194-202-120.sslip.io/api/public/certificates`
+- На `5.35.93.225` в `/etc/nginx/sites-enabled/barista-api` настроен exact-location `= /api/public/certificates`, который проксирует реальный backend `YClients-Dashboard`.
+- На fallback host `159-194-202-120.sslip.io` после плавающих проблем доступности из РФ отключён TLS 1.3: в `/etc/nginx/sites-enabled/yclients-dashboard` задано `ssl_protocols TLSv1.2;`.
+- Frontend каталога в `certificates/tilda-blocks/block-02-catalog.html` сначала пробует primary endpoint, затем fallback, затем свежий `localStorage` кеш `mbs-certificates-catalog-v1`.
 - Конфиг категорий: `/opt/yclients-dashboard/data/cert-categories.json`
 - Этот сервер **не входит** в данный репозиторий
 
@@ -107,6 +143,21 @@ scripts/tilda-fetch.js
 - Backend/cron находится в соседнем проекте `schedule-online/basic-barista-booking/scripts/update_trainers.py`.
 - Логика показа: сотрудник попадает в блок, если в yClients `specialization` содержит `тренер`, не скрыт в overrides, фото берётся только из overrides, отзывы привязываются по `master_id`, описание берётся из `staff.information`.
 
+### 4.4.1. Каталог партнёров
+- Локальный проект: `tilda_blocks_others/partners-catalog/`.
+- Продакшн-страница: `https://baristaschool.ru/all-partners`.
+- В Tilda вставляется один раз короткий loader `tilda_blocks_others/partners-catalog/tilda-loader.html`.
+- Актуальная вёрстка, CSS и JS подгружаются с hosted HTML `https://api.barista-school.ru/api/partners-catalog.html`; правки интерфейса деплоить на сервер в `/var/www/html/api/partners-catalog.html`, Tilda после установки loader не трогать.
+- Исходник hosted HTML: `tilda_blocks_others/partners-catalog/hosted-partners-catalog.html`; локальный прототип: `partners-catalog.html`; `tilda-snippet.html` оставлен как архивный полный вариант для ручной вставки.
+- Данные страницы: `https://api.barista-school.ru/api/partners.json`.
+- Изображения категорий: `https://api.barista-school.ru/partners-catalog/assets/categories/...`, исходники лежат в `tilda_blocks_others/partners-catalog/assets/categories/`.
+- URL-логика: `/all-partners` показывает карточки категорий; `/all-partners?category=equipment` показывает отдельный вид категории сразу со списком компаний, без большой сетки категорий; кнопка `← Все категории` возвращает на `/all-partners`.
+- Поиск внутри выбранной категории не должен сбрасывать категорию и URL; после очистки поля пользователь остаётся в выбранной категории.
+- Backend-экспорт находится в соседнем проекте `bitrix-tools/scripts/export_public_partners.py`.
+- Источник в Битрикс: компании `COMPANY_TYPE=PARTNER`; новые поля — `Разрешить публикацию на сайте` (`UF_CRM_MBS_PARTNER_PUBLISH`), `Публичная заметка / описание партнёра` (`UF_CRM_MBS_PARTNER_PUBLIC_DESCRIPTION`) и `Чем полезен при открытии кофейни` (`UF_CRM_MBS_PARTNER_USEFUL_FOR`); остальные данные берутся из существующих полей `TITLE`, `LOGO`, `WEB`, Telegram `UF_CRM_1755378655628`, Instagram `UF_CRM_1766177865141`.
+- В публичный JSON не отдавать телефоны, обычные CRM-email, внутренние условия, Drive/Bitrix-ссылки, служебные ID и `UF_CRM_*` ключи напрямую.
+- Настройка поля публикации, подсказки userfields и контракт описаны в `tilda_blocks_others/partners-catalog/DATA_CONTRACT.md` и `bitrix-tools/docs/public-partners-catalog.md`.
+
 ### 4.5. Онлайн-запись базового курса
 - Popup-обвязка страницы курса находится в `barista-courses/tilda-blocks/09-online-booking-popup.html`.
 - Сам виджет и backend онлайн-записи находятся в соседнем проекте `schedule-online/basic-barista-booking`.
@@ -116,6 +167,102 @@ scripts/tilda-fetch.js
 - Для ручных изменений в yClients используется webhook `POST /api/course-booking/basic-barista/yclients-webhook`, защищённый token из production `.env`.
 - Cron обновления слотов на production работает каждые 5 минут как fallback.
 - Виджет передаёт `staff_preference`: конкретный тренер → категория yClients `Сотрудник важен`, `Любой тренер` → `Сотрудник не важен`.
+
+### 4.6. Онлайн-запись на экскурсии
+- Страница: `excu/tilda-block.html`, локальное превью: `excu/index.html`.
+- Продакшн URL: `https://baristaschool.ru/excu`.
+- Публичное расписание: `https://api.barista-school.ru/api/excursions.json`.
+- Fallback расписания: `https://159-194-202-120.sslip.io/api-fallback/api/excursions.json`.
+- Страница берёт планируемые события из JSON, фильтрует прошедшие, сортирует по дате/времени и не зависит от конкретного `activity_id`.
+- Кнопка «Записаться онлайн» использует `booking_url` конкретного события, но frontend дополнительно проверяет ссылку: только `https` и домены yClients.
+- Если API недоступен, используется свежий кэш `localStorage`; если свежего кэша нет, допускается stale-кэш до 12 часов; если данных нет совсем, показываются «Попробовать ещё раз», «Лист ожидания» и Telegram.
+- В блоке есть SEO-слой: static JSON-LD `WebPage` / `Service` / `FAQPage` / `BreadcrumbList`, dynamic JSON-LD `Event`, canonical/OG/meta для `/excu`.
+- Плавный скролл по якорям перехватывает только реально существующие элементы, чтобы не ломать Tilda-команды `#consalt` и `#waiting_list`.
+- Блок «Программа» на desktop — 4 фото-карточки в общей ширине страницы; на mobile карточки листаются горизонтально через CSS `overflow-x` + `scroll-snap`, чтобы секция не занимала большую высоту.
+
+### 4.7. Онлайн-запись на каппинги
+- Tilda loader: `capping/tilda-loader.html`, локальное превью: `capping/index.html`.
+- Рабочий источник: `capping/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html`.
+- Hosted HTML для сервера: `capping/hosted/capping-page.html`.
+- Продакшн URL: `https://baristaschool.ru/capping`.
+- Tilda page: `https://tilda.ru/page/?pageid=65688259&projectid=1009188`.
+- В Tilda вставляется один раз `capping/tilda-loader.html`; он загружает `https://api.barista-school.ru/api/capping-page.html` и fallback `https://159-194-202-120.sslip.io/api-fallback/api/capping-page.html`.
+- Обычные правки делать в `capping/tilda-blocks/`, затем запускать `node capping/build-capping.js` и выкладывать `capping/hosted/capping-page.html` на сервер.
+- Полный `capping/tilda-block.html` оставлен как локальный источник/архив и не предназначен для прямой вставки целиком.
+- Встроенный виджет берётся из соседнего проекта `schedule-online/capping-schedule-sync/tilda/capping-block.html`.
+- Публичное расписание виджета: `https://api.barista-school.ru/api/cuppings.json`.
+- Fallback расписания: `https://159-194-202-120.sslip.io/api-fallback/api/cuppings.json`.
+- Hero CTA: оставлены две кнопки — `Выбрать дату` и `Оставить заявку` (`#consalt`). На mobile обе кнопки идут на всю ширину: сначала `Оставить заявку`, ниже `Выбрать дату`. Не создавать видимый `id="consalt"`, чтобы Tilda открывала попап заявки.
+- Секция «Фото» находится в блоке `04-bottom-content.html` после «Зачем приходить» и перед FAQ. Использует реальные фотоальбомы из `mbs-photo-gallery/catalogs/cuppings` через быстрый `https://api.barista-school.ru/api/gallery-index.json`, отдельные альбомы `https://api.barista-school.ru/api/gallery-albums/{id}.json` и fallback на старый `gallery.json`, если новые файлы ещё не выложены. Паттерн как на `/master_doma`: карточки в один ряд на desktop и mobile, native horizontal scroll со `scroll-snap`, карточки `article role="button" tabindex="0"`, попап фотоальбома создаётся в `document.body`.
+- Блок «Зачем приходить» использует отдельный модификатор `mbs-capping-page__section--story`: на desktop уменьшены вертикальные отступы, фото поднято/увеличено, карточки справа уплотнены; на mobile desktop-смещение фото сбрасывается.
+- В блоке `01-top-content.html` секции «Как проходит» и «Онлайн-запись» должны оставаться внутри `.mbs-capping-page`; если закрыть обёртку раньше, Tilda начнёт перебивать шрифт.
+- Backend, yClients, Google Sheets, cron и `.env` для каппингов находятся вне `barista-course` и не меняются при обновлении страницы.
+
+### 4.8. Публичный оценочный лист каппинга
+- Продакшн URL в Tilda: `https://baristaschool.ru/capping_list`.
+- В Tilda вставляется только loader `tilda_blocks_others/capping/public-cupping-score-sheet-loader.html`.
+- Loader загружает hosted HTML `https://api.barista-school.ru/api/public-cupping-score-sheet.html`.
+- Рабочий файл фрагмента: `tilda_blocks_others/capping/public-cupping-score-sheet.html`.
+- Это общедоступный лист без личного кабинета, `cupping_id`, Bearer token и серверной отправки данных.
+- Данные участника, анкета, лоты, оценки, дескрипторы и заметки сохраняются только в браузере в `localStorage` ключ `mbs-public-cupping-score-sheet-v2`.
+- По умолчанию создаются 6 лотов. Лоты можно переименовать, добавить и удалить; последний лот удалить нельзя.
+- В анкете есть имя, номер телефона, название каппинга и 4 вопроса про опыт/привычки.
+- Логика оценки повторяет смысл листа из ЛК: оценка лотов по критериям 1-5, дескрипторы, заметки, прогресс и итог.
+- В итогах есть копирование результата для мессенджера, печать/PDF и CSV; JSON-кнопки и технических надписей для пользователя нет.
+- В шапке есть кнопка `Как заполнять`: открывает попап-инструкцию для новичка, не влияет на сохранение и не обязательна для заполнения.
+- Публичный лист не связан с `/capping`, итогами фотоальбомов, Dashboard-публикацией, yClients, Битрикс, Google Sheets и серверным сбором ответов.
+
+### 4.9. Онлайн-запись на мастер-класс «Домашнее заваривание»
+- Страница: `master-doma/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html`, локальное превью: `master-doma/index.html`.
+- Продакшн URL: `https://baristaschool.ru/master_doma`.
+- Tilda page: `https://tilda.ru/page/?pageid=27988719&projectid=1009188`.
+- Встроенный виджет берётся из соседнего проекта `schedule-online/homebrew-schedule-sync/tilda/homebrew-block.html`.
+- Публичное расписание виджета: `https://api.barista-school.ru/api/homebrew.json`.
+- Fallback расписания: `https://159-194-202-120.sslip.io/api-fallback/api/homebrew.json`.
+- yClients `service_id`: `10231419` (`Мастер-класс | Домашнее заваривание`).
+- Кнопка «Записаться онлайн» использует `booking_url` конкретного события; frontend дополнительно проверяет ссылку: только `https` и домены yClients.
+- Если мест нет или ссылку нельзя использовать, виджет показывает «Лист ожидания» (`#waiting_list`).
+- Секция расписания плоская: `#mbs-homebrew-widget.mbs-hb` стоит внутри зелёной секции без дополнительной белой карточки страницы.
+- Секция тренеров плоская: страница задаёт внешний заголовок, hosted-виджет тренеров не должен быть вложен в декоративную карточку страницы.
+- Блоки «Результат» и «Отзывы» удалены из новой сборки страницы.
+- Блок фото использует `https://api.barista-school.ru/api/homebrew-gallery.json` и fallback `https://159-194-202-120.sslip.io/api-fallback/api/homebrew-gallery.json`.
+- Фотоальбомы на `/master_doma` идут горизонтальным слайдером на desktop и mobile; не возвращать внешнюю белую рамку, декоративные градиенты по краям и многострочную сетку карточек.
+- Карточка фотоальбома рендерится как `article role="button" tabindex="0"`, а не `<button>` с блочными элементами внутри; это важно для Safari.
+- Обложка карточки лежит в `.mbs-master-doma-page__gallery-img-wrap`, заполняет контейнер через absolute/inset/object-fit; URL Google Drive/LH3 нормализуется до `=s800` для карточек и `=s1600` для попапа.
+- По клику, Enter или Space карточка открывает попап фотоальбома со стрелками, счётчиком и миниатюрами.
+- Backend, yClients, Google Sheets, cron и `.env` для домашнего заваривания находятся вне `barista-course` и не меняются при обновлении страницы.
+
+### 4.10. Вебинар «Налоги и финансы в общепите в 2026»
+- Страница: `coffee_accounting_webinar/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html`, локальное превью: `coffee_accounting_webinar/index.html`.
+- Продакшн URL: `https://baristaschool.ru/coffee_accounting_webinar`.
+- Tilda page: `https://tilda.ru/page/?pageid=148220666&projectid=1009188`.
+- Источник события: yClients activity `44746455` (`Вебинар | Бухгалтерия для кофеен`).
+- Актуальная дата на 7 июля 2026: `14 июля, 19:30`; дата берётся из публичного JSON, а не из статического HTML.
+- Публичный JSON синхронизации сейчас работает через fallback `https://159-194-202-120.sslip.io/api/coffee-accounting-webinar.json`; основной `https://api.barista-school.ru/api/coffee-accounting-webinar.json` пока отдаёт 404.
+- Sync находится в соседнем проекте `schedule-online/coffee-accounting-webinar-sync/` и развёрнут на `159.194.202.120` с cron каждые 5 минут.
+- Tilda-страница читает JSON в блоке `03`, обновляет дату/ссылку и переключает CTA на `#waiting_list`, если событие прошло, не найдено или мест нет.
+- Статический fallback даты — `Дата уточняется`; не возвращать конкретную дату в HTML/fallback JS, чтобы переносы в yClients не требовали правки Tilda-блоков.
+- Hero overlay живёт в блоке `00` как `.mbs-coffee-accounting-webinar__hero-wrap::before` с `pointer-events: none`; блок `03` страхует клик по `.js-mbs-caw-booking`.
+- Блок эксперта содержит фото Андрея Лаврищева, смысловые бейджи экспертности и раскрывающуюся карточку с местами работы и компетенциями.
+
+### 4.11. Платформа для открытия кофейни `/open_cafe_app`
+- Страница: `open_cafe_app/index.html`.
+- Продакшн URL в тексте, SEO и canonical: `https://baristaschool.ru/open_cafe_app`.
+- На текущем этапе это один самодостаточный HTML-файл для локальной правки; на Tilda-блоки ещё не нарезан и не деплоился.
+- Продуктовое позиционирование в hero: «Платформа для открытия кофейни».
+- Оффер: расчёт бюджета, продаж, среднего чека, окупаемости, поставщиков и отчётов до аренды и закупок.
+- Цена: `18 900 ₽`; в стоимость входит 1 час консультации с Романом Суслиным, основателем MBS*.
+- CTA покупки: `#order:Сервис открытия кофейни + консультация=18900`.
+- CTA заявки: `#consalt`; локальный JS не должен перехватывать этот якорь, чтобы Tilda могла открыть попап.
+- Дизайн опирается на `/Users/Romka/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`: Mulish, фирменные цвета, чистая карточная сетка, классы с префиксом `mbs-openapp__`.
+- Блок реальных экранов содержит 5 карточек: план продаж, бюджет запуска, рецепты, финмодель, поставщики. На desktop и mobile карточки идут в горизонтальной ленте.
+- По клику карточка открывает lightbox. Внутри открытой карточки переключаются только вложенные слайды выбранного раздела: стрелками, клавиатурой и свайпом. Между основными карточками из lightbox не переключаемся.
+- В карточке «Бюджет» есть дополнительные слайды списка оборудования и карточки оборудования.
+- В карточке «Рецепты» есть дополнительные слайды карточки напитка, редактирования рецепта и PDF техкарты.
+- В карточке «Фин.модель» есть дополнительные слайды калькулятора ФОТ, P&L и PDF-отчёта для инвестора или партнёра.
+- FAQ работает как accordion: при открытии одного вопроса остальные закрываются. Левый текстовый блок использует sticky-паттерн `data-mbs-sticky-section` / `data-mbs-sticky-panel` как на `barista-courses`.
+- Финальный CTA — компактная зелёная карточка с покупкой, заявкой и контактами; не растягивать её до hero-размера.
+- Скриншоты подключены публичными ссылками Tilda CDN и не должны содержать приватные данные, токены, внутренние админские URL или личные контакты клиентов.
 
 ---
 
@@ -238,6 +385,15 @@ node scripts/tilda-fetch.js <pageid> # скачать конкретную
 1. Открыть страницу на продакшне: `baristaschool.ru/<alias>`
 2. Проверить шрифты (Mulish), иконки (Phosphor), адаптив
 3. Проверить все интерактивные элементы: FAQ-аккордеон, кнопки CTA, формы
+
+### Chrome Automation через Codex
+- В Codex включено управление Google Chrome через macOS Automation.
+- Chrome разрешил выполнение JavaScript из Apple Events: `Вид → Разработчикам → Разрешить JavaScript из событий Apple`.
+- Возможности: открыть live-страницу, выполнить JS в активной вкладке, прочитать DOM, проверить порядок блоков, кликнуть элемент и считать текст открытого попапа.
+- Использовать только по прямой просьбе Романа или когда он явно просит проверить сайт в Chrome.
+- По умолчанию не запускать для каждой мелкой правки, чтобы не тратить время.
+- Подходящие случаи: проверка видимых клиентских блоков, попапов, онлайн-записи, Tilda loader/hosted HTML и спорных ситуаций «на сайте не видно».
+- Не вводить персональные данные и не работать с личными кабинетами/CRM через Chrome Automation без отдельного подтверждения.
 
 ### Правило синхронизации index.html ↔ блоки
 - Изменения в блоке (`blocks/block-*.html`) → перенести в `index.html` вручную

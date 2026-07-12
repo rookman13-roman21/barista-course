@@ -1,5 +1,5 @@
 # База знаний — Курс по открытию кофейни с нуля
-**Страница:** `https://baristaschool.ru/open_coffeeshop`  
+**Страница:** `https://baristaschool.ru/open_coffeeshop`
 **Проект:** `barista-course/open-coffeeshop/`
 
 ---

@@ -1,0 +1,156 @@
+<!--
+  MBS Partners Catalog Loader
+  Insert once into Tilda HTML block on https://baristaschool.ru/all-partners
+  The actual catalog HTML/CSS/JS is loaded from:
+  https://api.barista-school.ru/api/partners-catalog.html
+-->
+<div id="mbs-partners-catalog-hosted-root" data-mbs-partners-catalog-loader>
+  <section style="padding:48px 20px;background:#fff;color:#1f2a1d;font-family:Mulish,Arial,sans-serif;">
+    <div style="max-width:760px;margin:0 auto;border:1px solid #dbe6d6;border-radius:8px;padding:24px;background:#fff;">
+      <div style="margin:0 0 8px;color:#417033;font-size:14px;font-weight:900;text-transform:uppercase;">Партнёры MBS</div>
+      <h1 style="margin:0;color:#1f2a1d;font-size:32px;line-height:1.08;font-weight:900;">Партнёры для открытия кофейни</h1>
+      <p style="margin:12px 0 16px;color:#5f685b;font-size:16px;line-height:1.45;">Поставщики и сервисы, с которыми Московская школа бариста работает сама или рекомендует ученикам при запуске кофейного проекта.</p>
+      <p style="margin:0;color:#5f685b;font-size:14px;line-height:1.5;">Категории: <a href="/all-partners?category=coffee" style="color:#417033;">кофе</a>, <a href="/all-partners?category=equipment" style="color:#417033;">оборудование</a>, <a href="/all-partners?category=water" style="color:#417033;">вода</a>, <a href="/all-partners?category=pos" style="color:#417033;">POS и учёт</a>, <a href="/all-partners?category=tableware" style="color:#417033;">посуда</a>, <a href="/all-partners?category=complex" style="color:#417033;">комплексные поставщики</a>.</p>
+      <noscript>
+        <p style="margin:16px 0 0;color:#5f685b;font-size:14px;line-height:1.5;">Для просмотра полного каталога включите JavaScript или напишите в Telegram Московской школы бариста.</p>
+      </noscript>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('mbs-partners-catalog-hosted-root');
+    if (!root || root.getAttribute('data-loader-ready') === '1') return;
+    root.setAttribute('data-loader-ready', '1');
+
+    var HOSTED_URL = 'https://api.barista-school.ru/api/partners-catalog.html';
+    var LOAD_TIMEOUT_MS = 10000;
+    var SEO = {
+      title: 'Партнёры для открытия кофейни — Московская школа бариста',
+      description: 'Проверенные поставщики и сервисы для открытия кофейни: кофе, оборудование, вода, POS, посуда, расходники и услуги партнёров MBS.',
+      url: 'https://baristaschool.ru/all-partners',
+      image: 'https://api.barista-school.ru/partners-catalog/assets/categories/equipment.jpg'
+    };
+
+    function setMeta(selector, attrs) {
+      var tag = document.head.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement('meta');
+        document.head.appendChild(tag);
+      }
+      Object.keys(attrs).forEach(function (name) {
+        tag.setAttribute(name, attrs[name]);
+      });
+    }
+
+    function setLink(rel, href) {
+      var link = document.head.querySelector('link[rel="' + rel + '"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = rel;
+        document.head.appendChild(link);
+      }
+      link.href = href;
+    }
+
+    function applyStaticSeo() {
+      document.title = SEO.title;
+      setLink('canonical', SEO.url);
+      setMeta('meta[name="description"]', { name: 'description', content: SEO.description });
+      setMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow,max-image-preview:large' });
+      setMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+      setMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'ru_RU' });
+      setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Московская школа бариста' });
+      setMeta('meta[property="og:title"]', { property: 'og:title', content: SEO.title });
+      setMeta('meta[property="og:description"]', { property: 'og:description', content: SEO.description });
+      setMeta('meta[property="og:url"]', { property: 'og:url', content: SEO.url });
+      setMeta('meta[property="og:image"]', { property: 'og:image', content: SEO.image });
+      setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+      setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: SEO.title });
+      setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: SEO.description });
+      setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: SEO.image });
+    }
+
+    function cacheBustedUrl(url) {
+      return url + (url.indexOf('?') === -1 ? '?' : '&') + 'v=' + Date.now();
+    }
+
+    function fetchWithTimeout(url) {
+      var controller = window.AbortController ? new AbortController() : null;
+      var timeoutId = null;
+      var options = {
+        method: 'GET',
+        credentials: 'omit',
+        cache: 'no-store',
+        headers: { 'Accept': 'text/html' }
+      };
+      if (controller) options.signal = controller.signal;
+
+      return new Promise(function (resolve, reject) {
+        timeoutId = window.setTimeout(function () {
+          if (controller) controller.abort();
+          reject(new Error('Timeout'));
+        }, LOAD_TIMEOUT_MS);
+
+        fetch(cacheBustedUrl(url), options)
+          .then(function (response) {
+            window.clearTimeout(timeoutId);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.text();
+          })
+          .then(resolve)
+          .catch(function (error) {
+            window.clearTimeout(timeoutId);
+            reject(error);
+          });
+      });
+    }
+
+    function validateHostedHtml(html) {
+      if (typeof html !== 'string' || html.length < 10000) {
+        throw new Error('Short HTML response');
+      }
+      if (html.indexOf('mbs-partners-catalog') === -1 || html.indexOf('data-partners-api-url') === -1) {
+        throw new Error('Unexpected HTML response');
+      }
+      return html;
+    }
+
+    function runScripts(container) {
+      Array.prototype.slice.call(container.querySelectorAll('script')).forEach(function (oldScript) {
+        var script = document.createElement('script');
+        Array.prototype.slice.call(oldScript.attributes).forEach(function (attr) {
+          script.setAttribute(attr.name, attr.value);
+        });
+        script.text = oldScript.text || oldScript.textContent || '';
+        oldScript.parentNode.replaceChild(script, oldScript);
+      });
+    }
+
+    function renderError() {
+      root.innerHTML = '' +
+        '<section style="padding:48px 20px;background:#fff;color:#1f2a1d;font-family:Mulish,Arial,sans-serif;text-align:center;">' +
+          '<div style="max-width:640px;margin:0 auto;border:1px solid #dbe6d6;border-radius:8px;padding:24px;background:#fff;">' +
+            '<div style="margin:0 0 8px;color:#417033;font-size:14px;font-weight:900;text-transform:uppercase;">Партнёры MBS</div>' +
+            '<div style="margin:0;color:#1f2a1d;font-size:28px;line-height:1.1;font-weight:900;">Каталог временно не загрузился</div>' +
+            '<p style="margin:12px 0 18px;color:#5f685b;font-size:16px;line-height:1.45;">Попробуйте обновить страницу или напишите нам в Telegram.</p>' +
+            '<a href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:8px;background:#417033;color:#fff;text-decoration:none;font-size:15px;font-weight:900;">Написать в Telegram</a>' +
+          '</div>' +
+        '</section>';
+    }
+
+    applyStaticSeo();
+
+    fetchWithTimeout(HOSTED_URL)
+      .then(validateHostedHtml)
+      .then(function (html) {
+        root.innerHTML = html;
+        runScripts(root);
+      })
+      .catch(function (error) {
+        console.error('[mbs-partners-catalog] hosted load failed', error);
+        renderError();
+      });
+  })();
+</script>

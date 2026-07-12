@@ -2,9 +2,9 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "git-push-home-barista",
+			"label": "git-status",
 			"type": "shell",
-			"command": "bash /tmp/git_hb_push.sh 2>&1"
+			"command": "git status --short --branch"
 		}
 	]
 }

@@ -1,0 +1,183 @@
+<!--
+  MBS coffee_accounting_webinar — Tilda block 05 of 05
+  Назначение: meta/canonical, smooth scroll, font guard.
+-->
+<script>
+(function () {
+  var PAGE_URL = 'https://baristaschool.ru/coffee_accounting_webinar';
+  var TITLE = 'Налоги и финансы в общепите 2026 — вебинар МШБ';
+  var DESCRIPTION = 'Вебинар для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.';
+  var IMAGE_URL = 'https://static.tildacdn.com/tild6266-6338-4136-b462-383734383864/image.png';
+
+  function upsertMeta(selector, createAttrs, contentAttr, value) {
+    var node = document.head.querySelector(selector);
+    if (!node) {
+      node = document.createElement('meta');
+      Object.keys(createAttrs).forEach(function (key) {
+        node.setAttribute(key, createAttrs[key]);
+      });
+      document.head.appendChild(node);
+    }
+    node.setAttribute(contentAttr, value);
+  }
+
+  function upsertLink(rel, href) {
+    var node = document.head.querySelector('link[rel="' + rel + '"]');
+    if (!node) {
+      node = document.createElement('link');
+      node.setAttribute('rel', rel);
+      document.head.appendChild(node);
+    }
+    node.setAttribute('href', href);
+  }
+
+  function applyMeta() {
+    document.title = TITLE;
+    upsertLink('canonical', PAGE_URL);
+    upsertMeta('meta[name="description"]', { name: 'description' }, 'content', DESCRIPTION);
+    upsertMeta('meta[property="og:url"]', { property: 'og:url' }, 'content', PAGE_URL);
+    upsertMeta('meta[property="og:title"]', { property: 'og:title' }, 'content', TITLE);
+    upsertMeta('meta[property="og:description"]', { property: 'og:description' }, 'content', DESCRIPTION);
+    upsertMeta('meta[property="og:type"]', { property: 'og:type' }, 'content', 'website');
+    upsertMeta('meta[property="og:locale"]', { property: 'og:locale' }, 'content', 'ru_RU');
+    upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name' }, 'content', 'Московская школа бариста');
+    upsertMeta('meta[property="og:image"]', { property: 'og:image' }, 'content', IMAGE_URL);
+    upsertMeta('meta[property="og:image:alt"]', { property: 'og:image:alt' }, 'content', 'Вебинар по налогам и финансам для владельцев общепита');
+    upsertMeta('meta[name="robots"]', { name: 'robots' }, 'content', 'index, follow');
+    upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card' }, 'content', 'summary_large_image');
+    upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title' }, 'content', TITLE);
+    upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description' }, 'content', DESCRIPTION);
+    upsertMeta('meta[name="twitter:image"]', { name: 'twitter:image' }, 'content', IMAGE_URL);
+  }
+
+  function installSmoothScroll() {
+    var root = document.getElementById('mbs-coffee-accounting-webinar');
+    if (!root) return;
+
+    root.addEventListener('click', function (event) {
+      var link = event.target.closest ? event.target.closest('a[href^="#"]') : null;
+      if (!link || !root.contains(link)) return;
+
+      var hash = link.getAttribute('href');
+      if (!hash || hash === '#') return;
+
+      var target = document.getElementById(hash.slice(1));
+      if (!target) return;
+
+      event.preventDefault();
+
+      var reduceMotion = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      target.scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    });
+  }
+
+  function guardFont() {
+    var root = document.getElementById('mbs-coffee-accounting-webinar');
+    if (!root) return;
+    root.style.fontFamily = "'Mulish', Arial, sans-serif";
+  }
+
+  function installExclusiveAccordion(itemSelector, bodySelector, readyProp, busyProp) {
+    var items = Array.prototype.slice.call(
+      document.querySelectorAll(itemSelector)
+    );
+    if (!items.length) return;
+
+    function getBody(details) {
+      return details.querySelector(bodySelector);
+    }
+
+    function closeItem(details) {
+      var body = getBody(details);
+      if (!body || !details.open || details[busyProp]) return;
+
+      details[busyProp] = true;
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.height = '0px';
+
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details[busyProp] = false;
+      });
+    }
+
+    function openItem(details) {
+      var body = getBody(details);
+      if (!body || details.open || details[busyProp]) return;
+
+      items.forEach(function (item) {
+        if (item !== details) closeItem(item);
+      });
+
+      details[busyProp] = true;
+      details.open = true;
+      body.style.height = '0px';
+      body.offsetHeight;
+      body.style.height = body.scrollHeight + 'px';
+
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        body.style.height = 'auto';
+        details[busyProp] = false;
+      });
+    }
+
+    items.forEach(function (details) {
+      var body = getBody(details);
+      var summary = details.querySelector('summary');
+      if (!body || !summary || details[readyProp]) return;
+
+      details[readyProp] = true;
+      if (details.open) body.style.height = 'auto';
+
+      summary.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (details[busyProp]) return;
+
+        if (details.open) {
+          closeItem(details);
+        } else {
+          openItem(details);
+        }
+      });
+    });
+  }
+
+  function installAccordions() {
+    installExclusiveAccordion(
+      '.mbs-coffee-accounting-webinar__faq-item',
+      '.mbs-coffee-accounting-webinar__faq-body',
+      '__mbsFaqReady',
+      '__mbsFaqBusy'
+    );
+    installExclusiveAccordion(
+      '.mbs-coffee-accounting-webinar__program-item',
+      '.mbs-coffee-accounting-webinar__program-body',
+      '__mbsProgramReady',
+      '__mbsProgramBusy'
+    );
+  }
+
+  function init() {
+    applyMeta();
+    installSmoothScroll();
+    installAccordions();
+    guardFont();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

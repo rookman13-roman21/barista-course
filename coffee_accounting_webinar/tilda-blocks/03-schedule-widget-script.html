@@ -1,0 +1,168 @@
+<!--
+  MBS coffee_accounting_webinar — Tilda block 03 of 05
+  Назначение: обновление даты и CTA из публичного JSON расписания.
+-->
+<script>
+(function () {
+  var API_URL = 'https://api.barista-school.ru/api/coffee-accounting-webinar.json';
+  var FALLBACK_API_URL = 'https://159-194-202-120.sslip.io/api/coffee-accounting-webinar.json';
+  var DATE_PENDING_LABEL = 'Дата уточняется';
+  var WAITING_LIST = '#waiting_list';
+
+  function isSafeYclientsUrl(url) {
+    try {
+      var parsed = new URL(url, window.location.href);
+      return parsed.protocol === 'https:' && /(^|\.)yclients\.com$/i.test(parsed.hostname);
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function getDateTimeLabel(data) {
+    var date = data.dateLabel || '';
+    var time = data.timeLabel || '';
+    return data.dateTimeLabel || (date && time ? date + ', ' + time : date || time || DATE_PENDING_LABEL);
+  }
+
+  function getEventStartMs(data) {
+    var value = data.eventStartIso || data.startDate || '';
+    var ms = new Date(value).getTime();
+    return isNaN(ms) ? null : ms;
+  }
+
+  function applyDateLabels(data) {
+    var label = getDateTimeLabel(data);
+    if (!label) return;
+
+    document.querySelectorAll('[data-caw-date-time]').forEach(function (node) {
+      node.textContent = label;
+    });
+  }
+
+  function updateMetaDescription(data) {
+    var date = data.dateLabel || '';
+    var description = date
+      ? 'Вебинар ' + date + ' для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.'
+      : 'Вебинар для владельцев кофеен, кафе, ресторанов и пекарен: налоги, касса, персонал, маркировка и управленческий учёт.';
+    var nodes = [
+      document.querySelector('meta[name="description"]'),
+      document.querySelector('meta[property="og:description"]'),
+      document.querySelector('meta[name="twitter:description"]')
+    ];
+
+    nodes.forEach(function (node) {
+      if (node) node.setAttribute('content', description);
+    });
+  }
+
+  function updateJsonLd(data) {
+    var startDate = data.eventStartIso || data.startDate;
+    if (!startDate && !data.bookingUrl && !data.soldOut) return;
+
+    document.querySelectorAll('script[type="application/ld+json"]').forEach(function (script) {
+      var json;
+      try {
+        json = JSON.parse(script.textContent || '{}');
+      } catch (error) {
+        return;
+      }
+
+      var graph = Array.isArray(json['@graph']) ? json['@graph'] : [json];
+      graph.forEach(function (item) {
+        if (!item || item['@type'] !== 'Event') return;
+        if (startDate) item.startDate = startDate;
+        if (data.bookingUrl && item.offers) item.offers.url = data.bookingUrl;
+        if (item.offers) {
+          item.offers.availability = data.soldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock';
+        }
+      });
+
+      script.textContent = JSON.stringify(json, null, 2);
+    });
+  }
+
+  function updateBookingButtons(data) {
+    var buttons = document.querySelectorAll('.js-mbs-caw-booking');
+    if (!buttons.length) return;
+
+    var eventStartMs = getEventStartMs(data);
+    var hasEventStart = typeof eventStartMs === 'number';
+    var isPast = data.isPast === true || (hasEventStart && Date.now() >= eventStartMs);
+    var bookingUrl = data.bookingUrl || WAITING_LIST;
+    var safeBookingUrl = isSafeYclientsUrl(bookingUrl) ? bookingUrl : WAITING_LIST;
+    var shouldWait = data.found === false || data.soldOut === true || !hasEventStart || isPast || safeBookingUrl === WAITING_LIST;
+
+    buttons.forEach(function (button) {
+      if (shouldWait) {
+        button.setAttribute('href', WAITING_LIST);
+        button.removeAttribute('target');
+        button.removeAttribute('rel');
+        button.textContent = button.getAttribute('data-after-text') || 'Лист ожидания';
+      } else {
+        button.setAttribute('href', safeBookingUrl);
+        button.setAttribute('target', '_blank');
+        button.setAttribute('rel', 'noopener noreferrer');
+        button.textContent = button.getAttribute('data-before-text') || 'Записаться на вебинар';
+      }
+    });
+  }
+
+  function handleBookingClick(event) {
+    var button = event.target && event.target.closest ? event.target.closest('.js-mbs-caw-booking') : null;
+    if (!button) return;
+
+    var href = button.getAttribute('href') || WAITING_LIST;
+    if (!isSafeYclientsUrl(href)) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    var opened = window.open(href, '_blank');
+    if (opened) {
+      opened.opener = null;
+    } else {
+      window.location.href = href;
+    }
+  }
+
+  function applyEventData(data) {
+    var normalized = data && typeof data === 'object' ? data : {};
+    applyDateLabels(normalized);
+    updateMetaDescription(normalized);
+    updateJsonLd(normalized);
+    updateBookingButtons(normalized);
+    document.body.classList.add('mbs-caw-sync-ready');
+  }
+
+  function fetchJson(url) {
+    return fetch(url, { method: 'GET', cache: 'no-cache' })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Bad response');
+        return response.json();
+      });
+  }
+
+  function loadEventData() {
+    if (!window.fetch) {
+      applyEventData({});
+      return;
+    }
+
+    fetchJson(API_URL)
+      .catch(function () {
+        return fetchJson(FALLBACK_API_URL);
+      }).then(applyEventData)
+      .catch(function () {
+        applyEventData({});
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadEventData);
+  } else {
+    loadEventData();
+  }
+
+  document.addEventListener('click', handleBookingClick, true);
+})();
+</script>

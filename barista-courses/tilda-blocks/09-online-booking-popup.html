@@ -136,6 +136,7 @@
       <div data-course-booking-widget
            data-course-slug="basic-barista"
            data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json"
+           data-fallback-api-url="https://159-194-202-120.sslip.io/api-fallback/api/basic-barista-slots.json"
            data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
     </div>
   </div>
@@ -256,15 +257,46 @@
       }
       var current = document.querySelector('script[data-course-booking-widget-script]');
       if (current) current.parentNode.removeChild(current);
-      var script = document.createElement('script');
-      script.src = 'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260527';
-      script.async = true;
-      script.dataset.courseBookingWidgetScript = '1';
-      script.onerror = function () {
+
+      var urls = [
+        'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260611-stable',
+        'https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=basic-barista-variants-20260611-stable'
+      ];
+      var index = 0;
+
+      function failWidget() {
         var root = popup.querySelector('[data-course-booking-widget]');
         if (root) root.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
-      };
-      document.body.appendChild(script);
+      }
+
+      function loadNext() {
+        if (index >= urls.length) {
+          failWidget();
+          return;
+        }
+        var script = document.createElement('script');
+        var timer = setTimeout(function () {
+          script.onerror = null;
+          if (script.parentNode) script.parentNode.removeChild(script);
+          index += 1;
+          loadNext();
+        }, 3000);
+
+        script.src = urls[index];
+        script.async = true;
+        script.dataset.courseBookingWidgetScript = '1';
+        script.onload = function () {
+          clearTimeout(timer);
+        };
+        script.onerror = function () {
+          clearTimeout(timer);
+          index += 1;
+          loadNext();
+        };
+        document.body.appendChild(script);
+      }
+
+      loadNext();
     }
 
     function openPopup(event) {

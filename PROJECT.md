@@ -1,10 +1,10 @@
 # PROJECT — baristaschool.ru
 
-> **Цель:** системный, рентабельный образовательный бизнес.  
-> Постепенно обновляем все страницы сайта через Tilda Zero Block.  
+> **Цель:** системный, рентабельный образовательный бизнес.
+> Постепенно обновляем все страницы сайта через Tilda Zero Block.
 > Каждая страница работает на конверсию.
 
-> **Последнее обновление:** 18 мая 2026
+> **Последнее обновление:** 11 июня 2026
 
 ---
 
@@ -17,13 +17,14 @@
 | май 2026 | `/home_barista_online` — онлайн-курс «Домашний бариста», опубликован |
 | май 2026 | Дашборд YClients — аналитика, квартал, услуги, мастер-классы, предоплаты, маркетинг, интеграции |
 | май 2026 | **Tilda Back** (`/tilda`) — инструмент управления всеми 56 страницами сайта из дашборда |
+| июнь 2026 | `/master_doma` — локальная сборка страницы мастер-класса по сценарию v2: 6 Tilda-блоков, плоская онлайн-запись, плоский блок тренеров, горизонтальная галерея |
 
 ---
 
 ## 🛠️ Tilda Back — инструмент управления страницами
 
-**URL:** `https://159-194-202-120.sslip.io/tilda`  
-**Проект Tilda:** ID `1009188` (Schoolbarista)  
+**URL:** `https://159-194-202-120.sslip.io/tilda`
+**Проект Tilda:** ID `1009188` (Schoolbarista)
 **API ключи:** хранятся в `.env` (см. `.env.example`). Переменные: `TILDA_PUBLIC_KEY`, `TILDA_SECRET_KEY`
 
 ### Что умеет Tilda Back
@@ -62,7 +63,7 @@ POST /api/tilda/status         → обновить status / priority / note
 
 ## 🗺️ Карта страниц
 
-Полный список (56 страниц) хранится в `YClients-Dashboard/data/tilda-pages.json`  
+Полный список (56 страниц) хранится в `YClients-Dashboard/data/tilda-pages.json`
 и управляется через **Tilda Back** (`/tilda`).
 
 ### Ключевые страницы — высокий приоритет (ещё не начаты)
@@ -106,6 +107,76 @@ POST /api/tilda/status         → обновить status / priority / note
 3. Вставить содержимое `tilda-block.html`
 4. Обновить статус в Tilda Back (клик по статусу → «Готово»)
 5. `git commit` + `git push`
+
+---
+
+## 🔄 Сценарий обновления страницы v2
+
+Использовать для новых страниц мастер-классов и событийных страниц, где нужен быстрый старт по модели `/capping`: контент из Tilda Back, самодостаточные HTML-блоки, локальная проверка, ручная вставка в Tilda.
+
+### 1. Перед началом
+1. Выполнить `git status --short --branch`.
+2. Убедиться, что незавершённые изменения в соседних страницах не относятся к задаче.
+3. Прочитать:
+   - `PROJECT_MAP.md`;
+   - `PROJECT_STATE.md` нужной страницы, если он уже есть;
+   - `/Users/Romka/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`;
+   - `/Users/Romka/Downloads/All_Code/mbs-design-system/YCLIENTS_SYNC.md`, если есть расписание или запись.
+
+### 2. Забрать текущий контент
+1. Открыть Tilda Back: `https://159-194-202-120.sslip.io/tilda`.
+2. Найти страницу, скачать свежий HTML через кнопку `📥`.
+3. Открыть Preview → вкладка HTML → скопировать HTML.
+4. Зафиксировать в рабочем описании:
+   - production URL;
+   - Tilda pageid;
+   - ссылку на редактор Tilda;
+   - текущие важные блоки, попапы, формы, отзывы, оплату или запись.
+
+### 3. Определить механику действия
+Перед вёрсткой выбрать один источник записи/оплаты:
+
+| Тип | Что делать |
+|---|---|
+| yClients | Сверить `service_id`, endpoint и fallback по `YCLIENTS_SYNC.md`; проверять `booking_url` allowlist'ом yClients |
+| Tilda Shop | Оставить нативные ссылки `#order:...`; не добавлять JS-запись |
+| Hosted widget | Не переписывать backend; встроить текущий HTML/CSS/JS виджета или loader |
+| Статичная кнопка | Использовать `#consalt`, `#waiting_list`, Telegram или WhatsApp по дизайн-системе |
+
+Если механика не ясна, сначала описать риск и уточнить, не писать новую запись “на глаз”.
+
+### 4. Создать папку по шаблону
+1. Скопировать `_templates/tilda-event-page/` в новую папку страницы.
+2. Переименовать `PROJECT_STATE.template.md` в `PROJECT_STATE.md`.
+3. Заполнить паспорт страницы: URL, pageid, источник контента, тип записи/оплаты, Tilda-попапы, запреты.
+4. Собирать Tilda-блоки в порядке:
+   - `00-seo-and-page-styles.html`;
+   - `01-top-content.html`;
+   - `02-schedule-widget-styles.html`;
+   - `03-schedule-widget-script.html`;
+   - `04-bottom-content.html`;
+   - `05-page-scripts.html`.
+
+### 5. Проверить перед Tilda
+Минимальный набор:
+- каждый HTML-блок заметно меньше лимита Tilda;
+- JSON-LD парсится;
+- обычные `<script>` проходят `new Function(...)`;
+- на странице один H1;
+- все изображения с `alt`;
+- canonical/OG/Twitter/meta соответствуют production URL;
+- FAQ на странице совпадает с `FAQPage`;
+- mobile 390px без наложений, нечитаемых кнопок и растянутых фото;
+- Mulish не перебивается Tilda;
+- `#consalt`, `#waiting_list`, `#order:...` не конфликтуют с видимыми `id`;
+- запись или покупка работает по текущей механике страницы.
+
+### 6. Вставить и сохранить
+1. В Tilda вставить блоки строго по порядку `00 → 05`.
+2. Не публиковать и не использовать Tilda API без отдельного запроса.
+3. После проверки обновить `PROJECT_STATE.md`, `PROJECT_MAP.md` и при необходимости дизайн-систему.
+4. Перед GitHub stage только файлы текущей страницы и связанные базы знаний.
+5. Делать отдельный commit/push, не захватывая чужие незавершённые изменения.
 
 ---
 
@@ -203,6 +274,33 @@ Copilot читает PROJECT.md → понимает стек, дизайн-си
 
 ## 🏗️ Стандарт папки страницы
 
+Для новых событийных страниц и страниц мастер-классов использовать шаблон:
+
+```
+_templates/tilda-event-page/
+```
+
+Он даёт разбиение на Tilda-блоки `00 → 05`, локальное превью и паспорт страницы.
+
+Базовая структура новой событийной страницы:
+
+```
+page-slug/
+  tilda-blocks/
+    00-seo-and-page-styles.html
+    01-top-content.html
+    02-schedule-widget-styles.html
+    03-schedule-widget-script.html
+    04-bottom-content.html
+    05-page-scripts.html
+    README.md
+  index.html
+  PROJECT_STATE.md
+  tilda-block.html   ← полный локальный источник/архив, если нужен
+```
+
+Для старых страниц с одним блоком сохраняется прежний стандарт:
+
 ```
 page-slug/
   tilda-block.html   ← ЕДИНСТВЕННЫЙ рабочий файл (вставляется в Tilda Zero Block)
@@ -216,12 +314,12 @@ page-slug/
 
 ## 🎨 Дизайн-система
 
-Полный гайд: `/Users/romansuslin_1/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`
+Полный гайд: `/Users/Romka/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`
 
 ### Быстрая шпаргалка
 
-**Шрифт:** Mulish (400–900), Google Fonts  
-**Иконки:** Phosphor Icons (`https://unpkg.com/@phosphor-icons/web@2.1.1`)  
+**Шрифт:** Mulish (400–900), Google Fonts
+**Иконки:** Phosphor Icons (`https://unpkg.com/@phosphor-icons/web@2.1.1`)
 **Префикс классов:** `mbs-[блок]__[элемент]`
 
 **Цвета:**
@@ -236,7 +334,7 @@ page-slug/
 #FFFFFF  — фон белых блоков
 ```
 
-**Ширина контента:** `max-width: 1100px; margin: 0 auto;`  
+**Ширина контента:** `max-width: 1100px; margin: 0 auto;`
 **Отступы блоков:** `padding: 90px 20px` (mobile: `64px 14px`)
 
 **Чередование фонов блоков:**

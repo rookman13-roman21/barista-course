@@ -198,14 +198,14 @@ SEO-правки от `2026-06-08`:
 - hosted HTML закрыт от индексации на API-домене через `X-Robots-Tag: noindex, follow`;
 - в `latte-art-battle.html` добавлена JSON-LD разметка `Event` для чемпионата;
 - при загрузке hosted HTML на основной странице runtime удаляет старую неправильную Tilda JSON-LD разметку `Product / Продвинутый курс` и добавляет корректную `Event`-разметку в `head`;
-- основной `h1` усилен до `MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве`;
+- основной `h1` усилен до `MBS* Latte-art x Петмол — чемпионат по латте-арту`;
 - `tilda-loader.html` дополнен статическим SEO-блоком и `noscript` fallback.
 
 JSON-LD событие должно содержать:
 
 ```text
 @type: Event
-name: MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве
+name: MBS* Latte-art x Петмол — чемпионат по латте-арту
 startDate: 2026-07-02T10:00:00+03:00
 endDate: 2026-07-02T13:00:00+03:00
 location: CafeStore, Новодмитровская ул., 2, корп. 1, Москва
@@ -1056,4 +1056,4 @@ curl -sS https://api.barista-school.ru/api/latte-art-battle-data.json
 - Для карточек текущих судей на лендинге используются короткие card-copy роли и описания, чтобы карточки были одинаковыми по плотности. Полные описания из JSON остаются в модальном окне `Подробнее`.
 - В Telegram Mini App главный hero показывается только на вкладке `Главное`, тёмная тема оформлена отдельной VS Code-like палитрой, регламент открывается как PDF, карточки судей открывают центральный попап, а карта площадки находится только в FAQ.
 - 7 июня 2026 Tilda-страница очищена от старых тяжёлых блоков лендинга; актуальная архитектура — hosted loader + hosted HTML. В `tilda-loader.html` добавлен timeout `10` секунд и fallback с кнопкой Telegram школы.
-- 8 июня 2026 выполнены SEO-правки: API-дубль `/api/latte-art-battle.html` закрыт через `X-Robots-Tag: noindex, follow`, hosted HTML получил JSON-LD `Event`, старый Tilda schema `Product / Продвинутый курс` удаляется на runtime, `h1` расширен ключом `чемпионат по латте-арту в Москве`, а `tilda-loader.html` получил статический SEO fallback и `noscript`.
+- 8 июня 2026 выполнены SEO-правки: API-дубль `/api/latte-art-battle.html` закрыт через `X-Robots-Tag: noindex, follow`, hosted HTML получил JSON-LD `Event`, старый Tilda schema `Product / Продвинутый курс` удаляется на runtime, `h1` приведён к финальному заголовку `MBS* Latte-art x Петмол — чемпионат по латте-арту`, а `tilda-loader.html` получил статический SEO fallback и `noscript`.

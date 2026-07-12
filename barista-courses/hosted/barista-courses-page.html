@@ -1,0 +1,1583 @@
+<!-- MBS /barista_courses hosted page: deploy to https://api.barista-school.ru/api/barista-courses-page.html -->
+
+<!-- ============================================================
+  TILDA BLOCK 01 — HERO
+  Базовый курс бариста: первый экран и главный CTA.
+============================================================ -->
+
+<style>
+  :root {
+    --mbs-green-dark: #417033;
+    --mbs-green: #4F883E;
+    --mbs-bg-green: #E7F2E3;
+    --mbs-red: #CC2841;
+    --mbs-red-soft: #D83D54;
+    --mbs-bg: #F5F5F5;
+    --mbs-black: #1F1F1F;
+    --mbs-gray: #555555;
+  }
+  .mbs-bc-hero {
+    font-family: 'Mulish', sans-serif;
+    background: #fff;
+    padding: 48px 20px;
+  }
+  .mbs-bc-hero * { box-sizing: border-box; }
+  .mbs-bc-label {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(231,242,227,.95);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-bc-title {
+    margin: 0 0 10px;
+    color: var(--mbs-black);
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .mbs-bc-sub {
+    max-width: 660px;
+    margin: 0 0 34px;
+    color: var(--mbs-gray);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .mbs-bc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 0 26px;
+    border-radius: 999px;
+    text-decoration: none !important;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .mbs-bc-btn:hover { transform: translateY(-1px); }
+  .mbs-bc-btn.mbs-bc-btn--primary {
+    background: var(--mbs-red);
+  }
+  .mbs-bc-btn.mbs-bc-btn--primary,
+  .mbs-bc-btn.mbs-bc-btn--primary * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    opacity: 1 !important;
+  }
+  .mbs-bc-btn--primary:hover { background: var(--mbs-red-soft); }
+  .mbs-bc-btn--secondary {
+    color: var(--mbs-green-dark) !important;
+    border: 2px solid rgba(65,112,51,.25);
+    background: rgba(255,255,255,.72);
+  }
+  .mbs-bc-btn--secondary:hover { border-color: var(--mbs-green-dark); background: #fff; }
+
+  .mbs-bc-hero__wrap { max-width: 1320px; margin: 0 auto; }
+  .mbs-bc-hero__card {
+    border: 8px solid #E7F2E3;
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(231,242,227,.78) 0, rgba(231,242,227,.78) 18%, transparent 19%),
+      radial-gradient(circle at 86% 82%, rgba(231,242,227,.52) 0, rgba(231,242,227,.52) 15%, transparent 16%),
+      #F7F7F7;
+    padding: 64px 68px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 480px;
+    grid-template-rows: auto auto;
+    gap: 0 52px;
+  }
+  .mbs-bc-hero__content-top { grid-column: 1; grid-row: 1; }
+  .mbs-bc-hero__content-bottom {
+    grid-column: 1;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 28px;
+  }
+  .mbs-bc-hero__media {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #E7F2E3;
+    height: 520px;
+    min-height: 0;
+  }
+  .mbs-bc-hero__media img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center center;
+  }
+  .mbs-bc-hero__label {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.85);
+    color: var(--mbs-green-dark);
+    font-size: 13px;
+    font-weight: 900;
+  }
+  .mbs-bc-hero__title {
+    max-width: 720px;
+    margin: 0 0 18px;
+    color: var(--mbs-black);
+    font-size: 82px;
+    font-weight: 900;
+    line-height: .92;
+    letter-spacing: -0.07em;
+  }
+  .mbs-bc-hero__lead {
+    max-width: 680px;
+    margin: 0;
+    color: var(--mbs-black);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.32;
+  }
+  .mbs-bc-hero__lead--mobile { display: none; }
+  .mbs-bc-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .mbs-bc-hero__fact {
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.86);
+    border: 1.5px solid #E7F2E3;
+  }
+  .mbs-bc-hero__fact strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--mbs-black);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.1;
+  }
+  .mbs-bc-hero__fact span {
+    display: block;
+    color: var(--mbs-gray);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+  .mbs-bc-hero__price-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 18px;
+    border: 1.5px solid #E7F2E3;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .mbs-bc-hero__price-row {
+    padding: 12px 16px;
+  }
+  .mbs-bc-hero__price-row + .mbs-bc-hero__price-row {
+    border-left: 1px solid #E7F2E3;
+  }
+  .mbs-bc-hero__price-row small {
+    display: block;
+    margin-bottom: 4px;
+    color: #888;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .mbs-bc-hero__price-row b {
+    color: var(--mbs-black);
+    font-size: 20px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .mbs-bc-hero__promo {
+    margin: -4px 0 18px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: #F8DDE1;
+    color: var(--mbs-black);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+  .mbs-bc-hero__promo strong {
+    color: var(--mbs-red);
+    font-weight: 900;
+  }
+  .mbs-bc-discount-info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+    vertical-align: -3px;
+  }
+  .mbs-bc-discount-info__toggle {
+    width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--mbs-red);
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mbs-bc-discount-info__toggle svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+  }
+  .mbs-bc-discount-info__popup {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    z-index: 20;
+    display: none;
+    width: min(360px, calc(100vw - 40px));
+    padding: 14px 16px;
+    border: 1px solid #EC98A7;
+    border-radius: 14px;
+    background: #fff;
+    color: var(--mbs-gray);
+    box-shadow: 0 16px 42px rgba(31,31,31,.18);
+    transform: translateX(-50%);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+  .mbs-bc-discount-info__popup::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -7px;
+    width: 14px;
+    height: 14px;
+    background: #fff;
+    border-right: 1px solid #EC98A7;
+    border-bottom: 1px solid #EC98A7;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  .mbs-bc-discount-info.is-open .mbs-bc-discount-info__popup {
+    display: block;
+  }
+  .mbs-bc-discount-info__title {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--mbs-black);
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .mbs-bc-discount-info__popup p {
+    margin: 0;
+  }
+  .mbs-bc-discount-info__popup p + p {
+    margin-top: 8px;
+  }
+  .mbs-bc-discount-info__code {
+    color: var(--mbs-red);
+    font-weight: 900;
+  }
+  .mbs-bc-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1.5px solid #E7F2E3;
+  }
+
+  @media (max-width: 980px) {
+    .mbs-bc-hero__card {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      padding: 42px 30px;
+      gap: 14px;
+    }
+    .mbs-bc-hero__content-top { grid-column: 1; grid-row: 1; }
+    .mbs-bc-hero__media { grid-column: 1; grid-row: 2; min-height: 360px; height: 360px; }
+    .mbs-bc-hero__lead--desktop { display: none; }
+    .mbs-bc-hero__lead--mobile {
+      display: block;
+      grid-column: 1;
+      grid-row: 3;
+      max-width: none;
+      padding-top: 2px;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+    .mbs-bc-hero__content-bottom { grid-column: 1; grid-row: 4; padding-top: 0; }
+    .mbs-bc-hero__title { font-size: 48px; margin-bottom: 0; }
+  }
+  @media (max-width: 640px) {
+    .mbs-bc-hero { padding: 28px 14px 40px; }
+    .mbs-bc-hero__card {
+      border-width: 5px;
+      border-radius: 24px;
+      padding: 30px 22px;
+      gap: 10px;
+    }
+    .mbs-bc-hero__label { margin-bottom: 14px; font-size: 12px; }
+    .mbs-bc-hero__title { font-size: 38px; letter-spacing: -0.06em; }
+    .mbs-bc-hero__media {
+      min-height: 250px;
+      height: 250px;
+      border-radius: 16px;
+    }
+    .mbs-bc-hero__lead--mobile { font-size: 15px; padding-top: 2px; }
+    .mbs-bc-hero__facts { grid-template-columns: 1fr; gap: 6px; margin-bottom: 10px; }
+    .mbs-bc-hero__fact { padding: 9px 12px; }
+    .mbs-bc-hero__fact strong {
+      margin-bottom: 2px;
+      font-size: 15px;
+    }
+    .mbs-bc-hero__fact span {
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    .mbs-bc-hero__price-card { grid-template-columns: 1fr; margin-bottom: 14px; }
+    .mbs-bc-hero__promo { margin: -2px 0 14px; font-size: 13px; }
+    .mbs-bc-hero__price-row + .mbs-bc-hero__price-row {
+      border-left: 0;
+      border-top: 1px solid #E7F2E3;
+    }
+    .mbs-bc-hero__actions { flex-direction: column; padding-top: 14px; }
+    .mbs-bc-btn { width: 100%; min-height: 50px; }
+    .mbs-bc-title { font-size: 26px; }
+  }
+  @media (max-width: 420px) {
+    .mbs-bc-hero__title { font-size: 34px; }
+    .mbs-bc-hero__media { height: 220px; min-height: 220px; }
+  }
+</style>
+
+<section class="mbs-bc-hero">
+  <div class="mbs-bc-hero__wrap">
+    <div class="mbs-bc-hero__card">
+      <div class="mbs-bc-hero__content-top">
+        <div class="mbs-bc-hero__label">Самая популярная программа MBS</div>
+        <h1 class="mbs-bc-hero__title">Базовый курс бариста</h1>
+        <p class="mbs-bc-hero__lead mbs-bc-hero__lead--desktop">
+          За 9 часов практики вы разберёте работу кофемашины, настройку эспрессо, молоко, классику меню и первые приёмы латте-арта.
+        </p>
+      </div>
+
+      <div class="mbs-bc-hero__media">
+        <img src="https://static.tildacdn.com/tild3061-3037-4135-b736-626566313437/__-min.jpg" alt="Базовый курс бариста в MBS" loading="eager">
+      </div>
+
+      <p class="mbs-bc-hero__lead mbs-bc-hero__lead--mobile">
+        За 9 часов практики вы разберёте работу кофемашины, настройку эспрессо, молоко, классику меню и первые приёмы латте-арта.
+      </p>
+
+      <div class="mbs-bc-hero__content-bottom">
+        <div class="mbs-bc-hero__facts">
+          <div class="mbs-bc-hero__fact"><strong>9 часов</strong><span>3 дня по 3 часа или 1 день интенсивом</span></div>
+          <div class="mbs-bc-hero__fact"><strong>Практика</strong><span>Работа за профессиональной кофемашиной</span></div>
+          <div class="mbs-bc-hero__fact"><strong>С нуля</strong><span>Подходит тем, кто только входит в профессию</span></div>
+        </div>
+        <div class="mbs-bc-hero__price-card">
+          <div class="mbs-bc-hero__price-row"><small>Один участник</small><b>22 000 ₽</b></div>
+          <div class="mbs-bc-hero__price-row"><small>Вдвоём выгоднее</small><b>30 000 ₽</b></div>
+        </div>
+        <div class="mbs-bc-hero__promo">
+          <strong>Скидка 10%</strong> школьникам и студентам до 31 августа 2026.
+          <span class="mbs-bc-discount-info" data-mbs-bc-discount-info>
+            <button class="mbs-bc-discount-info__toggle" type="button" aria-label="Условия скидки" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                <path d="M12 10.8v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+                <circle cx="12" cy="7.3" r="1.3" fill="currentColor"></circle>
+              </svg>
+            </button>
+            <span class="mbs-bc-discount-info__popup" role="tooltip">
+              <span class="mbs-bc-discount-info__title">Условия скидки</span>
+              <p>Промокод: <span class="mbs-bc-discount-info__code">СТУДЕНТ10</span>.</p>
+              <p>Назовите промокод при записи и подтвердите статус школьника или студента.</p>
+              <p>Скидка действует только на индивидуальные курсы бариста и не применяется задним числом.</p>
+            </span>
+          </span>
+        </div>
+        <div class="mbs-bc-hero__actions">
+          <a class="mbs-bc-btn mbs-bc-btn--primary" href="#consalt">Оставить заявку</a>
+          <a class="mbs-bc-btn mbs-bc-btn--secondary mbs-bc-online-open" href="#online-booking">Онлайн запись</a>
+          <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#mbs-bc-program">Смотреть программу</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function closeInfo(info) {
+      var button = info.querySelector('.mbs-bc-discount-info__toggle');
+      info.classList.remove('is-open');
+      if (button) button.setAttribute('aria-expanded', 'false');
+    }
+
+    document.querySelectorAll('[data-mbs-bc-discount-info]').forEach(function (info) {
+      var button = info.querySelector('.mbs-bc-discount-info__toggle');
+      if (!button || info.dataset.mbsDiscountBound === 'true') return;
+      info.dataset.mbsDiscountBound = 'true';
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var shouldOpen = !info.classList.contains('is-open');
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(closeInfo);
+        info.classList.toggle('is-open', shouldOpen);
+        button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      });
+    });
+
+    if (window.mbsBcDiscountInfoGlobalBound !== 'true') {
+      window.mbsBcDiscountInfoGlobalBound = 'true';
+      document.addEventListener('click', function (event) {
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(function (info) {
+          if (!info.contains(event.target)) closeInfo(info);
+        });
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(closeInfo);
+      });
+    }
+  })();
+</script>
+
+<!-- ============================================================
+  TILDA BLOCK 02 — WHO FOR
+============================================================ -->
+
+<style>
+  .mbs-bc-who { font-family: 'Mulish', sans-serif; background: #F5F5F5; padding: 90px 20px; }
+  .mbs-bc-who * { box-sizing: border-box; }
+  .mbs-bc-who__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-bc-label { display: inline-flex; align-items: center; margin-bottom: 14px; padding: 7px 16px; border-radius: 999px; background: rgba(231,242,227,.95); color: #417033; font-size: 13px; font-weight: 900; }
+  .mbs-bc-title { margin: 0 0 10px; color: #1F1F1F; font-size: 34px; font-weight: 900; line-height: 1; letter-spacing: -0.04em; }
+  .mbs-bc-sub { max-width: 660px; margin: 0 0 34px; color: #555; font-size: 16px; font-weight: 500; line-height: 1.5; }
+  .mbs-bc-who__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .mbs-bc-who__card { min-height: 230px; padding: 28px; border-radius: 20px; background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+  .mbs-bc-who__num { color: #B6D8AB; font-size: 38px; font-weight: 900; line-height: 1; }
+  .mbs-bc-who__card h3 { margin: 26px 0 10px; color: #1F1F1F; font-size: 22px; font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; }
+  .mbs-bc-who__card p { margin: 0; color: #555; font-size: 15px; font-weight: 600; line-height: 1.45; }
+  @media (max-width: 820px) {
+    .mbs-bc-who { padding: 64px 14px; }
+    .mbs-bc-title { font-size: 26px; }
+    .mbs-bc-who__grid { grid-template-columns: 1fr; }
+    .mbs-bc-who__card { min-height: auto; }
+  }
+</style>
+
+<section class="mbs-bc-who">
+  <div class="mbs-bc-who__wrap">
+    <div class="mbs-bc-label">Кому подходит</div>
+    <h2 class="mbs-bc-title">Курс для тех, кто хочет уверенно стартовать</h2>
+    <p class="mbs-bc-sub">Мы не перегружаем теорией: сначала даём понятную базу, потом сразу закрепляем её руками за оборудованием.</p>
+    <div class="mbs-bc-who__grid">
+      <article class="mbs-bc-who__card">
+        <div class="mbs-bc-who__num">01</div>
+        <div>
+          <h3>Будущим бариста</h3>
+          <p>Если хотите войти в профессию и понять, как устроена работа за кофейной стойкой.</p>
+        </div>
+      </article>
+      <article class="mbs-bc-who__card">
+        <div class="mbs-bc-who__num">02</div>
+        <div>
+          <h3>Любителям кофе</h3>
+          <p>Если интересно разобраться в эспрессо, молоке, вкусе и классических напитках глубже.</p>
+        </div>
+      </article>
+      <article class="mbs-bc-who__card">
+        <div class="mbs-bc-who__num">03</div>
+        <div>
+          <h3>Тем, кто открывает кофейню</h3>
+          <p>Если нужно понимать продукт, оборудование и базовые процессы до запуска команды.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+  TILDA BLOCK 03 — RESULTS
+============================================================ -->
+
+<style>
+  .mbs-bc-results { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
+  .mbs-bc-results * { box-sizing: border-box; }
+  .mbs-bc-results__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: .82fr 1.18fr; gap: 24px; align-items: start; }
+  .mbs-bc-results__sticky { align-self: start; position: relative; will-change: transform; }
+  .mbs-bc-results__sticky .mbs-bc-sub { margin-bottom: 34px; }
+  .mbs-bc-results__list { display: grid; gap: 12px; }
+  .mbs-bc-results__item { display: grid; grid-template-columns: 42px 1fr; gap: 16px; align-items: start; padding: 20px; border-radius: 18px; background: #F5F5F5; }
+  .mbs-bc-results__mark { width: 42px; height: 42px; border-radius: 50%; background: #E7F2E3; color: #417033; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+  .mbs-bc-results__item h3 { margin: 0 0 6px; color: #1F1F1F; font-size: 19px; font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; }
+  .mbs-bc-results__item p { margin: 0; color: #555; font-size: 15px; font-weight: 600; line-height: 1.45; }
+  @media (max-width: 820px) {
+    .mbs-bc-results { padding: 64px 14px; }
+    .mbs-bc-results__wrap { grid-template-columns: 1fr; gap: 28px; }
+    .mbs-bc-results__sticky { transform: none !important; will-change: auto; }
+    .mbs-bc-results__item { grid-template-columns: 36px 1fr; padding: 18px; }
+    .mbs-bc-results__mark { width: 36px; height: 36px; }
+  }
+</style>
+
+<section class="mbs-bc-results" data-mbs-sticky-section>
+  <div class="mbs-bc-results__wrap">
+    <div class="mbs-bc-results__sticky" data-mbs-sticky-panel data-mbs-sticky-offset="90">
+      <div class="mbs-bc-label">Результат</div>
+      <h2 class="mbs-bc-title">Что вы сможете после курса</h2>
+      <p class="mbs-bc-sub">Главная цель базового курса — дать не набор фактов, а понятную опору для реальной работы бариста.</p>
+      <a class="mbs-bc-btn mbs-bc-btn--primary" href="#consalt">Оставить заявку</a>
+    </div>
+    <div class="mbs-bc-results__list">
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">1</div><div><h3>Настраивать эспрессо</h3><p>Понимать вкус, помол, время пролива и базовые параметры напитка.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">2</div><div><h3>Работать с молоком</h3><p>Взбивать молоко до нужной текстуры и температуры для капучино, латте и флэт уайта.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">3</div><div><h3>Готовить классику меню</h3><p>Разбирать рецепты и готовить эспрессо, капучино, латте, раф, моккачино и другие напитки.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">4</div><div><h3>Понимать рабочее место</h3><p>Организовывать инвентарь, пользоваться кофемолкой, питчерами, весами и нокбоксом.</p></div></article>
+      <article class="mbs-bc-results__item"><div class="mbs-bc-results__mark">5</div><div><h3>Начать латте-арт</h3><p>Освоить базовые приёмы вливания молока и первые рисунки на молочных напитках.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.mbsBcStickyInit) {
+      window.mbsBcStickyInit();
+      return;
+    }
+
+    var ticking = false;
+    var desktopQuery = window.matchMedia('(min-width: 821px)');
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
+    }
+
+    function updateStickyPanels() {
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-mbs-sticky-panel]'));
+      panels.forEach(function (panel) {
+        var section = panel.closest('[data-mbs-sticky-section]');
+        if (!section || !desktopQuery.matches) {
+          panel.style.transform = '';
+          return;
+        }
+
+        var container = panel.parentElement || section;
+        var offset = parseInt(panel.getAttribute('data-mbs-sticky-offset') || '90', 10);
+        var containerRect = container.getBoundingClientRect();
+        var maxShift = Math.max(0, container.offsetHeight - panel.offsetHeight);
+        var shift = clamp(offset - containerRect.top, 0, maxShift);
+        panel.style.transform = 'translate3d(0,' + shift + 'px,0)';
+      });
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        updateStickyPanels();
+        ticking = false;
+      });
+    }
+
+    window.mbsBcStickyUpdate = updateStickyPanels;
+    window.mbsBcStickyInit = function () {
+      requestUpdate();
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    requestUpdate();
+  })();
+</script>
+
+<!-- ============================================================
+  TILDA BLOCK — MBS TRAINERS WIDGET LOADER
+  Вставляется в Tilda один раз. Актуальная вёрстка, CSS и JS
+  подгружаются с https://api.barista-school.ru.
+============================================================ -->
+
+<div class="mbs-trainers-widget-loader"
+     data-mbs-trainers-widget
+     data-widget-url="https://api.barista-school.ru/api/trainers-widget.html">
+  <div style="font-family:Mulish,sans-serif;padding:32px 20px;text-align:center;color:#555;font-size:15px;font-weight:700;">
+    Загружаем тренеров...
+  </div>
+</div>
+
+<script>
+  (function () {
+    var src = 'https://api.barista-school.ru/trainers-widget.js';
+    if (window.__mbsTrainersWidgetLoaderScript) return;
+    window.__mbsTrainersWidgetLoaderScript = true;
+    var script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    document.head.appendChild(script);
+  })();
+</script>
+
+<!-- ============================================================
+  TILDA BLOCK 04 — PROGRAM
+============================================================ -->
+
+<style>
+  .mbs-bc-program { font-family: 'Mulish', sans-serif; background: #E7F2E3; padding: 90px 20px; }
+  .mbs-bc-program * { box-sizing: border-box; }
+  .mbs-bc-program__wrap { max-width: 1100px; margin: 0 auto; }
+  .mbs-bc-program__head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 34px; }
+  .mbs-bc-program__head .mbs-bc-sub { margin-bottom: 0; }
+  .mbs-bc-program__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .mbs-bc-program__card { min-height: 220px; padding: 26px; border-radius: 20px; background: #fff; }
+  .mbs-bc-program__top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .mbs-bc-program__step { color: #417033; font-size: 13px; font-weight: 900; }
+  .mbs-bc-program__time { padding: 6px 10px; border-radius: 999px; background: #F5F5F5; color: #555; font-size: 12px; font-weight: 800; }
+  .mbs-bc-program__card h3 { margin: 0 0 10px; color: #1F1F1F; font-size: 22px; font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; }
+  .mbs-bc-program__card p { margin: 0; color: #555; font-size: 15px; font-weight: 600; line-height: 1.5; }
+  @media (max-width: 820px) {
+    .mbs-bc-program { padding: 64px 14px; }
+    .mbs-bc-program__head { display: block; }
+    .mbs-bc-program__grid { grid-template-columns: 1fr; }
+    .mbs-bc-program__card { min-height: auto; }
+  }
+</style>
+
+<section class="mbs-bc-program" id="mbs-bc-program">
+  <div class="mbs-bc-program__wrap">
+    <div class="mbs-bc-program__head">
+      <div>
+        <div class="mbs-bc-label">Программа</div>
+        <h2 class="mbs-bc-title">Понятный маршрут от зерна до напитка</h2>
+      </div>
+      <p class="mbs-bc-sub">Каждая тема сразу связывается с практикой, чтобы знания не оставались абстрактными.</p>
+    </div>
+    <div class="mbs-bc-program__grid">
+      <article class="mbs-bc-program__card"><div class="mbs-bc-program__top"><span class="mbs-bc-program__step">Модуль 01</span><span class="mbs-bc-program__time">Видеотеория</span></div><h3>Теория до первого занятия</h3><p>После предоплаты откроем доступ в личный кабинет: видеотеория, тесты и полезные материалы. В школе всё время посвятим практике.</p></article>
+      <article class="mbs-bc-program__card"><div class="mbs-bc-program__top"><span class="mbs-bc-program__step">Модуль 02</span><span class="mbs-bc-program__time">Рабочее место</span></div><h3>Инвентарь и организация</h3><p>Научитесь пользоваться питчерами, весами, таймером, нокбоксом и собирать удобную рабочую станцию.</p></article>
+      <article class="mbs-bc-program__card"><div class="mbs-bc-program__top"><span class="mbs-bc-program__step">Модуль 03</span><span class="mbs-bc-program__time">Эспрессо</span></div><h3>Настройка эспрессо</h3><p>Разберёте баланс сладости, кислотности и горечи, научитесь менять вкус через помол и параметры приготовления.</p></article>
+      <article class="mbs-bc-program__card"><div class="mbs-bc-program__top"><span class="mbs-bc-program__step">Модуль 04</span><span class="mbs-bc-program__time">Молоко</span></div><h3>Молочные напитки и латте-арт</h3><p>Отработаете взбивание молока, температуру, текстуру, техники вливания и базовые элементы латте-арта.</p></article>
+      <article class="mbs-bc-program__card"><div class="mbs-bc-program__top"><span class="mbs-bc-program__step">Модуль 05</span><span class="mbs-bc-program__time">Меню</span></div><h3>Популярные кофейные напитки</h3><p>Приготовите капучино, латте, флэт уайт, раф, моккачино и поймёте логику техкарт.</p></article>
+      <article class="mbs-bc-program__card"><div class="mbs-bc-program__top"><span class="mbs-bc-program__step">Модуль 06</span><span class="mbs-bc-program__time">Итоги</span></div><h3>Завершение курса</h3><p>Зафиксируем результат, дадим обратную связь, подскажем следующие шаги и добавим в закрытый чат выпускников «Продлёнка».</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+  TILDA BLOCK 05 — FORMAT AND PRICE
+============================================================ -->
+
+<style>
+  .mbs-bc-price { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
+  .mbs-bc-price * { box-sizing: border-box; }
+  .mbs-bc-price__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: .9fr 1.1fr; gap: 24px; align-items: stretch; }
+  .mbs-bc-price__info { display: flex; flex-direction: column; padding: 36px; border-radius: 24px; background: #F5F5F5; }
+  .mbs-bc-price__info .mbs-bc-sub { margin-bottom: 28px; }
+  .mbs-bc-price__facts { display: grid; gap: 10px; }
+  .mbs-bc-price__fact { padding: 16px 18px; border-radius: 16px; background: #fff; color: #1F1F1F; font-size: 15px; font-weight: 800; line-height: 1.35; }
+  .mbs-bc-price__promo { margin-top: 10px; padding: 16px 18px; border-radius: 16px; background: #F8DDE1; color: #1F1F1F; font-size: 14px; font-weight: 700; line-height: 1.45; }
+  .mbs-bc-price__promo strong { color: #CC2841; font-weight: 900; }
+  .mbs-bc-discount-info { position: relative; display: inline-flex; align-items: center; margin-left: 6px; vertical-align: -3px; }
+  .mbs-bc-discount-info__toggle { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: #CC2841; color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .mbs-bc-discount-info__toggle svg { width: 14px; height: 14px; display: block; }
+  .mbs-bc-discount-info__popup { position: absolute; left: 50%; bottom: calc(100% + 10px); z-index: 20; display: none; width: min(360px, calc(100vw - 40px)); padding: 14px 16px; border: 1px solid #EC98A7; border-radius: 14px; background: #fff; color: #555; box-shadow: 0 16px 42px rgba(31,31,31,.18); transform: translateX(-50%); font-size: 14px; font-weight: 700; line-height: 1.45; }
+  .mbs-bc-discount-info__popup::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 14px; height: 14px; background: #fff; border-right: 1px solid #EC98A7; border-bottom: 1px solid #EC98A7; transform: translateX(-50%) rotate(45deg); }
+  .mbs-bc-discount-info.is-open .mbs-bc-discount-info__popup { display: block; }
+  .mbs-bc-discount-info__title { display: block; margin-bottom: 8px; color: #1F1F1F; font-size: 15px; font-weight: 900; }
+  .mbs-bc-discount-info__popup p { margin: 0; }
+  .mbs-bc-discount-info__popup p + p { margin-top: 8px; }
+  .mbs-bc-discount-info__code { color: #CC2841; font-weight: 900; }
+  .mbs-bc-price__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mbs-bc-price__card { display: flex; flex-direction: column; min-height: 430px; padding: 30px; border-radius: 24px; background: #F5F5F5; }
+  .mbs-bc-price__card--accent { background: #E7F2E3; }
+  .mbs-bc-price__card h3 { margin: 0 0 12px; color: #1F1F1F; font-size: 24px; font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; }
+  .mbs-bc-price__value { margin: 0 0 12px; color: #1F1F1F; font-size: 44px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+  .mbs-bc-price__note { margin: 0 0 24px; color: #555; font-size: 14px; font-weight: 700; line-height: 1.45; }
+  .mbs-bc-price__list { margin: 0 0 26px; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .mbs-bc-price__list li { color: #1F1F1F; font-size: 14px; font-weight: 700; line-height: 1.35; }
+  .mbs-bc-price__list li::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%; background: #4F883E; vertical-align: 2px; }
+  .mbs-bc-price__actions { display: grid; gap: 10px; margin-top: auto; padding-top: 22px; }
+  .mbs-bc-price .mbs-bc-btn.mbs-bc-btn--primary,
+  .mbs-bc-price .mbs-bc-btn.mbs-bc-btn--primary * {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    opacity: 1 !important;
+  }
+  @media (max-width: 980px) {
+    .mbs-bc-price__wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .mbs-bc-price { padding: 64px 14px; }
+    .mbs-bc-price__info, .mbs-bc-price__card { padding: 24px; }
+    .mbs-bc-price__cards { grid-template-columns: 1fr; }
+    .mbs-bc-price__card { min-height: auto; }
+    .mbs-bc-price__value { font-size: 38px; }
+  }
+</style>
+
+<section class="mbs-bc-price">
+  <div class="mbs-bc-price__wrap">
+    <div class="mbs-bc-price__info">
+      <div class="mbs-bc-label">Формат и запись</div>
+      <h2 class="mbs-bc-title">Гибко по времени, плотно по практике</h2>
+      <p class="mbs-bc-sub">После заявки менеджер поможет подобрать удобный график и объяснит, как внести предоплату для бронирования места.</p>
+      <div class="mbs-bc-price__facts">
+        <div class="mbs-bc-price__fact">3 дня по 3 часа или 1 день за 9 часов</div>
+      </div>
+      <div class="mbs-bc-price__promo">
+        <strong>Скидка 10%</strong> школьникам и студентам до 31 августа 2026.
+        <span class="mbs-bc-discount-info" data-mbs-bc-discount-info>
+          <button class="mbs-bc-discount-info__toggle" type="button" aria-label="Условия скидки" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+              <path d="M12 10.8v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+              <circle cx="12" cy="7.3" r="1.3" fill="currentColor"></circle>
+            </svg>
+          </button>
+          <span class="mbs-bc-discount-info__popup" role="tooltip">
+            <span class="mbs-bc-discount-info__title">Условия скидки</span>
+            <p>Промокод: <span class="mbs-bc-discount-info__code">СТУДЕНТ10</span>.</p>
+            <p>Назовите промокод при записи и подтвердите статус школьника или студента.</p>
+            <p>Скидка действует только на индивидуальные курсы бариста и не применяется задним числом.</p>
+          </span>
+        </span>
+      </div>
+      <div class="mbs-bc-price__actions">
+        <a class="mbs-bc-btn mbs-bc-btn--primary mbs-bc-online-open" href="#online-booking">Онлайн запись</a>
+        <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#consalt">Оставить заявку</a>
+      </div>
+    </div>
+    <div class="mbs-bc-price__cards">
+      <article class="mbs-bc-price__card">
+        <h3>Один участник</h3>
+        <div class="mbs-bc-price__value">22 000 ₽</div>
+        <p class="mbs-bc-price__note">Индивидуальный темп и внимание тренера на протяжении всего курса.</p>
+        <ul class="mbs-bc-price__list">
+          <li>9 часов обучения</li>
+          <li>Профессиональное оборудование</li>
+          <li>Все продукты входят в стоимость</li>
+        </ul>
+      </article>
+      <article class="mbs-bc-price__card mbs-bc-price__card--accent">
+        <h3>Два участника</h3>
+        <div class="mbs-bc-price__value">30 000 ₽</div>
+        <p class="mbs-bc-price__note">Выгодный формат, если хотите учиться вместе с другом, партнёром или коллегой.</p>
+        <ul class="mbs-bc-price__list">
+          <li>15 000 ₽ за человека</li>
+          <li>Экономия 14 000 ₽ на двоих</li>
+          <li>Одинаковая программа и практика</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    function closeInfo(info) {
+      var button = info.querySelector('.mbs-bc-discount-info__toggle');
+      info.classList.remove('is-open');
+      if (button) button.setAttribute('aria-expanded', 'false');
+    }
+
+    document.querySelectorAll('[data-mbs-bc-discount-info]').forEach(function (info) {
+      var button = info.querySelector('.mbs-bc-discount-info__toggle');
+      if (!button || info.dataset.mbsDiscountBound === 'true') return;
+      info.dataset.mbsDiscountBound = 'true';
+      button.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var shouldOpen = !info.classList.contains('is-open');
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(closeInfo);
+        info.classList.toggle('is-open', shouldOpen);
+        button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+      });
+    });
+
+    if (window.mbsBcDiscountInfoGlobalBound !== 'true') {
+      window.mbsBcDiscountInfoGlobalBound = 'true';
+      document.addEventListener('click', function (event) {
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(function (info) {
+          if (!info.contains(event.target)) closeInfo(info);
+        });
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('[data-mbs-bc-discount-info].is-open').forEach(closeInfo);
+      });
+    }
+  })();
+</script>
+
+<!-- ============================================================
+  TILDA BLOCK 06 — EQUIPMENT + GALLERY
+============================================================ -->
+
+<style>
+  .mbs-bc-eq { font-family: 'Mulish', sans-serif; background: #F5F5F5; padding: 64px 20px; }
+  .mbs-bc-eq * { box-sizing: border-box; }
+  .mbs-bc-eq__wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 16px; }
+  .mbs-bc-eq__top { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .mbs-bc-eq__intro { padding: 28px; border-radius: 20px; background: #fff; }
+  .mbs-bc-eq__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mbs-bc-eq__item { min-height: 132px; padding: 20px; border-radius: 16px; background: #fff; }
+  .mbs-bc-eq__item strong { display: block; margin-bottom: 6px; color: #1F1F1F; font-size: 17px; font-weight: 900; line-height: 1.1; }
+  .mbs-bc-eq__item span { color: #555; font-size: 13px; font-weight: 700; line-height: 1.4; }
+  .mbs-bc-eq__gallery { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .mbs-bc-eq__photo { aspect-ratio: 4 / 3; overflow: hidden; border: 0; padding: 0; border-radius: 14px; background: #E7F2E3; cursor: zoom-in; }
+  .mbs-bc-eq__photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .mbs-bc-eq__photo:hover img { transform: scale(1.04); }
+  .mbs-bc-lightbox { position: fixed; inset: 0; z-index: 999999; display: none; align-items: center; justify-content: center; padding: 28px; background: rgba(31,31,31,.82); }
+  .mbs-bc-lightbox.is-open { display: flex; }
+  .mbs-bc-lightbox__img { max-width: min(1120px, 92vw); max-height: 86vh; border-radius: 18px; object-fit: contain; box-shadow: 0 24px 80px rgba(0,0,0,.34); }
+  .mbs-bc-lightbox__btn { position: absolute; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: 0; border-radius: 50%; background: #fff; color: #1F1F1F; cursor: pointer; font-size: 30px; line-height: 1; box-shadow: 0 10px 26px rgba(0,0,0,.22); }
+  .mbs-bc-lightbox__close { top: 22px; right: 22px; }
+  .mbs-bc-lightbox__prev { left: 22px; top: 50%; transform: translateY(-50%); }
+  .mbs-bc-lightbox__next { right: 22px; top: 50%; transform: translateY(-50%); }
+  @media (max-width: 880px) {
+    .mbs-bc-eq { padding: 56px 14px; }
+    .mbs-bc-eq__top { grid-template-columns: 1fr; }
+    .mbs-bc-eq__gallery { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .mbs-bc-eq__photo { border-radius: 12px; }
+  }
+  @media (max-width: 520px) {
+    .mbs-bc-eq__grid { grid-template-columns: 1fr; }
+    .mbs-bc-eq__gallery { grid-template-columns: repeat(2, 1fr); }
+    .mbs-bc-eq__intro, .mbs-bc-eq__item { padding: 24px; }
+  }
+</style>
+
+<section class="mbs-bc-eq">
+  <div class="mbs-bc-eq__wrap">
+    <div class="mbs-bc-eq__top">
+      <div class="mbs-bc-eq__intro">
+        <div class="mbs-bc-label">Оборудование</div>
+        <h2 class="mbs-bc-title">Учитесь сразу на профессиональной технике</h2>
+        <p class="mbs-bc-sub">На курсе важно привыкнуть к рабочему оборудованию: так после обучения проще перейти к реальной смене или домашней практике на продвинутом уровне.</p>
+        <a class="mbs-bc-btn mbs-bc-btn--primary" href="#consalt">Оставить заявку</a>
+      </div>
+      <div class="mbs-bc-eq__grid">
+        <div class="mbs-bc-eq__item"><strong>Sanremo D8 Pro</strong><span>Профессиональная кофемашина для стабильной отработки эспрессо.</span></div>
+        <div class="mbs-bc-eq__item"><strong>Carimali Glow</strong><span>Рабочая кофемашина, на которой удобно тренировать скорость и повторяемость.</span></div>
+        <div class="mbs-bc-eq__item"><strong>Eureka Atom / W 75 F</strong><span>Кофемолки для понимания помола, дозировки и влияния настроек на вкус.</span></div>
+        <div class="mbs-bc-eq__item"><strong>Anfim Scody II</strong><span>Дополнительная кофемолка для сравнения оборудования и рабочих сценариев.</span></div>
+      </div>
+    </div>
+    <div class="mbs-bc-eq__gallery" aria-label="Галерея рабочего пространства">
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3965-6266-4532-a638-333361393865/0D1A7230_resized.jpg" alt="Базовый курс бариста — практика на кофемашине" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild6438-3866-4266-a463-363530333036/0D1A6468_resized.jpg" alt="Обучение бариста в Московской школе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3331-6430-4636-a530-373032376531/0D1A6473_resized.jpg" alt="Практика приготовления эспрессо на курсе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3339-3136-4831-a131-383531633439/0D1A7234_resized.jpg" alt="Тренер и ученик на базовом курсе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild6164-3335-4163-a537-613765313566/0D1A7249_resized.jpg" alt="Индивидуальная практика на курсе бариста" loading="lazy"></button>
+      <button class="mbs-bc-eq__photo" type="button"><img src="https://static.tildacdn.com/tild3333-6164-4831-b336-643764303862/0D1A7272_resized.jpg" alt="Московская школа бариста — обучение за кофейной стойкой" loading="lazy"></button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var galleries = Array.prototype.slice.call(document.querySelectorAll('.mbs-bc-eq__gallery'));
+    if (!galleries.length) return;
+
+    var lightbox = document.querySelector('.mbs-bc-lightbox');
+    if (!lightbox) {
+      lightbox = document.createElement('div');
+      lightbox.className = 'mbs-bc-lightbox';
+      lightbox.innerHTML = '<button class="mbs-bc-lightbox__btn mbs-bc-lightbox__close" type="button" aria-label="Закрыть">×</button><button class="mbs-bc-lightbox__btn mbs-bc-lightbox__prev" type="button" aria-label="Предыдущее фото">‹</button><img class="mbs-bc-lightbox__img" alt=""><button class="mbs-bc-lightbox__btn mbs-bc-lightbox__next" type="button" aria-label="Следующее фото">›</button>';
+      document.body.appendChild(lightbox);
+    }
+
+    var imageEl = lightbox.querySelector('.mbs-bc-lightbox__img');
+    var closeBtn = lightbox.querySelector('.mbs-bc-lightbox__close');
+    var prevBtn = lightbox.querySelector('.mbs-bc-lightbox__prev');
+    var nextBtn = lightbox.querySelector('.mbs-bc-lightbox__next');
+    var photos = [];
+    var currentIndex = 0;
+
+    galleries.forEach(function (gallery) {
+      Array.prototype.slice.call(gallery.querySelectorAll('.mbs-bc-eq__photo img')).forEach(function (img) {
+        photos.push({ src: img.currentSrc || img.src, alt: img.alt || '' });
+      });
+    });
+
+    function show(index) {
+      currentIndex = (index + photos.length) % photos.length;
+      imageEl.src = photos[currentIndex].src;
+      imageEl.alt = photos[currentIndex].alt;
+    }
+
+    function open(index) {
+      show(index);
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      lightbox.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    galleries.forEach(function (gallery) {
+      Array.prototype.slice.call(gallery.querySelectorAll('.mbs-bc-eq__photo')).forEach(function (button) {
+        button.addEventListener('click', function () {
+          var img = button.querySelector('img');
+          var index = photos.findIndex(function (photo) { return photo.src === (img.currentSrc || img.src); });
+          open(index >= 0 ? index : 0);
+        });
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { show(currentIndex - 1); });
+    nextBtn.addEventListener('click', function () { show(currentIndex + 1); });
+    lightbox.addEventListener('click', function (event) {
+      if (event.target === lightbox) close();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') close();
+      if (event.key === 'ArrowLeft') show(currentIndex - 1);
+      if (event.key === 'ArrowRight') show(currentIndex + 1);
+    });
+  })();
+</script>
+
+<!-- ============================================================
+  TILDA BLOCK 07 — FAQ
+============================================================ -->
+
+<style>
+  .mbs-bc-faq { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
+  .mbs-bc-faq * { box-sizing: border-box; }
+  .mbs-bc-faq__wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: .75fr 1.25fr; gap: 48px; align-items: start; }
+  .mbs-bc-faq__side { align-self: start; position: relative; will-change: transform; }
+  .mbs-bc-faq__list { display: grid; gap: 10px; }
+  .mbs-bc-faq__item { border-radius: 18px; background: #F5F5F5; overflow: hidden; }
+  .mbs-bc-faq summary { cursor: pointer; list-style: none; padding: 22px 24px; color: #1F1F1F; font-size: 19px; font-weight: 900; line-height: 1.25; }
+  .mbs-bc-faq summary::-webkit-details-marker { display: none; }
+  .mbs-bc-faq summary::after { content: "+"; float: right; color: #417033; font-size: 24px; line-height: 1; }
+  .mbs-bc-faq__item[open] summary::after { content: "×"; }
+  .mbs-bc-faq__body { overflow: hidden; height: 0; transition: height .32s cubic-bezier(.4, 0, .2, 1); }
+  .mbs-bc-faq__item[open] .mbs-bc-faq__body { height: auto; }
+  .mbs-bc-faq__answer { margin: 0; padding: 0 24px 24px; color: #555; font-size: 16px; font-weight: 600; line-height: 1.6; overflow: visible; }
+  @media (max-width: 820px) {
+    .mbs-bc-faq { padding: 64px 14px; }
+    .mbs-bc-faq__wrap { grid-template-columns: 1fr; gap: 28px; }
+    .mbs-bc-faq__side { transform: none !important; will-change: auto; }
+    .mbs-bc-faq summary { font-size: 17px; padding: 20px; }
+    .mbs-bc-faq__answer { padding: 0 20px 20px; font-size: 15px; }
+  }
+</style>
+
+<section class="mbs-bc-faq" data-mbs-sticky-section>
+  <div class="mbs-bc-faq__wrap">
+    <div class="mbs-bc-faq__side" data-mbs-sticky-panel data-mbs-sticky-offset="90">
+      <div class="mbs-bc-label">FAQ</div>
+      <h2 class="mbs-bc-title">Частые вопросы</h2>
+      <p class="mbs-bc-sub">Если хотите выбрать время сразу, нажмите «Онлайн запись». Если нужен совет, оставьте заявку — менеджер подскажет по расписанию, оплате и формату.</p>
+      <a class="mbs-bc-btn mbs-bc-btn--secondary" href="#consalt">Задать вопрос</a>
+    </div>
+    <div class="mbs-bc-faq__list">
+      <details class="mbs-bc-faq__item" open>
+        <summary>Можно ли прийти без опыта?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Да. Базовый курс создан для старта с нуля: тренер объясняет логику процесса, показывает технику и помогает закрепить её на практике за кофемашиной.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Как проходит обучение?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Курс состоит из 3 занятий по 3 часа. Вы много практикуетесь: работаете с кофемашиной и кофемолкой, настраиваете помол, готовите первый эспрессо, взбиваете молоко, пробуете латте-арт и собираете классические напитки меню.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Со скольки лет можно обучаться?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Обучение можно проходить с 14 лет. Если участнику меньше 18 лет, лучше заранее оставить заявку: менеджер уточнит детали и подскажет, как удобнее оформить запись.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Можно записаться вдвоём?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Да. Есть формат для двух участников за 30 000 ₽. Вы занимаетесь вместе, проходите ту же программу и бронируете те же доступные слоты. Предоплата такая же — 5 000 ₽.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Как забронировать место?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Можно записаться онлайн: выбрать формат, тренера, даты и внести предоплату 5 000 ₽. Бронь держится 5 минут и закрепляется после предоплаты. Если не готовы выбирать время сразу, оставьте заявку.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Когда оплачивается оставшаяся часть?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Предоплата 5 000 ₽ вносится при бронировании. Остаток оплачивается на первом занятии: 17 000 ₽ для одного участника или 25 000 ₽ для формата на двоих.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Есть ли скидка для школьников и студентов?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Да. Скидка 10% действует до 31 августа 2026 года только на индивидуальные курсы бариста. Чтобы применить скидку, назовите промокод СТУДЕНТ10 при записи и подтвердите статус школьника или студента. Скидка не применяется задним числом после оплаты или согласования стоимости.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Что входит в стоимость?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Практика на профессиональном оборудовании, зерно, молоко, продукты для напитков, работа с тренером и все материалы, которые нужны на занятиях.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Что делать, если после курса захочется больше практики?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Если после базового курса вы поймёте, что практики недостаточно, можно будет перейти на «Продвинутый курс бариста». Это ещё 3 дня по 3 часа с более глубокой отработкой навыков.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Помогаете ли вы с трудоустройством?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">Мы не занимаемся трудоустройством напрямую, но к нам часто обращаются кофейни и проекты, которые готовы работать с нашими выпускниками. Когда есть подходящие предложения, мы делимся ими с выпускниками.</p></div>
+      </details>
+      <details class="mbs-bc-faq__item">
+        <summary>Что происходит после курса?</summary>
+        <div class="mbs-bc-faq__body"><p class="mbs-bc-faq__answer">После обучения мы добавляем выпускников в закрытый Telegram-чат «Продлёнка». Там можно задавать вопросы, получать поддержку после курса и оставаться внутри профессионального сообщества школы.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.mbsBcStickyInit) {
+      window.mbsBcStickyInit();
+      return;
+    }
+
+    var ticking = false;
+    var desktopQuery = window.matchMedia('(min-width: 821px)');
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
+    }
+
+    function updateStickyPanels() {
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-mbs-sticky-panel]'));
+      panels.forEach(function (panel) {
+        var section = panel.closest('[data-mbs-sticky-section]');
+        if (!section || !desktopQuery.matches) {
+          panel.style.transform = '';
+          return;
+        }
+
+        var container = panel.parentElement || section;
+        var offset = parseInt(panel.getAttribute('data-mbs-sticky-offset') || '90', 10);
+        var containerRect = container.getBoundingClientRect();
+        var maxShift = Math.max(0, container.offsetHeight - panel.offsetHeight);
+        var shift = clamp(offset - containerRect.top, 0, maxShift);
+        panel.style.transform = 'translate3d(0,' + shift + 'px,0)';
+      });
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        updateStickyPanels();
+        ticking = false;
+      });
+    }
+
+    window.mbsBcStickyUpdate = updateStickyPanels;
+    window.mbsBcStickyInit = function () {
+      requestUpdate();
+    };
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    requestUpdate();
+  })();
+
+  (function () {
+    document.querySelectorAll('.mbs-bc-faq__list').forEach(function (list) {
+      var items = Array.prototype.slice.call(list.querySelectorAll('.mbs-bc-faq__item'));
+
+      function closeItem(details) {
+        var body = details.querySelector('.mbs-bc-faq__body');
+        if (!details.open || details.dataset.busy === '1') return;
+        details.dataset.busy = '1';
+        body.style.height = body.scrollHeight + 'px';
+        body.offsetHeight;
+        body.style.height = '0px';
+        body.addEventListener('transitionend', function done(ev) {
+          if (ev.propertyName !== 'height') return;
+          body.removeEventListener('transitionend', done);
+          details.open = false;
+          details.dataset.busy = '0';
+          if (window.mbsBcStickyUpdate) window.mbsBcStickyUpdate();
+        });
+      }
+
+      function openItem(details) {
+        var body = details.querySelector('.mbs-bc-faq__body');
+        if (details.open || details.dataset.busy === '1') return;
+        items.forEach(function (item) {
+          if (item !== details) closeItem(item);
+        });
+        details.dataset.busy = '1';
+        details.open = true;
+        var targetH = body.scrollHeight;
+        body.style.height = '0px';
+        body.offsetHeight;
+        body.style.height = targetH + 'px';
+        body.addEventListener('transitionend', function done(ev) {
+          if (ev.propertyName !== 'height') return;
+          body.removeEventListener('transitionend', done);
+          body.style.height = 'auto';
+          details.dataset.busy = '0';
+          if (window.mbsBcStickyUpdate) window.mbsBcStickyUpdate();
+        });
+      }
+
+      items.forEach(function (details) {
+        var body = details.querySelector('.mbs-bc-faq__body');
+        body.style.height = details.open ? 'auto' : '0px';
+        details.querySelector('summary').addEventListener('click', function (e) {
+          e.preventDefault();
+          if (details.open) closeItem(details);
+          else openItem(details);
+          if (window.mbsBcStickyUpdate) window.mbsBcStickyUpdate();
+        });
+      });
+    });
+  })();
+</script>
+
+<!-- ============================================================
+  TILDA BLOCK 08 — FINAL CTA
+============================================================ -->
+
+<style>
+  .mbs-bc-final { font-family: 'Mulish', sans-serif; background: #fff; padding: 90px 20px; }
+  .mbs-bc-final * { box-sizing: border-box; }
+  .mbs-bc-final__wrap { max-width: 1100px; margin: 0 auto; padding: 64px 72px; border-radius: 28px; background: #E7F2E3; display: grid; grid-template-columns: 1fr 260px; gap: 60px; align-items: center; }
+  .mbs-bc-final__title { margin: 0 0 14px; color: #1F1F1F; font-size: 40px; font-weight: 900; line-height: 1.1; letter-spacing: -0.04em; }
+  .mbs-bc-final__text { max-width: 620px; margin: 0; color: #555; font-size: 16px; font-weight: 500; line-height: 1.55; }
+  .mbs-bc-final__actions { display: flex; flex-direction: column; gap: 12px; min-width: 260px; }
+  .mbs-bc-final__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 58px;
+    padding: 0 28px;
+    border-radius: 999px;
+    text-decoration: none !important;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    transition: background .2s, border-color .2s, transform .15s;
+  }
+  .mbs-bc-final__btn svg,
+  .mbs-bc-final__contact-link svg { flex: 0 0 auto; width: 18px; height: 18px; }
+  .mbs-bc-final__btn--primary {
+    background: #CC2841;
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+  }
+  .mbs-bc-final__btn--primary:hover { background: #D83D54; transform: translateY(-2px); }
+  .mbs-bc-final__btn--secondary {
+    background: rgba(255,255,255,.85);
+    border: 2px solid rgba(65,112,51,.2);
+    color: #417033 !important;
+    -webkit-text-fill-color: #417033 !important;
+  }
+  .mbs-bc-final__btn--secondary:hover { background: #fff; border-color: #417033; transform: translateY(-2px); }
+  .mbs-bc-final__contacts { margin-top: 20px; display: grid; gap: 8px; }
+  .mbs-bc-final__contact-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #555 !important;
+    -webkit-text-fill-color: #555 !important;
+    text-decoration: none !important;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+    transition: color .2s;
+  }
+  .mbs-bc-final__contact-link svg { color: #417033; }
+  .mbs-bc-final__contact-link:hover {
+    color: #417033 !important;
+    -webkit-text-fill-color: #417033 !important;
+  }
+  @media (max-width: 820px) {
+    .mbs-bc-final { padding: 64px 14px; }
+    .mbs-bc-final__wrap { grid-template-columns: 1fr; gap: 36px; padding: 44px 28px; }
+    .mbs-bc-final__title { font-size: 30px; }
+    .mbs-bc-final__text { font-size: 16px; }
+    .mbs-bc-final__actions { min-width: 0; width: 100%; }
+    .mbs-bc-final__contact-link { font-size: 14px; }
+  }
+</style>
+
+<section class="mbs-bc-final">
+  <div class="mbs-bc-final__wrap">
+    <div>
+      <div class="mbs-bc-label">Следующий шаг</div>
+      <h2 class="mbs-bc-final__title">Оставьте заявку — подберём удобное время</h2>
+      <p class="mbs-bc-final__text">Менеджер расскажет, какие слоты доступны, как проходит оплата и какой формат лучше выбрать: 3 дня по 3 часа или интенсив за 1 день.</p>
+    </div>
+    <div class="mbs-bc-final__actions">
+      <a class="mbs-bc-final__btn mbs-bc-final__btn--primary mbs-bc-online-open" href="#online-booking">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 2.75v3.5M16 2.75v3.5M4.75 9.25h14.5M7.25 4.75h9.5a3 3 0 0 1 3 3v9.5a3 3 0 0 1-3 3h-9.5a3 3 0 0 1-3-3v-9.5a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m9 14 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Онлайн запись
+      </a>
+      <a class="mbs-bc-final__btn mbs-bc-final__btn--secondary" href="#consalt">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 6.75A3.25 3.25 0 0 1 8.25 3.5h7.5A3.25 3.25 0 0 1 19 6.75v4.5a3.25 3.25 0 0 1-3.25 3.25H11l-4.4 4.2a.95.95 0 0 1-1.6-.69V14.4A3.25 3.25 0 0 1 2.75 11.25v-4.5H5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 8.75h8M8 11.5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Оставить заявку
+      </a>
+      <div class="mbs-bc-final__contacts">
+        <a class="mbs-bc-final__contact-link" href="tel:+79959992836"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7.2 4.5 9 8.7l-2 1.45c1.15 2.35 2.9 4.1 5.25 5.25L13.7 13.4l4.2 1.8c.55.24.86.84.72 1.42l-.55 2.35c-.14.62-.7 1.03-1.33.98C9.7 19.35 4.15 13.8 3.55 6.76c-.05-.63.36-1.19.98-1.33l2.35-.55c.58-.14 1.18.17 1.42.72Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>+7 995 999 2836</a>
+        <a class="mbs-bc-final__contact-link" href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.5 4.5 3.8 11.15c-.8.32-.75 1.47.08 1.72l4.18 1.27 1.58 4.9c.25.78 1.25.98 1.78.35l2.25-2.67 4.35 3.16c.7.5 1.69.12 1.86-.72L22 5.82c.16-.9-.66-1.66-1.5-1.32Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m8.15 14.1 6.7-4.45-5.2 6.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Написать в Telegram</a>
+        <a class="mbs-bc-final__contact-link" href="https://wa.me/message/42GZ6YYBJTM5B1" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 19.5 5.75 16A8.2 8.2 0 1 1 9 19.25L4.5 19.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9.2 8.6c.22-.5.48-.52.82-.52h.58c.2 0 .48.03.73.55l.55 1.23c.16.35.1.62-.08.84l-.43.5c-.13.15-.18.34-.06.55.36.65.9 1.22 1.55 1.66.22.15.43.12.6-.04l.58-.55c.2-.2.47-.25.74-.13l1.33.62c.42.2.48.46.43.74-.12.68-.8 1.45-1.58 1.48-1.17.05-2.6-.38-4.18-1.96-1.58-1.58-2.06-3.1-1.96-4.25.04-.42.16-.67.36-.72Z" fill="currentColor"/></svg>Написать в WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+  TILDA BLOCK 09 — ONLINE BOOKING POPUP
+  Добавить на страницу один раз после CTA-блоков.
+============================================================ -->
+
+<style>
+  .mbs-bc-booking-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    background: rgba(31,31,31,.58);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    font-family: 'Mulish', sans-serif;
+  }
+  .mbs-bc-booking-popup.is-open { display: block; }
+  .mbs-bc-booking-popup * { box-sizing: border-box; }
+  .mbs-bc-booking-popup__scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 28px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mbs-bc-booking-popup__panel {
+    position: relative;
+    width: min(760px, 100%);
+    margin: auto;
+    border-radius: 24px;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .mbs-bc-booking-popup__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #1F1F1F;
+    cursor: pointer;
+    font-size: 30px;
+    line-height: 1;
+    box-shadow: 0 8px 22px rgba(31,31,31,.12);
+  }
+  .mbs-bc-booking-popup__share {
+    position: absolute;
+    top: 12px;
+    right: 64px;
+    z-index: 2;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #417033;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(31,31,31,.12);
+  }
+  .mbs-bc-booking-popup__share svg {
+    width: 21px;
+    height: 21px;
+    display: block;
+  }
+  .mbs-bc-booking-popup__share.is-hidden {
+    display: none;
+  }
+  .mbs-bc-booking-popup__panel [data-course-booking-widget] {
+    min-height: 420px;
+  }
+  .mbs-bc-booking-popup__toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    z-index: 100000;
+    transform: translateX(-50%);
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: #1F1F1F;
+    color: #fff;
+    font-family: 'Mulish', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+  }
+  .mbs-bc-booking-popup__toast.is-visible { opacity: 1; }
+  .mbs-bc-booking-popup .bbb-widget-root {
+    background: transparent !important;
+    padding: 0 !important;
+  }
+  body.mbs-bc-booking-lock { overflow: hidden; }
+  @media (max-width: 640px) {
+    .mbs-bc-booking-popup__scroll {
+      display: block;
+      padding: 0;
+    }
+    .mbs-bc-booking-popup__panel {
+      width: 100%;
+      min-height: 100vh;
+      border-radius: 0;
+    }
+    .mbs-bc-booking-popup__close {
+      top: 8px;
+      right: 8px;
+    }
+    .mbs-bc-booking-popup__share {
+      top: 8px;
+      right: 58px;
+    }
+  }
+</style>
+
+<div class="mbs-bc-booking-popup" id="mbs-bc-booking-popup" aria-hidden="true">
+  <div class="mbs-bc-booking-popup__scroll" data-booking-close>
+    <div class="mbs-bc-booking-popup__panel" role="dialog" aria-modal="true" aria-label="Онлайн запись на базовый курс бариста">
+      <button class="mbs-bc-booking-popup__share is-hidden" type="button" data-booking-share aria-label="Поделиться ссылкой" title="Поделиться">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M8.5 12.5 15.5 8.5M8.5 11.5l7 4M6.75 15.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 9.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 20.25a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="mbs-bc-booking-popup__close" type="button" data-booking-close aria-label="Закрыть">×</button>
+      <div data-course-booking-widget
+           data-course-slug="basic-barista"
+           data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json"
+           data-fallback-api-url="https://159-194-202-120.sslip.io/api-fallback/api/basic-barista-slots.json"
+           data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
+    </div>
+  </div>
+  <div class="mbs-bc-booking-popup__toast" id="mbs-bc-booking-toast" aria-live="polite"></div>
+</div>
+
+<script>
+  (function () {
+    var popup = document.getElementById('mbs-bc-booking-popup');
+    if (!popup) return;
+    var toastTimer = null;
+    var shareObserver = null;
+
+    function showToast(message) {
+      var toast = document.getElementById('mbs-bc-booking-toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('is-visible');
+      }, 2200);
+    }
+
+    function buildShareUrl() {
+      var url = new URL(window.location.href);
+      url.searchParams.set('online_booking', '1');
+      url.hash = 'online-booking';
+      return url.toString();
+    }
+
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      return new Promise(function (resolve, reject) {
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try {
+          document.execCommand('copy') ? resolve() : reject(new Error('copy failed'));
+        } catch (err) {
+          reject(err);
+        }
+        document.body.removeChild(textarea);
+      });
+    }
+
+    function shareBookingLink() {
+      var url = buildShareUrl();
+      var payload = {
+        title: 'Онлайн запись на базовый курс бариста',
+        text: 'Выберите формат обучения, дату и время.',
+        url: url
+      };
+      var canUseNativeShare = navigator.share && window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if (canUseNativeShare) {
+        navigator.share(payload).catch(function (err) {
+          if (!err || err.name === 'AbortError') return;
+          copyText(url).then(function () { showToast('Ссылка скопирована'); });
+        });
+        return;
+      }
+      copyText(url)
+        .then(function () { showToast('Ссылка скопирована'); })
+        .catch(function () { showToast('Не удалось скопировать ссылку'); });
+    }
+
+    function syncShareButtonVisibility() {
+      var button = popup.querySelector('[data-booking-share]');
+      var root = popup.querySelector('[data-course-booking-widget]');
+      if (!button) return;
+      var isVariantStep = !!(root && root.querySelector('.bbb-variant-grid'));
+      button.classList.toggle('is-hidden', !isVariantStep);
+    }
+
+    function observeWidgetStep(root) {
+      if (shareObserver) shareObserver.disconnect();
+      if (!root || !window.MutationObserver) {
+        syncShareButtonVisibility();
+        return;
+      }
+      shareObserver = new MutationObserver(syncShareButtonVisibility);
+      shareObserver.observe(root, { childList: true, subtree: true });
+      syncShareButtonVisibility();
+    }
+
+    function resetBookingDraftToVariant(root) {
+      try {
+        var slug = (root && root.dataset.courseSlug) || 'basic-barista';
+        var key = 'course-booking-draft-v1:' + slug + ':' + window.location.pathname;
+        var current = JSON.parse(window.localStorage.getItem(key) || 'null') || {};
+        window.localStorage.setItem(key, JSON.stringify({
+          savedAt: Date.now(),
+          step: 'variant',
+          variantId: '',
+          activeTrainer: null,
+          activeLesson: '1',
+          selectedDate: null,
+          cursor: '',
+          selected: {},
+          client: current.client || {}
+        }));
+      } catch (err) {
+        // localStorage может быть недоступен, виджет всё равно должен открыться.
+      }
+    }
+
+    function ensureWidgetScript() {
+      var root = popup.querySelector('[data-course-booking-widget]');
+      if (root) {
+        resetBookingDraftToVariant(root);
+        root.innerHTML = '';
+        observeWidgetStep(root);
+      }
+      var current = document.querySelector('script[data-course-booking-widget-script]');
+      if (current) current.parentNode.removeChild(current);
+
+      var urls = [
+        'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260611-stable',
+        'https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=basic-barista-variants-20260611-stable'
+      ];
+      var index = 0;
+
+      function failWidget() {
+        var root = popup.querySelector('[data-course-booking-widget]');
+        if (root) root.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
+      }
+
+      function loadNext() {
+        if (index >= urls.length) {
+          failWidget();
+          return;
+        }
+        var script = document.createElement('script');
+        var timer = setTimeout(function () {
+          script.onerror = null;
+          if (script.parentNode) script.parentNode.removeChild(script);
+          index += 1;
+          loadNext();
+        }, 3000);
+
+        script.src = urls[index];
+        script.async = true;
+        script.dataset.courseBookingWidgetScript = '1';
+        script.onload = function () {
+          clearTimeout(timer);
+        };
+        script.onerror = function () {
+          clearTimeout(timer);
+          index += 1;
+          loadNext();
+        };
+        document.body.appendChild(script);
+      }
+
+      loadNext();
+    }
+
+    function openPopup(event) {
+      if (event) event.preventDefault();
+      popup.classList.add('is-open');
+      popup.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-bc-booking-lock');
+      ensureWidgetScript();
+    }
+
+    function closePopup() {
+      popup.classList.remove('is-open');
+      popup.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('mbs-bc-booking-lock');
+    }
+
+    document.querySelectorAll('.mbs-bc-online-open').forEach(function (button) {
+      button.addEventListener('click', openPopup);
+    });
+    popup.querySelectorAll('[data-booking-share]').forEach(function (button) {
+      button.addEventListener('click', shareBookingLink);
+    });
+    popup.querySelectorAll('[data-booking-close]').forEach(function (item) {
+      item.addEventListener('click', function (event) {
+        if (event.target === item || event.target.hasAttribute('data-booking-close')) closePopup();
+      });
+    });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
+    });
+    try {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('online_booking') === '1') openPopup();
+    } catch (err) {}
+  })();
+</script>

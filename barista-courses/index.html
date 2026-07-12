@@ -64,6 +64,18 @@
     .hero__price-card + .hero__price-card { border-left: 1px solid var(--green-light); }
     .hero__price-card small { display: block; margin-bottom: 4px; color: #888; font-size: 12px; font-weight: 800; }
     .hero__price-card b { font-size: 20px; font-weight: 900; white-space: nowrap; }
+    .hero__promo { margin: -4px 0 18px; padding: 12px 16px; border-radius: 14px; background: #F8DDE1; color: var(--black); font-size: 14px; font-weight: 800; line-height: 1.4; }
+    .hero__promo strong { color: var(--red); font-weight: 900; }
+    .discount-info { position: relative; display: inline-flex; align-items: center; margin-left: 6px; vertical-align: -3px; }
+    .discount-info__toggle { width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: var(--red); color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    .discount-info__toggle svg { width: 14px; height: 14px; display: block; }
+    .discount-info__popup { position: absolute; left: 50%; bottom: calc(100% + 10px); z-index: 20; display: none; width: min(360px, calc(100vw - 40px)); padding: 14px 16px; border: 1px solid #EC98A7; border-radius: 14px; background: #fff; color: var(--gray); box-shadow: 0 16px 42px rgba(31,31,31,.18); transform: translateX(-50%); font-size: 14px; font-weight: 700; line-height: 1.45; }
+    .discount-info__popup::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 14px; height: 14px; background: #fff; border-right: 1px solid #EC98A7; border-bottom: 1px solid #EC98A7; transform: translateX(-50%) rotate(45deg); }
+    .discount-info.is-open .discount-info__popup { display: block; }
+    .discount-info__title { display: block; margin-bottom: 8px; color: var(--black); font-size: 15px; font-weight: 900; }
+    .discount-info__popup p { margin: 0; }
+    .discount-info__popup p + p { margin-top: 8px; }
+    .discount-info__code { color: var(--red); font-weight: 900; }
 
     .who { background: var(--bg); }
     .who__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -92,6 +104,8 @@
     .price__info { display: flex; flex-direction: column; padding: 36px; border-radius: 24px; background: var(--bg); }
     .price__facts { display: grid; gap: 10px; }
     .price__fact { padding: 16px 18px; border-radius: 16px; background: #fff; font-size: 15px; font-weight: 800; line-height: 1.35; }
+    .price__promo { margin-top: 10px; padding: 16px 18px; border-radius: 16px; background: #F8DDE1; color: var(--black); font-size: 14px; font-weight: 700; line-height: 1.45; }
+    .price__promo strong { color: var(--red); font-weight: 900; }
     .price__cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .price__card { display: flex; flex-direction: column; min-height: 430px; padding: 30px; border-radius: 24px; background: var(--bg); }
     .price__card--accent { background: var(--green-light); }
@@ -203,6 +217,7 @@
       .hero__media { min-height: 250px; height: 250px; border-radius: 16px; }
       .hero__price { grid-template-columns: 1fr; margin-bottom: 14px; }
       .hero__price-card + .hero__price-card { border-left: 0; border-top: 1px solid var(--green-light); }
+      .hero__promo { margin: -2px 0 14px; font-size: 13px; }
       .price__info, .price__card, .eq__intro, .eq__item { padding: 24px; }
       .eq__gallery { grid-template-columns: repeat(2, 1fr); }
       .price__value { font-size: 38px; }
@@ -236,6 +251,24 @@
             <div class="hero__price">
               <div class="hero__price-card"><small>Один участник</small><b>22 000 ₽</b></div>
               <div class="hero__price-card"><small>Вдвоём выгоднее</small><b>30 000 ₽</b></div>
+            </div>
+            <div class="hero__promo">
+              <strong>Скидка 10%</strong> школьникам и студентам до 31 августа 2026.
+              <span class="discount-info" data-discount-info>
+                <button class="discount-info__toggle" type="button" aria-label="Условия скидки" aria-expanded="false">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                    <path d="M12 10.8v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+                    <circle cx="12" cy="7.3" r="1.3" fill="currentColor"></circle>
+                  </svg>
+                </button>
+                <span class="discount-info__popup" role="tooltip">
+                  <span class="discount-info__title">Условия скидки</span>
+                  <p>Промокод: <span class="discount-info__code">СТУДЕНТ10</span>.</p>
+                  <p>Назовите промокод при записи и подтвердите статус школьника или студента.</p>
+                  <p>Скидка действует только на индивидуальные курсы бариста и не применяется задним числом.</p>
+                </span>
+              </span>
             </div>
             <div class="hero__actions">
               <a class="btn btn-primary" href="#consalt">Оставить заявку</a>
@@ -304,6 +337,24 @@
           <div class="price__facts">
             <div class="price__fact">3 дня по 3 часа или 1 день за 9 часов</div>
           </div>
+          <div class="price__promo">
+            <strong>Скидка 10%</strong> школьникам и студентам до 31 августа 2026.
+            <span class="discount-info" data-discount-info>
+              <button class="discount-info__toggle" type="button" aria-label="Условия скидки" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                  <path d="M12 10.8v6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></path>
+                  <circle cx="12" cy="7.3" r="1.3" fill="currentColor"></circle>
+                </svg>
+              </button>
+              <span class="discount-info__popup" role="tooltip">
+                <span class="discount-info__title">Условия скидки</span>
+                <p>Промокод: <span class="discount-info__code">СТУДЕНТ10</span>.</p>
+                <p>Назовите промокод при записи и подтвердите статус школьника или студента.</p>
+                <p>Скидка действует только на индивидуальные курсы бариста и не применяется задним числом.</p>
+              </span>
+            </span>
+          </div>
           <div class="price__actions">
             <a class="btn btn-primary online-booking-open" href="#online-booking">Онлайн запись</a>
             <a class="btn btn-secondary" href="#consalt">Оставить заявку</a>
@@ -348,6 +399,7 @@
           <details class="faq__item"><summary>Можно записаться вдвоём?</summary><div class="faq__body"><p class="faq__answer">Да. Есть формат для двух участников за 30 000 ₽. Вы занимаетесь вместе, проходите ту же программу и бронируете те же доступные слоты. Предоплата такая же — 5 000 ₽.</p></div></details>
           <details class="faq__item"><summary>Как забронировать место?</summary><div class="faq__body"><p class="faq__answer">Можно записаться онлайн: выбрать формат, тренера, даты и внести предоплату 5 000 ₽. Бронь держится 5 минут и закрепляется после предоплаты. Если не готовы выбирать время сразу, оставьте заявку.</p></div></details>
           <details class="faq__item"><summary>Когда оплачивается оставшаяся часть?</summary><div class="faq__body"><p class="faq__answer">Предоплата 5 000 ₽ вносится при бронировании. Остаток оплачивается на первом занятии: 17 000 ₽ для одного участника или 25 000 ₽ для формата на двоих.</p></div></details>
+          <details class="faq__item"><summary>Есть ли скидка для школьников и студентов?</summary><div class="faq__body"><p class="faq__answer">Да. Скидка 10% действует до 31 августа 2026 года только на индивидуальные курсы бариста. Чтобы применить скидку, назовите промокод СТУДЕНТ10 при записи и подтвердите статус школьника или студента. Скидка не применяется задним числом после оплаты или согласования стоимости.</p></div></details>
           <details class="faq__item"><summary>Что входит в стоимость?</summary><div class="faq__body"><p class="faq__answer">Практика на профессиональном оборудовании, зерно, молоко, продукты для напитков, работа с тренером и все материалы, которые нужны на занятиях.</p></div></details>
           <details class="faq__item"><summary>Что делать, если после курса захочется больше практики?</summary><div class="faq__body"><p class="faq__answer">Если после базового курса вы поймёте, что практики недостаточно, можно будет перейти на «Продвинутый курс бариста». Это ещё 3 дня по 3 часа с более глубокой отработкой навыков.</p></div></details>
           <details class="faq__item"><summary>Помогаете ли вы с трудоустройством?</summary><div class="faq__body"><p class="faq__answer">Мы не занимаемся трудоустройством напрямую, но к нам часто обращаются кофейни и проекты, которые готовы работать с нашими выпускниками. Когда есть подходящие предложения, мы делимся ими с выпускниками.</p></div></details>
@@ -368,7 +420,7 @@
       <div class="booking-popup__panel" role="dialog" aria-modal="true" aria-label="Онлайн запись на базовый курс бариста">
         <button class="booking-popup__share is-hidden" type="button" data-booking-share aria-label="Поделиться ссылкой" title="Поделиться"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.5 12.5 15.5 8.5M8.5 11.5l7 4M6.75 15.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 9.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 20.25a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <button class="booking-popup__close" type="button" data-booking-close aria-label="Закрыть">×</button>
-        <div data-course-booking-widget data-course-slug="basic-barista" data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json" data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
+        <div data-course-booking-widget data-course-slug="basic-barista" data-api-url="https://api.barista-school.ru/api/basic-barista-slots.json" data-fallback-api-url="https://159-194-202-120.sslip.io/api-fallback/api/basic-barista-slots.json" data-booking-url="https://api.barista-school.ru/api/barista-booking"></div>
       </div>
     </div>
     <div class="booking-popup__toast" id="online-booking-toast" aria-live="polite"></div>
@@ -479,15 +531,45 @@
         }
         var current = document.querySelector('script[data-course-booking-widget-script]');
         if (current) current.parentNode.removeChild(current);
-        var script = document.createElement('script');
-        script.src = 'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260527';
-        script.async = true;
-        script.dataset.courseBookingWidgetScript = '1';
-        script.onerror = function () {
+        var urls = [
+          'https://api.barista-school.ru/basic-barista-widget.js?v=basic-barista-variants-20260611-stable',
+          'https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=basic-barista-variants-20260611-stable'
+        ];
+        var index = 0;
+
+        function failWidget() {
           var root = popup.querySelector('[data-course-booking-widget]');
           if (root) root.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
-        };
-        document.body.appendChild(script);
+        }
+
+        function loadNext() {
+          if (index >= urls.length) {
+            failWidget();
+            return;
+          }
+          var script = document.createElement('script');
+          var timer = setTimeout(function () {
+            script.onerror = null;
+            if (script.parentNode) script.parentNode.removeChild(script);
+            index += 1;
+            loadNext();
+          }, 3000);
+
+          script.src = urls[index];
+          script.async = true;
+          script.dataset.courseBookingWidgetScript = '1';
+          script.onload = function () {
+            clearTimeout(timer);
+          };
+          script.onerror = function () {
+            clearTimeout(timer);
+            index += 1;
+            loadNext();
+          };
+          document.body.appendChild(script);
+        }
+
+        loadNext();
       }
       function openPopup(event) {
         if (event) event.preventDefault();
@@ -519,6 +601,40 @@
         var params = new URLSearchParams(window.location.search);
         if (params.get('online_booking') === '1') openPopup();
       } catch (err) {}
+    })();
+  </script>
+  <script>
+    (function () {
+      function closeInfo(info) {
+        var button = info.querySelector('.discount-info__toggle');
+        info.classList.remove('is-open');
+        if (button) button.setAttribute('aria-expanded', 'false');
+      }
+
+      document.querySelectorAll('[data-discount-info]').forEach(function (info) {
+        var button = info.querySelector('.discount-info__toggle');
+        if (!button || info.dataset.discountBound === 'true') return;
+        info.dataset.discountBound = 'true';
+        button.addEventListener('click', function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          var shouldOpen = !info.classList.contains('is-open');
+          document.querySelectorAll('[data-discount-info].is-open').forEach(closeInfo);
+          info.classList.toggle('is-open', shouldOpen);
+          button.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+        });
+      });
+
+      document.addEventListener('click', function (event) {
+        document.querySelectorAll('[data-discount-info].is-open').forEach(function (info) {
+          if (!info.contains(event.target)) closeInfo(info);
+        });
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Escape') return;
+        document.querySelectorAll('[data-discount-info].is-open').forEach(closeInfo);
+      });
     })();
   </script>
   <script>

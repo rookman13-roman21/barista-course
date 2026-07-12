@@ -1,0 +1,769 @@
+<script>
+(function () {
+  var root = document.getElementById('mbs-homebrew-widget');
+  if (!root) return;
+
+  var apiUrl = root.getAttribute('data-api-url');
+  var fallbackApiUrl = root.getAttribute('data-fallback-api-url') || '';
+  if (!apiUrl) {
+    root.innerHTML = '<div class="mbs-hb-empty">Расписание временно недоступно.</div>';
+    return;
+  }
+  var apiUrls = [apiUrl];
+  if (fallbackApiUrl && fallbackApiUrl !== apiUrl) apiUrls.push(fallbackApiUrl);
+
+  function fetchWithTimeout(url, options, ms) {
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var timer = setTimeout(function () {
+        if (done) return;
+        done = true;
+        reject(new Error('timeout'));
+      }, ms || 4500);
+
+      fetch(url, options || {}).then(function (resp) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resolve(resp);
+      }, function (err) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
+  }
+
+  function cacheBustedUrl(value) {
+    var url = new URL(value, window.location.href);
+    url.searchParams.set('_', String(Date.now()));
+    return url.toString();
+  }
+
+  function fetchJsonFromUrls(urls, options) {
+    function tryOne(index) {
+      return fetchWithTimeout(cacheBustedUrl(urls[index]), options || { method: 'GET' }, 4500)
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .catch(function (err) {
+          if (index + 1 < urls.length) return tryOne(index + 1);
+          throw err;
+        });
+    }
+    return tryOne(0);
+  }
+
+  function esc(t) {
+    return String(t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function getSafeBookingUrl(value) {
+    if (!value) return '';
+    try {
+      var url = new URL(String(value), window.location.href);
+      if (url.protocol !== 'https:') return '';
+      var host = url.hostname.toLowerCase();
+      var bookingHost = ['yc', 'lients', '.com'].join('');
+      if (host === bookingHost || host.endsWith('.' + bookingHost)) return url.toString();
+      return '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  var MONTH_SHORT = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+  function monthShort(dateStr) {
+    if (!dateStr) return '';
+    var parts = dateStr.split('-');
+    var m = parseInt(parts[1], 10);
+    return MONTH_SHORT[m - 1] || '';
+  }
+
+  var chevronSvg = '<svg class="mbs-hb-collapsed-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 8 10 13 15 8"></polyline></svg>';
+
+  var carouselArrowLeft = '<svg viewBox="0 0 20 20"><polyline points="13 4 7 10 13 16"/></svg>';
+  var carouselArrowRight = '<svg viewBox="0 0 20 20"><polyline points="7 4 13 10 7 16"/></svg>';
+
+  var carouselId = 0;
+
+  /**
+   * Собирает массив валидных URL-картинок из ev.images (приоритет) или ev.image_url.
+   */
+  function safeImgUrl(value) {
+    if (!value) return '';
+    try {
+      var url = new URL(String(value).trim(), window.location.href);
+      if (url.protocol !== 'https:' && url.protocol !== 'http:') return '';
+      return url.href;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function collectImages(ev) {
+    var fallbackImg = 'https://static.tildacdn.com/tild3831-6164-4262-a163-666362353163/0D1A4116_resized.jpg';
+    var imgs = [];
+    if (ev.images && ev.images.length) {
+      for (var i = 0; i < ev.images.length; i++) {
+        var u = safeImgUrl((ev.images[i] || '').trim());
+        if (u) imgs.push(u);
+      }
+    }
+    if (!imgs.length && ev.image_url) {
+      var safe = safeImgUrl(ev.image_url);
+      if (safe) imgs.push(safe);
+    }
+    if (!imgs.length) imgs.push(fallbackImg);
+    return imgs;
+  }
+
+  /**
+   * HTML для зоны изображений в доступной карточке.
+   * 1 фото → обычный img; 2-3 фото → карусель.
+   */
+  function buildCardImageArea(ev, formatBadge, seatsBadgeHtml) {
+    var fallbackImg = 'https://static.tildacdn.com/tild3831-6164-4262-a163-666362353163/0D1A4116_resized.jpg';
+    var imgs = collectImages(ev);
+    if (imgs.length <= 1) {
+      return '<img src="' + esc(imgs[0]) + '" alt="' + esc(ev.title) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + esc(fallbackImg) + '\'">' +
+        formatBadge + seatsBadgeHtml;
+    }
+    var cid = 'mbs-hb-cr-' + (++carouselId);
+    var slides = '';
+    for (var i = 0; i < imgs.length; i++) {
+      slides += '<div class="mbs-hb-carousel-slide"><img src="' + esc(imgs[i]) + '" alt="' + esc(ev.title) + ' ' + (i+1) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + esc(fallbackImg) + '\'"></div>';
+    }
+    var dots = '';
+    for (var d = 0; d < imgs.length; d++) {
+      dots += '<button class="mbs-hb-carousel-dot' + (d === 0 ? ' active' : '') + '" data-idx="' + d + '" aria-label="Фото ' + (d+1) + '"></button>';
+    }
+    return '<div class="mbs-hb-carousel" data-carousel-id="' + cid + '" data-total="' + imgs.length + '">' +
+      '<div class="mbs-hb-carousel-track">' + slides + '</div>' +
+      '<button class="mbs-hb-carousel-arrow mbs-hb-carousel-prev" aria-label="Назад">' + carouselArrowLeft + '</button>' +
+      '<button class="mbs-hb-carousel-arrow mbs-hb-carousel-next" aria-label="Вперёд">' + carouselArrowRight + '</button>' +
+      '<div class="mbs-hb-carousel-dots">' + dots + '</div>' +
+    '</div>' +
+    formatBadge + seatsBadgeHtml;
+  }
+
+  /**
+   * HTML для зоны изображений в collapsed-карточке.
+   * 1 фото → обычный img; 2-3 → мини-карусель.
+   */
+  function buildCollapsedImageArea(ev) {
+    var fallbackImg = 'https://static.tildacdn.com/tild3831-6164-4262-a163-666362353163/0D1A4116_resized.jpg';
+    var imgs = collectImages(ev);
+    if (imgs.length <= 1 && imgs[0] === fallbackImg && !ev.image_url) return '';
+    if (imgs.length <= 1) {
+      return '<div class="mbs-hb-collapsed-img"><img src="' + esc(imgs[0]) + '" alt="' + esc(ev.title) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + esc(fallbackImg) + '\'"></div>';
+    }
+    var cid = 'mbs-hb-cr-' + (++carouselId);
+    var slides = '';
+    for (var i = 0; i < imgs.length; i++) {
+      slides += '<div class="mbs-hb-carousel-slide"><img src="' + esc(imgs[i]) + '" alt="' + esc(ev.title) + ' ' + (i+1) + '" loading="lazy" onerror="this.onerror=null;this.src=\'' + esc(fallbackImg) + '\'"></div>';
+    }
+    var dots = '';
+    for (var d = 0; d < imgs.length; d++) {
+      dots += '<button class="mbs-hb-carousel-dot' + (d === 0 ? ' active' : '') + '" data-idx="' + d + '" aria-label="Фото ' + (d+1) + '"></button>';
+    }
+    return '<div class="mbs-hb-collapsed-carousel" data-carousel-id="' + cid + '" data-total="' + imgs.length + '">' +
+      '<div class="mbs-hb-carousel-track">' + slides + '</div>' +
+      '<button class="mbs-hb-carousel-arrow mbs-hb-carousel-prev" aria-label="Назад">' + carouselArrowLeft + '</button>' +
+      '<button class="mbs-hb-carousel-arrow mbs-hb-carousel-next" aria-label="Вперёд">' + carouselArrowRight + '</button>' +
+      '<div class="mbs-hb-carousel-dots">' + dots + '</div>' +
+    '</div>';
+  }
+
+  /**
+   * Инициализирует одну карусель (стрелки, точки, touch-swipe, микро-анимация).
+   */
+  function initOneCarousel(wrap) {
+    if (wrap.getAttribute('data-carousel-init')) return; /* уже инициализирована */
+    wrap.setAttribute('data-carousel-init', '1');
+
+    var track = wrap.querySelector('.mbs-hb-carousel-track');
+    var dots = wrap.querySelectorAll('.mbs-hb-carousel-dot');
+    var prevBtn = wrap.querySelector('.mbs-hb-carousel-prev');
+    var nextBtn = wrap.querySelector('.mbs-hb-carousel-next');
+    var total = parseInt(wrap.getAttribute('data-total'), 10);
+    var current = 0;
+
+    function goTo(idx) {
+      if (idx < 0) idx = total - 1;
+      if (idx >= total) idx = 0;
+      current = idx;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      for (var d = 0; d < dots.length; d++) {
+        dots[d].classList.toggle('active', d === current);
+      }
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo(current + 1); });
+    for (var d = 0; d < dots.length; d++) {
+      (function (dot) {
+        dot.addEventListener('click', function (e) {
+          e.stopPropagation();
+          goTo(parseInt(dot.getAttribute('data-idx'), 10));
+        });
+      })(dots[d]);
+    }
+
+    /* Touch-swipe */
+    var startX = 0, startY = 0, isDragging = false, dx = 0, isHorizontal = null;
+    wrap.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+      isHorizontal = null;
+      dx = 0;
+      track.classList.add('dragging');
+    }, { passive: true });
+
+    wrap.addEventListener('touchmove', function (e) {
+      if (!isDragging) return;
+      dx = e.touches[0].clientX - startX;
+      var dy = e.touches[0].clientY - startY;
+      if (isHorizontal === null) {
+        isHorizontal = Math.abs(dx) > Math.abs(dy);
+      }
+      if (isHorizontal) {
+        e.preventDefault();
+        var pct = -(current * 100) + (dx / wrap.offsetWidth * 100);
+        track.style.transform = 'translateX(' + pct + '%)';
+      }
+    }, { passive: false });
+
+    wrap.addEventListener('touchend', function () {
+      track.classList.remove('dragging');
+      if (!isDragging) return;
+      isDragging = false;
+      if (!isHorizontal) { goTo(current); return; }
+      var threshold = wrap.offsetWidth * 0.2;
+      if (dx < -threshold) goTo(current + 1);
+      else if (dx > threshold) goTo(current - 1);
+      else goTo(current);
+    }, { passive: true });
+
+    wrap.addEventListener('touchcancel', function () {
+      track.classList.remove('dragging');
+      isDragging = false;
+      goTo(current);
+    }, { passive: true });
+  }
+
+  /**
+   * Инициализация каруселей: только НЕ внутри collapsed-body (lazy init для collapsed).
+   */
+  function initCarousels() {
+    var wrappers = root.querySelectorAll('[data-carousel-id]');
+    for (var w = 0; w < wrappers.length; w++) {
+      /* Пропускаем карусели внутри collapsed-body — они будут lazy-init при открытии */
+      if (wrappers[w].closest('.mbs-hb-collapsed-body')) continue;
+      initOneCarousel(wrappers[w]);
+    }
+  }
+
+  function formatDuration(minutes) {
+    if (!minutes) return '';
+    var h = Math.floor(minutes / 60);
+    var m = minutes % 60;
+    if (h > 0 && m > 0) return h + ',' + (m < 10 ? '0' : '') + m + ' ч';
+    if (h > 0) return h + ' ч';
+    return m + ' мин';
+  }
+
+  function formatPrice(price) {
+    if (!price && price !== 0) return '';
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
+  }
+
+  function pluralize(n, one, few, many) {
+    var abs = Math.abs(n) % 100;
+    var n1 = abs % 10;
+    if (abs > 10 && abs < 20) return many;
+    if (n1 > 1 && n1 < 5) return few;
+    if (n1 === 1) return one;
+    return many;
+  }
+
+  function formatCountdown(dateStr) {
+    if (!dateStr) return '';
+    var parts = dateStr.split('-');
+    var evDate = new Date(parseInt(parts[0],10), parseInt(parts[1],10)-1, parseInt(parts[2],10));
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var diff = Math.round((evDate - today) / 86400000);
+    if (diff < 0) return '';
+    if (diff === 0) return '<span class="mbs-hb-countdown today">Сегодня</span>';
+    if (diff === 1) return '<span class="mbs-hb-countdown soon">Завтра</span>';
+    if (diff <= 3) return '<span class="mbs-hb-countdown soon">Через ' + diff + ' ' + pluralize(diff, 'день', 'дня', 'дней') + '</span>';
+    if (diff <= 7) return '<span class="mbs-hb-countdown">Через ' + diff + ' ' + pluralize(diff, 'день', 'дня', 'дней') + '</span>';
+    return '';
+  }
+
+  /* ——— Render available card ——— */
+  function renderCard(ev) {
+    var fallbackImg = 'https://static.tildacdn.com/tild3831-6164-4262-a163-666362353163/0D1A4116_resized.jpg';
+
+    /* Format badge */
+    var formatBadge = '';
+    if (ev.event_format === 'webinar') {
+      formatBadge = '<span class="mbs-hb-format-badge">Вебинар</span>';
+    } else {
+      formatBadge = '<span class="mbs-hb-format-badge">Офлайн</span>';
+    }
+
+    /* Seats badge */
+    var seatsBadgeHtml = '';
+    if (ev.seats_total > 0 && ev.is_available) {
+      var lowSeats = ev.seats_total > 0 && (ev.seats_free / ev.seats_total) <= 0.2;
+      var seatsCls = lowSeats ? 'low' : 'available';
+      seatsBadgeHtml = '<span class="mbs-hb-seats-badge ' + seatsCls + '">' + esc(ev.seats_free) + ' из ' + esc(ev.seats_total) + '</span>';
+    } else if (!ev.is_available) {
+      seatsBadgeHtml = '<span class="mbs-hb-seats-badge soldout">Мест нет</span>';
+    }
+
+    /* Image area (single image or carousel) */
+    var imageAreaHtml = buildCardImageArea(ev, formatBadge, seatsBadgeHtml);
+
+    /* Topic block */
+    var topicHtml = '';
+    var isPendingTopic = !ev.topic || /скоро здесь появится/i.test(ev.topic) || /уточняется/i.test(ev.topic);
+    if (ev.topic && !isPendingTopic) {
+      var descHtml = ev.description
+        ? '<span class="mbs-hb-topic-desc">' + esc(ev.description) + '</span>'
+        : '';
+      topicHtml = '<div class="mbs-hb-topic">' +
+        '<span class="mbs-hb-topic-icon">☕</span>' +
+        '<div class="mbs-hb-topic-info">' +
+          '<span class="mbs-hb-topic-label">Тема мастер-класса</span>' +
+          '<span class="mbs-hb-topic-name">' + esc(ev.topic) + '</span>' +
+          descHtml +
+        '</div>' +
+      '</div>';
+    } else {
+      topicHtml = '';
+    }
+
+    /* Meta */
+    var metaHtml = '';
+    var metaItems = '';
+    var dur = formatDuration(ev.duration_minutes);
+    var prc = formatPrice(ev.price);
+    if (dur) metaItems += '<span class="mbs-hb-meta-item"><span class="mbs-hb-meta-icon">⏱</span> ' + dur + '</span>';
+    if (prc) metaItems += '<span class="mbs-hb-meta-item">' + prc + '</span>';
+    if (ev.event_format === 'webinar') {
+      metaItems += '<span class="mbs-hb-meta-item"><span class="mbs-hb-meta-format online">💻 Онлайн</span></span>';
+    }
+    if (metaItems) metaHtml = '<div class="mbs-hb-meta">' + metaItems + '</div>';
+
+    /* Seats */
+    var seatsHtml = '';
+    if (ev.seats_total > 0 && ev.is_available) {
+      var freeWord = pluralize(ev.seats_free, 'место', 'места', 'мест');
+      var lowSeatsText = ev.seats_total > 0 && (ev.seats_free / ev.seats_total) <= 0.2;
+      seatsHtml = '<div class="mbs-hb-seats"' + (lowSeatsText ? ' style="color:var(--danger);font-weight:600"' : '') + '>Свободно <strong>' + esc(ev.seats_free) + '</strong> ' + freeWord + ' из ' + esc(ev.seats_total) + '</div>';
+    } else if (!ev.is_available) {
+      seatsHtml = '<div class="mbs-hb-seats">Все места заняты</div>';
+    }
+
+    /* Button */
+    var bookUrl = getSafeBookingUrl(ev.booking_url);
+    var btnHtml = '';
+    if (ev.is_available && bookUrl) {
+      btnHtml = '<a class="mbs-hb-btn" href="' + esc(bookUrl) + '" target="_blank" rel="noopener">Записаться онлайн</a>';
+    } else if (!ev.is_available) {
+      btnHtml = '<a class="mbs-hb-btn mbs-hb-btn-waiting" href="#waiting_list">Лист ожидания</a>';
+    }
+
+    /* Trainer */
+    var trainerHtml = '';
+    if (ev.trainer_name) {
+      var avatarTag = ev.trainer_avatar
+        ? '<img class="mbs-hb-trainer-avatar" src="' + esc(ev.trainer_avatar) + '" alt="' + esc(ev.trainer_name) + '" loading="lazy">'
+        : '';
+      trainerHtml = '<div class="mbs-hb-trainer">' +
+        avatarTag +
+        '<div class="mbs-hb-trainer-info">' +
+          '<span class="mbs-hb-trainer-role">Преподаватель</span>' +
+          '<span class="mbs-hb-trainer-name">' + esc(ev.trainer_name) + '</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var mShort = monthShort(ev.date);
+
+    return '' +
+      '<article class="mbs-hb-card">' +
+        '<div class="mbs-hb-img-wrap">' +
+          imageAreaHtml +
+        '</div>' +
+        '<div class="mbs-hb-body">' +
+          '<time class="mbs-hb-date-row" datetime="' + esc(ev.date) + (ev.time ? 'T' + ev.time.replace(/[^0-9:]/g,'') : '') + '">' +
+            '<div class="mbs-hb-day-block">' +
+              '<span class="mbs-hb-day-num">' + esc(ev.day_num) + '</span>' +
+              '<span class="mbs-hb-day-wd">' + esc(mShort) + '</span>' +
+            '</div>' +
+            '<div class="mbs-hb-time-info">' +
+              '<span class="mbs-hb-time">' + esc(ev.time) + '</span>' +
+              '<span class="mbs-hb-weekday">' + esc(ev.weekday) + '</span>' +
+              formatCountdown(ev.date) +
+            '</div>' +
+          '</time>' +
+          '<h3 class="mbs-hb-title">' + esc(ev.title) + '</h3>' +
+          topicHtml +
+          metaHtml +
+          trainerHtml +
+          '<div class="mbs-hb-action">' +
+            seatsHtml +
+            btnHtml +
+          '</div>' +
+        '</div>' +
+      '</article>';
+  }
+
+  /* ——— Render collapsed (sold-out) card ——— */
+  function renderCollapsedCard(ev) {
+    var topicHtml = '';
+    var isPendingTopic = !ev.topic || /скоро здесь появится/i.test(ev.topic) || /уточняется/i.test(ev.topic);
+    if (ev.topic && !isPendingTopic) {
+      var descHtml = ev.description
+        ? '<span class="mbs-hb-topic-desc">' + esc(ev.description) + '</span>'
+        : '';
+      topicHtml = '<div class="mbs-hb-topic">' +
+        '<span class="mbs-hb-topic-icon">☕</span>' +
+        '<div class="mbs-hb-topic-info">' +
+          '<span class="mbs-hb-topic-label">Тема мастер-класса</span>' +
+          '<span class="mbs-hb-topic-name">' + esc(ev.topic) + '</span>' +
+          descHtml +
+        '</div>' +
+      '</div>';
+    } else {
+      topicHtml = '';
+    }
+
+    var metaHtml = '';
+    var metaItems = '';
+    var dur = formatDuration(ev.duration_minutes);
+    var prc = formatPrice(ev.price);
+    if (dur) metaItems += '<span class="mbs-hb-meta-item"><span class="mbs-hb-meta-icon">⏱</span> ' + dur + '</span>';
+    if (prc) metaItems += '<span class="mbs-hb-meta-item">' + prc + '</span>';
+    if (ev.event_format === 'webinar') {
+      metaItems += '<span class="mbs-hb-meta-item"><span class="mbs-hb-meta-format online">💻 Онлайн</span></span>';
+    }
+    if (metaItems) metaHtml = '<div class="mbs-hb-meta">' + metaItems + '</div>';
+
+    var fallbackImg = 'https://static.tildacdn.com/tild3831-6164-4262-a163-666362353163/0D1A4116_resized.jpg';
+    var imgHtml = buildCollapsedImageArea(ev);
+
+    var trainerHtml = '';
+    if (ev.trainer_name) {
+      var avatarTag = ev.trainer_avatar
+        ? '<img class="mbs-hb-trainer-avatar" src="' + esc(ev.trainer_avatar) + '" alt="' + esc(ev.trainer_name) + '" loading="lazy">'
+        : '';
+      trainerHtml = '<div class="mbs-hb-trainer">' +
+        avatarTag +
+        '<div class="mbs-hb-trainer-info">' +
+          '<span class="mbs-hb-trainer-role">Преподаватель</span>' +
+          '<span class="mbs-hb-trainer-name">' + esc(ev.trainer_name) + '</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var mShort = monthShort(ev.date);
+    var subtitleText = (ev.topic && !isPendingTopic) ? ' · ' + esc(ev.topic) : '';
+
+    return '' +
+      '<article class="mbs-hb-card collapsed" role="button" tabindex="0" aria-expanded="false">' +
+        '<div class="mbs-hb-collapsed-row">' +
+          '<div class="mbs-hb-collapsed-left">' +
+            '<div class="mbs-hb-collapsed-day">' +
+              '<span class="mbs-hb-collapsed-day-num">' + esc(ev.day_num) + '</span>' +
+              '<span class="mbs-hb-collapsed-day-wd">' + esc(mShort) + '</span>' +
+            '</div>' +
+            '<div class="mbs-hb-collapsed-info">' +
+              '<span class="mbs-hb-collapsed-title">' + esc(ev.title) + subtitleText + '</span>' +
+              '<span class="mbs-hb-collapsed-time">' + esc(ev.time) + ' · ' + esc(ev.weekday) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="mbs-hb-collapsed-right">' +
+            '<span class="mbs-hb-collapsed-badge">Мест нет</span>' +
+            chevronSvg +
+          '</div>' +
+        '</div>' +
+        '<div class="mbs-hb-collapsed-body">' +
+          '<div class="mbs-hb-collapsed-body-inner">' +
+            imgHtml +
+            '<div class="mbs-hb-collapsed-content">' +
+              topicHtml +
+              metaHtml +
+              trainerHtml +
+              '<div class="mbs-hb-soldout-banner">Все места заняты</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</article>';
+  }
+
+  /* ——— Collapsed-card toggle + lazy carousel init ——— */
+  function initCollapsedToggle(container) {
+    var collapsedCards = container.querySelectorAll('.mbs-hb-card.collapsed');
+    for (var c = 0; c < collapsedCards.length; c++) {
+      (function (card) {
+        function toggleCard(e) {
+          if (e && e.target.closest && (e.target.closest('a') || e.target.closest('.mbs-hb-carousel-arrow') || e.target.closest('.mbs-hb-carousel-dot'))) return;
+          var isOpen = card.classList.toggle('open');
+          card.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          if (isOpen) {
+            var lazyCarousels = card.querySelectorAll('[data-carousel-id]:not([data-carousel-init])');
+            for (var lc = 0; lc < lazyCarousels.length; lc++) initOneCarousel(lazyCarousels[lc]);
+          }
+        }
+        card.addEventListener('click', toggleCard);
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCard(e); }
+        });
+      })(collapsedCards[c]);
+    }
+  }
+
+  /* ——— iOS touch fix helper ——— */
+  function initTouchFix(container) {
+    var btns = container.querySelectorAll('.mbs-hb-btn:not(.disabled)');
+    for (var b = 0; b < btns.length; b++) {
+      (function (btn) {
+        btn.addEventListener('touchstart', function () { btn.classList.add('mbs-hb-btn-pressed'); }, { passive: true });
+        btn.addEventListener('touchend', function () { setTimeout(function () { btn.classList.remove('mbs-hb-btn-pressed'); }, 120); }, { passive: true });
+        btn.addEventListener('touchcancel', function () { btn.classList.remove('mbs-hb-btn-pressed'); }, { passive: true });
+        btn.addEventListener('blur', function () { btn.classList.remove('mbs-hb-btn-pressed'); });
+      })(btns[b]);
+    }
+  }
+
+  /* ——— Render all ——— */
+  function render(events) {
+    carouselId = 0;
+    if (!events || !events.length) {
+      root.innerHTML = '<div class="mbs-hb-empty">Сейчас нет запланированных мастер-классов «Домашнее заваривание».' +
+        '<br><a class="mbs-hb-consalt-link" href="#consalt">Оставить заявку</a></div>';
+      return;
+    }
+
+    /* ── Share кнопка ── */
+    var shareSvg = '<svg class="mbs-hb-share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+    var shareHtml = '<button class="mbs-hb-share" id="mbs-hb-share-btn">' + shareSvg + 'Поделиться расписанием</button>';
+
+    /* ── Плоский список: доступные сверху, sold-out снизу ── */
+    var avail = events.filter(function (ev) { return ev.is_available; });
+    var soldOut = events.filter(function (ev) { return !ev.is_available; });
+
+    var sectionsHtml = '';
+    if (avail.length) {
+      sectionsHtml += '<div class="mbs-hb-grid">';
+      avail.forEach(function (ev) { sectionsHtml += renderCard(ev); });
+      sectionsHtml += '</div>';
+    }
+
+    if (soldOut.length) {
+      sectionsHtml += '<div class="mbs-hb-soldout-section">';
+      sectionsHtml += '<p class="mbs-hb-soldout-heading">Запись закрыта</p>';
+      sectionsHtml += '<div class="mbs-hb-soldout-list">';
+      soldOut.forEach(function (ev) { sectionsHtml += renderCollapsedCard(ev); });
+      sectionsHtml += '</div></div>';
+    }
+
+    if (avail.length === 0) {
+      sectionsHtml += '<div class="mbs-hb-waiting-global">' +
+        '<a class="mbs-hb-btn mbs-hb-btn-waiting mbs-hb-btn-global" href="#waiting_list">Лист ожидания</a>' +
+      '</div>';
+    }
+
+    /* ── Кнопка наверх ── */
+    var toTopHtml = '<button class="mbs-hb-totop" id="mbs-hb-totop" aria-label="Наверх">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>' +
+    '</button>';
+
+    /* ── Schema.org (SEO) — Google + Яндекс rich snippets ── */
+    var schemaEvents = events.map(function (ev) {
+      var schema = {
+        '@type': 'Event',
+        'name': ev.title || 'Домашнее заваривание',
+        'startDate': ev.date + (ev.time ? 'T' + ev.time.replace(/[^0-9:]/g,'') : ''),
+        'eventAttendanceMode': ev.event_format === 'webinar'
+          ? 'https://schema.org/OnlineEventAttendanceMode'
+          : 'https://schema.org/OfflineEventAttendanceMode',
+        'eventStatus': 'https://schema.org/EventScheduled',
+        'organizer': { '@type': 'Organization', 'name': 'Московская школа бариста', 'url': 'https://baristaschool.ru' }
+      };
+      if (ev.event_format !== 'webinar') {
+        schema['location'] = { '@type': 'Place', 'name': 'Московская школа бариста', 'address': { '@type': 'PostalAddress', 'addressLocality': 'Москва', 'addressCountry': 'RU' } };
+      } else {
+        schema['location'] = { '@type': 'VirtualLocation', 'url': ev.booking_url || 'https://baristaschool.ru' };
+      }
+      if (ev.description) schema['description'] = ev.description;
+      if (ev.images && ev.images.length) schema['image'] = ev.images[0];
+      else if (ev.image_url) schema['image'] = ev.image_url;
+      if (ev.price) schema['offers'] = { '@type': 'Offer', 'price': ev.price, 'priceCurrency': 'RUB', 'url': ev.booking_url || 'https://baristaschool.ru', 'availability': ev.is_available ? 'https://schema.org/InStock' : 'https://schema.org/SoldOut' };
+      if (ev.trainer_name) schema['performer'] = { '@type': 'Person', 'name': ev.trainer_name };
+      return schema;
+    });
+    var ldJson = { '@context': 'https://schema.org', '@graph': schemaEvents };
+    var existingLd = document.getElementById('mbs-hb-schema');
+    if (existingLd) existingLd.remove();
+    var scriptTag = document.createElement('script');
+    scriptTag.type = 'application/ld+json';
+    scriptTag.id = 'mbs-hb-schema';
+    scriptTag.textContent = JSON.stringify(ldJson);
+    document.head.appendChild(scriptTag);
+
+    /* ── Вставляем HTML ── */
+    var h2Html = '<h2 class="mbs-hb-heading" style="font-size:0;height:0;margin:0;padding:0;overflow:hidden;position:absolute">Расписание мастер-класса «Домашнее заваривание» — Московская школа бариста</h2>';
+    root.innerHTML = h2Html + '<div style="display:flex;justify-content:flex-end;margin-bottom:12px">' + shareHtml + '</div>' +
+      sectionsHtml + toTopHtml;
+
+    /* ── Init carousels (non-collapsed) ── */
+    initCarousels();
+
+    /* ── Collapsed card toggle ── */
+    initCollapsedToggle(root);
+
+    /* ── Share button ── */
+    var shareBtn = document.getElementById('mbs-hb-share-btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function () {
+        var url = window.location.href.split('#')[0] + '#mbs-homebrew-widget';
+        var shareText = 'Расписание мастер-класса «Домашнее заваривание» — Московская школа бариста\n' + url;
+        function onCopied() {
+          shareBtn.classList.add('copied');
+          shareBtn.innerHTML = shareSvg + 'Ссылка скопирована!';
+          setTimeout(function () {
+            shareBtn.classList.remove('copied');
+            shareBtn.innerHTML = shareSvg + 'Поделиться расписанием';
+          }, 2000);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(shareText).then(onCopied);
+        } else {
+          var ta = document.createElement('textarea');
+          ta.value = shareText;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          onCopied();
+        }
+      });
+    }
+
+
+
+
+
+    /* ── Touch fix ── */
+    initTouchFix(root);
+
+    /* ── Scroll to top ── */
+    var toTopBtn = document.getElementById('mbs-hb-totop');
+    if (toTopBtn) {
+      var ticking = false;
+      function checkToTop() {
+        var rect = root.getBoundingClientRect();
+        toTopBtn.classList.toggle('visible', rect.top < -400);
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () {
+        if (!ticking) { ticking = true; requestAnimationFrame(checkToTop); }
+      }, { passive: true });
+      toTopBtn.addEventListener('click', function () {
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }
+
+  /* ——— Skeleton ——— */
+  function showSkeleton() {
+    var s = '<div class="mbs-hb-skeleton">';
+    for (var j = 0; j < 2; j++) {
+      s += '<div class="mbs-hb-skeleton-card">' +
+        '<div class="mbs-hb-skeleton-img"></div>' +
+        '<div class="mbs-hb-skeleton-body">' +
+          '<div class="mbs-hb-skeleton-line w60 h20"></div>' +
+          '<div class="mbs-hb-skeleton-line w80"></div>' +
+          '<div class="mbs-hb-skeleton-line w40"></div>' +
+          '<div class="mbs-hb-skeleton-line w60"></div>' +
+        '</div>' +
+      '</div>';
+    }
+    s += '</div>';
+    root.innerHTML = s;
+  }
+  showSkeleton();
+
+  /* ——— Cache ——— */
+  var CACHE_KEY = 'mbs_hb_data';
+  var CACHE_TTL = 5 * 60 * 1000;
+
+  function loadFromCache() {
+    try {
+      var raw = sessionStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      var cached = JSON.parse(raw);
+      if (Date.now() - cached.ts > CACHE_TTL) { sessionStorage.removeItem(CACHE_KEY); return null; }
+      return cached.data;
+    } catch (e) { return null; }
+  }
+
+  function saveToCache(data) {
+    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+  }
+
+  var retrySvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>';
+
+  function showError() {
+    root.innerHTML = '<div class="mbs-hb-empty">' +
+      'Не удалось загрузить расписание мастер-классов «Домашнее заваривание»' +
+      '<br><button class="mbs-hb-retry" id="mbs-hb-retry-btn">' + retrySvg + 'Попробовать снова</button>' +
+      '<br><a class="mbs-hb-consalt-link" href="#consalt">Оставить заявку</a>' +
+    '</div>';
+    var retryBtn = document.getElementById('mbs-hb-retry-btn');
+    if (retryBtn) retryBtn.addEventListener('click', loadData);
+  }
+
+  function loadData() {
+    var cached = loadFromCache();
+    if (cached) {
+      /* stale-while-revalidate: render cached immediately, fetch in background */
+      render(cached.events || []);
+      fetchJsonFromUrls(apiUrls, { method: 'GET' })
+        .then(function (fresh) {
+          var oldJson = JSON.stringify(cached);
+          var newJson = JSON.stringify(fresh);
+          saveToCache(fresh);
+          if (oldJson !== newJson) render(fresh.events || []);
+        })
+        .catch(function () { /* silently keep stale data */ });
+    } else {
+      showSkeleton();
+      fetchJsonFromUrls(apiUrls, { method: 'GET' })
+        .then(function (data) { saveToCache(data); render(data.events || []); })
+        .catch(function (err) {
+          console.error('Homebrew widget error:', err);
+          showError();
+        });
+    }
+  }
+  loadData();
+
+  /* Auto-refresh every 5 minutes (silent background update) */
+  setInterval(function () {
+    /* Only refresh if tab is visible */
+    if (!document.hidden) loadData();
+  }, 5 * 60 * 1000);
+})();
+</script>

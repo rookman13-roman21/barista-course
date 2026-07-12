@@ -1,0 +1,2761 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Платформа для открытия кофейни — финмодель, бюджет и меню | MBS*</title>
+  <meta name="description" content="MBS* Coffee Menu — платформа для расчёта открытия кофейни: бюджет запуска, план продаж, рецепты, поставщики, финмодель и 1 час консультации. Доступ 18 900 ₽.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://baristaschool.ru/open_cafe_app">
+  <meta name="theme-color" content="#417033">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Московская школа бариста">
+  <meta property="og:title" content="Платформа для открытия кофейни — MBS* Coffee Menu">
+  <meta property="og:description" content="Посчитайте бюджет запуска, продажи, средний чек, рецепты, поставщиков, прибыль и окупаемость до аренды и закупок. Доступ 18 900 ₽ + консультация.">
+  <meta property="og:url" content="https://baristaschool.ru/open_cafe_app">
+  <meta property="og:image" content="https://static.tildacdn.com/tild3933-6461-4765-b262-333364386362/__2026-06-24_121453.png">
+  <meta property="og:image:alt" content="Интерфейс финмодели MBS* Coffee Menu для расчёта открытия кофейни">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Платформа для открытия кофейни — MBS* Coffee Menu">
+  <meta name="twitter:description" content="Бюджет запуска, план продаж, рецепты, поставщики, финмодель и консультация с Романом Суслиным.">
+  <meta name="twitter:image" content="https://static.tildacdn.com/tild3933-6461-4765-b262-333364386362/__2026-06-24_121453.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <style>
+    :root {
+      --mbs-green-dark: #417033;
+      --mbs-green: #4F883E;
+      --mbs-green-light: #B6D8AB;
+      --mbs-bg-green: #E7F2E3;
+      --mbs-red: #CC2841;
+      --mbs-red-soft: #D83D54;
+      --mbs-bg: #F5F5F5;
+      --mbs-black: #1F1F1F;
+      --mbs-gray: #555555;
+      --mbs-white: #FFFFFF;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--mbs-bg);
+      color: var(--mbs-black);
+      font-family: "Mulish", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .mbs-openapp,
+    .mbs-openapp * {
+      box-sizing: border-box;
+    }
+
+    .mbs-openapp {
+      overflow: hidden;
+      background: var(--mbs-white);
+    }
+
+    .mbs-openapp a {
+      color: inherit;
+    }
+
+    .mbs-openapp__section {
+      padding: 90px 20px;
+    }
+
+    .mbs-openapp__section--muted {
+      background: var(--mbs-bg);
+    }
+
+    .mbs-openapp__section--green {
+      background: var(--mbs-bg-green);
+    }
+
+    .mbs-openapp__container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .mbs-openapp__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(231, 242, 227, 0.95);
+      color: var(--mbs-green-dark);
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .mbs-openapp__label i {
+      font-size: 16px;
+    }
+
+    .mbs-openapp__section--green .mbs-openapp__label {
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .mbs-openapp__h2 {
+      margin: 0;
+      max-width: 760px;
+      color: var(--mbs-black);
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-openapp__subtitle {
+      max-width: 720px;
+      margin: 14px 0 0;
+      color: var(--mbs-gray);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.55;
+    }
+
+    .mbs-openapp__hero {
+      padding: 48px 20px 76px;
+      background: var(--mbs-white);
+    }
+
+    .mbs-openapp__hero-wrap {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(540px, 0.98fr) minmax(420px, 1.02fr);
+      gap: 24px;
+      align-items: center;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 64px 68px;
+      overflow: hidden;
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 88% 10%, rgba(182, 216, 171, 0.74), transparent 34%),
+        linear-gradient(135deg, #f7f7f7 0%, #ffffff 62%, #e7f2e3 100%);
+    }
+
+    .mbs-openapp__kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .mbs-openapp__title {
+      margin: 0;
+      max-width: 620px;
+      color: var(--mbs-black);
+      font-size: 74px;
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.07em;
+    }
+
+    .mbs-openapp__lead {
+      max-width: 600px;
+      margin: 24px 0 0;
+      color: var(--mbs-black);
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 1.27;
+      letter-spacing: -0.03em;
+    }
+
+    .mbs-openapp__hero-actions,
+    .mbs-openapp__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .mbs-openapp__hero-actions {
+      gap: 8px;
+      flex-wrap: nowrap;
+    }
+
+    .mbs-openapp__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 52px;
+      padding: 15px 22px;
+      border: 0;
+      border-radius: 999px;
+      color: var(--mbs-white) !important;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none !important;
+      cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .mbs-openapp__hero-actions .mbs-openapp__btn {
+      min-height: 48px;
+      padding: 13px 14px;
+      gap: 7px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .mbs-openapp__btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .mbs-openapp__btn--primary {
+      background: var(--mbs-red);
+      box-shadow: 0 12px 28px rgba(204, 40, 65, 0.2);
+    }
+
+    .mbs-openapp__btn--primary:hover {
+      background: var(--mbs-red-soft);
+    }
+
+    .mbs-openapp__btn--secondary {
+      background: var(--mbs-green-dark);
+      box-shadow: 0 12px 28px rgba(65, 112, 51, 0.16);
+    }
+
+    .mbs-openapp__btn--ghost {
+      background: var(--mbs-white);
+      color: var(--mbs-green-dark) !important;
+      box-shadow: inset 0 0 0 1px rgba(65, 112, 51, 0.22);
+    }
+
+    .mbs-openapp__price-card {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      align-items: baseline;
+      margin-top: 26px;
+      padding: 18px 20px;
+      border: 1px solid rgba(65, 112, 51, 0.18);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: 0 16px 44px rgba(31, 31, 31, 0.06);
+    }
+
+    .mbs-openapp__price-label {
+      color: var(--mbs-gray);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mbs-openapp__price-value {
+      color: var(--mbs-green-dark);
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-openapp__price-note {
+      flex-basis: 100%;
+      color: var(--mbs-gray);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .mbs-openapp__visual {
+      min-width: 0;
+    }
+
+    .mbs-openapp__app-frame {
+      width: min(100%, 720px);
+      margin-left: auto;
+      overflow: hidden;
+      border: 1px solid rgba(31, 31, 31, 0.1);
+      border-radius: 24px;
+      background: #1f1f1f;
+      box-shadow: 0 30px 80px rgba(31, 31, 31, 0.18);
+    }
+
+    .mbs-openapp__app-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .mbs-openapp__app-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .mbs-openapp__app-dots span {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #6fc36b;
+      opacity: 0.9;
+    }
+
+    .mbs-openapp__app-dots span:nth-child(2) {
+      background: #d8cf58;
+    }
+
+    .mbs-openapp__app-dots span:nth-child(3) {
+      background: #d83d54;
+    }
+
+    .mbs-openapp__app-body {
+      padding: 18px;
+      background: #202020;
+    }
+
+    .mbs-openapp__app-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .mbs-openapp__app-stat {
+      min-height: 68px;
+      padding: 11px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      background: #2d2d2d;
+    }
+
+    .mbs-openapp__app-stat small {
+      display: block;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.52);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mbs-openapp__app-stat strong {
+      color: #80d882;
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .mbs-openapp__app-table {
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      background: #272727;
+    }
+
+    .mbs-openapp__app-row {
+      display: grid;
+      grid-template-columns: 1.2fr 0.7fr 0.6fr;
+      gap: 10px;
+      align-items: center;
+      padding: 11px 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .mbs-openapp__app-row:first-child {
+      border-top: 0;
+      background: rgba(128, 216, 130, 0.08);
+      color: #80d882;
+    }
+
+    .mbs-openapp__app-row span:last-child {
+      justify-self: end;
+      color: #80d882;
+      font-weight: 900;
+    }
+
+    .mbs-openapp__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .mbs-openapp__card {
+      min-width: 0;
+      padding: 24px;
+      border: 1px solid rgba(31, 31, 31, 0.08);
+      border-radius: 24px;
+      background: var(--mbs-white);
+      box-shadow: 0 12px 34px rgba(31, 31, 31, 0.04);
+    }
+
+    .mbs-openapp__section--muted .mbs-openapp__card,
+    .mbs-openapp__section--green .mbs-openapp__card {
+      background: var(--mbs-white);
+    }
+
+    .mbs-openapp__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 18px;
+      border-radius: 16px;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-size: 24px;
+    }
+
+    .mbs-openapp__card-title {
+      margin: 0;
+      color: var(--mbs-black);
+      font-size: 19px;
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .mbs-openapp__card-text {
+      margin: 10px 0 0;
+      color: var(--mbs-gray);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .mbs-openapp__features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .mbs-openapp__feature {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 22px;
+      border-radius: 24px;
+      background: var(--mbs-white);
+      box-shadow: inset 0 0 0 1px rgba(65, 112, 51, 0.12);
+    }
+
+    .mbs-openapp__feature i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-size: 22px;
+    }
+
+    .mbs-openapp__feature strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--mbs-black);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .mbs-openapp__feature span {
+      display: block;
+      color: var(--mbs-gray);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .mbs-openapp__screens-head {
+      display: flex;
+      gap: 24px;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 34px;
+    }
+
+    .mbs-openapp__screens-head .mbs-openapp__subtitle {
+      max-width: 440px;
+      margin-top: 0;
+    }
+
+    .mbs-openapp__screens {
+      display: flex;
+      gap: 18px;
+      margin-right: calc((100vw - min(1100px, 100vw - 40px)) / -2);
+      padding: 0 max(20px, calc((100vw - 1100px) / 2)) 10px 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(65, 112, 51, 0.36) transparent;
+    }
+
+    .mbs-openapp__screens::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .mbs-openapp__screens::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .mbs-openapp__screens::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: rgba(65, 112, 51, 0.28);
+    }
+
+    .mbs-openapp__screen-card {
+      position: relative;
+      flex: 0 0 min(352px, calc((1100px - 36px) / 3));
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(31, 31, 31, 0.08);
+      border-radius: 28px;
+      background: var(--mbs-white);
+      box-shadow: 0 18px 42px rgba(31, 31, 31, 0.06);
+      cursor: zoom-in;
+      scroll-snap-align: start;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+
+    .mbs-openapp__screen-card:hover,
+    .mbs-openapp__screen-card:focus {
+      transform: translateY(-3px);
+      border-color: rgba(65, 112, 51, 0.24);
+      box-shadow: 0 24px 54px rgba(31, 31, 31, 0.1);
+      outline: none;
+    }
+
+    .mbs-openapp__screen-card:focus-visible {
+      outline: 3px solid rgba(79, 136, 62, 0.28);
+      outline-offset: 4px;
+    }
+
+    .mbs-openapp__screen {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 16 / 10;
+      min-height: 0;
+      background:
+        linear-gradient(135deg, rgba(231, 242, 227, 0.88), rgba(245, 245, 245, 0.92)),
+        #f5f5f5;
+    }
+
+    .mbs-openapp__screen img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mbs-openapp__screen-zoom {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(31, 31, 31, 0.72);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+    }
+
+    .mbs-openapp__screen-card:hover .mbs-openapp__screen-zoom,
+    .mbs-openapp__screen-card:focus .mbs-openapp__screen-zoom {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mbs-openapp__screen-placeholder {
+      display: grid;
+      gap: 12px;
+      width: min(78%, 460px);
+      padding: 26px;
+      border: 1px dashed rgba(65, 112, 51, 0.36);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--mbs-green-dark);
+      text-align: center;
+    }
+
+    .mbs-openapp__screen-placeholder i {
+      justify-self: center;
+      font-size: 36px;
+    }
+
+    .mbs-openapp__screen-placeholder strong {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .mbs-openapp__screen-placeholder span {
+      color: var(--mbs-gray);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .mbs-openapp__screen-caption {
+      padding: 18px 20px 20px;
+    }
+
+    .mbs-openapp__screen-caption strong {
+      display: block;
+      color: var(--mbs-black);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .mbs-openapp__screen-titleline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .mbs-openapp__screen-titleline strong {
+      min-width: 0;
+    }
+
+    .mbs-openapp__recipe-badge {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .mbs-openapp__screen-caption span {
+      display: block;
+      margin-top: 8px;
+      color: var(--mbs-gray);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .mbs-openapp__lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(12, 12, 12, 0.76);
+      backdrop-filter: blur(14px);
+    }
+
+    .mbs-openapp__lightbox.is-open {
+      display: flex;
+    }
+
+    .mbs-openapp__lightbox-panel {
+      position: relative;
+      width: min(1180px, 100%);
+      max-height: calc(100vh - 48px);
+      overflow-x: hidden;
+      overflow-y: auto;
+      border-radius: 28px;
+      background: #ffffff;
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.34);
+    }
+
+    .mbs-openapp__lightbox-image-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: calc(100vh - 168px);
+      padding: 18px;
+      background: #1f1f1f;
+    }
+
+    .mbs-openapp__lightbox-image {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100vh - 204px);
+      border-radius: 16px;
+      object-fit: contain;
+    }
+
+    .mbs-openapp__lightbox-caption {
+      padding: 20px 24px 22px;
+      background: #ffffff;
+    }
+
+    .mbs-openapp__lightbox-title {
+      margin: 0;
+      color: var(--mbs-black);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .mbs-openapp__lightbox-text {
+      margin: 8px 0 0;
+      color: var(--mbs-gray);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .mbs-openapp__lightbox-recipes {
+      display: none;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .mbs-openapp__lightbox-recipes.is-visible {
+      display: grid;
+    }
+
+    .mbs-openapp__recipe-group {
+      min-width: 0;
+      padding: 12px;
+      border-radius: 18px;
+      background: #f5f5f5;
+      box-shadow: inset 0 0 0 1px rgba(65, 112, 51, 0.1);
+    }
+
+    .mbs-openapp__recipe-group:first-child {
+      grid-column: span 2;
+    }
+
+    .mbs-openapp__recipe-group strong {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--mbs-green-dark);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .mbs-openapp__recipe-group small {
+      flex: 0 0 auto;
+      color: var(--mbs-gray);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .mbs-openapp__recipe-group ul {
+      display: grid;
+      gap: 6px;
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mbs-openapp__recipe-group:first-child ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 12px;
+    }
+
+    .mbs-openapp__recipe-group li {
+      color: var(--mbs-black);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .mbs-openapp__lightbox-slide-nav {
+      position: absolute;
+      top: 50%;
+      z-index: 2;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      min-width: 46px;
+      max-width: 46px;
+      height: 46px;
+      min-height: 46px;
+      max-height: 46px;
+      box-sizing: border-box;
+      flex: 0 0 46px;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.46);
+      color: rgba(31, 31, 31, 0.82);
+      font-size: 34px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+      backdrop-filter: blur(10px);
+      transform: translateY(-50%);
+      transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+    }
+
+    .mbs-openapp__lightbox-slide-nav.is-visible {
+      display: inline-flex;
+    }
+
+    .mbs-openapp__lightbox-slide-nav:hover,
+    .mbs-openapp__lightbox-slide-nav:focus-visible {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--mbs-black);
+      outline: none;
+    }
+
+    .mbs-openapp__lightbox-slide-nav--prev {
+      left: 18px;
+    }
+
+    .mbs-openapp__lightbox-slide-nav--next {
+      right: 18px;
+    }
+
+    .mbs-openapp__lightbox-slide-count {
+      position: absolute;
+      left: 24px;
+      bottom: 20px;
+      z-index: 2;
+      display: none;
+      min-width: 68px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(31, 31, 31, 0.58);
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .mbs-openapp__lightbox-slide-count.is-visible {
+      display: block;
+    }
+
+    .mbs-openapp__lightbox-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      min-width: 42px;
+      max-width: 42px;
+      height: 42px;
+      min-height: 42px;
+      max-height: 42px;
+      box-sizing: border-box;
+      flex: 0 0 42px;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(31, 31, 31, 0.34);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
+      transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+    }
+
+    .mbs-openapp__lightbox-close:hover,
+    .mbs-openapp__lightbox-close:focus-visible {
+      background: rgba(31, 31, 31, 0.62);
+      color: #ffffff;
+    }
+
+    .mbs-openapp__steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 34px;
+      counter-reset: step;
+    }
+
+    .mbs-openapp__step {
+      position: relative;
+      min-width: 0;
+      padding: 24px 20px 22px;
+      border: 1px solid rgba(65, 112, 51, 0.14);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.66);
+      counter-increment: step;
+    }
+
+    .mbs-openapp__step::before {
+      content: counter(step);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      background: var(--mbs-green-dark);
+      color: var(--mbs-white);
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .mbs-openapp__step strong {
+      display: block;
+      color: var(--mbs-black);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .mbs-openapp__step span {
+      display: block;
+      margin-top: 8px;
+      color: var(--mbs-gray);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .mbs-openapp__section--consult {
+      background:
+        linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+    }
+
+    .mbs-openapp__consult-shell {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
+      gap: 0;
+      align-items: stretch;
+      margin-top: 36px;
+      overflow: hidden;
+      border: 1px solid rgba(65, 112, 51, 0.14);
+      border-radius: 34px;
+      background: var(--mbs-white);
+      box-shadow: 0 24px 64px rgba(31, 31, 31, 0.08);
+    }
+
+    .mbs-openapp__consult {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .mbs-openapp__person {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      padding: 34px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 0%, rgba(128, 216, 130, 0.24), transparent 32%),
+        linear-gradient(145deg, #1f1f1f 0%, #2a2a2a 100%);
+      color: var(--mbs-white);
+    }
+
+    .mbs-openapp__person::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      bottom: -70px;
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 50%;
+    }
+
+    .mbs-openapp__person-top {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mbs-openapp__person-photo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 118px;
+      height: 118px;
+      border: 4px solid rgba(255, 255, 255, 0.16);
+      border-radius: 32px;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-size: 42px;
+      font-weight: 900;
+      overflow: hidden;
+    }
+
+    .mbs-openapp__person-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mbs-openapp__person h3 {
+      margin: 0;
+      color: var(--mbs-white);
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-openapp__person-role {
+      margin: 8px 0 0;
+      color: #80d882;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .mbs-openapp__person p {
+      position: relative;
+      z-index: 1;
+      margin: 24px 0 0;
+      color: rgba(255, 255, 255, 0.76);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.58;
+    }
+
+    .mbs-openapp__person-facts {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 26px;
+    }
+
+    .mbs-openapp__person-fact {
+      min-width: 0;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .mbs-openapp__person-fact strong {
+      display: block;
+      color: #80d882;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .mbs-openapp__person-fact span {
+      display: block;
+      margin-top: 6px;
+      color: rgba(255, 255, 255, 0.64);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .mbs-openapp__consult-list {
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      margin: 0;
+      padding: 34px;
+      list-style: none;
+      background:
+        linear-gradient(135deg, rgba(231, 242, 227, 0.72), rgba(255, 255, 255, 0.84));
+    }
+
+    .mbs-openapp__consult-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 20px;
+      border-radius: 22px;
+      background: var(--mbs-white);
+      color: var(--mbs-black);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.45;
+      box-shadow:
+        inset 0 0 0 1px rgba(65, 112, 51, 0.12),
+        0 12px 26px rgba(31, 31, 31, 0.035);
+    }
+
+    .mbs-openapp__consult-list i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-size: 18px;
+    }
+
+    .mbs-openapp__consult-list strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--mbs-black);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .mbs-openapp__consult-list span {
+      display: block;
+      color: var(--mbs-gray);
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .mbs-openapp__offer {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 42px;
+      align-items: center;
+      padding: 48px;
+      border-radius: 34px;
+      background: var(--mbs-white);
+      box-shadow: 0 18px 46px rgba(31, 31, 31, 0.06);
+    }
+
+    .mbs-openapp__offer .mbs-openapp__h2 {
+      margin-bottom: 34px;
+      line-height: 1.08;
+    }
+
+    .mbs-openapp__offer-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mbs-openapp__offer-list li {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      color: var(--mbs-black);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .mbs-openapp__offer-list i {
+      color: var(--mbs-green-dark);
+      font-size: 21px;
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    .mbs-openapp__buy-box {
+      padding: 34px;
+      border-radius: 28px;
+      background: var(--mbs-bg-green);
+      box-shadow: inset 0 0 0 1px rgba(65, 112, 51, 0.16);
+    }
+
+    .mbs-openapp__buy-label {
+      margin: 0 0 10px;
+      color: var(--mbs-gray);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mbs-openapp__buy-price {
+      margin: 0;
+      color: var(--mbs-green-dark);
+      font-size: 46px;
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .mbs-openapp__buy-note {
+      margin: 20px 0 0;
+      color: var(--mbs-black);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+
+    #faq {
+      background: var(--mbs-bg);
+    }
+
+    .mbs-openapp__faq {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+      gap: 34px;
+      align-items: start;
+      padding: 42px;
+      border-radius: 30px;
+      background: var(--mbs-bg);
+    }
+
+    .mbs-openapp__faq-aside {
+      position: relative;
+      z-index: 1;
+      transform: translate3d(0, 0, 0);
+      will-change: transform;
+    }
+
+    .mbs-openapp__faq-title {
+      margin: 0;
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-openapp__faq .mbs-openapp__subtitle {
+      max-width: 360px;
+      font-size: 19px;
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    .mbs-openapp__faq-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mbs-openapp__faq-item {
+      overflow: hidden;
+      border: 1px solid rgba(31, 31, 31, 0.08);
+      border-radius: 20px;
+      background: var(--mbs-white);
+      box-shadow: 0 10px 28px rgba(31, 31, 31, 0.035);
+    }
+
+    .mbs-openapp__faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 19px 22px;
+      color: var(--mbs-black);
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.25;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .mbs-openapp__faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .mbs-openapp__faq-item summary::after {
+      content: "+";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-green-dark);
+      font-weight: 900;
+      transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+
+    .mbs-openapp__faq-item[open] {
+      border-color: rgba(65, 112, 51, 0.18);
+      box-shadow: 0 14px 34px rgba(65, 112, 51, 0.08);
+    }
+
+    .mbs-openapp__faq-item[open] summary::after {
+      content: "-";
+      background: var(--mbs-green);
+      color: var(--mbs-white);
+      transform: rotate(180deg);
+    }
+
+    .mbs-openapp__faq-item p {
+      margin: 0;
+      padding: 0 22px 22px;
+      color: var(--mbs-gray);
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .mbs-openapp__final-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 60px;
+      align-items: center;
+      padding: 48px 56px;
+      border-radius: 28px;
+      background: var(--mbs-bg-green);
+      color: var(--mbs-black);
+    }
+
+    .mbs-openapp__final-label {
+      margin: 0 0 14px;
+      color: var(--mbs-green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .mbs-openapp__final-card h2 {
+      margin: 0;
+      max-width: 660px;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .mbs-openapp__final-card p {
+      max-width: 620px;
+      margin: 14px 0 0;
+      color: var(--mbs-gray);
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .mbs-openapp__final-card > .mbs-openapp__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-self: center;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    .mbs-openapp__final-card > .mbs-openapp__actions .mbs-openapp__btn {
+      width: 100%;
+      min-height: 58px;
+      padding-right: 22px;
+      padding-left: 22px;
+      font-size: 16px;
+      box-shadow: none;
+    }
+
+    .mbs-openapp__final-card .mbs-openapp__btn svg {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+    }
+
+    .mbs-openapp__contacts {
+      display: grid;
+      gap: 7px;
+      margin-top: 18px;
+    }
+
+    .mbs-openapp__contact {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--mbs-green-dark);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none !important;
+      box-shadow: none;
+    }
+
+    .mbs-openapp__contact i,
+    .mbs-openapp__contact svg {
+      flex: 0 0 auto;
+      width: 19px;
+      height: 19px;
+      font-size: 19px;
+    }
+
+    @media (max-width: 1180px) {
+      .mbs-openapp__hero-wrap {
+        grid-template-columns: 1fr;
+        padding: 56px 48px;
+      }
+
+      .mbs-openapp__title {
+        max-width: 820px;
+        font-size: 62px;
+      }
+
+      .mbs-openapp__lead {
+        max-width: 760px;
+      }
+
+      .mbs-openapp__screens,
+      .mbs-openapp__offer,
+      .mbs-openapp__consult-shell,
+      .mbs-openapp__consult,
+      .mbs-openapp__faq,
+      .mbs-openapp__final-card {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-openapp__final-card {
+        grid-template-columns: 1fr;
+        gap: 26px;
+        padding: 48px;
+      }
+
+      .mbs-openapp__final-card > .mbs-openapp__actions {
+        max-width: 420px;
+      }
+
+      .mbs-openapp__final-card h2 {
+        font-size: 32px;
+      }
+
+      .mbs-openapp__final-card p {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .mbs-openapp__section {
+        padding: 64px 14px;
+      }
+
+      .mbs-openapp__hero {
+        padding: 14px 12px 52px;
+      }
+
+      .mbs-openapp__hero-wrap {
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        min-width: 0;
+        gap: 0;
+        padding: 22px 16px 20px;
+        border-radius: 24px;
+      }
+
+      .mbs-openapp__hero-content {
+        display: contents;
+      }
+
+      .mbs-openapp__kicker {
+        order: 1;
+      }
+
+      .mbs-openapp__title {
+        order: 2;
+      }
+
+      .mbs-openapp__lead {
+        order: 3;
+      }
+
+      .mbs-openapp__visual {
+        order: 4;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin-top: 22px;
+      }
+
+      .mbs-openapp__visual .mbs-openapp__app-frame {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0;
+      }
+
+      .mbs-openapp__price-card {
+        order: 5;
+      }
+
+      .mbs-openapp__hero-actions {
+        order: 6;
+        margin-top: 18px;
+      }
+
+      .mbs-openapp__title {
+        font-size: 38px;
+        line-height: 0.98;
+      }
+
+      .mbs-openapp__lead {
+        margin-top: 16px;
+        font-size: 16px;
+        line-height: 1.4;
+        letter-spacing: 0;
+      }
+
+      .mbs-openapp__price-card {
+        width: 100%;
+        margin-top: 20px;
+        padding: 16px;
+        border-radius: 20px;
+      }
+
+      .mbs-openapp__price-value {
+        font-size: 30px;
+      }
+
+      .mbs-openapp__hero-actions,
+      .mbs-openapp__actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+
+      .mbs-openapp__btn {
+        width: 100%;
+        min-height: 50px;
+      }
+
+      .mbs-openapp__app-body {
+        padding: 10px;
+      }
+
+      .mbs-openapp__app-stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 10px;
+      }
+
+      .mbs-openapp__app-stat {
+        min-height: 58px;
+        padding: 9px 8px;
+        border-radius: 14px;
+      }
+
+      .mbs-openapp__app-stat small {
+        min-height: 24px;
+        margin-bottom: 5px;
+        font-size: 8px;
+        line-height: 1.2;
+      }
+
+      .mbs-openapp__app-stat strong {
+        font-size: clamp(13px, 4vw, 16px);
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .mbs-openapp__app-row {
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        padding: 10px 10px;
+        font-size: 11px;
+      }
+
+      .mbs-openapp__app-row span:nth-child(2) {
+        display: none;
+      }
+
+      .mbs-openapp__h2 {
+        font-size: 26px;
+        line-height: 1.05;
+      }
+
+      .mbs-openapp__subtitle {
+        font-size: 15px;
+      }
+
+      .mbs-openapp__grid,
+      .mbs-openapp__features,
+      .mbs-openapp__steps {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-openapp__screens-head {
+        display: block;
+      }
+
+      .mbs-openapp__screens-head .mbs-openapp__subtitle {
+        margin-top: 14px;
+      }
+
+      .mbs-openapp__screens {
+        gap: 14px;
+        margin-right: -14px;
+        padding: 0 14px 8px 0;
+      }
+
+      .mbs-openapp__screen-card {
+        flex: 0 0 min(82vw, 360px);
+      }
+
+      .mbs-openapp__screen {
+        aspect-ratio: 16 / 11;
+      }
+
+      .mbs-openapp__screen-zoom {
+        opacity: 1;
+        transform: none;
+      }
+
+      .mbs-openapp__screen-caption {
+        padding: 16px;
+      }
+
+      .mbs-openapp__lightbox {
+        padding: 12px;
+      }
+
+      .mbs-openapp__lightbox-panel {
+        max-height: calc(100vh - 24px);
+        border-radius: 22px;
+      }
+
+      .mbs-openapp__lightbox-recipes {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .mbs-openapp__recipe-group {
+        padding: 11px;
+        border-radius: 16px;
+      }
+
+      .mbs-openapp__recipe-group:first-child {
+        grid-column: auto;
+      }
+
+      .mbs-openapp__recipe-group:first-child ul {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-openapp__lightbox-image-wrap {
+        max-height: calc(100vh - 152px);
+        padding: 10px;
+      }
+
+      .mbs-openapp__lightbox-image {
+        max-height: calc(100vh - 176px);
+        border-radius: 12px;
+      }
+
+      .mbs-openapp__lightbox-caption {
+        padding: 16px;
+      }
+
+      .mbs-openapp__lightbox-title {
+        font-size: 19px;
+      }
+
+      .mbs-openapp__lightbox-slide-nav {
+        width: 40px;
+        min-width: 40px;
+        max-width: 40px;
+        height: 40px;
+        min-height: 40px;
+        max-height: 40px;
+        flex-basis: 40px;
+        font-size: 28px;
+      }
+
+      .mbs-openapp__lightbox-slide-nav--prev {
+        left: 10px;
+      }
+
+      .mbs-openapp__lightbox-slide-nav--next {
+        right: 10px;
+      }
+
+      .mbs-openapp__lightbox-slide-count {
+        left: 16px;
+        bottom: 14px;
+        min-width: 58px;
+        padding: 7px 12px;
+        font-size: 13px;
+      }
+
+      .mbs-openapp__consult-shell {
+        margin-top: 26px;
+        border-radius: 26px;
+      }
+
+      .mbs-openapp__person {
+        padding: 24px;
+      }
+
+      .mbs-openapp__person-top {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .mbs-openapp__person-photo {
+        width: 104px;
+        height: 104px;
+        border-radius: 28px;
+      }
+
+      .mbs-openapp__person h3 {
+        font-size: 28px;
+      }
+
+      .mbs-openapp__person-facts {
+        grid-template-columns: 1fr;
+        margin-top: 0;
+      }
+
+      .mbs-openapp__consult-list {
+        padding: 18px;
+      }
+
+      .mbs-openapp__consult-list li {
+        padding: 16px;
+        border-radius: 18px;
+      }
+
+      .mbs-openapp__offer {
+        padding: 22px;
+        border-radius: 26px;
+      }
+
+      .mbs-openapp__buy-box {
+        padding: 22px;
+      }
+
+      .mbs-openapp__buy-price {
+        font-size: 40px;
+      }
+
+      .mbs-openapp__faq-title {
+        font-size: 34px;
+      }
+
+      .mbs-openapp__faq {
+        gap: 24px;
+        padding: 24px 16px;
+        border-radius: 24px;
+      }
+
+      .mbs-openapp__faq-aside {
+        position: static;
+      }
+
+      .mbs-openapp__faq .mbs-openapp__subtitle {
+        max-width: none;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .mbs-openapp__faq-item summary {
+        padding: 18px;
+        font-size: 17px;
+      }
+
+      .mbs-openapp__faq-item p {
+        padding: 0 18px 18px;
+        font-size: 15px;
+      }
+
+      .mbs-openapp__final-card {
+        padding: 40px 24px;
+        border-radius: 28px;
+      }
+
+      .mbs-openapp__final-card > .mbs-openapp__actions {
+        max-width: none;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .mbs-openapp__final-card h2 {
+        font-size: 30px;
+        line-height: 1.02;
+      }
+
+      .mbs-openapp__final-card p {
+        margin-top: 14px;
+        font-size: 16px;
+      }
+
+      .mbs-openapp__final-label {
+        margin-bottom: 14px;
+        font-size: 13px;
+      }
+
+      .mbs-openapp__final-card > .mbs-openapp__actions .mbs-openapp__btn {
+        min-height: 56px;
+        font-size: 16px;
+      }
+
+      .mbs-openapp__contacts {
+        margin-top: 26px;
+      }
+
+      .mbs-openapp__contact {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .mbs-openapp__title {
+        font-size: 34px;
+      }
+
+      .mbs-openapp__card,
+      .mbs-openapp__feature,
+      .mbs-openapp__step,
+      .mbs-openapp__person {
+        padding: 20px;
+        border-radius: 22px;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://baristaschool.ru/#organization",
+          "name": "Московская школа бариста",
+          "url": "https://baristaschool.ru/",
+          "telephone": "+79959992836",
+          "sameAs": [
+            "https://t.me/Moscow_barista_school",
+            "https://wa.me/message/42GZ6YYBJTM5B1"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://baristaschool.ru/#website",
+          "url": "https://baristaschool.ru/",
+          "name": "Московская школа бариста",
+          "publisher": {
+            "@id": "https://baristaschool.ru/#organization"
+          },
+          "inLanguage": "ru-RU"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://baristaschool.ru/open_cafe_app#webpage",
+          "url": "https://baristaschool.ru/open_cafe_app",
+          "name": "Платформа для открытия кофейни — MBS* Coffee Menu",
+          "description": "Платформа для расчёта открытия кофейни: бюджет запуска, план продаж, рецепты, поставщики, финансовая модель и консультация с Романом Суслиным.",
+          "inLanguage": "ru-RU",
+          "isPartOf": {
+            "@id": "https://baristaschool.ru/#website"
+          },
+          "publisher": {
+            "@id": "https://baristaschool.ru/#organization"
+          },
+          "about": {
+            "@id": "https://baristaschool.ru/open_cafe_app#product"
+          }
+        },
+        {
+          "@type": [
+            "Product",
+            "SoftwareApplication"
+          ],
+          "@id": "https://baristaschool.ru/open_cafe_app#product",
+          "name": "MBS* Coffee Menu — платформа для открытия кофейни",
+          "alternateName": "Сервис открытия кофейни",
+          "description": "Сервис для будущих владельцев кофеен: расчёт бюджета запуска, плана продаж, рецептов, поставщиков, финансовой модели, прибыли и окупаемости.",
+          "image": "https://static.tildacdn.com/tild3933-6461-4765-b262-333364386362/__2026-06-24_121453.png",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "brand": {
+            "@type": "Brand",
+            "name": "MBS* Coffee Menu"
+          },
+          "provider": {
+            "@id": "https://baristaschool.ru/#organization"
+          },
+          "featureList": [
+            "Бюджет запуска кофейни",
+            "План продаж и дополнительные продажи",
+            "25 рецептов напитков с себестоимостью",
+            "База поставщиков и закупок",
+            "Финансовая модель, P&L, прибыль и окупаемость",
+            "PDF и Excel отчёты"
+          ],
+          "offers": {
+            "@type": "Offer",
+            "url": "https://baristaschool.ru/open_cafe_app",
+            "price": "18900",
+            "priceCurrency": "RUB",
+            "availability": "https://schema.org/InStock",
+            "seller": {
+              "@id": "https://baristaschool.ru/#organization"
+            }
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://baristaschool.ru/open_cafe_app#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Московская школа бариста",
+              "item": "https://baristaschool.ru/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Платформа для открытия кофейни",
+              "item": "https://baristaschool.ru/open_cafe_app"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Это курс или сервис?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Это сервис для расчётов открытия кофейни. В стоимость входит консультация, чтобы разобрать модель и не оставить клиента один на один с цифрами."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Нужно ли уже иметь помещение?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Нет. Сервис полезен и до выбора помещения: можно сравнить форматы, стартовые вложения, выручку и окупаемость на разных сценариях."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли считать не только напитки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. В плане продаж можно учитывать выпечку, десерты, еду и импульсные позиции, чтобы средний чек был ближе к реальности."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Что я получу после покупки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Доступ к сервису, возможность работать с расчётами и 1 час консультации с Романом Суслиным по проекту кофейни."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Можно ли выгрузить расчёты?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. В сервисе предусмотрены PDF и Excel-отчёты, чтобы сохранить модель или обсудить её с партнёром, инвестором или командой."
+          }
+        }
+      ]
+    }
+  </script>
+</head>
+<body>
+  <main class="mbs-openapp">
+    <section class="mbs-openapp__hero">
+      <div class="mbs-openapp__hero-wrap">
+        <div class="mbs-openapp__hero-content">
+          <div class="mbs-openapp__kicker"><i class="ph ph-coffee"></i> MBS* Coffee Menu</div>
+          <h1 class="mbs-openapp__title">Платформа для открытия кофейни</h1>
+          <p class="mbs-openapp__lead">Посчитайте бюджет, продажи, средний чек, окупаемость, поставщиков и отчёты до аренды и закупок.</p>
+
+          <div class="mbs-openapp__price-card" id="price">
+            <span class="mbs-openapp__price-label">Доступ к сервису</span>
+            <strong class="mbs-openapp__price-value">18 900 ₽</strong>
+            <span class="mbs-openapp__price-note">Включен 1 час консультации с Романом Суслиным, основателем MBS*.</span>
+          </div>
+
+          <div class="mbs-openapp__hero-actions">
+            <a class="mbs-openapp__btn mbs-openapp__btn--primary" href="#order:Сервис открытия кофейни + консультация=18900">
+              <i class="ph ph-shopping-cart-simple"></i>
+              Купить доступ
+            </a>
+            <a class="mbs-openapp__btn mbs-openapp__btn--secondary" href="#consalt">
+              <i class="ph ph-chat-circle-text"></i>
+              Оставить заявку
+            </a>
+            <a class="mbs-openapp__btn mbs-openapp__btn--ghost" href="#screens">
+              <i class="ph ph-monitor"></i>
+              Посмотреть сервис
+            </a>
+          </div>
+        </div>
+
+        <div class="mbs-openapp__visual" aria-label="Превью интерфейса сервиса">
+          <div class="mbs-openapp__app-frame">
+            <div class="mbs-openapp__app-bar">
+              <div class="mbs-openapp__app-dots"><span></span><span></span><span></span></div>
+              <span>Финансовая модель</span>
+            </div>
+            <div class="mbs-openapp__app-body">
+              <div class="mbs-openapp__app-stats">
+                <div class="mbs-openapp__app-stat"><small>Выручка / мес</small><strong>3 930 420 ₽</strong></div>
+                <div class="mbs-openapp__app-stat"><small>Средний чек</small><strong>535 ₽</strong></div>
+                <div class="mbs-openapp__app-stat"><small>Окупаемость</small><strong>4.3 мес.</strong></div>
+              </div>
+              <div class="mbs-openapp__app-table">
+                <div class="mbs-openapp__app-row"><span>Раздел</span><span>Позиции</span><span>Сумма</span></div>
+                <div class="mbs-openapp__app-row"><span>Стартовые вложения</span><span>36</span><span>4 077 164 ₽</span></div>
+                <div class="mbs-openapp__app-row"><span>План продаж</span><span>250 чеков</span><span>3 930 420 ₽</span></div>
+                <div class="mbs-openapp__app-row"><span>Доп. продажи</span><span>5</span><span>1 332 420 ₽</span></div>
+                <div class="mbs-openapp__app-row"><span>Чистая прибыль</span><span>мес.</span><span>953 410 ₽</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section mbs-openapp__section--green">
+      <div class="mbs-openapp__container">
+        <span class="mbs-openapp__label"><i class="ph ph-users-three"></i> Для кого</span>
+        <h2 class="mbs-openapp__h2">Для тех, кто хочет открыть кофейню с цифрами, а не с догадками</h2>
+        <p class="mbs-openapp__subtitle">Сервис помогает быстро проверить идею, сравнить форматы и увидеть, сколько денег потребуется до запуска и что должно происходить после открытия.</p>
+
+        <div class="mbs-openapp__grid">
+          <article class="mbs-openapp__card">
+            <span class="mbs-openapp__icon"><i class="ph ph-rocket-launch"></i></span>
+            <h3 class="mbs-openapp__card-title">Будущим владельцам кофеен</h3>
+            <p class="mbs-openapp__card-text">Понять бюджет, оборудование, стартовый склад, выручку и точку безубыточности до первых крупных расходов.</p>
+          </article>
+          <article class="mbs-openapp__card">
+            <span class="mbs-openapp__icon"><i class="ph ph-briefcase"></i></span>
+            <h3 class="mbs-openapp__card-title">Предпринимателям и инвесторам</h3>
+            <p class="mbs-openapp__card-text">Сравнить киоск, остров и кофейню, увидеть окупаемость и проверить, насколько проект выглядит устойчивым.</p>
+          </article>
+          <article class="mbs-openapp__card">
+            <span class="mbs-openapp__icon"><i class="ph ph-compass-tool"></i></span>
+            <h3 class="mbs-openapp__card-title">Управляющим и проектным командам</h3>
+            <p class="mbs-openapp__card-text">Собрать понятную рабочую модель для запуска, закупок, меню, доп. продаж и отчетов без разрозненных таблиц.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section" id="features">
+      <div class="mbs-openapp__container">
+        <span class="mbs-openapp__label"><i class="ph ph-squares-four"></i> Возможности</span>
+        <h2 class="mbs-openapp__h2">Все ключевые расчеты открытия кофейни в одном месте</h2>
+        <p class="mbs-openapp__subtitle">Сервис связывает бюджет запуска, меню, продажи и финмодель. Когда вы меняете цифры в одном разделе, итоговая картина становится понятнее.</p>
+
+        <div class="mbs-openapp__features">
+          <div class="mbs-openapp__feature">
+            <i class="ph ph-bank"></i>
+            <div><strong>Стартовый бюджет</strong><span>Ремонт, оборудование, мебель, склад, маркетинг, депозит, обучение и оборотный резерв.</span></div>
+          </div>
+          <div class="mbs-openapp__feature">
+            <i class="ph ph-truck"></i>
+            <div><strong>Поставщики и библиотека</strong><span>Позиции для закупок можно собирать из библиотеки и переносить в бюджет запуска.</span></div>
+          </div>
+          <div class="mbs-openapp__feature">
+            <i class="ph ph-shopping-cart"></i>
+            <div><strong>План продаж</strong><span>Напитки, выпечка, десерты, еда и импульсные позиции влияют на средний чек и выручку.</span></div>
+          </div>
+          <div class="mbs-openapp__feature">
+            <i class="ph ph-chart-pie-slice"></i>
+            <div><strong>Финансовая модель</strong><span>Выручка, расходы, food-cost, прибыль, рентабельность, запас прочности и окупаемость.</span></div>
+          </div>
+          <div class="mbs-openapp__feature">
+            <i class="ph ph-cooking-pot"></i>
+            <div><strong>Рецептуры</strong><span>Себестоимость напитков и контроль цены помогают не запускать меню вслепую.</span></div>
+          </div>
+          <div class="mbs-openapp__feature">
+            <i class="ph ph-file-xls"></i>
+            <div><strong>Отчеты</strong><span>PDF и Excel помогают сохранить расчеты, обсудить проект с партнером или подготовиться к запуску.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section mbs-openapp__section--muted" id="screens">
+      <div class="mbs-openapp__container">
+        <div class="mbs-openapp__screens-head">
+          <div>
+            <span class="mbs-openapp__label"><i class="ph ph-monitor"></i> Интерфейс</span>
+            <h2 class="mbs-openapp__h2">Реальные экраны сервиса</h2>
+          </div>
+          <p class="mbs-openapp__subtitle">Показываем ключевые рабочие разделы сервиса: план продаж, бюджет запуска, финмодель, поставщиков и рецепты с расчетом себестоимости.</p>
+        </div>
+
+        <div class="mbs-openapp__screens">
+          <article class="mbs-openapp__screen-card">
+            <div class="mbs-openapp__screen" data-src="https://static.tildacdn.com/tild3464-6136-4534-b134-626639336165/__2026-06-24_114945.png" data-alt="Экран плана продаж кофейни">
+              <div class="mbs-openapp__screen-placeholder">
+                <i class="ph ph-image-square"></i>
+                <strong>Скриншот плана продаж</strong>
+                <span>Позиции, доп. продажи и средний чек.</span>
+              </div>
+            </div>
+            <div class="mbs-openapp__screen-caption">
+              <strong>План продаж</strong>
+              <span>Показывает, сколько чеков, напитков и доп. продаж нужно в день, чтобы выручка перестала быть догадкой.</span>
+            </div>
+          </article>
+
+          <article class="mbs-openapp__screen-card"
+            data-detail-1-src="https://static.tildacdn.com/tild3266-6633-4132-b236-346461323133/__2026-06-24_133226.png"
+            data-detail-1-title="Список оборудования"
+            data-detail-1-text="Помогает увидеть, из каких покупок складывается запуск, что уже учтено и где бюджет может раздуваться."
+            data-detail-2-src="https://static.tildacdn.com/tild6165-3562-4632-b036-613631303162/__2026-06-24_133407.png"
+            data-detail-2-title="Карточка оборудования"
+            data-detail-2-text="Показывает фото, цену, описание и данные позиции, чтобы быстрее принять решение по закупке.">
+            <div class="mbs-openapp__screen" data-src="https://static.tildacdn.com/tild6639-3936-4161-b563-353036383138/__2026-06-24_114956.png" data-alt="Экран бюджета запуска кофейни">
+              <div class="mbs-openapp__screen-placeholder">
+                <i class="ph ph-image-square"></i>
+                <strong>Скриншот бюджета</strong>
+                <span>Категории расходов и структура вложений.</span>
+              </div>
+            </div>
+            <div class="mbs-openapp__screen-caption">
+              <strong>Бюджет запуска</strong>
+              <span>Собирает ремонт, оборудование, склад и резерв в один список, чтобы заранее увидеть реальную сумму запуска.</span>
+            </div>
+          </article>
+
+          <article class="mbs-openapp__screen-card"
+            data-recipe-card="true"
+            data-detail-1-src="https://static.tildacdn.com/tild3564-3962-4639-b763-656362346564/__2026-06-24_133148.png"
+            data-detail-1-title="Карточка напитка"
+            data-detail-1-text="Клиент видит фото, состав, себестоимость, цену и прибыль по позиции до запуска меню."
+            data-detail-2-src="https://static.tildacdn.com/tild3964-6336-4066-b734-326131613235/__2026-06-24_133726.png"
+            data-detail-2-title="Редактирование рецепта"
+            data-detail-2-text="Можно менять состав, добавлять свои ингредиенты и сразу видеть, как рецепт влияет на себестоимость."
+            data-detail-3-src="https://static.tildacdn.com/tild6261-6638-4731-a364-623163303363/__2026-06-24_133924.png"
+            data-detail-3-title="PDF техкарта"
+            data-detail-3-text="Готовая техкарта помогает быстрее передать напиток команде и держать стабильный стандарт приготовления.">
+            <div class="mbs-openapp__screen" data-src="https://static.tildacdn.com/tild6466-6237-4532-a131-633762613335/__2026-06-24_115015.png" data-alt="Экран рецептов и себестоимости">
+              <div class="mbs-openapp__screen-placeholder">
+                <i class="ph ph-image-square"></i>
+                <strong>Скриншот рецептов</strong>
+                <span>Состав, себестоимость и контроль цены.</span>
+              </div>
+            </div>
+            <div class="mbs-openapp__screen-caption">
+              <div class="mbs-openapp__screen-titleline">
+                <strong>Рецепты</strong>
+                <span class="mbs-openapp__recipe-badge">25 рецептов</span>
+              </div>
+              <span>Готовая база напитков с составом, себестоимостью, маржей, ценой, PDF-техкартами и полным списком в просмотре.</span>
+            </div>
+          </article>
+
+          <article class="mbs-openapp__screen-card"
+            data-detail-1-src="https://static.tildacdn.com/tild3335-3466-4032-b938-643432383438/__2026-06-24_140144.png"
+            data-detail-1-title="Калькулятор ФОТ"
+            data-detail-1-text="Помогает посчитать фонд оплаты труда и понять, сколько команда будет стоить каждый месяц."
+            data-detail-2-src="https://static.tildacdn.com/tild3536-3364-4362-b432-646564363633/__2026-06-24_140118.png"
+            data-detail-2-title="Отчёт о прибылях и убытках (P&L)"
+            data-detail-2-text="Показывает P&L: выручку, расходы, прибыль и слабые места модели до подписания аренды."
+            data-detail-3-src="https://static.tildacdn.com/tild6365-6564-4561-a235-666532373862/__2026-06-24_140317.png"
+            data-detail-3-title="PDF отчёт для инвестора или партнёра"
+            data-detail-3-text="Готовый отчёт можно показать инвестору, партнёру или использовать как основу для решения о запуске.">
+            <div class="mbs-openapp__screen" data-src="https://static.tildacdn.com/tild3933-6461-4765-b262-333364386362/__2026-06-24_121453.png" data-alt="Экран финансовой модели кофейни">
+              <div class="mbs-openapp__screen-placeholder">
+                <i class="ph ph-image-square"></i>
+                <strong>Скриншот финмодели</strong>
+                <span>Выручка, расходы, прибыль и окупаемость.</span>
+              </div>
+            </div>
+            <div class="mbs-openapp__screen-caption">
+              <strong>Фин.модель</strong>
+              <span>Сводит продажи, расходы, ФОТ, food-cost, прибыль и окупаемость, чтобы сразу видеть устойчивость проекта.</span>
+            </div>
+          </article>
+
+          <article class="mbs-openapp__screen-card">
+            <div class="mbs-openapp__screen" data-src="https://static.tildacdn.com/tild3632-3337-4136-b461-623964333034/__2026-06-24_121435.png" data-alt="Экран поставщиков сервиса">
+              <div class="mbs-openapp__screen-placeholder">
+                <i class="ph ph-image-square"></i>
+                <strong>Скриншот поставщиков</strong>
+                <span>Контакты и позиции для закупок.</span>
+              </div>
+            </div>
+            <div class="mbs-openapp__screen-caption">
+              <strong>Поставщики</strong>
+              <span>Даёт стартовую базу закупок и контактов, чтобы не искать с нуля оборудование, сырьё и расходники.</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section mbs-openapp__section--green">
+      <div class="mbs-openapp__container">
+        <span class="mbs-openapp__label"><i class="ph ph-path"></i> Как работает</span>
+        <h2 class="mbs-openapp__h2">От идеи кофейни до понятной финансовой картины</h2>
+        <p class="mbs-openapp__subtitle">Логика сервиса простая: вы выбираете формат, уточняете цифры, смотрите результаты и разбираете модель на консультации.</p>
+
+        <div class="mbs-openapp__steps">
+          <div class="mbs-openapp__step"><strong>Выбираете формат</strong><span>Киоск, остров или кофейня с разной площадью и стартовыми условиями.</span></div>
+          <div class="mbs-openapp__step"><strong>Заполняете цифры</strong><span>Бюджет, меню, продажи, доп. позиции, расходы и параметры работы.</span></div>
+          <div class="mbs-openapp__step"><strong>Смотрите результат</strong><span>Выручка, прибыль, food-cost, средний чек, точка безубыточности и окупаемость.</span></div>
+          <div class="mbs-openapp__step"><strong>Разбираете с экспертом</strong><span>На консультации переводите расчеты в конкретные решения по запуску.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section mbs-openapp__section--consult">
+      <div class="mbs-openapp__container">
+        <span class="mbs-openapp__label"><i class="ph ph-chalkboard-teacher"></i> Консультация</span>
+        <h2 class="mbs-openapp__h2">В стоимость входит 1 час с Романом Суслиным</h2>
+        <p class="mbs-openapp__subtitle">Консультация нужна не для пересказа интерфейса, а для разбора вашей идеи кофейни и ключевых цифр проекта.</p>
+
+        <div class="mbs-openapp__consult-shell">
+          <div class="mbs-openapp__consult">
+            <article class="mbs-openapp__person">
+              <div class="mbs-openapp__person-top">
+                <div class="mbs-openapp__person-photo">
+                  <img src="https://static.tildacdn.com/tild3238-3539-4339-b633-653730316666/_2.jpg" alt="Роман Суслин" loading="lazy">
+                </div>
+                <div>
+                  <h3>Роман Суслин</h3>
+                  <div class="mbs-openapp__person-role">Основатель и руководитель Московской школы бариста</div>
+                </div>
+              </div>
+              <p>В кофейной индустрии с 2011 года: начинал бариста в «Кофемании», вырос до тренера в кофейной компании Куппо, в 2015 году основал Московскую школу бариста. 5 лет параллельно управлял собственным кафе и знает запуск кофейного проекта изнутри.</p>
+              <div class="mbs-openapp__person-facts" aria-label="Опыт эксперта">
+                <div class="mbs-openapp__person-fact"><strong>2011</strong><span>в индустрии</span></div>
+                <div class="mbs-openapp__person-fact"><strong>2015</strong><span>основал школу</span></div>
+                <div class="mbs-openapp__person-fact"><strong>5 лет</strong><span>управлял кафе</span></div>
+              </div>
+            </article>
+          </div>
+          <ul class="mbs-openapp__consult-list">
+            <li><i class="ph ph-check-circle"></i><div><strong>Формат и бюджет</strong><span>Проверите формат кофейни, стартовые вложения и слабые места в смете.</span></div></li>
+            <li><i class="ph ph-check-circle"></i><div><strong>Средний чек и продажи</strong><span>Разберете напитки, доп. позиции, food-cost и реалистичность плана продаж.</span></div></li>
+            <li><i class="ph ph-check-circle"></i><div><strong>Финансовая модель</strong><span>Посмотрите модель с человеком, который помогает предпринимателям запускать кофейные проекты.</span></div></li>
+            <li><i class="ph ph-check-circle"></i><div><strong>Следующие шаги</strong><span>Получите понятный план перед арендой, закупками или запуском.</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section mbs-openapp__section--muted">
+      <div class="mbs-openapp__container">
+        <div class="mbs-openapp__offer">
+          <div>
+            <span class="mbs-openapp__label"><i class="ph ph-package"></i> Что входит</span>
+            <h2 class="mbs-openapp__h2">Доступ к сервису и экспертный разбор вашего проекта</h2>
+            <ul class="mbs-openapp__offer-list">
+              <li><i class="ph ph-check-fat"></i> Сервис для расчета открытия кофейни</li>
+              <li><i class="ph ph-check-fat"></i> Бюджет, продажи, доп. продажи и финмодель</li>
+              <li><i class="ph ph-check-fat"></i> PDF и Excel-отчеты для обсуждения проекта</li>
+              <li><i class="ph ph-check-fat"></i> 1 час консультации с Романом Суслиным</li>
+            </ul>
+          </div>
+          <aside class="mbs-openapp__buy-box">
+            <p class="mbs-openapp__buy-label">Стоимость доступа</p>
+            <p class="mbs-openapp__buy-price">18 900 ₽</p>
+            <p class="mbs-openapp__buy-note">После покупки вы сможете работать с сервисом и отдельно согласовать время консультации.</p>
+            <div class="mbs-openapp__actions">
+              <a class="mbs-openapp__btn mbs-openapp__btn--primary" href="#order:Сервис открытия кофейни + консультация=18900">
+                <i class="ph ph-shopping-cart-simple"></i>
+                Купить доступ
+              </a>
+              <a class="mbs-openapp__btn mbs-openapp__btn--ghost" href="#consalt">
+                Задать вопрос
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section" id="faq" data-mbs-sticky-section>
+      <div class="mbs-openapp__container">
+        <div class="mbs-openapp__faq">
+          <div class="mbs-openapp__faq-aside" data-mbs-sticky-panel data-mbs-sticky-offset="90">
+            <span class="mbs-openapp__label"><i class="ph ph-question"></i> FAQ</span>
+            <h2 class="mbs-openapp__faq-title">Частые вопросы</h2>
+            <p class="mbs-openapp__subtitle">Если остались вопросы по доступу или консультации, можно оставить заявку, и мы поможем разобраться.</p>
+          </div>
+
+          <div class="mbs-openapp__faq-list">
+            <details class="mbs-openapp__faq-item" open>
+              <summary>Это курс или сервис?</summary>
+              <p>Это сервис для расчетов открытия кофейни. В стоимость входит консультация, чтобы разобрать вашу модель и не оставить вас один на один с цифрами.</p>
+            </details>
+            <details class="mbs-openapp__faq-item">
+              <summary>Нужно ли уже иметь помещение?</summary>
+              <p>Нет. Сервис полезен и до выбора помещения: можно сравнить форматы, стартовые вложения, выручку и окупаемость на разных сценариях.</p>
+            </details>
+            <details class="mbs-openapp__faq-item">
+              <summary>Можно ли считать не только напитки?</summary>
+              <p>Да. В плане продаж можно учитывать выпечку, десерты, еду и импульсные позиции, чтобы средний чек был ближе к реальности.</p>
+            </details>
+            <details class="mbs-openapp__faq-item">
+              <summary>Что я получу после покупки?</summary>
+              <p>Доступ к сервису, возможность работать с расчетами и 1 час консультации с Романом Суслиным по вашему проекту кофейни.</p>
+            </details>
+            <details class="mbs-openapp__faq-item">
+              <summary>Можно ли выгрузить расчеты?</summary>
+              <p>Да. В сервисе предусмотрены PDF и Excel-отчеты, чтобы сохранить модель или обсудить ее с партнером, инвестором или командой.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-openapp__section">
+      <div class="mbs-openapp__container">
+        <div class="mbs-openapp__final-card">
+          <div>
+            <p class="mbs-openapp__final-label">Следующий шаг</p>
+            <h2>Откройте кофейню с понятной моделью, а не с набором догадок</h2>
+            <p>Купите доступ к сервису, посчитайте проект и разберите ключевые решения на консультации с основателем MBS*.</p>
+          </div>
+          <div class="mbs-openapp__actions">
+            <a class="mbs-openapp__btn mbs-openapp__btn--primary" href="#order:Сервис открытия кофейни + консультация=18900">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                <path d="M7 8h12l-1.2 7.2a2 2 0 0 1-2 1.7H9.4a2 2 0 0 1-2-1.6L5.8 5.7A2 2 0 0 0 3.9 4H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 21h.1M17 21h.1" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+              Купить за 18 900 ₽
+            </a>
+            <a class="mbs-openapp__btn mbs-openapp__btn--ghost" href="#consalt">
+              Оставить заявку
+            </a>
+            <div class="mbs-openapp__contacts">
+              <a class="mbs-openapp__contact" href="tel:+79959992836">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                  <path d="M7.2 4.5 9.1 8c.4.7.2 1.5-.4 2l-1 .8a12.7 12.7 0 0 0 5.5 5.5l.8-1c.5-.6 1.3-.8 2-.4l3.5 1.9c.7.4 1 1.2.8 1.9-.4 1.4-1.7 2.3-3.1 2.3C9.4 21 3 14.6 3 6.8c0-1.4.9-2.7 2.3-3.1.7-.2 1.5.1 1.9.8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                +7 995 999 2836
+              </a>
+              <a class="mbs-openapp__contact" href="https://t.me/Moscow_barista_school" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                  <path d="m21 4-3.2 16-5.1-4.2-3 2.9.6-4.6L4 11.8 21 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="m10.3 14.1 7.2-6.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Написать в Telegram
+              </a>
+              <a class="mbs-openapp__contact" href="https://wa.me/message/42GZ6YYBJTM5B1" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+                  <path d="M5.5 18.5 4 22l3.8-1.3A9 9 0 1 0 3 12.8a9.1 9.1 0 0 0 2.5 5.7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M9.3 8.8c.2-.5.4-.6.8-.6h.6c.2 0 .5.1.6.5l.7 1.6c.1.3.1.5-.1.7l-.5.6c.7 1.2 1.6 2.1 2.9 2.8l.7-.5c.2-.2.4-.2.7-.1l1.6.8c.4.2.5.4.5.7v.5c0 .4-.2.7-.6.9-.6.3-1.4.4-2.1.2-3.4-.9-5.8-3.3-6.8-6.7-.2-.6-.1-1.4.2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Написать в WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.mbs-openapp');
+      if (!root) return;
+
+      root.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        var href = link.getAttribute('href') || '';
+        if (href === '#consalt' || href.indexOf('#order:') === 0) return;
+
+        link.addEventListener('click', function (event) {
+          var target = document.querySelector(href);
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      root.querySelectorAll('.mbs-openapp__screen[data-src]').forEach(function (screen) {
+        var src = (screen.getAttribute('data-src') || '').trim();
+        if (!src) return;
+
+        var card = screen.closest('.mbs-openapp__screen-card');
+        if (card) {
+          card.setAttribute('role', 'button');
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('aria-label', 'Открыть скриншот: ' + (screen.getAttribute('data-alt') || 'скриншот сервиса'));
+        }
+
+        var zoom = document.createElement('span');
+        zoom.className = 'mbs-openapp__screen-zoom';
+        zoom.innerHTML = '<i class="ph ph-magnifying-glass-plus"></i> Увеличить';
+        screen.appendChild(zoom);
+
+        var img = document.createElement('img');
+        img.src = src;
+        img.alt = screen.getAttribute('data-alt') || 'Скриншот сервиса';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.addEventListener('load', function () {
+          screen.innerHTML = '';
+          screen.appendChild(img);
+          screen.appendChild(zoom);
+        });
+      });
+
+      var lightbox = document.createElement('div');
+      lightbox.className = 'mbs-openapp__lightbox';
+      lightbox.setAttribute('role', 'dialog');
+      lightbox.setAttribute('aria-modal', 'true');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightbox.innerHTML = [
+        '<div class="mbs-openapp__lightbox-panel" role="document">',
+          '<button class="mbs-openapp__lightbox-close" type="button" aria-label="Закрыть">×</button>',
+          '<div class="mbs-openapp__lightbox-image-wrap">',
+            '<button class="mbs-openapp__lightbox-slide-nav mbs-openapp__lightbox-slide-nav--prev" type="button" aria-label="Предыдущий экран">‹</button>',
+            '<img class="mbs-openapp__lightbox-image" src="" alt="">',
+            '<button class="mbs-openapp__lightbox-slide-nav mbs-openapp__lightbox-slide-nav--next" type="button" aria-label="Следующий экран">›</button>',
+            '<div class="mbs-openapp__lightbox-slide-count" aria-live="polite"></div>',
+          '</div>',
+          '<div class="mbs-openapp__lightbox-caption">',
+            '<h3 class="mbs-openapp__lightbox-title"></h3>',
+            '<p class="mbs-openapp__lightbox-text"></p>',
+            '<div class="mbs-openapp__lightbox-recipes" aria-label="Список рецептов напитков"></div>',
+          '</div>',
+        '</div>'
+      ].join('');
+      document.body.appendChild(lightbox);
+
+      var lightboxImage = lightbox.querySelector('.mbs-openapp__lightbox-image');
+      var lightboxTitle = lightbox.querySelector('.mbs-openapp__lightbox-title');
+      var lightboxText = lightbox.querySelector('.mbs-openapp__lightbox-text');
+      var lightboxRecipes = lightbox.querySelector('.mbs-openapp__lightbox-recipes');
+      var lightboxPrev = lightbox.querySelector('.mbs-openapp__lightbox-slide-nav--prev');
+      var lightboxNext = lightbox.querySelector('.mbs-openapp__lightbox-slide-nav--next');
+      var lightboxCount = lightbox.querySelector('.mbs-openapp__lightbox-slide-count');
+      var lightboxClose = lightbox.querySelector('.mbs-openapp__lightbox-close');
+      var screenCards = Array.prototype.slice.call(root.querySelectorAll('.mbs-openapp__screen-card')).filter(function (card) {
+        var screen = card.querySelector('.mbs-openapp__screen[data-src]');
+        return screen && (screen.getAttribute('data-src') || '').trim();
+      });
+      var currentSlides = [];
+      var currentSlideIndex = 0;
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var recipeGroups = [
+        {
+          title: 'Горячие кофейные',
+          items: [
+            'Эспрессо Доппио',
+            'Американо 200',
+            'Американо 400',
+            'Капучино 200',
+            'Капучино 300',
+            'Латте 300',
+            'Латте 400',
+            'Флэт уайт 200',
+            'Моккачино 300',
+            'Раф ванильный 300',
+            'Раф апельсиновый 300',
+            'Какао 300',
+            'Какао 400',
+            'Ванильное облако 300'
+          ]
+        },
+        {
+          title: 'Чай и матча',
+          items: [
+            'Чай в ассортименте 300',
+            'Матча 300'
+          ]
+        },
+        {
+          title: 'Холодные',
+          items: [
+            'Айс-латте 300',
+            'Айс-латте 500',
+            'Айс-какао 300',
+            'Айс-какао 500',
+            'Бамбл 300',
+            'Эспрессо-тоник 300'
+          ]
+        },
+        {
+          title: 'Фильтр-кофе',
+          items: [
+            'Фильтр-кофе 200',
+            'Фильтр-кофе 300',
+            'Пуровер 270'
+          ]
+        }
+      ];
+
+      function escHtml(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        lightboxImage.src = '';
+      }
+
+      function getCardDetails(card) {
+        var details = [];
+        for (var index = 1; index <= 6; index += 1) {
+          var src = (card.getAttribute('data-detail-' + index + '-src') || '').trim();
+          if (!src) continue;
+
+          details.push({
+            src: src,
+            title: card.getAttribute('data-detail-' + index + '-title') || 'Дополнительный экран',
+            text: card.getAttribute('data-detail-' + index + '-text') || '',
+          });
+        }
+        return details;
+      }
+
+      function recipeListHtml() {
+        return recipeGroups.map(function (group) {
+          return '<div class="mbs-openapp__recipe-group">' +
+            '<strong>' + escHtml(group.title) + '<small>' + group.items.length + '</small></strong>' +
+            '<ul>' + group.items.map(function (name) {
+              return '<li>' + escHtml(name) + '</li>';
+            }).join('') + '</ul>' +
+          '</div>';
+        }).join('');
+      }
+
+      function setLightboxImage(src, alt, title, text, recipesHtml) {
+        lightboxImage.src = src;
+        lightboxImage.alt = alt || 'Скриншот сервиса';
+        lightboxTitle.textContent = title || 'Скриншот сервиса';
+        lightboxText.textContent = text || '';
+        if (recipesHtml) {
+          lightboxRecipes.innerHTML = recipesHtml;
+          lightboxRecipes.classList.add('is-visible');
+        } else {
+          lightboxRecipes.innerHTML = '';
+          lightboxRecipes.classList.remove('is-visible');
+        }
+      }
+
+      function updateSlideControls() {
+        var hasManySlides = currentSlides.length > 1;
+        lightboxPrev.classList.toggle('is-visible', hasManySlides);
+        lightboxNext.classList.toggle('is-visible', hasManySlides);
+        lightboxCount.classList.toggle('is-visible', hasManySlides);
+        lightboxCount.textContent = hasManySlides ? (currentSlideIndex + 1) + ' / ' + currentSlides.length : '';
+      }
+
+      function showLightboxSlide(index) {
+        if (!currentSlides.length) return;
+
+        currentSlideIndex = (index + currentSlides.length) % currentSlides.length;
+        var slide = currentSlides[currentSlideIndex];
+        setLightboxImage(slide.src, slide.alt, slide.title, slide.text, slide.recipesHtml);
+        updateSlideControls();
+      }
+
+      function showAdjacentLightboxSlide(direction) {
+        if (currentSlides.length < 2) return;
+        showLightboxSlide(currentSlideIndex + direction);
+      }
+
+      function showLightboxCard(card) {
+        var screen = card.querySelector('.mbs-openapp__screen[data-src]');
+        if (!screen) return;
+
+        var src = (screen.getAttribute('data-src') || '').trim();
+        if (!src) return;
+
+        var title = card.querySelector('.mbs-openapp__screen-caption strong');
+        var text = card.querySelector('.mbs-openapp__screen-caption > span');
+
+        currentSlides = [{
+          src: src,
+          alt: screen.getAttribute('data-alt') || 'Скриншот сервиса',
+          title: title ? title.textContent : 'Скриншот сервиса',
+          text: text ? text.textContent : '',
+          recipesHtml: card.getAttribute('data-recipe-card') === 'true' ? recipeListHtml() : ''
+        }].concat(getCardDetails(card).map(function (detail) {
+          return {
+            src: detail.src,
+            alt: detail.title,
+            title: detail.title,
+            text: detail.text
+          };
+        }));
+
+        showLightboxSlide(0);
+      }
+
+      function openLightbox(card) {
+        showLightboxCard(card);
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        lightboxClose.focus();
+      }
+
+      screenCards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          openLightbox(card);
+        });
+
+        card.addEventListener('keydown', function (event) {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          openLightbox(card);
+        });
+      });
+
+      lightboxPrev.addEventListener('click', function (event) {
+        event.stopPropagation();
+        showAdjacentLightboxSlide(-1);
+      });
+      lightboxNext.addEventListener('click', function (event) {
+        event.stopPropagation();
+        showAdjacentLightboxSlide(1);
+      });
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (event) {
+        if (event.target === lightbox) closeLightbox();
+      });
+      lightbox.addEventListener('touchstart', function (event) {
+        if (!lightbox.classList.contains('is-open') || !event.changedTouches.length) return;
+        touchStartX = event.changedTouches[0].clientX;
+        touchStartY = event.changedTouches[0].clientY;
+      }, { passive: true });
+      lightbox.addEventListener('touchend', function (event) {
+        if (!lightbox.classList.contains('is-open') || !event.changedTouches.length) return;
+
+        var deltaX = event.changedTouches[0].clientX - touchStartX;
+        var deltaY = event.changedTouches[0].clientY - touchStartY;
+        if (Math.abs(deltaX) < 52 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+        showAdjacentLightboxSlide(deltaX > 0 ? -1 : 1);
+      }, { passive: true });
+      document.addEventListener('keydown', function (event) {
+        if (!lightbox.classList.contains('is-open')) return;
+
+        if (event.key === 'Escape') {
+          closeLightbox();
+        } else if (event.key === 'ArrowLeft') {
+          showAdjacentLightboxSlide(-1);
+        } else if (event.key === 'ArrowRight') {
+          showAdjacentLightboxSlide(1);
+        }
+      });
+
+      var faqItems = Array.prototype.slice.call(root.querySelectorAll('.mbs-openapp__faq-item'));
+      faqItems.forEach(function (item) {
+        item.addEventListener('toggle', function () {
+          if (!item.open) return;
+
+          faqItems.forEach(function (otherItem) {
+            if (otherItem !== item) otherItem.open = false;
+          });
+        });
+      });
+
+      var stickyDesktopQuery = window.matchMedia('(min-width: 821px)');
+      var stickyTicking = false;
+
+      function clampNumber(value, min, max) {
+        return Math.max(min, Math.min(value, max));
+      }
+
+      function updateStickyPanels() {
+        var panels = Array.prototype.slice.call(root.querySelectorAll('[data-mbs-sticky-panel]'));
+        panels.forEach(function (panel) {
+          var section = panel.closest('[data-mbs-sticky-section]');
+          if (!section || !stickyDesktopQuery.matches) {
+            panel.style.transform = '';
+            return;
+          }
+
+          var container = panel.parentElement || section;
+          var offset = parseInt(panel.getAttribute('data-mbs-sticky-offset') || '90', 10);
+          var containerRect = container.getBoundingClientRect();
+          var maxShift = Math.max(0, container.offsetHeight - panel.offsetHeight);
+          var shift = clampNumber(offset - containerRect.top, 0, maxShift);
+          panel.style.transform = 'translate3d(0,' + shift + 'px,0)';
+        });
+      }
+
+      function requestStickyUpdate() {
+        if (stickyTicking) return;
+        stickyTicking = true;
+        window.requestAnimationFrame(function () {
+          updateStickyPanels();
+          stickyTicking = false;
+        });
+      }
+
+      window.addEventListener('scroll', requestStickyUpdate, { passive: true });
+      window.addEventListener('resize', requestStickyUpdate);
+      window.addEventListener('load', requestStickyUpdate);
+      requestStickyUpdate();
+    })();
+  </script>
+</body>
+</html>

@@ -4,8 +4,8 @@
      ВАЖНО: block-01-hero.html должен идти выше на странице
             (шрифты и иконки уже подключены там)
 ════════════════════════════════════════════════════════ -->
-<link rel="dns-prefetch" href="https://159-194-202-120.sslip.io">
-<link rel="preconnect" href="https://159-194-202-120.sslip.io" crossorigin>
+<link rel="dns-prefetch" href="https://api.barista-school.ru">
+<link rel="preconnect" href="https://api.barista-school.ru" crossorigin>
 <style>
   :root {
     --mbs-green-dark: #417033;
@@ -210,7 +210,12 @@
 
 <script>
 (function () {
-  const API_URL = 'https://159-194-202-120.sslip.io/api/public/certificates';
+  const API_URLS = [
+    'https://api.barista-school.ru/api/public/certificates',
+    'https://159-194-202-120.sslip.io/api/public/certificates'
+  ];
+  const CACHE_KEY = 'mbs-certificates-catalog-v1';
+  const CACHE_TTL = 6 * 60 * 60 * 1000;
   const YCLIENTS_BUY_BASE = 'https://o3059.yclients.com/certificates/';
 
   const tabsEl    = document.getElementById('js-cert-tabs');
@@ -344,7 +349,7 @@
   function render(categories) {
     if (!categories || categories.length === 0) { showError('Сертификаты не найдены'); return; }
     const CAT_DESC_SLUG = {
-      'barista': 'Профессиональные курсы для тех, кто хочет стать Бариста — от базовых навыков до продвинутых техник.',
+      'barista': 'Профессиональные курсы для тех, кто хочет стать бариста — от базовых навыков до продвинутых техник.',
       'owners':  'Программы для владельцев и управляющих: как выстроить процессы и повысить качество кофейни.',
       'hobby':   'Для любителей кофе — научитесь готовить правильно дома, понять вкус и аромат.',
       'lovers':  'Для любителей кофе — научитесь готовить правильно дома, понять вкус и аромат.',
@@ -352,7 +357,7 @@
       'nominal': 'Сертификат на любую сумму — подарите право выбрать самостоятельно.',
     };
     const CAT_DESC_TITLE = {
-      'Для бариста': 'Профессиональные курсы для тех, кто хочет стать Бариста — от базовых навыков до продвинутых техник.',
+      'Для бариста': 'Профессиональные курсы для тех, кто хочет стать бариста — от базовых навыков до продвинутых техник.',
       'Для владельцев': 'Программы для владельцев и управляющих: как выстроить процессы и повысить качество кофейни.',
       'Открыть кофейню': 'Программы для владельцев и управляющих: как выстроить процессы и повысить качество кофейни.',
       'Для любителей': 'Для любителей кофе — научитесь готовить правильно дома, понять вкус и аромат.',
@@ -574,21 +579,58 @@
     </div>`;
   }
 
-  async function load() {
+  async function fetchJson(url) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 10000);
+    const timer = setTimeout(() => controller.abort(), 7000);
     try {
-      const resp = await fetch(API_URL, { signal: controller.signal });
+      const resp = await fetch(url, { signal: controller.signal, cache: 'no-store' });
       clearTimeout(timer);
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       const json = await resp.json();
       if (!json.ok) throw new Error(json.message || 'API error');
-      render(json.categories);
+      return json;
     } catch (err) {
       clearTimeout(timer);
-      console.warn('Certificates API error:', err);
-      showError('Сервис временно недоступен.');
+      throw err;
     }
+  }
+
+  function readCachedCatalog() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if (!cached || !cached.ts || !Array.isArray(cached.categories)) return null;
+      if (Date.now() - cached.ts > CACHE_TTL) return null;
+      return cached.categories;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function writeCachedCatalog(categories) {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), categories: categories }));
+    } catch (e) {}
+  }
+
+  async function load() {
+    for (const url of API_URLS) {
+      try {
+        const json = await fetchJson(url);
+        writeCachedCatalog(json.categories);
+        render(json.categories);
+        return;
+      } catch (err) {
+        console.warn('Certificates API error:', url, err);
+      }
+    }
+
+    const cached = readCachedCatalog();
+    if (cached) {
+      render(cached);
+      return;
+    }
+
+    showError('Сервис временно недоступен.');
   }
 
   load();

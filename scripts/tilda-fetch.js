@@ -13,7 +13,21 @@ const fs = require('fs');
 const path = require('path');
 
 // ─── Ключи Tilda API (читаются из .env или переменных окружения) ─────────────
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+function loadEnvFile(filepath) {
+  if (!fs.existsSync(filepath)) return;
+  const lines = fs.readFileSync(filepath, 'utf8').split(/\r?\n/);
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eqIndex = trimmed.indexOf('=');
+    if (eqIndex === -1) continue;
+    const key = trimmed.slice(0, eqIndex).trim();
+    const value = trimmed.slice(eqIndex + 1).trim().replace(/^['"]|['"]$/g, '');
+    if (key && process.env[key] === undefined) process.env[key] = value;
+  }
+}
+
+loadEnvFile(path.join(__dirname, '..', '.env'));
 const PUBLIC_KEY  = process.env.TILDA_PUBLIC_KEY;
 const SECRET_KEY  = process.env.TILDA_SECRET_KEY;
 if (!PUBLIC_KEY || !SECRET_KEY) {

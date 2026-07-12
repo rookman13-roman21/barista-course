@@ -9,7 +9,7 @@
     var eventSchema = {
       '@context': 'https://schema.org',
       '@type': 'Event',
-      name: 'MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве',
+      name: 'MBS* Latte-art x Петмол — чемпионат по латте-арту',
       description: 'Чемпионат по латте-арту от Московской школы бариста и Петмол для бариста с опытом работы до 3 лет. Участники выступают перед судьями, получают соревновательный опыт и борются за призы от школы и партнёров.',
       url: 'https://baristaschool.ru/latte_art_battle',
       image: 'https://static.tildacdn.com/tild3139-6138-4461-a238-303466366633/IMG_9096.PNG',
@@ -78,7 +78,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Event",
-  "name": "MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве",
+  "name": "MBS* Latte-art x Петмол — чемпионат по латте-арту",
   "description": "Чемпионат по латте-арту от Московской школы бариста и Петмол для бариста с опытом работы до 3 лет. Участники выступают перед судьями, получают соревновательный опыт и борются за призы от школы и партнёров.",
   "url": "https://baristaschool.ru/latte_art_battle",
   "image": "https://static.tildacdn.com/tild3139-6138-4461-a238-303466366633/IMG_9096.PNG",
@@ -1256,8 +1256,8 @@
   }
   .mbs-latte-battle-judges__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
   }
   .mbs-latte-battle-judge {
     overflow: hidden;
@@ -1276,7 +1276,7 @@
     box-shadow: 0 18px 42px rgba(31, 31, 31, .12);
   }
   .mbs-latte-battle-judge:focus { outline: none; }
-  .mbs-latte-battle-judge:focus-visible { outline: 3px solid var(--mbs-green-light); outline-offset: 3px; }
+  .mbs-latte-battle-judge:focus-visible { outline: none; }
   button.mbs-latte-battle-judge {
     display: block;
     width: 100%;
@@ -1284,7 +1284,7 @@
   }
   .mbs-latte-battle-judge__photo {
     aspect-ratio: 1 / 1.02;
-    height: clamp(300px, 31vw, 390px);
+    height: clamp(220px, 21vw, 270px);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -1302,11 +1302,11 @@
   .mbs-latte-battle-judge__body {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 16px;
   }
   .mbs-latte-battle-judge h3 {
     margin: 0 0 6px;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.25;
     font-weight: 900;
   }
@@ -1314,7 +1314,7 @@
     margin: 0 0 10px;
     min-height: 32px;
     color: var(--mbs-green-dark);
-    font-size: 12px;
+    font-size: 11px;
     line-height: 1.35;
     font-weight: 900;
     display: -webkit-box;
@@ -1323,16 +1323,7 @@
     overflow: hidden;
   }
   .mbs-latte-battle-judge p {
-    margin: 0;
-    min-height: 57px;
-    color: var(--mbs-gray);
-    font-size: 13px;
-    line-height: 1.45;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    display: none;
   }
   .mbs-latte-battle-judge__more {
     display: inline-flex;
@@ -2187,7 +2178,7 @@
       order: 3;
     }
     .mbs-latte-battle-partners__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .mbs-latte-battle-judges__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .mbs-latte-battle-judges__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .mbs-latte-battle-rules__box,
     .mbs-latte-battle-final__box,
     .mbs-latte-battle-faq__grid { grid-template-columns: 1fr; }
@@ -2623,7 +2614,7 @@
       <div class="mbs-latte-battle-hero__grid">
         <div>
           <div class="mbs-latte-battle-hero__kicker" data-archive-hero-kicker>Чемпионат по латте-арту</div>
-          <h1>MBS* Latte-art x Петмол — чемпионат по латте-арту в Москве</h1>
+          <h1>MBS* Latte-art x Петмол — чемпионат по латте-арту</h1>
           <p class="mbs-latte-battle-hero__lead" data-archive-hero-lead>Чемпионат для бариста с опытом до 3 лет: реальная соревновательная атмосфера, профессиональное судейство и возможность получить первый чемпионатный опыт.</p>
           <div class="mbs-latte-battle-hero__actions">
             <button class="mbs-latte-battle__btn js-mbs-latte-battle-open" type="button">Участвовать</button>
@@ -2727,10 +2718,13 @@
       <div class="mbs-latte-battle__label">Призы</div>
       <h2 class="mbs-latte-battle__title">Побеждай и получай призы!</h2>
       <p class="mbs-latte-battle__sub">Победители получат подарки от партнёров чемпионата. Ниже собрали призы для каждого места.</p>
-      <p class="mbs-latte-battle-prizes__notice">Список призов будет дополнен: скоро добавим подарки от генерального партнёра чемпионата — компании Петмол.</p>
       <div class="mbs-latte-battle-prizes__grid">
         <article class="mbs-latte-battle-prize-card mbs-latte-battle-prize-card--second">
           <h3 class="mbs-latte-battle-prize-card__place">2 <span>место</span></h3>
+          <div class="mbs-latte-battle-prize-group">
+            <h3>Петмол</h3>
+            <ul><li>подарочный сертификат в маркетплейсе Ozon на 20 000 ₽</li></ul>
+          </div>
           <div class="mbs-latte-battle-prize-group">
             <h3>Gourmet Style</h3>
             <ul><li>кофемолка Hero Z1</li></ul>
@@ -2767,6 +2761,10 @@
         <article class="mbs-latte-battle-prize-card mbs-latte-battle-prize-card--first">
           <h3 class="mbs-latte-battle-prize-card__place">1 <span>место</span></h3>
           <div class="mbs-latte-battle-prize-card__badge">главный набор</div>
+          <div class="mbs-latte-battle-prize-group">
+            <h3>Петмол</h3>
+            <ul><li>подарочный сертификат в маркетплейсе Ozon на 25 000 ₽</li></ul>
+          </div>
           <div class="mbs-latte-battle-prize-group">
             <h3>Gourmet Style</h3>
             <ul><li>весы для кофе Hero white</li></ul>
@@ -2807,6 +2805,10 @@
 
         <article class="mbs-latte-battle-prize-card mbs-latte-battle-prize-card--third">
           <h3 class="mbs-latte-battle-prize-card__place">3 <span>место</span></h3>
+          <div class="mbs-latte-battle-prize-group">
+            <h3>Петмол</h3>
+            <ul><li>подарочный сертификат в маркетплейсе Ozon на 15 000 ₽</li></ul>
+          </div>
           <div class="mbs-latte-battle-prize-group">
             <h3>Gourmet Style</h3>
             <ul><li>Hero rib mug 240 ml — кружка</li></ul>
@@ -3566,23 +3568,22 @@
       }
       return esc((judge.name || 'M').charAt(0));
     }
-    function judgePreview(text) {
-      var value = String(text || '').replace(/\s+/g, ' ').trim();
-      if (!value) return '';
-      return value.length > 130 ? value.slice(0, 130).trim() + '...' : value;
-    }
     var JUDGE_CARD_COPY = {
       'Анастасия Кадушкина': {
         role: 'Управляющая MBS',
         description: '10+ лет в кофейной индустрии. Работала бариста, шеф-бариста, бренд-шеф и управляющей кофейных проектов.'
       },
-      'Елена Гущина': {
-        role: 'Судья национальных чемпионатов',
-        description: 'Судья национальных чемпионатов бариста с 2010 года. Бренд-бариста Лакталис, призёр российских чемпионатов.'
-      },
       'Владимир Матвейчук': {
         role: 'Сертифицированный судья latte-art',
         description: 'Сертифицированный судья latte-art LORD OF LATTE ART CHAMPIONSHIP. Эксперт по sensory skill и оценке рисунка.'
+      },
+      'Кристмас Ли': {
+        role: 'Сертифицированный судья чемпионатов Бариста',
+        description: 'Сертифицированный судья чемпионатов Бариста с 2019 года. Главный судья Dalla Corte Cup и Бариста Года.'
+      },
+      'Николай Хюпенен': {
+        role: 'Кофейный брокер и судья чемпионатов',
+        description: 'Кофейный брокер, владелец обжарки Obzharka.com, чемпион России по каптестингу, судья кофейных чемпионатов с 2004 года.'
       }
     };
     function judgeCardCopy(judge) {
@@ -3618,12 +3619,6 @@
       });
       if (!sections.experience.length && lines.length) sections.experience.push(lines[0]);
       return sections;
-    }
-    function judgeCardDescription(judge) {
-      var copy = judgeCardCopy(judge);
-      if (copy && copy.description) return copy.description;
-      var sections = judgeDescriptionSections(judge.description);
-      return judgePreview(sections.experience.join(' '));
     }
     function judgeSectionHtml(title, lines) {
       if (!lines || !lines.length) return '';
@@ -3677,7 +3672,6 @@
           '<div class="mbs-latte-battle-judge__body">' +
             '<h3>' + esc(judge.name) + '</h3>' +
             '<div class="mbs-latte-battle-judge__role">' + esc(judgeCardRole(judge)) + '</div>' +
-            '<p>' + esc(judgeCardDescription(judge)) + '</p>' +
             '<span class="mbs-latte-battle-judge__more">Подробнее</span>' +
           '</div>' +
         '</button>';

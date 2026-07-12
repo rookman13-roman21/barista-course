@@ -1,0 +1,302 @@
+<!-- MBS student discount block: standalone Tilda HTML fragment -->
+<section class="mbs-student-discount" aria-label="Скидка для школьников и студентов">
+  <style>
+    .mbs-student-discount {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 34px 20px;
+      font-family: "Mulish", Arial, sans-serif;
+      color: #24262b;
+      background: transparent;
+    }
+
+    .mbs-student-discount *,
+    .mbs-student-discount *::before,
+    .mbs-student-discount *::after {
+      box-sizing: border-box;
+    }
+
+    .mbs-student-discount__card {
+      width: min(100%, 860px);
+      margin: 0 auto;
+      padding: 26px 34px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+      align-items: center;
+      gap: 24px;
+      background: #ffffff;
+      border: 3px solid #ec98a7;
+      border-radius: 20px;
+    }
+
+    .mbs-student-discount__label {
+      margin: 0 0 10px;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 800;
+      color: #cc2841;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    .mbs-student-discount__title {
+      margin: 0;
+      max-width: 520px;
+      font-size: 28px;
+      line-height: 1.18;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: #24262b;
+    }
+
+    .mbs-student-discount__text {
+      margin: 10px 0 0;
+      max-width: 470px;
+      font-size: 17px;
+      line-height: 1.4;
+      font-weight: 500;
+      letter-spacing: 0;
+      color: #3e424a;
+    }
+
+    .mbs-student-discount__actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mbs-student-discount__age {
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+      padding: 7px 11px;
+      border-radius: 10px;
+      background: #e7f2e3;
+      color: #417033;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .mbs-student-discount__promo {
+      margin: 0;
+      position: relative;
+      width: fit-content;
+      color: #24262b;
+    }
+
+    .mbs-student-discount__promo-summary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: #f8dde1;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .mbs-student-discount__promo-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .mbs-student-discount__promo-label {
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: #cc2841;
+    }
+
+    .mbs-student-discount__promo-code {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f8dde1;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: #cc2841;
+    }
+
+    .mbs-student-discount__conditions {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: calc(100% + 10px);
+      z-index: 5;
+      width: min(360px, calc(100vw - 48px));
+      padding: 12px 14px;
+      border: 1px solid #ec98a7;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 14px 34px rgba(36, 38, 43, 0.14);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: #5d616a;
+    }
+
+    .mbs-student-discount__promo[open] .mbs-student-discount__conditions {
+      display: block;
+    }
+
+    .mbs-student-discount__conditions p {
+      margin: 0;
+    }
+
+    .mbs-student-discount__conditions p + p {
+      margin-top: 8px;
+    }
+
+    .mbs-student-discount__image-wrap {
+      width: 100%;
+      aspect-ratio: 1.45 / 1;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #f8dde1;
+    }
+
+    .mbs-student-discount__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    @media (max-width: 760px) {
+      .mbs-student-discount {
+        padding: 28px 16px;
+      }
+
+      .mbs-student-discount__card {
+        grid-template-columns: 1fr;
+        padding: 26px 22px;
+        gap: 22px;
+        border-radius: 18px;
+      }
+
+      .mbs-student-discount__label {
+        font-size: 13px;
+      }
+
+      .mbs-student-discount__title {
+        font-size: 25px;
+        line-height: 1.22;
+      }
+
+      .mbs-student-discount__text {
+        font-size: 17px;
+        line-height: 1.45;
+      }
+
+      .mbs-student-discount__actions {
+        width: 100%;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .mbs-student-discount__age {
+        flex: 1 1 auto;
+        justify-content: center;
+        font-size: 15px;
+      }
+
+      .mbs-student-discount__promo {
+        flex: 1 1 auto;
+        width: auto;
+      }
+
+      .mbs-student-discount__promo-summary {
+        width: 100%;
+      }
+
+      .mbs-student-discount__promo-label {
+        font-size: 15px;
+      }
+
+      .mbs-student-discount__promo-code {
+        font-size: 17px;
+      }
+
+      .mbs-student-discount__conditions {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        font-size: 15px;
+      }
+
+      .mbs-student-discount__image-wrap {
+        width: 100%;
+        aspect-ratio: 1.5 / 1;
+        border-radius: 16px;
+      }
+    }
+  </style>
+
+  <div class="mbs-student-discount__card">
+    <div class="mbs-student-discount__content">
+      <p class="mbs-student-discount__label">До 31 августа 2026 года</p>
+      <h2 class="mbs-student-discount__title">Скидка 10% на индивидуальные курсы бариста</h2>
+      <p class="mbs-student-discount__text">Для школьников и студентов в Московской школе бариста.</p>
+      <div class="mbs-student-discount__actions">
+        <div class="mbs-student-discount__age">Обучаем с 14 лет</div>
+        <details class="mbs-student-discount__promo">
+          <summary class="mbs-student-discount__promo-summary" aria-label="Условия скидки">
+            <span class="mbs-student-discount__promo-label">Условия</span>
+          </summary>
+          <div class="mbs-student-discount__conditions">
+            <p>Промокод: <strong class="mbs-student-discount__promo-code">СТУДЕНТ10</strong></p>
+            <p>Назовите промокод при записи.</p>
+            <p>Скидка действует после подтверждения статуса школьника или студента.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+    <div class="mbs-student-discount__image-wrap" aria-hidden="true">
+      <img
+        class="mbs-student-discount__image"
+        src="https://static.tildacdn.com/tild3864-3635-4431-b562-653032663566/__.jpeg"
+        alt=""
+        loading="lazy"
+      >
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var blocks = document.querySelectorAll(".mbs-student-discount");
+
+      blocks.forEach(function (block) {
+        var promo = block.querySelector(".mbs-student-discount__promo");
+
+        if (!promo || promo.dataset.mbsDiscountBound === "true") {
+          return;
+        }
+
+        promo.dataset.mbsDiscountBound = "true";
+
+        document.addEventListener("click", function (event) {
+          if (promo.open && !promo.contains(event.target)) {
+            promo.open = false;
+          }
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && promo.open) {
+            promo.open = false;
+          }
+        });
+      });
+    })();
+  </script>
+</section>

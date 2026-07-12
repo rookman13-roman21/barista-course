@@ -1,0 +1,1739 @@
+<!--
+  MBS Partners Catalog Tilda snippet
+  Insert into Tilda HTML block on https://baristaschool.ru/all-partners
+-->
+<section id="mbs-partners-catalog" class="mbs-partners" data-partners-api-url="https://api.barista-school.ru/api/partners.json" data-partners-assets-base-url="https://api.barista-school.ru/partners-catalog/" data-partners-allow-demo="false">
+  <style>
+    #mbs-partners-catalog {
+      --mbs-green: #417033;
+      --mbs-green-2: #4f883e;
+      --mbs-mint: #e7f2e3;
+      --mbs-red: #cc2841;
+      --mbs-red-soft: #f8dde1;
+      --mbs-pink: #ec98a7;
+      --mbs-text: #1f2a1d;
+      --mbs-muted: #5f685b;
+      --mbs-line: #dbe6d6;
+      --mbs-bg: #ffffff;
+      --mbs-white: #ffffff;
+      color: var(--mbs-text);
+      background: var(--mbs-bg);
+      font-family: "Mulish", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    #mbs-partners-catalog * {
+      box-sizing: border-box;
+    }
+
+    .mbs-partners__inner {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 56px;
+    }
+
+    .mbs-partners__top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .mbs-partners__eyebrow {
+      margin: 0 0 10px;
+      color: var(--mbs-green);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .mbs-partners__title {
+      margin: 0;
+      max-width: 780px;
+      color: var(--mbs-text);
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .mbs-partners__lead {
+      margin: 18px 0 0;
+      max-width: 680px;
+      color: var(--mbs-muted);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .mbs-partners__search {
+      display: grid;
+      gap: 10px;
+      align-content: end;
+    }
+
+    .mbs-partners__search label {
+      color: var(--mbs-muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .mbs-partners__search input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 8px;
+      background: var(--mbs-white);
+      color: var(--mbs-text);
+      font: inherit;
+      font-size: 16px;
+      outline: none;
+      padding: 0 14px;
+    }
+
+    .mbs-partners__search input:focus {
+      border-color: var(--mbs-green);
+      box-shadow: 0 0 0 3px rgba(65, 112, 51, .14);
+    }
+
+    .mbs-partners-categories {
+      margin: 0 0 26px;
+    }
+
+    .mbs-partners-categories__head,
+    .mbs-partners-listing__head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin: 0 0 14px;
+    }
+
+    .mbs-partners-categories__title,
+    .mbs-partners-listing__title {
+      margin: 0;
+      color: var(--mbs-text);
+      font-size: 24px;
+      line-height: 1.15;
+      font-weight: 900;
+    }
+
+    .mbs-partners-categories__note,
+    .mbs-partners-listing__note {
+      margin: 6px 0 0;
+      max-width: 620px;
+      color: var(--mbs-muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .mbs-partners-categories__grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mbs-partners-category {
+      position: relative;
+      display: grid;
+      align-content: space-between;
+      min-height: 154px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 8px;
+      background: var(--mbs-white);
+      color: var(--mbs-text);
+      cursor: pointer;
+      font: inherit;
+      overflow: hidden;
+      padding: 0;
+      text-align: left;
+      text-decoration: none;
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+    }
+
+    .mbs-partners-category::after {
+      content: "→";
+      position: absolute;
+      right: 14px;
+      bottom: 12px;
+      z-index: 3;
+      color: var(--mbs-white);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .mbs-partners-category:hover,
+    .mbs-partners-category:focus-visible {
+      border-color: var(--mbs-green);
+      box-shadow: 0 12px 30px rgba(31, 42, 29, .08);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .mbs-partners-category.is-active {
+      border-color: var(--mbs-green);
+      box-shadow: 0 0 0 3px rgba(65, 112, 51, .12);
+    }
+
+    .mbs-partners-category__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(135deg, var(--mbs-mint), var(--mbs-white));
+    }
+
+    .mbs-partners-category__media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mbs-partners-category__media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(31, 42, 29, .72), rgba(31, 42, 29, .28) 58%, rgba(31, 42, 29, .16)),
+        linear-gradient(0deg, rgba(31, 42, 29, .32), rgba(31, 42, 29, .02));
+    }
+
+    .mbs-partners-category__content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      align-content: space-between;
+      min-height: 154px;
+      padding: 16px;
+    }
+
+    .mbs-partners-category--plain .mbs-partners-category__media::after {
+      background: linear-gradient(135deg, rgba(65, 112, 51, .92), rgba(79, 136, 62, .72));
+    }
+
+    .mbs-partners-category__name {
+      display: block;
+      max-width: calc(100% - 18px);
+      color: var(--mbs-white);
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.15;
+      text-shadow: 0 1px 18px rgba(0, 0, 0, .32);
+    }
+
+    .mbs-partners-category__meta {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      min-height: 22px;
+      margin-top: 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .92);
+      color: var(--mbs-green);
+      font-size: 11px;
+      font-weight: 900;
+      line-height: 1;
+      padding: 5px 8px;
+    }
+
+    .mbs-partners-listing {
+      margin-top: 20px;
+    }
+
+    .mbs-partners-listing[hidden] {
+      display: none;
+    }
+
+    .mbs-partners-listing__eyebrow {
+      margin: 0 0 5px;
+      color: var(--mbs-green);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .mbs-partners-listing__eyebrow:empty {
+      display: none;
+    }
+
+    .mbs-partners-listing__topline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 5px;
+    }
+
+    .mbs-partners-listing__back {
+      min-height: 36px;
+      border: 1px solid rgba(65, 112, 51, .28);
+      border-radius: 999px;
+      background: var(--mbs-mint);
+      color: var(--mbs-green);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+      padding: 9px 14px;
+    }
+
+    .mbs-partners-listing__back:hover,
+    .mbs-partners-listing__back:focus-visible {
+      border-color: var(--mbs-green);
+      outline: none;
+    }
+
+    .mbs-partners__filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+      margin: 0;
+    }
+
+    .mbs-partners__filter {
+      min-height: 38px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 999px;
+      background: var(--mbs-white);
+      color: var(--mbs-text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      padding: 8px 14px;
+      transition: background .18s ease, border-color .18s ease, color .18s ease;
+    }
+
+    .mbs-partners__filter:hover,
+    .mbs-partners__filter:focus-visible {
+      border-color: var(--mbs-green);
+      outline: none;
+    }
+
+    .mbs-partners__filter.is-active {
+      border-color: var(--mbs-green);
+      background: var(--mbs-green);
+      color: #fff;
+    }
+
+    .mbs-partners__filter span {
+      display: inline-grid;
+      place-items: center;
+      min-width: 20px;
+      height: 20px;
+      margin-left: 5px;
+      border-radius: 999px;
+      background: var(--mbs-mint);
+      color: var(--mbs-green);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .mbs-partners__filter.is-active span {
+      background: rgba(255, 255, 255, .18);
+      color: #fff;
+    }
+
+    .mbs-partners__meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin: 0 0 16px;
+      color: var(--mbs-muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .mbs-partners__grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      min-height: 220px;
+    }
+
+    .mbs-partners-card {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 360px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 8px;
+      background: var(--mbs-white);
+      overflow: hidden;
+    }
+
+    .mbs-partners-card__head {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 18px 18px 12px;
+    }
+
+    .mbs-partners-card__logo {
+      display: grid;
+      place-items: center;
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--mbs-mint), var(--mbs-red-soft));
+      color: var(--mbs-green);
+      font-size: 20px;
+      font-weight: 900;
+      overflow: hidden;
+    }
+
+    .mbs-partners-card__logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .mbs-partners-card__name {
+      margin: 0;
+      color: var(--mbs-text);
+      font-size: 20px;
+      line-height: 1.15;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .mbs-partners-card__cats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .mbs-partners-card__cat,
+    .mbs-partners-card__badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.2;
+      padding: 4px 8px;
+    }
+
+    .mbs-partners-card__cat {
+      background: var(--mbs-mint);
+      color: var(--mbs-green);
+    }
+
+    .mbs-partners-card__badge {
+      background: var(--mbs-red-soft);
+      color: var(--mbs-red);
+    }
+
+    .mbs-partners-card__body {
+      padding: 0 18px 18px;
+    }
+
+    .mbs-partners-card__summary {
+      margin: 0 0 14px;
+      color: var(--mbs-muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .mbs-partners-card__list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: var(--mbs-text);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .mbs-partners-card__list li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .mbs-partners-card__list li::before {
+      content: "";
+      position: absolute;
+      top: .58em;
+      left: 0;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--mbs-green-2);
+    }
+
+    .mbs-partners-card__actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 14px 18px 18px;
+      border-top: 1px solid var(--mbs-line);
+    }
+
+    .mbs-partners__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      border: 1px solid var(--mbs-green);
+      border-radius: 8px;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.1;
+      text-decoration: none;
+      padding: 10px 14px;
+    }
+
+    .mbs-partners__btn--primary {
+      background: var(--mbs-green);
+      color: #fff;
+    }
+
+    .mbs-partners__btn--ghost {
+      background: #fff;
+      color: var(--mbs-green);
+    }
+
+    .mbs-partners__btn:hover,
+    .mbs-partners__btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(65, 112, 51, .14);
+    }
+
+    .mbs-partners__empty {
+      grid-column: 1 / -1;
+      border: 1px dashed var(--mbs-line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--mbs-muted);
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .mbs-partners__empty-title {
+      margin: 0;
+      color: var(--mbs-text);
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .mbs-partners__empty-text {
+      max-width: 620px;
+      margin: 10px auto 0;
+    }
+
+    .mbs-partners__empty-actions,
+    .mbs-partners__empty-suggestions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .mbs-partners__suggestion {
+      min-height: 34px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 999px;
+      background: var(--mbs-mint);
+      color: var(--mbs-green);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 7px 12px;
+    }
+
+    .mbs-partners__suggestion:hover,
+    .mbs-partners__suggestion:focus-visible {
+      border-color: var(--mbs-green);
+      outline: none;
+    }
+
+    .mbs-partners-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(31, 42, 29, .54);
+    }
+
+    .mbs-partners-modal.is-open {
+      display: flex;
+    }
+
+    .mbs-partners-modal__panel {
+      width: min(760px, 100%);
+      max-height: min(760px, calc(100vh - 36px));
+      overflow: auto;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 60px rgba(31, 42, 29, .24);
+    }
+
+    .mbs-partners-modal__head {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr) 40px;
+      gap: 14px;
+      align-items: start;
+      padding: 22px;
+      border-bottom: 1px solid var(--mbs-line);
+    }
+
+    .mbs-partners-modal__close {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--mbs-line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--mbs-text);
+      cursor: pointer;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .mbs-partners-modal__body {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+    }
+
+    .mbs-partners-modal__intro {
+      margin: 0;
+      color: var(--mbs-muted);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .mbs-partners-modal__section h4 {
+      margin: 0 0 8px;
+      color: var(--mbs-green);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: none;
+    }
+
+    .mbs-partners-modal__section p {
+      margin: 0;
+      color: var(--mbs-muted);
+      font-size: 16px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .mbs-partners-modal__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--mbs-line);
+    }
+
+    .mbs-partners-modal__offer {
+      border: 1px solid #f2c8d0;
+      border-radius: 8px;
+      background: #fff8fa;
+      padding: 14px;
+    }
+
+    .mbs-partners-modal__offer h4 {
+      color: var(--mbs-red);
+    }
+
+    @media (max-width: 980px) {
+      .mbs-partners__top {
+        grid-template-columns: 1fr;
+      }
+
+      .mbs-partners-categories__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .mbs-partners-category,
+      .mbs-partners-category__content {
+        min-height: 220px;
+      }
+
+      .mbs-partners__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .mbs-partners__inner {
+        width: min(100% - 24px, 1180px);
+        padding: 32px 0 42px;
+      }
+
+      .mbs-partners__title {
+        font-size: 34px;
+      }
+
+      .mbs-partners__lead {
+        font-size: 16px;
+      }
+
+      .mbs-partners-categories__head,
+      .mbs-partners-listing__head {
+        display: grid;
+      }
+
+      .mbs-partners-categories__grid {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        margin-left: -12px;
+        margin-right: -12px;
+        padding: 0 12px 8px;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .mbs-partners-categories__grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mbs-partners-category {
+        flex: 0 0 min(76vw, 280px);
+        min-height: 220px;
+        scroll-snap-align: start;
+      }
+
+      .mbs-partners-category__content {
+        min-height: 220px;
+        padding: 18px;
+      }
+
+      .mbs-partners-category__name {
+        font-size: 18px;
+      }
+
+      .mbs-partners-category__meta {
+        min-height: 20px;
+        font-size: 10px;
+        padding: 4px 7px;
+      }
+
+      .mbs-partners__filters {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 6px;
+        overflow-x: auto;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0 0 8px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .mbs-partners__filters::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mbs-partners__filter {
+        flex: 0 0 auto;
+        min-height: 34px;
+        padding: 7px 12px;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .mbs-partners__meta {
+        display: grid;
+      }
+
+      .mbs-partners__grid {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        margin-left: -12px;
+        margin-right: -12px;
+        padding: 0 12px 10px;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 12px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+
+      .mbs-partners__grid::-webkit-scrollbar {
+        display: none;
+      }
+
+      .mbs-partners-card {
+        flex: 0 0 min(86vw, 360px);
+        min-height: 0;
+        scroll-snap-align: start;
+      }
+
+      .mbs-partners__empty {
+        flex: 0 0 100%;
+      }
+
+      .mbs-partners-card__actions {
+        display: grid;
+      }
+
+      .mbs-partners-modal {
+        padding: 10px;
+      }
+
+      .mbs-partners-modal__panel {
+        max-height: calc(100vh - 20px);
+      }
+
+      .mbs-partners-modal__head {
+        grid-template-columns: 56px minmax(0, 1fr) 40px;
+        padding: 16px;
+      }
+
+      .mbs-partners-modal__body {
+        gap: 14px;
+        padding: 16px;
+      }
+
+      .mbs-partners-modal__intro {
+        font-size: 16px;
+      }
+
+      .mbs-partners-card__logo {
+        width: 56px;
+        height: 56px;
+      }
+    }
+  </style>
+
+  <div class="mbs-partners__inner">
+    <div class="mbs-partners__top">
+      <div>
+        <p class="mbs-partners__eyebrow">Партнёры MBS</p>
+        <h1 class="mbs-partners__title">Полезные контакты для открытия кофейни</h1>
+        <p class="mbs-partners__lead">Собрали компании, с которыми Московская школа бариста работает сама или рекомендует ученикам при запуске кофейного проекта.</p>
+      </div>
+      <div class="mbs-partners__search">
+        <label for="mbs-partners-search">Поиск</label>
+        <input id="mbs-partners-search" type="search" placeholder="Кофе, оборудование, автоматизация..." autocomplete="off">
+      </div>
+    </div>
+
+    <section class="mbs-partners-categories" data-partners-categories-panel aria-labelledby="mbs-partners-categories-title">
+      <div class="mbs-partners-categories__head">
+        <div>
+          <h2 id="mbs-partners-categories-title" class="mbs-partners-categories__title">Категории партнёров</h2>
+          <p class="mbs-partners-categories__note">Выберите направление, а ниже откроются партнёры внутри выбранной категории.</p>
+        </div>
+      </div>
+      <div class="mbs-partners-categories__grid" data-partners-categories></div>
+    </section>
+
+    <section class="mbs-partners-listing" data-partners-listing aria-live="polite" hidden>
+      <div class="mbs-partners-listing__head">
+        <div>
+          <div class="mbs-partners-listing__topline">
+            <button class="mbs-partners-listing__back" type="button" data-partners-back>← Все категории</button>
+            <p class="mbs-partners-listing__eyebrow" data-partners-section-kicker>Все категории</p>
+          </div>
+          <h2 class="mbs-partners-listing__title" data-partners-section-title>Все партнёры</h2>
+          <p class="mbs-partners-listing__note" data-partners-section-note>Показываем всех опубликованных партнёров из Битрикс.</p>
+        </div>
+        <div class="mbs-partners__filters" data-partners-filters></div>
+      </div>
+      <div class="mbs-partners__meta">
+        <span data-partners-count>Загружаем партнёров...</span>
+        <span data-partners-updated></span>
+      </div>
+      <div class="mbs-partners__grid" data-partners-grid>
+        <div class="mbs-partners__empty">Загружаем партнёров...</div>
+      </div>
+    </section>
+  </div>
+
+  <div class="mbs-partners-modal" data-partners-modal aria-hidden="true">
+    <div class="mbs-partners-modal__panel" role="dialog" aria-modal="true" aria-labelledby="mbs-partners-modal-title">
+      <div class="mbs-partners-modal__head" data-partners-modal-head></div>
+      <div class="mbs-partners-modal__body" data-partners-modal-body></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('mbs-partners-catalog');
+      if (!root) return;
+
+      var demoData = {
+        updated_at: '2026-07-09T08:40:00+00:00',
+        categories: {
+          coffee: 'Кофе и обжарка',
+          equipment: 'Оборудование',
+          water: 'Вода и фильтрация',
+          milk: 'Молоко и альтернативное молоко',
+          pos: 'POS, учет и автоматизация',
+          bar: 'Бар, мебель и эргономика',
+          tableware: 'Посуда и сервировка',
+          uniform: 'Форма и текстиль',
+          chemical: 'Химия для кофемашин',
+          ice: 'Лёд',
+          drinks: 'Напитки',
+          spices: 'Специи и сиропы',
+          cacao: 'Какао и шоколад',
+          matcha: 'Матча',
+          food: 'Готовая еда и десерты',
+          latteart: 'Инвентарь для латте-арт',
+          complex: 'Комплексный поставщик',
+          consumables: 'Расходники и ингредиенты',
+          consulting: 'Обучение и консалтинг',
+          other: 'Другое для кофейни'
+        },
+        partners: [
+          {
+            slug: 'rockets',
+            name: 'Rockets.coffee',
+            categories: ['coffee'],
+            logo_url: 'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Frockets.coffee%2F&sz=128',
+            summary: 'Rockets.coffee помогает кофейням с подбором и поставкой кофе для стабильной работы меню.',
+            description: 'Rockets.coffee помогает кофейням с подбором и поставкой кофе для стабильной работы меню.',
+            useful_for: ['подобрать зерно под формат кофейни', 'собрать регулярные поставки', 'обсудить B2B-заказ'],
+            website_url: 'https://rockets.coffee/',
+            telegram_url: 'https://t.me/rocketscoffee',
+            instagram_url: 'https://www.instagram.com/rockets.roasters/',
+            cta: { text: 'Перейти на сайт', url: 'https://rockets.coffee/' }
+          },
+          {
+            slug: 'carimali',
+            name: 'Carimali',
+            categories: ['equipment'],
+            logo_url: 'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fwww.carimali.com%2F&sz=128',
+            summary: 'Carimali помогает подобрать оборудование для запуска и развития кофейни.',
+            description: 'Carimali помогает подобрать оборудование для запуска и развития кофейни.',
+            useful_for: ['подобрать кофемашину', 'сопоставить оборудование с форматом кофейни'],
+            website_url: 'https://www.carimali.com/',
+            cta: { text: 'Перейти на сайт', url: 'https://www.carimali.com/' }
+          },
+          {
+            slug: 'quick-resto',
+            name: 'Quick Resto',
+            categories: ['pos'],
+            logo_url: 'https://www.google.com/s2/favicons?domain_url=https%3A%2F%2Fquickresto.ru%2F&sz=128',
+            summary: 'Quick Resto помогает настроить учёт, кассу и операционные процессы кофейни.',
+            description: 'Quick Resto помогает настроить учёт, кассу и операционные процессы кофейни.',
+            useful_for: ['настроить учет', 'подготовить кассовый контур', 'упростить операционную работу'],
+            website_url: 'https://quickresto.ru/',
+            cta: { text: 'Перейти на сайт', url: 'https://quickresto.ru/' }
+          }
+        ]
+      };
+
+      var state = {
+        data: demoData,
+        activeCategory: categoryFromUrl(),
+        activeQuickFilter: 'all',
+        query: ''
+      };
+
+      var emptyData = {
+        updated_at: '',
+        categories: demoData.categories,
+        partners: []
+      };
+
+      var els = {
+        categoriesPanel: root.querySelector('[data-partners-categories-panel]'),
+        categories: root.querySelector('[data-partners-categories]'),
+        listing: root.querySelector('[data-partners-listing]'),
+        back: root.querySelector('[data-partners-back]'),
+        filters: root.querySelector('[data-partners-filters]'),
+        grid: root.querySelector('[data-partners-grid]'),
+        count: root.querySelector('[data-partners-count]'),
+        updated: root.querySelector('[data-partners-updated]'),
+        sectionKicker: root.querySelector('[data-partners-section-kicker]'),
+        sectionTitle: root.querySelector('[data-partners-section-title]'),
+        sectionNote: root.querySelector('[data-partners-section-note]'),
+        search: root.querySelector('#mbs-partners-search'),
+        modal: root.querySelector('[data-partners-modal]'),
+        modalHead: root.querySelector('[data-partners-modal-head]'),
+        modalBody: root.querySelector('[data-partners-modal-body]')
+      };
+
+      var categoryOrder = [
+        'coffee',
+        'equipment',
+        'water',
+        'milk',
+        'cacao',
+        'matcha',
+        'drinks',
+        'spices',
+        'food',
+        'chemical',
+        'ice',
+        'tableware',
+        'uniform',
+        'bar',
+        'pos',
+        'latteart',
+        'complex',
+        'consulting',
+        'consumables',
+        'other'
+      ];
+
+      var categoryNotes = {
+        all: 'Все опубликованные партнёры из Битрикс в одном списке.',
+        coffee: 'Обжарщики и поставщики кофе для стабильного меню.',
+        equipment: 'Кофейное, барное и технологическое оборудование для запуска.',
+        water: 'Фильтрация и настройка воды для вкуса кофе и защиты оборудования.',
+        milk: 'Молоко и альтернативные напитки для кофейного меню.',
+        cacao: 'Какао, шоколад и ингредиенты для горячих напитков.',
+        matcha: 'Поставщики матча и продуктов для напитков на его основе.',
+        drinks: 'Готовые напитки, тоники, лимонады и миксы для меню.',
+        spices: 'Сиропы, специи и вкусовые ингредиенты для напитков.',
+        food: 'Готовая еда, десерты и выпечка для витрины.',
+        chemical: 'Средства для ухода за кофемашинами и рабочей зоной.',
+        ice: 'Лёд и сопутствующие решения для напитков и бара.',
+        tableware: 'Посуда, чашки и сервировка для подачи напитков.',
+        uniform: 'Форма, текстиль и аксессуары для команды.',
+        bar: 'Мебель, барные решения и эргономика рабочей зоны.',
+        pos: 'Касса, склад, учёт, аналитика и автоматизация кофейни.',
+        latteart: 'Инвентарь и материалы для тренировки латте-арт.',
+        complex: 'Партнёры, которые закрывают несколько задач запуска сразу.',
+        consulting: 'Обучение, консалтинг и сопровождение кофейных проектов.',
+        consumables: 'Расходные материалы и ингредиенты для ежедневной работы.',
+        other: 'Партнёры, которым нужна ручная проверка категории.'
+      };
+
+      var searchSynonyms = [
+        ['кофемашин', 'эспрессо машин', 'espresso machine', 'кофейное оборудование', 'equipment'],
+        ['кофемолк', 'гриндер', 'мельниц', 'grinder'],
+        ['касс', 'pos', 'crm', 'срм', 'учет', 'учёт', 'автоматизац', 'склад', 'техкарт', 'аналитик'],
+        ['вод', 'фильтр', 'осмос', 'накип', 'минерализац'],
+        ['молок', 'альтернативное молоко', 'растительное молоко', 'овсян', 'кокосов'],
+        ['посуд', 'чашк', 'стакан', 'тарелк', 'сервировк'],
+        ['сироп', 'спец', 'пряност', 'топпинг', 'ингредиент'],
+        ['какао', 'шоколад', 'горячий шоколад'],
+        ['матч', 'matcha'],
+        ['форма', 'фартук', 'текстиль', 'одежд'],
+        ['бар', 'мебел', 'стойк', 'эргономик', 'планировк'],
+        ['лед', 'лёд', 'ice'],
+        ['хим', 'чист', 'моющ', 'средств', 'таблетк', 'декальцинац'],
+        ['латте арт', 'латте-арт', 'питчер', 'темпер', 'коврик'],
+        ['десерт', 'еда', 'выпечк', 'витрин', 'сэндвич'],
+        ['напитк', 'тоник', 'лимонад', 'микс']
+      ];
+
+      var emptySearchSuggestions = ['кофемашина', 'касса', 'вода', 'посуда', 'молоко', 'сиропы'];
+
+      var seoBaseUrl = 'https://baristaschool.ru/all-partners';
+      var seoSiteName = 'Московская школа бариста';
+      var seoDefaultImage = 'https://api.barista-school.ru/partners-catalog/assets/categories/equipment.jpg';
+
+      var categoryImages = {
+        coffee: 'assets/categories/coffee-roasters.jpg',
+        equipment: 'assets/categories/equipment.jpg',
+        water: 'assets/categories/water-filter.jpg',
+        milk: 'assets/categories/milk.jpg',
+        cacao: 'assets/categories/cacao.jpg',
+        matcha: 'assets/categories/matcha.jpg',
+        drinks: 'assets/categories/drinks.jpg',
+        spices: 'assets/categories/spices-syrups.jpg',
+        food: 'assets/categories/food-desserts.jpg',
+        chemical: 'assets/categories/coffee-chemistry.jpg',
+        ice: 'assets/categories/ice.jpg',
+        tableware: 'assets/categories/tableware.jpg',
+        uniform: 'assets/categories/uniform.jpg',
+        bar: 'assets/categories/bar-ergonomics.jpg',
+        pos: 'assets/categories/pos-automation.jpg',
+        latteart: 'assets/categories/latte-art-tools.jpg',
+        complex: 'assets/categories/complex-supplier.jpg'
+      };
+
+      function esc(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function normalizeCategorySlug(value) {
+        var slug = String(value || '').trim().toLowerCase();
+        return /^[a-z0-9_-]{1,48}$/.test(slug) ? slug : 'all';
+      }
+
+      function categoryFromUrl() {
+        try {
+          return normalizeCategorySlug(new URLSearchParams(window.location.search).get('category'));
+        } catch (error) {
+          return 'all';
+        }
+      }
+
+      function categoryUrl(category) {
+        var slug = normalizeCategorySlug(category);
+        try {
+          var url = new URL(window.location.href);
+          if (slug === 'all') {
+            url.searchParams.delete('category');
+          } else {
+            url.searchParams.set('category', slug);
+          }
+          url.hash = '';
+          return url.pathname + url.search;
+        } catch (error) {
+          return slug === 'all' ? window.location.pathname : '?category=' + encodeURIComponent(slug);
+        }
+      }
+
+      function absoluteCategoryUrl(category) {
+        var slug = normalizeCategorySlug(category);
+        return slug === 'all' ? seoBaseUrl : seoBaseUrl + '?category=' + encodeURIComponent(slug);
+      }
+
+      function seoForCategory(category) {
+        var slug = normalizeCategorySlug(category);
+        var label = slug === 'all' ? 'Партнёры для открытия кофейни' : categoryLabel(slug);
+        var note = categoryNotes[slug] || 'Проверенные партнёры для запуска и развития кофейни.';
+        var description = slug === 'all'
+          ? 'Проверенные поставщики и сервисы для открытия кофейни: кофе, оборудование, вода, POS, посуда, расходники и услуги партнёров MBS.'
+          : label + ': ' + note + ' Список партнёров Московской школы бариста для запуска кофейни.';
+        var image = categoryImages[slug] ? assetUrl(categoryImages[slug]) : seoDefaultImage;
+        return {
+          title: slug === 'all'
+            ? 'Партнёры для открытия кофейни — Московская школа бариста'
+            : label + ' для кофейни — партнёры MBS',
+          description: description,
+          url: absoluteCategoryUrl(slug),
+          image: image
+        };
+      }
+
+      function setMeta(selector, attrs) {
+        var tag = document.head.querySelector(selector);
+        if (!tag) {
+          tag = document.createElement('meta');
+          document.head.appendChild(tag);
+        }
+        Object.keys(attrs).forEach(function (name) {
+          tag.setAttribute(name, attrs[name]);
+        });
+      }
+
+      function setCanonical(url) {
+        var link = document.head.querySelector('link[rel="canonical"]');
+        if (!link) {
+          link = document.createElement('link');
+          link.rel = 'canonical';
+          document.head.appendChild(link);
+        }
+        link.href = url;
+      }
+
+      function partnerListForSeo(category) {
+        var slug = normalizeCategorySlug(category);
+        return (state.data.partners || []).filter(function (partner) {
+          return slug === 'all' || (partner.categories || []).indexOf(slug) !== -1;
+        });
+      }
+
+      function applySeo() {
+        var seo = seoForCategory(state.activeCategory);
+        var partners = partnerListForSeo(state.activeCategory);
+        document.title = seo.title;
+        setCanonical(seo.url);
+        setMeta('meta[name="description"]', { name: 'description', content: seo.description });
+        setMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow,max-image-preview:large' });
+        setMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+        setMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: seoSiteName });
+        setMeta('meta[property="og:locale"]', { property: 'og:locale', content: 'ru_RU' });
+        setMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
+        setMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
+        setMeta('meta[property="og:url"]', { property: 'og:url', content: seo.url });
+        setMeta('meta[property="og:image"]', { property: 'og:image', content: seo.image });
+        setMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+        setMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
+        setMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });
+        setMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: seo.image });
+        upsertStructuredData(seo, partners);
+      }
+
+      function upsertStructuredData(seo, partners) {
+        var script = document.head.querySelector('script[data-mbs-partners-schema]');
+        if (!script) {
+          script = document.createElement('script');
+          script.type = 'application/ld+json';
+          script.setAttribute('data-mbs-partners-schema', 'true');
+          document.head.appendChild(script);
+        }
+        var listItems = partners.slice(0, 30).map(function (partner, index) {
+          var item = {
+            '@type': 'Organization',
+            name: partner.name
+          };
+          if (partner.website_url) item.url = partner.website_url;
+          if (partner.logo_url) item.logo = partner.logo_url;
+          if (partner.summary) item.description = partner.summary;
+          return {
+            '@type': 'ListItem',
+            position: index + 1,
+            item: item
+          };
+        });
+        script.text = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@graph': [
+            {
+              '@type': 'CollectionPage',
+              '@id': seo.url + '#webpage',
+              url: seo.url,
+              name: seo.title,
+              description: seo.description,
+              inLanguage: 'ru-RU',
+              isPartOf: {
+                '@type': 'WebSite',
+                name: seoSiteName,
+                url: 'https://baristaschool.ru/'
+              },
+              publisher: {
+                '@type': 'EducationalOrganization',
+                name: seoSiteName,
+                url: 'https://baristaschool.ru/'
+              }
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Главная', item: 'https://baristaschool.ru/' },
+                { '@type': 'ListItem', position: 2, name: 'Партнёры', item: seoBaseUrl }
+              ].concat(state.activeCategory === 'all' ? [] : [
+                { '@type': 'ListItem', position: 3, name: categoryLabel(state.activeCategory), item: seo.url }
+              ])
+            },
+            {
+              '@type': 'ItemList',
+              name: seo.title,
+              numberOfItems: partners.length,
+              itemListElement: listItems
+            }
+          ]
+        });
+      }
+
+      function syncCategoryUrl(category, replace) {
+        if (!window.history || !window.history[replace ? 'replaceState' : 'pushState']) return;
+        window.history[replace ? 'replaceState' : 'pushState']({}, '', categoryUrl(category));
+      }
+
+      function allowDemoData() {
+        return root.getAttribute('data-partners-allow-demo') !== 'false';
+      }
+
+      function fallbackData() {
+        return allowDemoData() ? demoData : emptyData;
+      }
+
+      function initials(name) {
+        return String(name || 'MBS').split(/\s+/).filter(Boolean).slice(0, 2).map(function (part) {
+          return part.charAt(0);
+        }).join('').toUpperCase() || 'MBS';
+      }
+
+      function categoryLabel(slug) {
+        return (state.data.categories && state.data.categories[slug]) || slug;
+      }
+
+      function categoryMedia(category) {
+        var image = categoryImages[category];
+        if (!image) return '<span class="mbs-partners-category__media" aria-hidden="true"></span>';
+        return '<span class="mbs-partners-category__media" aria-hidden="true"><img src="' + esc(assetUrl(image)) + '" alt="" loading="lazy"></span>';
+      }
+
+      function assetUrl(path) {
+        var base = String(root.getAttribute('data-partners-assets-base-url') || '').trim();
+        if (!base) return path;
+        return base.replace(/\/+$/, '') + '/' + String(path || '').replace(/^\/+/, '');
+      }
+
+      function formatDate(value) {
+        if (!value) return '';
+        var date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '';
+        return 'Обновлено: ' + date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+
+      function partnerCountLabel(count) {
+        var mod10 = count % 10;
+        var mod100 = count % 100;
+        if (mod10 === 1 && mod100 !== 11) return count + ' партнёр';
+        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return count + ' партнёра';
+        return count + ' партнёров';
+      }
+
+      function normalizeSearchText(value) {
+        return String(value || '')
+          .toLowerCase()
+          .replace(/ё/g, 'е')
+          .replace(/[.,;:!?()[\]{}"«»'`]+/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+      }
+
+      function partnerText(partner) {
+        return [
+          partner.name,
+          partner.summary,
+          partner.description,
+          partner.special_terms,
+          (partner.categories || []).map(categoryLabel).join(' '),
+          (partner.useful_for || []).join(' ')
+        ].join(' ');
+      }
+
+      function expandedSearchTerms(query) {
+        var normalized = normalizeSearchText(query);
+        if (!normalized) return [];
+        var terms = normalized.split(' ').filter(Boolean);
+        terms.push(normalized);
+        searchSynonyms.forEach(function (group) {
+          var normalizedGroup = group.map(normalizeSearchText).filter(Boolean);
+          var matched = normalizedGroup.some(function (term) {
+            return normalized.indexOf(term) !== -1 || term.indexOf(normalized) !== -1;
+          });
+          if (matched) terms = terms.concat(normalizedGroup);
+        });
+        return terms.filter(function (term, index, list) {
+          return term && list.indexOf(term) === index;
+        });
+      }
+
+      function partnerMatchesQuery(partner, query) {
+        var terms = expandedSearchTerms(query);
+        if (!terms.length) return true;
+        var text = normalizeSearchText(partnerText(partner));
+        return terms.some(function (term) {
+          return text.indexOf(term) !== -1;
+        });
+      }
+
+      function categoryCounts() {
+        var counts = {};
+        (state.data.partners || []).forEach(function (partner) {
+          (partner.categories || []).forEach(function (category) {
+            counts[category] = (counts[category] || 0) + 1;
+          });
+        });
+        return counts;
+      }
+
+      function categorySort(a, b) {
+        var indexA = categoryOrder.indexOf(a);
+        var indexB = categoryOrder.indexOf(b);
+        if (indexA === -1) indexA = 999;
+        if (indexB === -1) indexB = 999;
+        if (indexA !== indexB) return indexA - indexB;
+        return categoryLabel(a).localeCompare(categoryLabel(b), 'ru');
+      }
+
+      function basePartners() {
+        var query = state.query.trim();
+        return (state.data.partners || []).filter(function (partner) {
+          var byCategory = state.activeCategory === 'all' || (partner.categories || []).indexOf(state.activeCategory) !== -1;
+          var byQuery = partnerMatchesQuery(partner, query);
+          return byCategory && byQuery;
+        });
+      }
+
+      function filteredPartners() {
+        return basePartners().filter(function (partner) {
+          if (state.activeQuickFilter === 'special') return Boolean(partner.special_terms);
+          return true;
+        });
+      }
+
+      function renderCategories() {
+        var counts = categoryCounts();
+        var categories = Object.keys(counts).sort(categorySort);
+        var tiles = [];
+        if (!categories.length) {
+          els.categories.innerHTML = '<div class="mbs-partners__empty">Каталог партнёров временно недоступен. Попробуйте обновить страницу позже.</div>';
+          return;
+        }
+        categories.forEach(function (category) {
+          var hasImage = Boolean(categoryImages[category]);
+          tiles.push(
+            '<a class="mbs-partners-category' + (hasImage ? '' : ' mbs-partners-category--plain') + (state.activeCategory === category ? ' is-active' : '') + '" href="' + esc(categoryUrl(category)) + '" data-category-link="' + esc(category) + '">' +
+              categoryMedia(category) +
+              '<span class="mbs-partners-category__content">' +
+                '<span class="mbs-partners-category__name">' + esc(categoryLabel(category)) + '</span>' +
+                '<span class="mbs-partners-category__meta">' + partnerCountLabel(counts[category]) + '</span>' +
+              '</span>' +
+            '</a>'
+          );
+        });
+        els.categories.innerHTML = tiles.join('');
+      }
+
+      function quickFilterCounts() {
+        var partners = basePartners();
+        return {
+          all: partners.length,
+          special: partners.filter(function (partner) { return Boolean(partner.special_terms); }).length
+        };
+      }
+
+      function renderFilters() {
+        var counts = quickFilterCounts();
+        if (counts.all <= 1) {
+          state.activeQuickFilter = 'all';
+          els.filters.innerHTML = '';
+          return;
+        }
+        if (state.activeQuickFilter === 'special' && !counts.special) {
+          state.activeQuickFilter = 'all';
+        }
+        var items = [
+          { key: 'all', label: 'Все' }
+        ];
+        if (counts.special) {
+          items.push({ key: 'special', label: 'Со спецусловиями' });
+        }
+        var buttons = items.map(function (item) {
+          return '<button class="mbs-partners__filter' + (state.activeQuickFilter === item.key ? ' is-active' : '') + '" type="button" data-quick-filter="' + item.key + '">' +
+            esc(item.label) + ' <span>' + counts[item.key] + '</span>' +
+          '</button>';
+        });
+        els.filters.innerHTML = buttons.join('');
+      }
+
+      function renderSectionIntro() {
+        var query = state.query.trim();
+        var shouldShowListing = Boolean(query) || state.activeCategory !== 'all';
+        els.listing.hidden = !shouldShowListing;
+        if (!shouldShowListing) return;
+
+        if (query) {
+          if (state.activeCategory === 'all') {
+            els.sectionKicker.textContent = 'Поиск по всем категориям';
+            els.sectionTitle.textContent = 'Результаты поиска';
+            els.sectionNote.textContent = 'Ищем партнёров по названию, описанию, категории и пользе для запуска кофейни.';
+          } else {
+            els.sectionKicker.textContent = 'Поиск в категории';
+            els.sectionTitle.textContent = categoryLabel(state.activeCategory);
+            els.sectionNote.textContent = 'Ищем только среди партнёров выбранной категории.';
+          }
+          return;
+        }
+        var title = categoryLabel(state.activeCategory);
+        els.sectionKicker.textContent = '';
+        els.sectionTitle.textContent = title;
+        els.sectionNote.textContent = categoryNotes[state.activeCategory] || 'Партнёры выбранного направления.';
+      }
+
+      function renderCards() {
+        var partners = filteredPartners();
+        els.count.textContent = partners.length
+          ? ''
+          : 'Партнёры не найдены';
+        els.updated.textContent = formatDate(state.data.updated_at);
+        if (!partners.length) {
+          els.grid.innerHTML = emptyStateHtml();
+          return;
+        }
+        els.grid.innerHTML = partners.map(function (partner) {
+          var cats = (partner.categories || []).slice(0, 3).map(function (category) {
+            return '<span class="mbs-partners-card__cat">' + esc(categoryLabel(category)) + '</span>';
+          }).join('');
+          var badges = partner.special_terms
+            ? '<span class="mbs-partners-card__badge">Спецусловия MBS</span>'
+            : '';
+          var useful = (partner.useful_for || []).slice(0, 3).map(function (item) {
+            return '<li>' + esc(item) + '</li>';
+          }).join('');
+          var logo = partner.logo_url
+            ? '<img src="' + esc(partner.logo_url) + '" alt="">'
+            : esc(initials(partner.name));
+          var cta = partner.cta && partner.cta.url
+            ? '<a class="mbs-partners__btn mbs-partners__btn--primary" href="' + esc(partner.cta.url) + '" target="_blank" rel="noopener">' + esc(partner.cta.text || 'Открыть') + '</a>'
+            : '';
+          return [
+            '<article class="mbs-partners-card" data-partner-card="' + esc(partner.slug) + '">',
+              '<div class="mbs-partners-card__head">',
+                '<div class="mbs-partners-card__logo">' + logo + '</div>',
+                '<div>',
+                  '<h3 class="mbs-partners-card__name">' + esc(partner.name) + '</h3>',
+                  '<div class="mbs-partners-card__cats">' + cats + badges + '</div>',
+                '</div>',
+              '</div>',
+              '<div class="mbs-partners-card__body">',
+                '<p class="mbs-partners-card__summary">' + esc(partner.summary || '') + '</p>',
+                useful ? '<ul class="mbs-partners-card__list">' + useful + '</ul>' : '',
+              '</div>',
+              '<div class="mbs-partners-card__actions">',
+                '<button class="mbs-partners__btn mbs-partners__btn--ghost" type="button" data-partner-open="' + esc(partner.slug) + '">Открыть карточку</button>',
+                cta,
+              '</div>',
+            '</article>'
+          ].join('');
+        }).join('');
+      }
+
+      function render() {
+        applySeo();
+        var showCategoryPicker = state.activeCategory === 'all' && !state.query.trim();
+        els.categoriesPanel.hidden = !showCategoryPicker;
+        if (showCategoryPicker) renderCategories();
+        renderSectionIntro();
+        if (els.listing.hidden) return;
+        renderFilters();
+        renderCards();
+      }
+
+      function findPartner(slug) {
+        return (state.data.partners || []).find(function (partner) {
+          return partner.slug === slug;
+        });
+      }
+
+      function emptyStateHtml() {
+        var query = state.query.trim();
+        var inCategory = state.activeCategory !== 'all';
+        var title = query
+          ? (inCategory ? 'В категории «' + categoryLabel(state.activeCategory) + '» ничего не найдено' : 'По запросу «' + query + '» ничего не найдено')
+          : 'Партнёры не найдены';
+        var text = query
+          ? (inCategory
+            ? 'Можно попробовать другое слово или поискать этот запрос среди всех партнёров.'
+            : 'Попробуйте другой запрос или одну из подсказок ниже.')
+          : 'Попробуйте выбрать другую категорию.';
+        var suggestions = emptySearchSuggestions.map(function (item) {
+          return '<button class="mbs-partners__suggestion" type="button" data-search-suggestion="' + esc(item) + '">' + esc(item) + '</button>';
+        }).join('');
+        var actions = '';
+        if (query && inCategory) {
+          actions += '<button class="mbs-partners__btn mbs-partners__btn--primary" type="button" data-search-all>Искать во всех категориях</button>';
+        }
+        if (query) {
+          actions += '<button class="mbs-partners__btn mbs-partners__btn--ghost" type="button" data-search-clear>Очистить поиск</button>';
+        }
+        actions += '<a class="mbs-partners__btn mbs-partners__btn--ghost" href="' + esc(categoryUrl('all')) + '">Вернуться к категориям</a>';
+        return [
+          '<div class="mbs-partners__empty">',
+            '<p class="mbs-partners__empty-title">' + esc(title) + '</p>',
+            '<p class="mbs-partners__empty-text">' + esc(text) + '</p>',
+            query ? '<div class="mbs-partners__empty-actions">' + actions + '</div>' : '',
+            '<div class="mbs-partners__empty-suggestions" aria-label="Подсказки для поиска">' + suggestions + '</div>',
+          '</div>'
+        ].join('');
+      }
+
+      function linkHtml(url, label) {
+        return url ? '<a class="mbs-partners__btn mbs-partners__btn--ghost" href="' + esc(url) + '" target="_blank" rel="noopener">' + esc(label) + '</a>' : '';
+      }
+
+      function normalizedText(value) {
+        return String(value || '').replace(/\s+/g, ' ').trim();
+      }
+
+      function normalizedUrl(value) {
+        return String(value || '').trim().replace(/\/+$/, '').toLowerCase();
+      }
+
+      function addUniqueLink(items, seen, url, label) {
+        var key = normalizedUrl(url);
+        if (!key || seen[key]) return;
+        seen[key] = true;
+        items.push(linkHtml(url, label));
+      }
+
+      function openModal(partner) {
+        if (!partner) return;
+        var logo = partner.logo_url
+          ? '<img src="' + esc(partner.logo_url) + '" alt="">'
+          : esc(initials(partner.name));
+        var cats = (partner.categories || []).map(function (category) {
+          return '<span class="mbs-partners-card__cat">' + esc(categoryLabel(category)) + '</span>';
+        }).join('');
+        var badges = partner.special_terms
+          ? '<span class="mbs-partners-card__badge">Спецусловия MBS</span>'
+          : '';
+        var useful = (partner.useful_for || []).map(function (item) {
+          return '<li>' + esc(item) + '</li>';
+        }).join('');
+        var linkItems = [];
+        var seenLinks = {};
+        if (partner.cta && partner.cta.url) addUniqueLink(linkItems, seenLinks, partner.cta.url, partner.cta.text || 'Открыть');
+        addUniqueLink(linkItems, seenLinks, partner.website_url, 'Сайт');
+        addUniqueLink(linkItems, seenLinks, partner.telegram_url, 'Telegram');
+        addUniqueLink(linkItems, seenLinks, partner.instagram_url, 'Instagram');
+        var links = linkItems.join('');
+        var details = normalizedText(partner.description) !== normalizedText(partner.summary)
+          ? sectionHtml('Подробно', partner.description)
+          : '';
+
+        els.modalHead.innerHTML = [
+          '<div class="mbs-partners-card__logo">' + logo + '</div>',
+          '<div>',
+            '<h3 id="mbs-partners-modal-title" class="mbs-partners-card__name">' + esc(partner.name) + '</h3>',
+            '<div class="mbs-partners-card__cats">' + cats + badges + '</div>',
+          '</div>',
+          '<button class="mbs-partners-modal__close" type="button" data-partners-close aria-label="Закрыть">×</button>'
+        ].join('');
+
+        els.modalBody.innerHTML = [
+          introHtml(partner.summary),
+          details,
+          useful ? '<div class="mbs-partners-modal__section"><h4>Чем полезен</h4><ul class="mbs-partners-card__list">' + useful + '</ul></div>' : '',
+          offerHtml(partner.special_terms),
+          links ? '<div class="mbs-partners-modal__links">' + links + '</div>' : ''
+        ].filter(Boolean).join('');
+
+        els.modal.classList.add('is-open');
+        els.modal.setAttribute('aria-hidden', 'false');
+        document.documentElement.style.overflow = 'hidden';
+        var close = els.modal.querySelector('[data-partners-close]');
+        if (close) close.focus();
+      }
+
+      function sectionHtml(title, text) {
+        return text
+          ? '<div class="mbs-partners-modal__section"><h4>' + esc(title) + '</h4><p>' + esc(text) + '</p></div>'
+          : '';
+      }
+
+      function introHtml(text) {
+        return text ? '<p class="mbs-partners-modal__intro">' + esc(text) + '</p>' : '';
+      }
+
+      function offerHtml(text) {
+        return text
+          ? '<div class="mbs-partners-modal__section mbs-partners-modal__offer"><h4>Для выпускников MBS</h4><p>' + esc(text) + '</p></div>'
+          : '';
+      }
+
+      function closeModal() {
+        els.modal.classList.remove('is-open');
+        els.modal.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+      }
+
+      function bindEvents() {
+        els.search.addEventListener('input', function () {
+          state.query = els.search.value || '';
+          state.activeQuickFilter = 'all';
+          render();
+        });
+        els.filters.addEventListener('click', function (event) {
+          var button = event.target.closest('[data-quick-filter]');
+          if (!button) return;
+          state.activeQuickFilter = button.getAttribute('data-quick-filter') || 'all';
+          render();
+        });
+        els.categories.addEventListener('click', function (event) {
+          var link = event.target.closest('[data-category-link]');
+          if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+          event.preventDefault();
+          window.location.assign(link.href);
+        });
+        els.back.addEventListener('click', function () {
+          window.location.href = categoryUrl('all');
+        });
+        els.grid.addEventListener('click', function (event) {
+          var searchAll = event.target.closest('[data-search-all]');
+          if (searchAll) {
+            state.activeCategory = 'all';
+            state.activeQuickFilter = 'all';
+            syncCategoryUrl('all', true);
+            render();
+            els.search.focus();
+            return;
+          }
+          var clearSearch = event.target.closest('[data-search-clear]');
+          if (clearSearch) {
+            state.query = '';
+            els.search.value = '';
+            state.activeQuickFilter = 'all';
+            render();
+            els.search.focus();
+            return;
+          }
+          var suggestion = event.target.closest('[data-search-suggestion]');
+          if (suggestion) {
+            state.query = suggestion.getAttribute('data-search-suggestion') || '';
+            els.search.value = state.query;
+            state.activeQuickFilter = 'all';
+            render();
+            els.search.focus();
+            return;
+          }
+          var button = event.target.closest('[data-partner-open]');
+          if (!button) return;
+          openModal(findPartner(button.getAttribute('data-partner-open')));
+        });
+        els.modal.addEventListener('click', function (event) {
+          if (event.target === els.modal || event.target.closest('[data-partners-close]')) closeModal();
+        });
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && els.modal.classList.contains('is-open')) closeModal();
+        });
+      }
+
+      function normalizePayload(payload) {
+        if (!payload || !Array.isArray(payload.partners)) return fallbackData();
+        payload.categories = payload.categories || demoData.categories;
+        payload.partners = payload.partners.filter(function (partner) {
+          return partner && partner.slug && partner.name;
+        });
+        if (state.activeCategory !== 'all') {
+          var hasCategory = Boolean(payload.categories[state.activeCategory]) || payload.partners.some(function (partner) {
+            return (partner.categories || []).indexOf(state.activeCategory) !== -1;
+          });
+          if (!hasCategory) {
+            state.activeCategory = 'all';
+            syncCategoryUrl('all', true);
+          }
+        }
+        return payload.partners.length ? payload : fallbackData();
+      }
+
+      function loadData() {
+        var url = root.getAttribute('data-partners-api-url') || '';
+        if (!url) {
+          render();
+          return;
+        }
+        fetch(url, { cache: 'no-store' })
+          .then(function (response) {
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.json();
+          })
+          .then(function (payload) {
+            state.data = normalizePayload(payload);
+            render();
+          })
+          .catch(function () {
+            state.data = fallbackData();
+            render();
+          });
+      }
+
+      bindEvents();
+      loadData();
+    })();
+  </script>
+</section>

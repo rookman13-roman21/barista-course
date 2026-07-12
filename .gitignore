@@ -1,2 +1,5 @@
 .env
 .DS_Store
+scripts/_temp/
+home-barista/
+push-open-coffeeshop.sh
