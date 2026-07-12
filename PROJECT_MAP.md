@@ -14,6 +14,7 @@ barista-course/
 ├── about-school/             ← Страница «О школе» (baristaschool.ru/company)
 ├── barista-interview/        ← Лендинг «Собеседование бариста» (baristaschool.ru/hr)
 ├── barista-theory-cabinet/   ← Личный кабинет: теория перед курсом (Tilda Members)
+├── breeew-battle/            ← Чемпионат MBS* Breeew battle (baristaschool.ru/breeew-battle)
 ├── capping/                  ← Страница каппингов (baristaschool.ru/capping)
 ├── certificates/             ← Страница подарочных сертификатов (baristaschool.ru/sertifikat)
 ├── coffee_accounting_webinar/ ← Вебинар «Налоги и финансы в общепите» (baristaschool.ru/coffee_accounting_webinar)
@@ -44,6 +45,7 @@ barista-course/
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
 | `barista-theory-cabinet/` | Tilda Members | Tilda Members | Личный кабинет: 11 теоретических уроков перед очным курсом |
+| `breeew-battle/` | `/breeew-battle` | Tilda hosted loader | Чемпионат MBS* Breeew battle: hosted HTML, popup записи в yClients group activity, public JSON, Telegram Mini App |
 | `capping/` | `/capping` | Tilda hosted loader | Страница каппингов: Tilda один раз вставляет loader, актуальный HTML страницы загружается с `api.barista-school.ru` |
 | `certificates/` | `/sertifikat` | Tilda Zero Block | Каталог подарочных сертификатов с модальным окном и API |
 | `coffee_accounting_webinar/` | `/coffee_accounting_webinar` | Tilda HTML Block | Вебинар «Налоги и финансы в общепите в 2026»: 6 блоков, дата/ссылка из публичного JSON `coffee-accounting-webinar.json`, fallback CTA → `#waiting_list` |
@@ -65,6 +67,7 @@ barista-course/
 |---|---|---|
 | О школе | `about-school/blocks/block-0*.html` | `about-school/index.html` |
 | Собеседование бариста | `barista-interview/index.html` | `barista-interview/index.html` |
+| Чемпионат MBS* Breeew battle | `breeew-battle/tilda-loader.html` | `breeew-battle/breeew-battle.html` |
 | Каппинг кофе | `capping/tilda-loader.html` | `capping/index.html` |
 | Подарочные сертификаты | `certificates/tilda-blocks/block-0*.html` | `certificates/index.html` |
 | Вебинар по налогам и финансам в общепите | `coffee_accounting_webinar/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html` | `coffee_accounting_webinar/index.html` |
