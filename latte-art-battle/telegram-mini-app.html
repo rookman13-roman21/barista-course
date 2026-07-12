@@ -823,6 +823,20 @@
       var tg = window.Telegram && window.Telegram.WebApp;
       var state = { payload: null, activeTab: 'home', refreshTimer: null };
 
+      function startParam() {
+        var unsafeParam = tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param;
+        if (unsafeParam) return String(unsafeParam);
+        var searchParam = new URLSearchParams(window.location.search || '').get('startapp');
+        if (searchParam) return String(searchParam);
+        var hash = String(window.location.hash || '').replace(/^#/, '');
+        return new URLSearchParams(hash).get('tgWebAppStartParam') || '';
+      }
+
+      if (startParam() === 'breeew_battle_info') {
+        window.location.replace('https://api.barista-school.ru/api/breeew-battle-mini-app.html' + window.location.search + window.location.hash);
+        return;
+      }
+
       function syncTheme() {
         document.documentElement.setAttribute('data-theme', tg && tg.colorScheme === 'dark' ? 'dark' : 'light');
       }
