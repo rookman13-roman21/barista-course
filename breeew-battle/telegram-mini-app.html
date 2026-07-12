@@ -264,6 +264,17 @@
       cursor: pointer;
     }
 
+    .card__actions {
+      display: grid;
+      gap: 8px;
+    }
+
+    .btn--secondary {
+      border: 1px solid rgba(65, 112, 51, .35);
+      background: var(--card);
+      color: var(--green);
+    }
+
     .participants,
     .timings,
     .judges,
@@ -891,9 +902,40 @@
         '</section>';
       }
 
+      function renderCoffeeDelivery(content) {
+        var delivery = content.coffee_delivery || {};
+        var cdek = delivery.cdek || {};
+        var pickup = delivery.pickup || {};
+        if (!cdek.url && !pickup.telegram_url && !pickup.map_url) return '';
+
+        var cdekCard = cdek.url ?
+          '<div class="card card--green"><h3>🚚 ' + esc(cdek.title || 'Иногородним участникам') + '</h3>' +
+            '<p>' + esc(cdek.text || '') + '</p>' +
+            '<a class="btn" href="' + esc(cdek.url) + '" target="_blank" rel="noopener">' + esc(cdek.label || 'Указать ПВЗ СДЭК') + '</a>' +
+          '</div>' : '';
+
+        var pickupActions = [];
+        if (pickup.telegram_url) {
+          pickupActions.push('<a class="btn" href="' + esc(pickup.telegram_url) + '" target="_blank" rel="noopener">' + esc(pickup.telegram_label || 'Написать в Telegram') + '</a>');
+        }
+        if (pickup.map_url) {
+          pickupActions.push('<a class="btn btn--secondary" href="' + esc(pickup.map_url) + '" target="_blank" rel="noopener">' + esc(pickup.map_label || 'Открыть Яндекс Карты') + '</a>');
+        }
+        var pickupCard = (pickup.text || pickup.address || pickupActions.length) ?
+          '<div class="card"><h3>🏫 ' + esc(pickup.title || 'Участникам из Москвы') + '</h3>' +
+            '<p>' + esc(pickup.text || '') + '</p>' +
+            (pickup.address ? '<p><strong>Адрес:</strong> ' + esc(pickup.address) + '</p>' : '') +
+            (pickupActions.length ? '<div class="card__actions">' + pickupActions.join('') + '</div>' : '') +
+          '</div>' : '';
+
+        return '<div class="section__head"><h2>' + esc(delivery.title || 'Как получить кофе для подготовки') + '</h2>' +
+            '<p>' + esc(delivery.intro || '') + '</p></div>' + cdekCard + pickupCard;
+      }
+
       function renderHome(data, content) {
         return '<section class="section is-active" data-section="home">' +
             renderHero(data, content) +
+            renderCoffeeDelivery(content) +
             '<div class="section__head"><h2>Что важно помнить</h2><p>Короткая версия правил перед днём чемпионата.</p></div>' +
             '<div class="card card--green"><h3>Для бариста от 18 лет</h3><p>Ограничения по опыту работы нет. Главное — готовность выступить по регламенту и приготовить напиток на Hario V60.</p></div>' +
             '<div class="card"><h3>Формат</h3>' + list(['Жеребьёвку и индивидуальные тайминги выступлений отправим заранее.', 'Соревнование проходит в 2 этапа.', 'Отборочный этап — пары участников и батлы на вылет.', 'На выступление: 4 минуты подготовки, 10 минут приготовления и 5 минут уборки станции.', 'В финал проходят 10 участников. Перед финалом — 20 минут на рецепт и речь.', 'Финал — личный зачёт с самопрезентацией, рецептом и описанием ожидаемого вкуса.']) + '</div>' +
