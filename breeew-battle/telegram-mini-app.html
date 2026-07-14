@@ -932,9 +932,35 @@
             '<p>' + esc(delivery.intro || '') + '</p></div>' + cdekCard + pickupCard;
       }
 
+      function renderFirstStageCoffee(content) {
+        var coffee = content.first_stage_coffee || {};
+        var image = coffee.image_url ?
+          '<div class="asset-card__media"><img src="' + esc(coffee.image_url) + '" alt="' + esc(coffee.name || 'Кофе первого этапа') + '" loading="lazy"></div>' : '';
+        var link = coffee.url ?
+          '<a class="btn btn--secondary" href="' + esc(coffee.url) + '" target="_blank" rel="noopener">' + esc(coffee.link_label || 'Открыть карточку кофе') + '</a>' : '';
+        var text = coffee.text || '250 г кофе №1 для подготовки и 100 г кофе №1 на первый этап относятся к одной партии обжарки. Кофе для дня выступления хранится замороженным до чемпионата.';
+
+        return '<article class="asset-card">' +
+          image +
+          '<div class="asset-card__body"><strong>' + esc(coffee.title || 'Кофе') + ': ' + esc(coffee.name || 'кофе №1') + '</strong><span>' + esc(text) + '</span></div>' +
+          link +
+        '</article>';
+      }
+
+      function renderMediaGuide(content) {
+        var guide = content.media_guide || {};
+        if (!guide.url) return '';
+        return '<div class="section__head"><h2>' + esc(guide.title || 'Медиагайд') + '</h2><p>' + esc(guide.text || '') + '</p></div>' +
+          '<div class="card card--green"><h3>📖 Публикация о подготовке</h3>' +
+            '<p>До 1 августа разместите публикацию и отправьте ссылку в чат участников.</p>' +
+            '<a class="btn" href="' + esc(guide.url) + '" target="_blank" rel="noopener">' + esc(guide.label || 'Открыть медиагайд') + '</a>' +
+          '</div>';
+      }
+
       function renderHome(data, content) {
         return '<section class="section is-active" data-section="home">' +
             renderHero(data, content) +
+            renderMediaGuide(content) +
             renderCoffeeDelivery(content) +
             '<div class="section__head"><h2>Что важно помнить</h2><p>Короткая версия правил перед днём чемпионата.</p></div>' +
             '<div class="card card--green"><h3>Для бариста от 18 лет</h3><p>Ограничения по опыту работы нет. Главное — готовность выступить по регламенту и приготовить напиток на Hario V60.</p></div>' +
@@ -944,9 +970,7 @@
               '<article class="asset-card">' +
                 '<div class="asset-card__body"><strong>Hario V60 02</strong><span>Все этапы проходят на пластиковой воронке Hario V60 классического размера 02 и оригинальном отбелённом бумажном фильтре Hario.</span></div>' +
               '</article>' +
-              '<article class="asset-card">' +
-                '<div class="asset-card__body"><strong>Кофе</strong><span>250 г кофе №1 для подготовки и 100 г кофе №1 на первый этап относятся к одной партии обжарки. Кофе для дня выступления хранится замороженным до чемпионата.</span></div>' +
-              '</article>' +
+              renderFirstStageCoffee(content) +
               '<article class="asset-card">' +
                 '<div class="asset-card__body"><strong>Своя вода и инструменты</strong><span>Можно использовать свою воду, кофемолку, чайник, весы, сито, Paragon, LilyDrip, рыхлители, ложки, спреи, блокнот и полотенца.</span></div>' +
               '</article>' +
