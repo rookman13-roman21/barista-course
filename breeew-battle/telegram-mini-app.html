@@ -815,7 +815,9 @@
   <script>
     (function () {
       var API_URL = 'https://api.barista-school.ru/api/course-booking/breeew-battle/telegram-mini-app-data';
-      var MAP_URL = 'https://yandex.ru/maps/org/moskovskaya_shkola_barista/206204133172/?ll=37.674068%2C55.774689&z=16';
+      // Карта партнёрской площадки чемпионата (не путать с картой выдачи кофе:
+      // она приходит с backend в coffee_delivery.pickup.map_url).
+      var VENUE_MAP_URL = 'https://yandex.ru/maps/org/biznes_tsentr_rossiya/1113761001';
       var REFRESH_INTERVAL_MS = 60 * 1000;
       var app = document.getElementById('app');
       var nav = document.getElementById('nav');
@@ -872,8 +874,8 @@
       function renderHeroMetaItem(item) {
         var title = String(item.title || '').toLowerCase();
         var value = esc(item.value);
-        var body = MAP_URL && (title === 'площадка' || title === 'адрес')
-          ? '<a href="' + esc(MAP_URL) + '" target="_blank" rel="noopener">' + value + '</a>'
+        var body = VENUE_MAP_URL && (title === 'площадка' || title === 'адрес')
+          ? '<a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + value + '</a>'
           : value;
         return '<div class="pill"><span>' + esc(item.title) + '</span>' + body + '</div>';
       }
@@ -1285,8 +1287,8 @@
           '<div class="section__head"><h2>FAQ</h2><p>Короткие ответы по участию в чемпионате.</p></div>' +
           '<div class="faq">' + items.map(function (item) {
             var links = [];
-            if (MAP_URL && /где проходит/i.test(String(item.q || ''))) {
-              links.push('<a class="faq__link" href="' + esc(MAP_URL) + '" target="_blank" rel="noopener">Открыть карту</a>');
+            if (VENUE_MAP_URL && /где проходит/i.test(String(item.q || ''))) {
+              links.push('<a class="faq__link" href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">Открыть карту</a>');
             }
             if (item.link_url) {
               if (/\.(?:png|jpe?g|webp|gif)(?:\?|$)/i.test(String(item.link_url))) {
@@ -1328,6 +1330,7 @@
         state.payload = payload;
         var data = payload.data || {};
         var content = payload.content || {};
+        if (content.venue && content.venue.map_url) VENUE_MAP_URL = content.venue.map_url;
         app.innerHTML = renderHome(data, content) + renderRules(content) + renderParticipants(data) + renderJudges(data) + renderPrizes(content) + renderFaq(content);
         nav.hidden = false;
         setActiveTab(state.activeTab, { keepScroll: options.keepScroll });
