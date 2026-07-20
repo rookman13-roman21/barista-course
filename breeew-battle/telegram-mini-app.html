@@ -889,8 +889,8 @@
         var venueName = String(venue.name || '');
         var venueAddress = String(venue.address || item.value || '');
         var body = venueName
-          ? esc(venueName) + ', <a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + esc(venueAddress) + '</a>'
-          : '<a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + esc(venueAddress) + '</a>';
+          ? esc(venueName) + ', <strong><a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + esc(venueAddress) + '</a></strong>'
+          : '<strong><a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + esc(venueAddress) + '</a></strong>';
         return '<div class="pill"><span>' + esc(item.title) + '</span>' + body + '</div>';
       }
 
