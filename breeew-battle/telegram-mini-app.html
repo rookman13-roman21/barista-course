@@ -880,6 +880,20 @@
         return '<div class="pill"><span>' + esc(item.title) + '</span>' + body + '</div>';
       }
 
+      function renderVenueHeroMetaItem(item, content) {
+        var title = String(item.title || '');
+        var isVenue = title === 'площадка' || title === 'адрес';
+        if (!VENUE_MAP_URL || !isVenue) return renderHeroMetaItem(item);
+
+        var venue = content && content.venue ? content.venue : {};
+        var venueName = String(venue.name || '');
+        var venueAddress = String(venue.address || item.value || '');
+        var body = venueName
+          ? esc(venueName) + ', <a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + esc(venueAddress) + '</a>'
+          : '<a href="' + esc(VENUE_MAP_URL) + '" target="_blank" rel="noopener">' + esc(venueAddress) + '</a>';
+        return '<div class="pill"><span>' + esc(item.title) + '</span>' + body + '</div>';
+      }
+
       function renderHero(data, content) {
         var counters = data.counters || {};
         var participants = Array.isArray(data.participants) ? data.participants : [];
@@ -894,7 +908,7 @@
           '<div class="label">Памятка участника</div>' +
           '<h1>MBS* Breeew battle</h1>' +
           '<p>Здесь собрана актуальная информация на день чемпионата: регламент, участники, судьи, призы и ответы на вопросы.</p>' +
-          '<div class="hero__meta">' + schedule.map(renderHeroMetaItem).join('') + '</div>' +
+          '<div class="hero__meta">' + schedule.map(function (item) { return renderVenueHeroMetaItem(item, content); }).join('') + '</div>' +
           '<div class="counter">' +
             '<div class="counter__item"><span>Статус</span><strong>' + esc((data.event && data.event.status) === 'completed' ? 'Завершён' : 'Готовимся') + '</strong></div>' +
             '<div class="counter__item"><span>Формат</span><strong>2 этапа</strong></div>' +
