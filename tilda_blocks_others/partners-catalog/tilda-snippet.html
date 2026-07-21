@@ -1085,20 +1085,51 @@
         }
       }
 
-      function categoryUrl(category) {
-        var slug = normalizeCategorySlug(category);
+      function partnerFromUrl() {
+        try {
+          var slug = String(new URLSearchParams(window.location.search).get('partner') || '').trim().toLowerCase();
+          return /^[a-z0-9_-]{1,96}$/.test(slug) ? slug : '';
+        } catch (error) {
+          return '';
+        }
+      }
+
+      function catalogUrl(category, partnerSlug) {
+        var categorySlug = normalizeCategorySlug(category);
+        var partner = String(partnerSlug || '').trim().toLowerCase();
         try {
           var url = new URL(window.location.href);
-          if (slug === 'all') {
+          if (categorySlug === 'all') {
             url.searchParams.delete('category');
           } else {
-            url.searchParams.set('category', slug);
+            url.searchParams.set('category', categorySlug);
+          }
+          if (/^[a-z0-9_-]{1,96}$/.test(partner)) {
+            url.searchParams.set('partner', partner);
+          } else {
+            url.searchParams.delete('partner');
           }
           url.hash = '';
           return url.pathname + url.search;
         } catch (error) {
-          return slug === 'all' ? window.location.pathname : '?category=' + encodeURIComponent(slug);
+          var params = [];
+          if (categorySlug !== 'all') params.push('category=' + encodeURIComponent(categorySlug));
+          if (/^[a-z0-9_-]{1,96}$/.test(partner)) params.push('partner=' + encodeURIComponent(partner));
+          return params.length ? '?' + params.join('&') : window.location.pathname;
         }
+      }
+
+      function categoryUrl(category) {
+        return catalogUrl(category, '');
+      }
+
+      function partnerUrl(partner) {
+        var categories = partner && Array.isArray(partner.categories) ? partner.categories : [];
+        var category = state.activeCategory;
+        if (category === 'all' || categories.indexOf(category) === -1) {
+          category = normalizeCategorySlug(categories[0]);
+        }
+        return catalogUrl(category, partner && partner.slug);
       }
 
       function absoluteCategoryUrl(category) {
@@ -1238,6 +1269,11 @@
       function syncCategoryUrl(category, replace) {
         if (!window.history || !window.history[replace ? 'replaceState' : 'pushState']) return;
         window.history[replace ? 'replaceState' : 'pushState']({}, '', categoryUrl(category));
+      }
+
+      function syncPartnerUrl(partner, replace) {
+        if (!window.history || !window.history[replace ? 'replaceState' : 'pushState']) return;
+        window.history[replace ? 'replaceState' : 'pushState']({}, '', partner ? partnerUrl(partner) : categoryUrl(state.activeCategory));
       }
 
       function allowDemoData() {
@@ -1561,8 +1597,9 @@
         items.push(linkHtml(url, label));
       }
 
-      function openModal(partner) {
+      function openModal(partner, syncUrl) {
         if (!partner) return;
+        if (syncUrl !== false) syncPartnerUrl(partner, false);
         var logo = partner.logo_url
           ? '<img src="' + esc(partner.logo_url) + '" alt="">'
           : esc(initials(partner.name));
@@ -1626,10 +1663,26 @@
           : '';
       }
 
-      function closeModal() {
+      function closeModal(syncUrl) {
         els.modal.classList.remove('is-open');
         els.modal.setAttribute('aria-hidden', 'true');
         document.documentElement.style.overflow = '';
+        if (syncUrl !== false) syncPartnerUrl(null, true);
+      }
+
+      function syncModalFromUrl() {
+        var slug = partnerFromUrl();
+        if (!slug) {
+          closeModal(false);
+          return;
+        }
+        var partner = findPartner(slug);
+        if (!partner) {
+          closeModal(false);
+          syncPartnerUrl(null, true);
+          return;
+        }
+        openModal(partner, false);
       }
 
       function bindEvents() {
@@ -1691,6 +1744,14 @@
         document.addEventListener('keydown', function (event) {
           if (event.key === 'Escape' && els.modal.classList.contains('is-open')) closeModal();
         });
+        window.addEventListener('popstate', function () {
+          state.activeCategory = categoryFromUrl();
+          state.activeQuickFilter = 'all';
+          state.query = '';
+          els.search.value = '';
+          render();
+          syncModalFromUrl();
+        });
       }
 
       function normalizePayload(payload) {
@@ -1715,6 +1776,7 @@
         var url = root.getAttribute('data-partners-api-url') || '';
         if (!url) {
           render();
+          syncModalFromUrl();
           return;
         }
         fetch(url, { cache: 'no-store' })
@@ -1725,10 +1787,12 @@
           .then(function (payload) {
             state.data = normalizePayload(payload);
             render();
+            syncModalFromUrl();
           })
           .catch(function () {
             state.data = fallbackData();
             render();
+            syncModalFromUrl();
           });
       }
 
