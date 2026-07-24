@@ -1159,6 +1159,8 @@
     flex-shrink: 0;
   }
   .mbs-latte-battle-participants-widget .mbs-cup-name {
+    flex: 1 1 auto;
+    min-width: 0;
     font-size: 15px;
     font-weight: 700;
     color: var(--mbs-text);
@@ -1166,6 +1168,101 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-name-wrap {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 8px;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-result-badge {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    padding: 4px 7px;
+    border-radius: 999px;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-result-badge.is-first {
+    background: #FFF3C9;
+    color: #8C6500;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-result-badge.is-second {
+    background: #EEF1F0;
+    color: #53605D;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-result-badge.is-third {
+    background: #F8E6D7;
+    color: #865128;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--mbs-border);
+    background: linear-gradient(135deg, #F9FCF7 0%, #FFF 100%);
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__title {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    color: var(--mbs-text);
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__title span {
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 900;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--mbs-red);
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__title strong {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 900;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__item {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid var(--mbs-border);
+    border-radius: 10px;
+    background: #fff;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__place {
+    width: fit-content;
+    padding: 3px 6px;
+    border-radius: 999px;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 900;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__item strong {
+    overflow: hidden;
+    color: var(--mbs-text);
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 900;
+    text-overflow: ellipsis;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__item.is-first .mbs-cup-results__place {
+    background: #FFF3C9;
+    color: #8C6500;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__item.is-second .mbs-cup-results__place {
+    background: #EEF1F0;
+    color: #53605D;
+  }
+  .mbs-latte-battle-participants-widget .mbs-cup-results__item.is-third .mbs-cup-results__place {
+    background: #F8E6D7;
+    color: #865128;
   }
   .mbs-cup-name-float {
     position: fixed;
@@ -2549,6 +2646,19 @@
     .mbs-latte-battle-participants-widget .mbs-cup-name {
       font-size: 14px;
     }
+    .mbs-latte-battle-participants-widget .mbs-cup-results {
+      padding: 14px 12px;
+    }
+    .mbs-latte-battle-participants-widget .mbs-cup-results__item {
+      padding: 8px;
+    }
+    .mbs-latte-battle-participants-widget .mbs-cup-results__item strong {
+      font-size: 12px;
+    }
+    .mbs-latte-battle-participants-widget .mbs-cup-result-badge {
+      padding: 3px 5px;
+      font-size: 9px;
+    }
     .mbs-latte-battle-participants-widget .mbs-cup-proj {
       font-size: 12px;
     }
@@ -2938,6 +3048,15 @@
     var STORAGE_KEY = 'mbs-latte-battle-booking-client-v1';
     var STORAGE_TTL_MS = 24 * 60 * 60 * 1000;
     var PHONE_CODES = ['+7', '+375', '+380', '+374', '+995', '+998', '+996', '+992', '+90', '+49', '+44', '+1'];
+    var ARCHIVE_RESULTS_2026 = {
+      enabled: true,
+      title: 'Latte Art Battle 2026',
+      winners: [
+        { place: 1, firstName: 'Алина', lastName: 'Трунова' },
+        { place: 2, firstName: 'Катя', lastName: 'Канушина' },
+        { place: 3, firstName: 'Ян', lastName: 'Шелипов' }
+      ]
+    };
     var state = { data: null, soldOut: false, completed: false };
     var participantsTable = {
       currentList: [],
@@ -3273,6 +3392,7 @@
                   '</button>' +
                 '</div>' +
               '</div>' +
+              '<div class="mbs-cup-results" data-mbs-cup-results style="display:none;"></div>' +
               '<div class="mbs-cup-search" data-mbs-cup-search style="display:none;">' +
                 '<input type="text" placeholder="Поиск по имени или проекту…" data-mbs-cup-input>' +
               '</div>' +
@@ -3365,6 +3485,40 @@
         return item.f || item.l || item.p;
       });
     }
+    function participantNameKey(firstName, lastName) {
+      return String(lastName || '').trim().toLowerCase() + '|' + String(firstName || '').trim().toLowerCase();
+    }
+    function isArchiveResultsVisible() {
+      return ARCHIVE_RESULTS_2026.enabled && state.completed;
+    }
+    function getParticipantResult(participant) {
+      if (!isArchiveResultsVisible()) return null;
+      var key = participantNameKey(participant.f, participant.l);
+      for (var i = 0; i < ARCHIVE_RESULTS_2026.winners.length; i++) {
+        var winner = ARCHIVE_RESULTS_2026.winners[i];
+        if (participantNameKey(winner.firstName, winner.lastName) === key) return winner;
+      }
+      return null;
+    }
+    function renderParticipantsResults(target) {
+      var results = target.querySelector('[data-mbs-cup-results]');
+      if (!results) return;
+      if (!isArchiveResultsVisible()) {
+        results.style.display = 'none';
+        results.innerHTML = '';
+        return;
+      }
+      results.style.display = '';
+      results.innerHTML =
+        '<div class="mbs-cup-results__title"><span>Итоги чемпионата</span><strong>' + esc(ARCHIVE_RESULTS_2026.title) + '</strong></div>' +
+        ARCHIVE_RESULTS_2026.winners.map(function (winner) {
+          var placeClass = winner.place === 1 ? 'is-first' : (winner.place === 2 ? 'is-second' : 'is-third');
+          return '<div class="mbs-cup-results__item ' + placeClass + '">' +
+            '<span class="mbs-cup-results__place">' + esc(String(winner.place)) + ' место</span>' +
+            '<strong>' + esc(winner.firstName + ' ' + winner.lastName) + '</strong>' +
+          '</div>';
+        }).join('');
+    }
     function processParticipantsData(newList, target) {
       var newKeys = {};
       if (!participantsTable.firstLoad) {
@@ -3378,6 +3532,7 @@
         });
       }
       participantsTable.currentList = newList;
+      renderParticipantsResults(target);
       renderParticipantsHeader(newList, target);
       renderParticipantsRows(newList, participantsTable.firstLoad, newKeys, target);
       updateParticipantsTimestamp(target);
@@ -3461,13 +3616,17 @@
       for (var j = 0; j < filtered.length; j++) {
         var p = filtered[j];
         var name = esc(p.f) + (p.f && p.l ? ' ' : '') + esc(p.l);
+        var result = getParticipantResult(p);
+        var resultClass = result && result.place === 1 ? 'is-first' : (result && result.place === 2 ? 'is-second' : 'is-third');
         var rowKey = p.f + '|' + p.l + '|' + p.p;
         var cls = 'mbs-cup-row';
         if (newKeys[rowKey]) cls += ' mbs-cup-row-new';
         var delay = animate ? Math.min(j * 45, 1400) : 0;
         html += '<div class="' + cls + '" style="animation-delay:' + delay + 'ms;">';
         html += '<div class="mbs-cup-num">' + esc(String(p.n)) + '</div>';
-        html += '<div class="mbs-cup-name" data-full="' + esc(p.f + (p.f && p.l ? ' ' : '') + p.l) + '">' + (name || '—') + '</div>';
+        html += '<div class="mbs-cup-name-wrap"><div class="mbs-cup-name" data-full="' + esc(p.f + (p.f && p.l ? ' ' : '') + p.l) + '">' + (name || '—') + '</div>' +
+          (result ? '<span class="mbs-cup-result-badge ' + resultClass + '">' + esc(String(result.place)) + ' место</span>' : '') +
+          '</div>';
         html += '<div class="mbs-cup-proj">' + (p.p ? '<span class="mbs-cup-proj-tag">' + esc(p.p) + '</span>' : '—') + '</div>';
         html += '</div>';
       }
