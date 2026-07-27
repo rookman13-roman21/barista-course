@@ -523,6 +523,45 @@
       white-space: nowrap;
     }
 
+    .timing-row__stations {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .timing-row__station {
+      display: grid;
+      gap: 4px;
+      min-height: 52px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--green-soft);
+    }
+
+    .timing-row__station small {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .timing-row__station strong,
+    .timing-row__station span {
+      overflow: hidden;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+    }
+
+    .timing-row__station span {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
     .timing-row__pending {
       color: var(--muted);
       font-size: 13px;
@@ -1118,17 +1157,35 @@
           '<strong>' + esc(timingParticipant(second, 'Участник B')) + '</strong>';
       }
 
+      function practiceStationsHtml(row) {
+        var stations = Array.isArray(row.stations) ? row.stations : [];
+        return '<div class="timing-row__stations">' + [1, 2, 3, 4].map(function (number, index) {
+          var name = String(stations[index] || '').trim();
+          return '<div class="timing-row__station">' +
+            '<small>Станция ' + number + '</small>' +
+            (name ? '<strong>' + esc(name) + '</strong>' : '<span>После батла</span>') +
+          '</div>';
+        }).join('') + '</div>';
+      }
+
+      function timingTimesHtml(row, isPractice) {
+        var labels = isPractice ? ['Выкладка', 'Тренировка', 'Уборка'] : ['Подготовка', 'Выступление', 'Уборка'];
+        return '<div class="timing-row__times">' +
+          '<span><small>' + labels[0] + '</small>' + esc(row.prep_time || '—') + '</span>' +
+          '<span class="is-main"><small>' + labels[1] + '</small>' + esc(row.performance_time || '—') + '</span>' +
+          '<span><small>' + labels[2] + '</small>' + esc(row.cleanup_time || '—') + '</span>' +
+        '</div>';
+      }
+
       function renderTimingRow(row, section, rowIndex) {
+        var isPractice = section && section.type === 'practice';
         return '<article class="timing-row" data-timing-row="' + esc(timingRowKey(section, row, rowIndex)) + '">' +
           '<div class="timing-row__top">' +
-            '<span class="timing-row__pair">Пара ' + esc(row.pair || '—') + '</span>' +
-            '<div class="timing-row__people">' + timingParticipantsHtml(row) + '</div>' +
+            '<span class="timing-row__pair">' + (isPractice ? 'Слот ' : 'Пара ') + esc(row.pair || '—') + '</span>' +
+            '<div class="timing-row__people">' + (isPractice ? '<strong>Тренировка на 4 станциях</strong>' : timingParticipantsHtml(row)) + '</div>' +
           '</div>' +
-          '<div class="timing-row__times">' +
-            '<span><small>Подготовка</small>' + esc(row.prep_time || '—') + '</span>' +
-            '<span class="is-main"><small>Выступление</small>' + esc(row.performance_time || '—') + '</span>' +
-            '<span><small>Уборка</small>' + esc(row.cleanup_time || '—') + '</span>' +
-          '</div>' +
+          (isPractice ? practiceStationsHtml(row) : '') +
+          timingTimesHtml(row, isPractice) +
         '</article>';
       }
 
