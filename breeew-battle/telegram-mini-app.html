@@ -804,6 +804,7 @@
   <nav class="nav" id="nav" hidden>
     <button type="button" data-tab="home" class="is-active">Главное</button>
     <button type="button" data-tab="rules">Регламент</button>
+    <button type="button" data-tab="timing">Тайминг</button>
     <button type="button" data-tab="participants">Участники</button>
     <button type="button" data-tab="judges">Судьи</button>
     <button type="button" data-tab="prizes">Призы</button>
@@ -1247,7 +1248,7 @@
           }).join('')
           : '<div class="card"><h3>Тайминг появится позже</h3><p>Тайминг появится после обновления таблицы организаторами.</p></div>';
         return '<section class="section" data-section="timing">' +
-          '<div class="section__head"><h2>Тайминг</h2><p>Имена появятся после жеребьёвки.</p></div>' +
+          '<div class="section__head"><h2>Тайминг</h2><p>Актуальный порядок выступлений и работы на станциях.</p></div>' +
           renderTimingJump(sections) +
           '<div class="timings">' + body + '</div>' +
         '</section>';
@@ -1345,7 +1346,7 @@
         var data = payload.data || {};
         var content = payload.content || {};
         if (content.venue && content.venue.map_url) VENUE_MAP_URL = content.venue.map_url;
-        app.innerHTML = renderHome(data, content) + renderRules(content) + renderParticipants(data) + renderJudges(data) + renderPrizes(content) + renderFaq(content);
+        app.innerHTML = renderHome(data, content) + renderRules(content) + renderTiming(data) + renderParticipants(data) + renderJudges(data) + renderPrizes(content) + renderFaq(content);
         nav.hidden = false;
         setActiveTab(state.activeTab, { keepScroll: options.keepScroll });
         if (options.keepScroll) window.scrollTo({ top: scrollTop, behavior: 'auto' });
