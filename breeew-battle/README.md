@@ -112,6 +112,14 @@ Backend создаёт запись в group activity. Если yClients соз�
 
 ## Google Sheets
 
+Тайминг:
+
+```text
+https://docs.google.com/spreadsheets/d/1IlRmaaHntubFj3y2auZsUTL6suEtlVHE8UQYqgy5TEM/edit?gid=0#gid=0
+```
+
+Sync-скрипт берёт вкладку `Тайминги` и публикует в Mini App этапы `Батлы`, `Тренировка`, `Финал` и перерывы. Участникам видны только имена, пары и время; телефоны, email и внутренние идентификаторы не публикуются.
+
 Участники:
 
 ```text
