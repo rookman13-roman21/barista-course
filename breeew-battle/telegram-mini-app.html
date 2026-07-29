@@ -855,9 +855,9 @@
   <script>
     (function () {
       var API_URL = 'https://api.barista-school.ru/api/course-booking/breeew-battle/telegram-mini-app-data';
-      // Карта партнёрской площадки чемпионата (не путать с картой выдачи кофе:
-      // она приходит с backend в coffee_delivery.pickup.map_url).
-      var VENUE_MAP_URL = 'https://yandex.ru/maps/org/biznes_tsentr_rossiya/1113761001';
+      // Карта площадки чемпионата. Адрес совпадает с выдачей кофе, но сам
+      // адрес выдачи приходит с backend в coffee_delivery.pickup.map_url.
+      var VENUE_MAP_URL = 'https://yandex.ru/maps/org/206204133172';
       var REFRESH_INTERVAL_MS = 60 * 1000;
       var app = document.getElementById('app');
       var nav = document.getElementById('nav');
