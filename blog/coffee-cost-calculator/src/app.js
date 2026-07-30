@@ -1,5 +1,5 @@
 import { COST_CALCULATOR_SNAPSHOT, DEFAULT_RECIPE_ID } from './data.js';
-import { calculateRecipeCost, formatAmount, formatRub } from './calc.js';
+import { calculateRecipeCost, formatAmount, formatRub, recipeHasCustomIngredientSettings } from './calc.js';
 
 const PRICE_STORAGE_KEY = 'mbsCostCalc:v1:prices';
 const SELECTION_STORAGE_KEY = 'mbsCostCalc:v1:selection';
@@ -73,6 +73,7 @@ function initCalculator() {
     breakdown: root.querySelector('[data-breakdown]'),
     dialog: root.querySelector('[data-price-dialog]'),
     priceFields: root.querySelector('[data-price-fields]'),
+    resetCurrent: root.querySelector('[data-reset-current]'),
   };
 
   const faqItems = Array.from(root.querySelectorAll('.mbs-costcalc__faq details'));
@@ -139,6 +140,7 @@ function initCalculator() {
         <span class="mbs-costcalc__breakdown-cost">${formatRub(line.cost)}</span>
       </div>
     `).join('');
+    elements.resetCurrent.hidden = !recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, recipe, state.overrides);
   }
 
   function renderPriceFields() {
