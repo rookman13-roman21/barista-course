@@ -75,6 +75,16 @@ function initCalculator() {
     priceFields: root.querySelector('[data-price-fields]'),
   };
 
+  const faqItems = Array.from(root.querySelectorAll('.mbs-costcalc__faq details'));
+  faqItems.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) otherItem.removeAttribute('open');
+      });
+    });
+  });
+
   function selectedRecipe() {
     const recipe = getRecipe(COST_CALCULATOR_SNAPSHOT, state.selectedRecipeId);
     state.selectedRecipeId = recipe.id;

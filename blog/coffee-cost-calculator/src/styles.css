@@ -20,6 +20,7 @@
 .mbs-costcalc button, .mbs-costcalc input { font: inherit; }
 .mbs-costcalc button, .mbs-costcalc a { -webkit-tap-highlight-color: transparent; }
 .mbs-costcalc a { color: inherit; }
+.mbs-costcalc--hosted { padding: 18px 0; }
 
 .mbs-costcalc__hero,
 .mbs-costcalc__tool,
@@ -261,7 +262,15 @@
 
 .mbs-costcalc__button:hover { transform: translateY(-1px); }
 .mbs-costcalc__button--primary { background: var(--mbs-cc-red); color: #fff; box-shadow: 0 8px 17px rgba(204, 40, 65, .18); }
+.mbs-costcalc a.mbs-costcalc__button--primary { color: #fff !important; }
 .mbs-costcalc__button--secondary { border: 2px solid var(--mbs-cc-green); background: #fff; color: var(--mbs-cc-green); }
+
+.mbs-costcalc__inline-link {
+  color: var(--mbs-cc-green);
+  font-weight: 900;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
 
 .mbs-costcalc__text-button {
   min-height: 32px;

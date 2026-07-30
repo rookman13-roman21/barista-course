@@ -1,0 +1,64 @@
+<section class="mbs-costcalc mbs-costcalc--hosted" data-mbs-costcalc-root data-mbs-costcalc-hosted="v1" aria-label="Калькулятор себестоимости кофейных напитков">
+  <section class="mbs-costcalc__tool" aria-labelledby="mbs-costcalc-picker-title">
+    <div class="mbs-costcalc__section-head">
+      <div>
+        <p class="mbs-costcalc__kicker">Шаг 1</p>
+        <h2 id="mbs-costcalc-picker-title">Выберите напиток</h2>
+      </div>
+      <p>Нормы ингредиентов открыты: так проще проверить логику расчёта и применить её к своему меню.</p>
+    </div>
+    <div class="mbs-costcalc__filters" data-category-filters aria-label="Категории напитков"></div>
+    <div class="mbs-costcalc__recipe-list" data-recipe-list aria-label="Список напитков"></div>
+  </section>
+
+  <section class="mbs-costcalc__workspace" aria-label="Расчёт выбранного напитка">
+    <article class="mbs-costcalc__result-card" aria-labelledby="mbs-costcalc-result-title">
+      <p class="mbs-costcalc__kicker">Шаг 2</p>
+      <div class="mbs-costcalc__result-heading">
+        <div>
+          <h2 id="mbs-costcalc-result-title" data-selected-name>Капучино · 300 мл</h2>
+          <p data-result-caption>Себестоимость ингредиентов и упаковки</p>
+        </div>
+        <span class="mbs-costcalc__live-dot">Пересчёт онлайн</span>
+      </div>
+      <div class="mbs-costcalc__total" aria-live="polite" aria-atomic="true">
+        <span>Себестоимость одной порции</span>
+        <strong data-total-cost>—</strong>
+      </div>
+      <div class="mbs-costcalc__result-actions">
+        <button class="mbs-costcalc__button mbs-costcalc__button--primary" type="button" data-open-prices>Изменить цены</button>
+        <button class="mbs-costcalc__text-button" type="button" data-reset-current>Сбросить мои цены для этих ингредиентов</button>
+      </div>
+      <p class="mbs-costcalc__disclaimer">Стартовые цифры — учебные ориентиры, не прайс поставщика. Сохранение происходит только в вашем браузере. Одна цена ингредиента применяется ко всем напиткам, где он используется.</p>
+    </article>
+
+    <article class="mbs-costcalc__breakdown" aria-labelledby="mbs-costcalc-breakdown-title">
+      <div class="mbs-costcalc__compact-head">
+        <div>
+          <p class="mbs-costcalc__kicker">Состав и расчёт</p>
+          <h2 id="mbs-costcalc-breakdown-title">Из чего складывается сумма</h2>
+        </div>
+        <span class="mbs-costcalc__volume" data-selected-volume>300 мл</span>
+      </div>
+      <div class="mbs-costcalc__breakdown-list" data-breakdown></div>
+    </article>
+  </section>
+
+  <dialog class="mbs-costcalc__dialog" data-price-dialog aria-labelledby="mbs-costcalc-dialog-title">
+    <div class="mbs-costcalc__dialog-inner">
+      <div class="mbs-costcalc__dialog-head">
+        <div>
+          <p class="mbs-costcalc__kicker">Ваши закупки</p>
+          <h2 id="mbs-costcalc-dialog-title">Изменить цены</h2>
+          <p data-dialog-recipe-name>Капучино · 300 мл</p>
+        </div>
+        <button class="mbs-costcalc__dialog-close" type="button" data-close-prices aria-label="Закрыть окно">×</button>
+      </div>
+      <div class="mbs-costcalc__price-fields" data-price-fields></div>
+      <div class="mbs-costcalc__dialog-actions">
+        <button class="mbs-costcalc__button mbs-costcalc__button--primary" type="button" data-close-prices>Готово</button>
+        <button class="mbs-costcalc__text-button" type="button" data-reset-all>Сбросить все мои цены</button>
+      </div>
+    </div>
+  </dialog>
+</section>

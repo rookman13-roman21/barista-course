@@ -1,16 +1,6 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Рассчитайте себестоимость 12 кофейных напитков: настройте закупочные цены, размер упаковки и увидьте разбивку по ингредиентам.">
-    <title>Калькулятор себестоимости кофейных напитков | Московская школа бариста</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-      body { margin: 0; background: #f5f5f5; }
-      .mbs-costcalc {
+<!-- MBS Coffee Cost Calculator: deploy to https://api.barista-school.ru/api/coffee-cost-calculator.html -->
+<style>
+.mbs-costcalc {
   --mbs-cc-green: #417033;
   --mbs-cc-green-bright: #4f883e;
   --mbs-cc-green-soft: #e7f2e3;
@@ -418,22 +408,9 @@
   .mbs-costcalc *, .mbs-costcalc *::before, .mbs-costcalc *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }
 
-    </style>
-  </head>
-  <body>
-    <main class="mbs-costcalc" data-mbs-costcalc-root>
-  <section class="mbs-costcalc__hero" aria-labelledby="mbs-costcalc-title">
-    <div class="mbs-costcalc__hero-copy">
-      <p class="mbs-costcalc__eyebrow">MBS* Московская Школа Бариста</p>
-      <h1 id="mbs-costcalc-title">Калькулятор себестоимости кофейных напитков</h1>
-      <p class="mbs-costcalc__lead">Выберите базовый напиток, проверьте открытый состав и подставьте свои закупочные цены. Результат обновится сразу — без таблиц и регистрации.</p>
-    </div>
-    <div class="mbs-costcalc__hero-note">
-      <strong>12 рецептур</strong>
-      <span>для старта меню и учебной практики</span>
-    </div>
-  </section>
+</style>
 
+<section class="mbs-costcalc mbs-costcalc--hosted" data-mbs-costcalc-root data-mbs-costcalc-hosted="v1" aria-label="Калькулятор себестоимости кофейных напитков">
   <section class="mbs-costcalc__tool" aria-labelledby="mbs-costcalc-picker-title">
     <div class="mbs-costcalc__section-head">
       <div>
@@ -479,47 +456,6 @@
     </article>
   </section>
 
-  <section class="mbs-costcalc__how" aria-labelledby="mbs-costcalc-how-title">
-    <div class="mbs-costcalc__section-head mbs-costcalc__section-head--article">
-      <div>
-        <p class="mbs-costcalc__eyebrow">Коротко о методе</p>
-        <h2 id="mbs-costcalc-how-title">Как считать себестоимость напитка</h2>
-      </div>
-      <p>Берём цену упаковки, делим её на объём или вес и умножаем на расход в рецепте. Затем складываем стоимость каждого ингредиента и расходника.</p>
-    </div>
-    <div class="mbs-costcalc__steps">
-      <article><span>01</span><h3>Проверьте состав</h3><p>Рецептура задаёт норму кофе, молока, добавок и упаковки на одну порцию.</p></article>
-      <article><span>02</span><h3>Подставьте свои закупки</h3><p>Обновите цену и размер упаковки — этого достаточно, чтобы пересчитать позицию под вашу кофейню.</p></article>
-      <article><span>03</span><h3>Сравните позиции</h3><p>Посмотрите, какие ингредиенты формируют основную долю себестоимости, до запуска или обновления меню.</p></article>
-    </div>
-    <aside class="mbs-costcalc__notice"><strong>Важно.</strong> Калькулятор считает продукты и упаковку. Аренда, зарплата, налоги, доставка, списания вне рецептуры и другие операционные расходы сюда не входят.</aside>
-  </section>
-
-  <section class="mbs-costcalc__faq" aria-labelledby="mbs-costcalc-faq-title">
-    <div class="mbs-costcalc__section-head mbs-costcalc__section-head--article">
-      <div>
-        <p class="mbs-costcalc__eyebrow">Вопросы</p>
-        <h2 id="mbs-costcalc-faq-title">Что важно учесть</h2>
-      </div>
-    </div>
-    <div class="mbs-costcalc__faq-list">
-      <details><summary>Почему результат отличается от моей текущей цены?</summary><p>Закупки, объём упаковки и расходники у каждой кофейни свои. Откройте «Изменить цены» и внесите фактические данные из последней поставки.</p></details>
-      <details><summary>Можно ли изменить рецепт?</summary><p>Эта версия показывает базовые учебные рецептуры. Для собственных напитков, меню и финансовой модели используйте <a class="mbs-costcalc__inline-link" href="https://baristaschool.ru/open_cafe_app" target="_top">MBS* Coffee Menu</a>.</p></details>
-    </div>
-  </section>
-
-  <section class="mbs-costcalc__cta" aria-labelledby="mbs-costcalc-cta-title">
-    <div>
-      <p class="mbs-costcalc__eyebrow">Следующий шаг</p>
-      <h2 id="mbs-costcalc-cta-title">Себестоимость — начало сильного меню</h2>
-      <p>Соберите рецептуры, цены, продажи и финансовую модель в одном рабочем пространстве — или начните создавать свои напитки на курсе «Миксология».</p>
-    </div>
-    <div class="mbs-costcalc__cta-actions">
-      <a class="mbs-costcalc__button mbs-costcalc__button--primary" href="/open_cafe_app" target="_top">Открыть MBS* Coffee Menu</a>
-      <a class="mbs-costcalc__button mbs-costcalc__button--secondary" href="#consalt">Записаться на «Миксологию»</a>
-    </div>
-  </section>
-
   <dialog class="mbs-costcalc__dialog" data-price-dialog aria-labelledby="mbs-costcalc-dialog-title">
     <div class="mbs-costcalc__dialog-inner">
       <div class="mbs-costcalc__dialog-head">
@@ -537,10 +473,11 @@
       </div>
     </div>
   </dialog>
-</main>
+</section>
 
-    <script>
-      // Публичный учебный снимок базовых рецептур Coffee Menu.
+
+<script>
+// Публичный учебный снимок базовых рецептур Coffee Menu.
 // Источник: Coffee_menu/HTML_coffee_menu, commit 1439df3527214f1190ccfb955b40b292c08719bb.
 
 const COST_CALCULATOR_SNAPSHOT = {
@@ -1068,6 +1005,4 @@ if (document.readyState === 'loading') {
   initCalculator();
 }
 
-    </script>
-  </body>
-</html>
+</script>
