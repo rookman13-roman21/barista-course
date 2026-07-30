@@ -6,9 +6,9 @@
 |---|---|
 | Production URL | `https://baristaschool.ru/blog/coffee-cost-calculator` — ещё не создана в Tilda |
 | Локальное превью | `blog/coffee-cost-calculator/index.html` |
-| Tilda-артефакт для одной вставки | `blog/coffee-cost-calculator/tilda-loader.html` |
+| Tilda-артефакты | `blog/coffee-cost-calculator/tilda-seo-block.html` + `blog/coffee-cost-calculator/tilda-loader.html` |
 | Hosted-артефакт | `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` → будущий `/var/www/html/api/coffee-cost-calculator.html` |
-| Тип | Hosted-калькулятор через одноразовый Tilda loader; статья и H1 — нативные блоки Tilda |
+| Тип | Статичный SEO-блок и hosted-калькулятор через Tilda loader |
 | Источник рецептур | `Coffee_menu/HTML_coffee_menu`, commit `1439df3527214f1190ccfb955b40b292c08719bb` |
 | Публичная модель | 12 базовых учебных рецептур, ингредиенты, нормы, учебные ориентиры цены и упаковки |
 | Сохранение | Только `localStorage`: `mbsCostCalc:v1:prices`, `mbsCostCalc:v1:selection`. Цена ингредиента общая для всех напитков, в которых он используется. |
@@ -39,7 +39,7 @@
 1. Выполнить `node scripts/build.mjs`, затем оба теста из `tests/`.
 2. Открыть `index.html` и проверить 360 и 390 px: выбор напитка, изменение цен, сброс, FAQ, обе CTA и работу с клавиатурой.
 3. Перед Tilda проверить, что `hosted/coffee-cost-calculator.html` содержит маркер `data-mbs-costcalc-hosted="v1"`, не содержит H1 и не содержит приватных данных; `tilda-loader.html` содержит только один публичный URL сервера, timeout, проверку ответа и fallback.
-4. После отдельного разрешения на публикацию нативно собрать H1 и статью в Tilda, создать попап заявки, вставить `tilda-loader.html`, выложить hosted-файл на сервер, затем проверить `#consalt`, `/open_cafe_app`, опубликованный URL и мобильный сценарий.
+4. После отдельного разрешения на публикацию вставить в Tilda сначала `tilda-seo-block.html`, затем `tilda-loader.html`; создать попап заявки, выложить hosted-файл на сервер, затем проверить `#consalt`, `/open_cafe_app`, опубликованный URL и мобильный сценарий.
 
 ## Статус
 

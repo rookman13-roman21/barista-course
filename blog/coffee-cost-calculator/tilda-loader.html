@@ -21,6 +21,11 @@
     if (!root || root.getAttribute('data-mbs-costcalc-loader-ready') === '1') return;
     root.setAttribute('data-mbs-costcalc-loader-ready', '1');
 
+    var calculatorSlot = document.querySelector('[data-mbs-costcalc-loader-slot]');
+    if (calculatorSlot && calculatorSlot.parentNode) {
+      calculatorSlot.parentNode.replaceChild(root, calculatorSlot);
+    }
+
     var HOSTED_URL = 'https://api.barista-school.ru/api/coffee-cost-calculator.html';
     var LOAD_TIMEOUT_MS = 10000;
 

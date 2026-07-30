@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { COST_CALCULATOR_SNAPSHOT } from '../src/data.js';
-import { calculateIngredientCost, calculateRecipeCost } from '../src/calc.js';
+import { calculateIngredientCost, calculateRecipeCost, recipeHasCustomIngredientSettings } from '../src/calc.js';
 
 const recipeById = (id) => COST_CALCULATOR_SNAPSHOT.recipes.find((recipe) => recipe.id === id);
 
@@ -19,5 +19,13 @@ const lossCatalogItem = { defaultPrice: 1000, defaultSize: 1000 };
 assert.equal(calculateIngredientCost(lossIngredient, lossCatalogItem), 200);
 assert.equal(calculateIngredientCost({ amount: 100, loss: 1 }, lossCatalogItem), 0);
 assert.equal(calculateIngredientCost({ amount: -1 }, lossCatalogItem), 0);
+
+const cappuccino = recipeById('cappuccino-300');
+const milk = COST_CALCULATOR_SNAPSHOT.ingredients.milk;
+assert.equal(recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, cappuccino, {}), false);
+assert.equal(recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, cappuccino, { milk: { price: milk.defaultPrice } }), false);
+assert.equal(recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, cappuccino, { milk: { price: milk.defaultPrice + 1 } }), true);
+assert.equal(recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, cappuccino, { milk: { size: milk.defaultSize - 1 } }), true);
+assert.equal(recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, cappuccino, { cocoa: { price: 999 } }), false);
 
 console.log('calc.test.mjs: passed');

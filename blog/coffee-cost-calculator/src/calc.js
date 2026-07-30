@@ -53,6 +53,21 @@ export function calculateRecipeCost(snapshot, recipe, overrides = {}) {
   };
 }
 
+export function recipeHasCustomIngredientSettings(snapshot, recipe, overrides = {}) {
+  if (!recipe || !Array.isArray(recipe.ingredients) || !overrides || typeof overrides !== 'object') return false;
+
+  return recipe.ingredients.some(({ code }) => {
+    const ingredient = snapshot.ingredients?.[code];
+    const override = overrides[code];
+    if (!ingredient || !override || typeof override !== 'object') return false;
+
+    return (
+      (Number.isFinite(override.price) && override.price !== ingredient.defaultPrice) ||
+      (Number.isFinite(override.size) && override.size !== ingredient.defaultSize)
+    );
+  });
+}
+
 export function formatRub(value) {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',

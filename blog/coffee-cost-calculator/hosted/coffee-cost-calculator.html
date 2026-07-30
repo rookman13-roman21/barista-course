@@ -439,9 +439,9 @@
       </div>
       <div class="mbs-costcalc__result-actions">
         <button class="mbs-costcalc__button mbs-costcalc__button--primary" type="button" data-open-prices>Изменить цены</button>
-        <button class="mbs-costcalc__text-button" type="button" data-reset-current>Сбросить мои цены для этих ингредиентов</button>
+        <button class="mbs-costcalc__text-button" type="button" data-reset-current hidden>Сбросить мои цены для этих ингредиентов</button>
       </div>
-      <p class="mbs-costcalc__disclaimer">Стартовые цифры — учебные ориентиры, не прайс поставщика. Сохранение происходит только в вашем браузере. Одна цена ингредиента применяется ко всем напиткам, где он используется.</p>
+      <p class="mbs-costcalc__disclaimer">Стартовые цифры — учебные ориентиры, не прайс поставщика.</p>
     </article>
 
     <article class="mbs-costcalc__breakdown" aria-labelledby="mbs-costcalc-breakdown-title">
@@ -733,6 +733,21 @@ function calculateRecipeCost(snapshot, recipe, overrides = {}) {
   };
 }
 
+function recipeHasCustomIngredientSettings(snapshot, recipe, overrides = {}) {
+  if (!recipe || !Array.isArray(recipe.ingredients) || !overrides || typeof overrides !== 'object') return false;
+
+  return recipe.ingredients.some(({ code }) => {
+    const ingredient = snapshot.ingredients?.[code];
+    const override = overrides[code];
+    if (!ingredient || !override || typeof override !== 'object') return false;
+
+    return (
+      (Number.isFinite(override.price) && override.price !== ingredient.defaultPrice) ||
+      (Number.isFinite(override.size) && override.size !== ingredient.defaultSize)
+    );
+  });
+}
+
 function formatRub(value) {
   return new Intl.NumberFormat('ru-RU', {
     style: 'currency',
@@ -822,6 +837,7 @@ function initCalculator() {
     breakdown: root.querySelector('[data-breakdown]'),
     dialog: root.querySelector('[data-price-dialog]'),
     priceFields: root.querySelector('[data-price-fields]'),
+    resetCurrent: root.querySelector('[data-reset-current]'),
   };
 
   const faqItems = Array.from(root.querySelectorAll('.mbs-costcalc__faq details'));
@@ -888,6 +904,7 @@ function initCalculator() {
         <span class="mbs-costcalc__breakdown-cost">${formatRub(line.cost)}</span>
       </div>
     `).join('');
+    elements.resetCurrent.hidden = !recipeHasCustomIngredientSettings(COST_CALCULATOR_SNAPSHOT, recipe, state.overrides);
   }
 
   function renderPriceFields() {
