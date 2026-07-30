@@ -1,6 +1,6 @@
 # Публикация в Tilda: hosted calculator
 
-Этот документ описывает будущую ступень C. Сейчас ничего из него не публикуется.
+Server-часть ступени C выполнена 2026-07-30: `hosted/coffee-cost-calculator.html` из `main` commit `52c051e` выложен на `https://api.barista-school.ru/api/coffee-cost-calculator.html` и проверен по HTTPS. Tilda-часть остаётся незавершённой: до публикации страницы выполнить шаги ниже.
 
 ## Что остаётся статичным в Tilda
 

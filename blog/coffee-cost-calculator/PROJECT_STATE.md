@@ -4,10 +4,10 @@
 
 | Поле | Значение |
 |---|---|
-| Production URL | `https://baristaschool.ru/blog/coffee-cost-calculator` — ещё не создана в Tilda |
+| Production URL | `https://baristaschool.ru/blog/coffee-cost-calculator` — ожидает публикации в Tilda |
 | Локальное превью | `blog/coffee-cost-calculator/index.html` |
 | Tilda-артефакты | `blog/coffee-cost-calculator/tilda-seo-block.html` + `blog/coffee-cost-calculator/tilda-loader.html` |
-| Hosted-артефакт | `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` → будущий `/var/www/html/api/coffee-cost-calculator.html` |
+| Hosted-артефакт | `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` → `https://api.barista-school.ru/api/coffee-cost-calculator.html` (выложен 2026-07-30 из `main` commit `52c051e`) |
 | Тип | Статичный SEO-блок и hosted-калькулятор через Tilda loader |
 | Источник рецептур | `Coffee_menu/HTML_coffee_menu`, commit `1439df3527214f1190ccfb955b40b292c08719bb` |
 | Публичная модель | 12 базовых учебных рецептур, ингредиенты, нормы, учебные ориентиры цены и упаковки |
@@ -39,10 +39,10 @@
 1. Выполнить `node scripts/build.mjs`, затем оба теста из `tests/`.
 2. Открыть `index.html` и проверить 360 и 390 px: выбор напитка, изменение цен, сброс, FAQ, обе CTA и работу с клавиатурой.
 3. Перед Tilda проверить, что `hosted/coffee-cost-calculator.html` содержит маркер `data-mbs-costcalc-hosted="v1"`, не содержит H1 и не содержит приватных данных; `tilda-loader.html` содержит только один публичный URL сервера, timeout, проверку ответа и fallback.
-4. После отдельного разрешения на публикацию вставить в Tilda сначала `tilda-seo-block.html`, затем `tilda-loader.html`; создать попап заявки, выложить hosted-файл на сервер, затем проверить `#consalt`, `/open_cafe_app`, опубликованный URL и мобильный сценарий.
+4. Перед публикацией вставить в Tilda сначала `tilda-seo-block.html`, затем `tilda-loader.html`; создать попап заявки, затем проверить `#consalt`, `/open_cafe_app`, опубликованный URL и мобильный сценарий.
 
 ## Статус
 
-Локальные loader и hosted-артефакт подготовлены. Tilda-страница, попап, серверный файл и публикация не выполнялись.
+Hosted-файл выложен и проверен по публичному HTTPS-адресу: HTTP 200, CORS, `no-store` и `X-Robots-Tag: noindex, follow` подтверждены. Tilda-страница, статичный SEO-блок, попап `#consalt` и публикация страницы ещё не подтверждены; не называть страницу опубликованной до этой проверки.
 
 Обновлено: 2026-07-30.

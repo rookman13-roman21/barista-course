@@ -46,7 +46,7 @@ barista-course/
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
 | `barista-theory-cabinet/` | Tilda Members | Tilda Members | Личный кабинет: 11 теоретических уроков перед очным курсом |
-| `blog/coffee-cost-calculator/` | `/blog/coffee-cost-calculator` | Tilda SEO-блок + hosted loader, не опубликован | H1 и SEO-статья — статичный HTML Tilda; mobile-first калькулятор 12 учебных напитков подгружается с `api.barista-school.ru`, хранит цены локально и ведёт к Coffee Menu / «Миксологии» |
+| `blog/coffee-cost-calculator/` | `/blog/coffee-cost-calculator` | Tilda SEO-блок + hosted loader, Tilda не опубликована | Hosted-файл уже доступен на `api.barista-school.ru`; H1 и SEO-статья вставляются статичным HTML Tilda, после чего mobile-first калькулятор 12 учебных напитков подгружается с сервера, хранит цены локально и ведёт к Coffee Menu / «Миксологии» |
 | `breeew-battle/` | `/breeew-battle` | Tilda hosted loader | Чемпионат MBS* Breeew battle: hosted HTML, popup записи в yClients group activity, public JSON, Telegram Mini App |
 | `capping/` | `/capping` | Tilda hosted loader | Страница каппингов: Tilda один раз вставляет loader, актуальный HTML страницы загружается с `api.barista-school.ru` |
 | `certificates/` | `/sertifikat` | Tilda Zero Block | Каталог подарочных сертификатов с модальным окном и API |
