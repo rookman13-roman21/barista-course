@@ -1,7 +1,7 @@
 # barista-course — карточка проекта
 
 > Статус: active
-> Обновлено: 2026-07-24
+> Обновлено: 2026-07-31
 > ⚠️ Репозиторий ПУБЛИЧНЫЙ — не коммитить секреты, IP и учётки.
 
 - **Что это:** лендинги страниц сайта baristaschool.ru; каждая папка = одна страница Tilda.
@@ -16,4 +16,4 @@
 - **Ловушки:** `barista-theory-cabinet/` — legacy старого кабинета Tilda Members, только reference (прод кабинета — в `bitrix-tools`); `home-barista/` — отдельный вложенный git-репозиторий, не часть этого.
 - **Соседние системы:** Tilda, `schedule-online` (виджеты записи на страницах), `bitrix-tools` (личный кабинет).
 - **Главная дока:** `PROJECT.md`, `PROJECT_MAP.md`.
-- **Последний важный контекст:** рабочая ветка может быть `work/excu-local-page` — проверять перед задачами; незакоммиченные хвосты — см. `mbs-design-system/WORK_IN_PROGRESS.md`. В Breeew Mini App кофе первого этапа задаётся backend-объектом `first_stage_coffee`; 14.07.2026 опубликован кофе «Танзания Лунгва АВ» с карточкой товара и изображением. На вкладке «Главное» также опубликована карточка `Медиагайд`, которая открывает PDF в browser-viewer. Итоги Latte Art Battle 2026 живут только во фронтенд-конфиге `latte-art-battle/latte-art-battle.html`: они показываются при `status=completed` и `ARCHIVE_RESULTS_2026.enabled`; перед следующим сезоном отключить этот флаг, JSON и cron не менять. Калькулятор себестоимости: hosted-файл доступен на `https://api.barista-school.ru/api/coffee-cost-calculator.html` (2026-07-30, `main` commit `52c051e`); Tilda-страница `https://baristaschool.ru/blog/coffee-cost-calculator` не считается опубликованной, пока не вставлены `tilda-seo-block.html`, `tilda-loader.html`, не создан попап `#consalt` и не пройдена мобильная проверка.
+- **Последний важный контекст:** рабочая ветка может быть `work/excu-local-page` — проверять перед задачами; незакоммиченные хвосты — см. `mbs-design-system/WORK_IN_PROGRESS.md`. В Breeew Mini App кофе первого этапа задаётся backend-объектом `first_stage_coffee`; 14.07.2026 опубликован кофе «Танзания Лунгва АВ» с карточкой товара и изображением. На вкладке «Главное» также опубликована карточка `Медиагайд`, которая открывает PDF в browser-viewer. Итоги Latte Art Battle 2026 живут только во фронтенд-конфиге `latte-art-battle/latte-art-battle.html`: они показываются при `status=completed` и `ARCHIVE_RESULTS_2026.enabled`; перед следующим сезоном отключить этот флаг, JSON и cron не менять. Калькулятор себестоимости опубликован: `https://baristaschool.ru/blog/coffee-cost-calculator` и hosted-файл `https://api.barista-school.ru/api/coffee-cost-calculator.html` (2026-07-31; код из `main` commit `52c051e`). В публичном HTML подтверждены H1, SEO-блок и loader; Tilda ещё требует popup `#consalt`, исправления Keywords и мобильной проверки обеих CTA.
