@@ -1,0 +1,1008 @@
+<!-- MBS Coffee Cost Calculator: deploy to https://api.barista-school.ru/api/coffee-cost-calculator.html -->
+<style>
+.mbs-costcalc {
+  --mbs-cc-green: #417033;
+  --mbs-cc-green-bright: #4f883e;
+  --mbs-cc-green-soft: #e7f2e3;
+  --mbs-cc-red: #cc2841;
+  --mbs-cc-ink: #1f2920;
+  --mbs-cc-muted: #647064;
+  --mbs-cc-line: #dce5d9;
+  --mbs-cc-paper: #ffffff;
+  --mbs-cc-sand: #f5f5f5;
+  box-sizing: border-box;
+  color: var(--mbs-cc-ink);
+  font-family: Mulish, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.mbs-costcalc *, .mbs-costcalc *::before, .mbs-costcalc *::after { box-sizing: border-box; }
+.mbs-costcalc button, .mbs-costcalc input { font: inherit; }
+.mbs-costcalc button, .mbs-costcalc a { -webkit-tap-highlight-color: transparent; }
+.mbs-costcalc a { color: inherit; }
+.mbs-costcalc--hosted { padding: 18px 0; }
+
+.mbs-costcalc__hero,
+.mbs-costcalc__tool,
+.mbs-costcalc__workspace,
+.mbs-costcalc__how,
+.mbs-costcalc__faq,
+.mbs-costcalc__cta {
+  width: min(1160px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.mbs-costcalc__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px;
+  gap: 36px;
+  align-items: end;
+  padding: 64px 0 46px;
+}
+
+.mbs-costcalc__eyebrow,
+.mbs-costcalc__kicker {
+  margin: 0 0 10px;
+  color: var(--mbs-cc-green);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mbs-costcalc__hero h1,
+.mbs-costcalc h2,
+.mbs-costcalc h3,
+.mbs-costcalc p { margin-top: 0; }
+
+.mbs-costcalc__hero h1 {
+  max-width: 760px;
+  margin-bottom: 20px;
+  color: var(--mbs-cc-ink);
+  font-size: clamp(34px, 5vw, 62px);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  line-height: .98;
+  overflow-wrap: anywhere;
+}
+
+.mbs-costcalc__lead {
+  max-width: 660px;
+  margin-bottom: 0;
+  color: #465446;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.mbs-costcalc__hero-note {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 146px;
+  justify-content: end;
+  padding: 24px;
+  border-radius: 24px;
+  background: var(--mbs-cc-green);
+  color: #fff;
+}
+
+.mbs-costcalc__hero-note strong { font-size: 30px; font-weight: 900; line-height: 1; }
+.mbs-costcalc__hero-note span { font-size: 14px; line-height: 1.35; opacity: .88; }
+
+.mbs-costcalc__tool {
+  padding: 34px;
+  border: 1px solid #d7e5d3;
+  border-radius: 30px;
+  background: var(--mbs-cc-green-soft);
+}
+
+.mbs-costcalc__section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 390px);
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 26px;
+}
+
+.mbs-costcalc__section-head h2,
+.mbs-costcalc__compact-head h2,
+.mbs-costcalc__result-heading h2,
+.mbs-costcalc__dialog h2,
+.mbs-costcalc__cta h2 {
+  margin-bottom: 0;
+  color: var(--mbs-cc-ink);
+  font-size: clamp(23px, 3vw, 32px);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+}
+
+.mbs-costcalc__section-head > p {
+  margin-bottom: 0;
+  color: #526052;
+  font-size: 15px;
+}
+
+.mbs-costcalc__filters {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 1px 12px;
+  scrollbar-width: none;
+}
+
+.mbs-costcalc__filters::-webkit-scrollbar { display: none; }
+
+.mbs-costcalc__filter {
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 9px 15px;
+  border: 1px solid #c3d8bd;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .6);
+  color: #42603c;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mbs-costcalc__filter[aria-pressed="true"] { border-color: var(--mbs-cc-green); background: var(--mbs-cc-green); color: #fff; }
+
+.mbs-costcalc__recipe-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mbs-costcalc__recipe {
+  display: flex;
+  min-height: 92px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 15px;
+  border: 1px solid #d7e3d4;
+  border-radius: 18px;
+  background: var(--mbs-cc-paper);
+  color: var(--mbs-cc-ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.mbs-costcalc__recipe:hover { border-color: #85aa7b; transform: translateY(-2px); }
+.mbs-costcalc__recipe[aria-pressed="true"] { border: 2px solid var(--mbs-cc-green); padding: 14px; box-shadow: 0 10px 22px rgba(65, 112, 51, .12); }
+.mbs-costcalc__recipe-name { font-size: 15px; font-weight: 900; line-height: 1.22; }
+.mbs-costcalc__recipe-volume { color: var(--mbs-cc-muted); font-size: 13px; font-weight: 700; }
+
+.mbs-costcalc__workspace {
+  display: grid;
+  grid-template-columns: minmax(300px, .86fr) minmax(0, 1.14fr);
+  gap: 18px;
+  padding: 32px 0 48px;
+}
+
+.mbs-costcalc__result-card,
+.mbs-costcalc__breakdown {
+  border: 1px solid var(--mbs-cc-line);
+  border-radius: 28px;
+  background: var(--mbs-cc-paper);
+  box-shadow: 0 14px 32px rgba(31, 41, 32, .05);
+}
+
+.mbs-costcalc__result-card { padding: 30px; }
+.mbs-costcalc__breakdown { padding: 29px; }
+
+.mbs-costcalc__result-heading,
+.mbs-costcalc__compact-head {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.mbs-costcalc__result-heading p,
+.mbs-costcalc__dialog-head p {
+  margin: 7px 0 0;
+  color: var(--mbs-cc-muted);
+  font-size: 14px;
+}
+
+.mbs-costcalc__live-dot,
+.mbs-costcalc__volume {
+  flex: 0 0 auto;
+  padding: 7px 9px;
+  border-radius: 999px;
+  background: var(--mbs-cc-green-soft);
+  color: var(--mbs-cc-green);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.mbs-costcalc__live-dot::before { content: '•'; padding-right: 4px; font-size: 18px; line-height: 0; vertical-align: -1px; }
+
+.mbs-costcalc__total {
+  display: grid;
+  gap: 5px;
+  margin: 30px 0 24px;
+  padding: 22px;
+  border-radius: 20px;
+  background: var(--mbs-cc-ink);
+  color: #fff;
+}
+
+.mbs-costcalc__total span { font-size: 13px; font-weight: 700; opacity: .74; }
+.mbs-costcalc__total strong { font-size: clamp(38px, 5vw, 50px); font-weight: 900; letter-spacing: -.05em; line-height: 1; }
+
+.mbs-costcalc__result-actions,
+.mbs-costcalc__dialog-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 13px;
+}
+
+.mbs-costcalc__button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 20px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.mbs-costcalc__button:hover { transform: translateY(-1px); }
+.mbs-costcalc__button--primary { background: var(--mbs-cc-red); color: #fff; box-shadow: 0 8px 17px rgba(204, 40, 65, .18); }
+.mbs-costcalc a.mbs-costcalc__button--primary { color: #fff !important; }
+.mbs-costcalc__button--secondary { border: 2px solid var(--mbs-cc-green); background: #fff; color: var(--mbs-cc-green); }
+
+.mbs-costcalc__inline-link {
+  color: var(--mbs-cc-green);
+  font-weight: 900;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.mbs-costcalc__text-button {
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: transparent;
+  color: #657665;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.mbs-costcalc__disclaimer { margin: 22px 0 0; color: #788478; font-size: 12px; line-height: 1.45; }
+
+.mbs-costcalc__compact-head { margin-bottom: 20px; }
+.mbs-costcalc__breakdown-list { display: grid; gap: 8px; }
+
+.mbs-costcalc__breakdown-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #edf0ec;
+}
+
+.mbs-costcalc__breakdown-row:last-child { border-bottom: 0; }
+.mbs-costcalc__breakdown-name { display: block; font-size: 15px; font-weight: 800; }
+.mbs-costcalc__breakdown-meta { display: block; margin-top: 2px; color: var(--mbs-cc-muted); font-size: 13px; }
+.mbs-costcalc__breakdown-cost { color: var(--mbs-cc-green); font-size: 16px; font-weight: 900; white-space: nowrap; }
+
+.mbs-costcalc__how { padding: 54px 0; border-top: 1px solid #e0e6dd; }
+.mbs-costcalc__section-head--article { grid-template-columns: minmax(0, 1fr) minmax(220px, 440px); }
+
+.mbs-costcalc__steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.mbs-costcalc__steps article { padding: 25px; border-radius: 22px; background: var(--mbs-cc-sand); }
+.mbs-costcalc__steps span { color: var(--mbs-cc-green); font-size: 13px; font-weight: 900; letter-spacing: .08em; }
+.mbs-costcalc__steps h3 { margin: 18px 0 9px; font-size: 19px; font-weight: 900; letter-spacing: -.02em; }
+.mbs-costcalc__steps p { margin-bottom: 0; color: #5c665c; font-size: 14px; }
+
+.mbs-costcalc__notice { margin-top: 16px; padding: 18px 21px; border-radius: 16px; background: #f8dde1; color: #67343b; font-size: 14px; }
+.mbs-costcalc__notice strong { font-weight: 900; }
+
+.mbs-costcalc__faq { padding: 14px 0 54px; }
+.mbs-costcalc__faq-list { border-top: 1px solid var(--mbs-cc-line); }
+.mbs-costcalc__faq details { border-bottom: 1px solid var(--mbs-cc-line); padding: 0 4px; }
+.mbs-costcalc__faq summary { position: relative; padding: 20px 34px 20px 0; cursor: pointer; font-weight: 900; list-style: none; }
+.mbs-costcalc__faq summary::-webkit-details-marker { display: none; }
+.mbs-costcalc__faq summary::after { content: '+'; position: absolute; right: 2px; top: 13px; color: var(--mbs-cc-green); font-size: 29px; font-weight: 400; }
+.mbs-costcalc__faq details[open] summary::after { content: '–'; }
+.mbs-costcalc__faq details p { max-width: 780px; margin: -3px 0 20px; color: #586358; font-size: 15px; }
+
+.mbs-costcalc__cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 330px);
+  gap: 42px;
+  align-items: center;
+  margin-bottom: 64px;
+  padding: 38px;
+  border-radius: 30px;
+  background: var(--mbs-cc-green-soft);
+}
+
+.mbs-costcalc__cta p:not(.mbs-costcalc__eyebrow) { max-width: 620px; margin: 16px 0 0; color: #536053; }
+.mbs-costcalc__cta-actions { display: grid; gap: 10px; }
+
+.mbs-costcalc__dialog {
+  width: min(600px, calc(100% - 28px));
+  max-height: min(760px, calc(100dvh - 28px));
+  padding: 0;
+  border: 0;
+  border-radius: 25px;
+  background: #fff;
+  color: var(--mbs-cc-ink);
+  box-shadow: 0 24px 70px rgba(15, 26, 16, .28);
+}
+
+.mbs-costcalc__dialog::backdrop { background: rgba(22, 36, 23, .58); }
+.mbs-costcalc__dialog-inner { padding: 28px; overflow: auto; }
+.mbs-costcalc__dialog-head { display: flex; gap: 18px; justify-content: space-between; }
+.mbs-costcalc__dialog-close { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; padding: 0; border: 0; border-radius: 50%; background: var(--mbs-cc-sand); color: var(--mbs-cc-ink); cursor: pointer; font-size: 27px; line-height: 1; }
+.mbs-costcalc__price-fields { display: grid; gap: 10px; margin: 24px 0; }
+
+.mbs-costcalc__price-fieldset { margin: 0; padding: 16px; border: 1px solid var(--mbs-cc-line); border-radius: 17px; }
+.mbs-costcalc__price-fieldset legend { padding: 0 6px; color: var(--mbs-cc-ink); font-size: 15px; font-weight: 900; }
+.mbs-costcalc__field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mbs-costcalc__field { display: grid; gap: 6px; color: var(--mbs-cc-muted); font-size: 12px; font-weight: 800; }
+.mbs-costcalc__field input { width: 100%; min-height: 47px; padding: 10px; border: 1px solid #ccd8c9; border-radius: 11px; background: #fff; color: var(--mbs-cc-ink); font-size: 16px; font-weight: 800; }
+
+.mbs-costcalc button:focus-visible,
+.mbs-costcalc a:focus-visible,
+.mbs-costcalc input:focus-visible,
+.mbs-costcalc summary:focus-visible { outline: 3px solid #82b875; outline-offset: 3px; }
+
+@media (max-width: 820px) {
+  .mbs-costcalc__hero,
+  .mbs-costcalc__tool,
+  .mbs-costcalc__workspace,
+  .mbs-costcalc__how,
+  .mbs-costcalc__faq,
+  .mbs-costcalc__cta { width: min(calc(100% - 28px), 600px); }
+  .mbs-costcalc__hero { grid-template-columns: 1fr; gap: 20px; padding: 38px 0 26px; }
+  .mbs-costcalc__hero-note { min-height: auto; padding: 19px; }
+  .mbs-costcalc__hero-note strong { font-size: 24px; }
+  .mbs-costcalc__lead { font-size: 16px; }
+  .mbs-costcalc__tool { margin: 0 auto; padding: 22px 16px; border-radius: 22px; }
+  .mbs-costcalc__section-head { grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
+  .mbs-costcalc__section-head > p { font-size: 14px; }
+  .mbs-costcalc__recipe-list { display: flex; gap: 10px; overflow-x: auto; padding: 2px 1px 9px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .mbs-costcalc__recipe-list::-webkit-scrollbar { display: none; }
+  .mbs-costcalc__recipe { flex: 0 0 min(43vw, 184px); min-height: 90px; scroll-snap-align: start; }
+  .mbs-costcalc__workspace { grid-template-columns: 1fr; padding: 20px 0 34px; }
+  .mbs-costcalc__result-card, .mbs-costcalc__breakdown { border-radius: 22px; padding: 22px; }
+  .mbs-costcalc__total { margin: 22px 0 20px; }
+  .mbs-costcalc__steps { display: flex; gap: 12px; overflow-x: auto; padding: 2px 1px 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .mbs-costcalc__steps::-webkit-scrollbar { display: none; }
+  .mbs-costcalc__steps article { flex: 0 0 min(78vw, 310px); scroll-snap-align: start; }
+  .mbs-costcalc__how { padding: 38px 0; }
+  .mbs-costcalc__faq { padding-bottom: 38px; }
+  .mbs-costcalc__cta { grid-template-columns: 1fr; gap: 26px; margin-bottom: 34px; padding: 26px 22px; border-radius: 22px; }
+  .mbs-costcalc__cta-actions .mbs-costcalc__button { width: 100%; }
+}
+
+@media (max-width: 430px) {
+  .mbs-costcalc__hero h1 { font-size: 35px; }
+  .mbs-costcalc__result-heading { flex-direction: column; gap: 10px; }
+  .mbs-costcalc__field-grid { grid-template-columns: 1fr; }
+  .mbs-costcalc__dialog-inner { padding: 22px 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbs-costcalc *, .mbs-costcalc *::before, .mbs-costcalc *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+
+</style>
+
+<section class="mbs-costcalc mbs-costcalc--hosted" data-mbs-costcalc-root data-mbs-costcalc-hosted="v1" aria-label="Калькулятор себестоимости кофейных напитков">
+  <section class="mbs-costcalc__tool" aria-labelledby="mbs-costcalc-picker-title">
+    <div class="mbs-costcalc__section-head">
+      <div>
+        <p class="mbs-costcalc__kicker">Шаг 1</p>
+        <h2 id="mbs-costcalc-picker-title">Выберите напиток</h2>
+      </div>
+      <p>Нормы ингредиентов открыты: так проще проверить логику расчёта и применить её к своему меню.</p>
+    </div>
+    <div class="mbs-costcalc__filters" data-category-filters aria-label="Категории напитков"></div>
+    <div class="mbs-costcalc__recipe-list" data-recipe-list aria-label="Список напитков"></div>
+  </section>
+
+  <section class="mbs-costcalc__workspace" aria-label="Расчёт выбранного напитка">
+    <article class="mbs-costcalc__result-card" aria-labelledby="mbs-costcalc-result-title">
+      <p class="mbs-costcalc__kicker">Шаг 2</p>
+      <div class="mbs-costcalc__result-heading">
+        <div>
+          <h2 id="mbs-costcalc-result-title" data-selected-name>Капучино · 300 мл</h2>
+          <p data-result-caption>Себестоимость ингредиентов и упаковки</p>
+        </div>
+        <span class="mbs-costcalc__live-dot">Пересчёт онлайн</span>
+      </div>
+      <div class="mbs-costcalc__total" aria-live="polite" aria-atomic="true">
+        <span>Себестоимость одной порции</span>
+        <strong data-total-cost>—</strong>
+      </div>
+      <div class="mbs-costcalc__result-actions">
+        <button class="mbs-costcalc__button mbs-costcalc__button--primary" type="button" data-open-prices>Изменить цены</button>
+        <button class="mbs-costcalc__text-button" type="button" data-reset-current>Сбросить мои цены для этих ингредиентов</button>
+      </div>
+      <p class="mbs-costcalc__disclaimer">Стартовые цифры — учебные ориентиры, не прайс поставщика. Сохранение происходит только в вашем браузере. Одна цена ингредиента применяется ко всем напиткам, где он используется.</p>
+    </article>
+
+    <article class="mbs-costcalc__breakdown" aria-labelledby="mbs-costcalc-breakdown-title">
+      <div class="mbs-costcalc__compact-head">
+        <div>
+          <p class="mbs-costcalc__kicker">Состав и расчёт</p>
+          <h2 id="mbs-costcalc-breakdown-title">Из чего складывается сумма</h2>
+        </div>
+        <span class="mbs-costcalc__volume" data-selected-volume>300 мл</span>
+      </div>
+      <div class="mbs-costcalc__breakdown-list" data-breakdown></div>
+    </article>
+  </section>
+
+  <dialog class="mbs-costcalc__dialog" data-price-dialog aria-labelledby="mbs-costcalc-dialog-title">
+    <div class="mbs-costcalc__dialog-inner">
+      <div class="mbs-costcalc__dialog-head">
+        <div>
+          <p class="mbs-costcalc__kicker">Ваши закупки</p>
+          <h2 id="mbs-costcalc-dialog-title">Изменить цены</h2>
+          <p data-dialog-recipe-name>Капучино · 300 мл</p>
+        </div>
+        <button class="mbs-costcalc__dialog-close" type="button" data-close-prices aria-label="Закрыть окно">×</button>
+      </div>
+      <div class="mbs-costcalc__price-fields" data-price-fields></div>
+      <div class="mbs-costcalc__dialog-actions">
+        <button class="mbs-costcalc__button mbs-costcalc__button--primary" type="button" data-close-prices>Готово</button>
+        <button class="mbs-costcalc__text-button" type="button" data-reset-all>Сбросить все мои цены</button>
+      </div>
+    </div>
+  </dialog>
+</section>
+
+
+<script>
+// Публичный учебный снимок базовых рецептур Coffee Menu.
+// Источник: Coffee_menu/HTML_coffee_menu, commit 1439df3527214f1190ccfb955b40b292c08719bb.
+
+const COST_CALCULATOR_SNAPSHOT = {
+  schemaVersion: '1.0.0',
+  capturedAt: '2026-07-30',
+  source: {
+    repository: 'Coffee_menu/HTML_coffee_menu',
+    commit: '1439df3527214f1190ccfb955b40b292c08719bb',
+    recipeFile: 'src/data/drinks.js',
+    ingredientFile: 'src/data/mat.js',
+  },
+  ingredients: {
+    coffee: {
+      name: 'Зерно эспрессо',
+      packageLabel: 'упаковка 1 кг',
+      amountUnit: 'г',
+      packageSizeUnit: 'г',
+      defaultPrice: 2000,
+      defaultSize: 1000,
+    },
+    filter_coffee: {
+      name: 'Зерно под фильтр',
+      packageLabel: 'упаковка 1 кг',
+      amountUnit: 'г',
+      packageSizeUnit: 'г',
+      defaultPrice: 4000,
+      defaultSize: 1000,
+    },
+    milk: {
+      name: 'Молоко',
+      packageLabel: 'упаковка 1 л',
+      amountUnit: 'мл',
+      packageSizeUnit: 'мл',
+      defaultPrice: 130,
+      defaultSize: 1000,
+    },
+    cream: {
+      name: 'Сливки 10%',
+      packageLabel: 'упаковка 1 л',
+      amountUnit: 'мл',
+      packageSizeUnit: 'мл',
+      defaultPrice: 250,
+      defaultSize: 1000,
+    },
+    cocoa: {
+      name: 'Какао-порошок',
+      packageLabel: 'упаковка 1 кг',
+      amountUnit: 'г',
+      packageSizeUnit: 'г',
+      defaultPrice: 2500,
+      defaultSize: 1000,
+    },
+    matcha: {
+      name: 'Матча',
+      packageLabel: 'упаковка 1 кг',
+      amountUnit: 'г',
+      packageSizeUnit: 'г',
+      defaultPrice: 8000,
+      defaultSize: 1000,
+    },
+    sugar: {
+      name: 'Сахар',
+      packageLabel: 'упаковка 1 кг',
+      amountUnit: 'г',
+      packageSizeUnit: 'г',
+      defaultPrice: 56,
+      defaultSize: 1000,
+    },
+    sugar_van: {
+      name: 'Сахар ванильный',
+      packageLabel: 'упаковка 1 кг',
+      amountUnit: 'г',
+      packageSizeUnit: 'г',
+      defaultPrice: 140,
+      defaultSize: 1000,
+    },
+    cup250: {
+      name: 'Стакан 250 мл с крышкой',
+      packageLabel: '1 штука',
+      amountUnit: 'шт',
+      packageSizeUnit: 'шт',
+      defaultPrice: 9,
+      defaultSize: 1,
+    },
+    cup350: {
+      name: 'Стакан 350 мл с крышкой',
+      packageLabel: '1 штука',
+      amountUnit: 'шт',
+      packageSizeUnit: 'шт',
+      defaultPrice: 11,
+      defaultSize: 1,
+    },
+    cup450: {
+      name: 'Стакан 450 мл с крышкой',
+      packageLabel: '1 штука',
+      amountUnit: 'шт',
+      packageSizeUnit: 'шт',
+      defaultPrice: 13,
+      defaultSize: 1,
+    },
+    cup_p300: {
+      name: 'Пластиковый стакан 300 мл',
+      packageLabel: '1 штука',
+      amountUnit: 'шт',
+      packageSizeUnit: 'шт',
+      defaultPrice: 11,
+      defaultSize: 1,
+    },
+  },
+  recipes: [
+    {
+      id: 'espresso-doppio',
+      category: 'Классика',
+      name: 'Эспрессо доппио',
+      volumeMl: 50,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'cup250', amount: 1 }],
+    },
+    {
+      id: 'americano-200',
+      category: 'Классика',
+      name: 'Американо',
+      volumeMl: 200,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'cup250', amount: 1 }],
+    },
+    {
+      id: 'cappuccino-200',
+      category: 'Молочные',
+      name: 'Капучино',
+      volumeMl: 200,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'milk', amount: 170 }, { code: 'cup250', amount: 1 }],
+    },
+    {
+      id: 'cappuccino-300',
+      category: 'Молочные',
+      name: 'Капучино',
+      volumeMl: 300,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'milk', amount: 250 }, { code: 'cup350', amount: 1 }],
+    },
+    {
+      id: 'latte-300',
+      category: 'Молочные',
+      name: 'Латте',
+      volumeMl: 300,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'milk', amount: 250 }, { code: 'cup350', amount: 1 }],
+    },
+    {
+      id: 'latte-400',
+      category: 'Молочные',
+      name: 'Латте',
+      volumeMl: 400,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'milk', amount: 350 }, { code: 'cup450', amount: 1 }],
+    },
+    {
+      id: 'flat-white-200',
+      category: 'Молочные',
+      name: 'Флэт уайт',
+      volumeMl: 200,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'milk', amount: 170 }, { code: 'cup250', amount: 1 }],
+    },
+    {
+      id: 'vanilla-raf-300',
+      category: 'Особые',
+      name: 'Раф ванильный',
+      volumeMl: 300,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'cream', amount: 250 }, { code: 'sugar_van', amount: 10 }, { code: 'cup350', amount: 1 }],
+    },
+    {
+      id: 'cocoa-300',
+      category: 'Особые',
+      name: 'Какао',
+      volumeMl: 300,
+      ingredients: [{ code: 'milk', amount: 250 }, { code: 'cocoa', amount: 13 }, { code: 'sugar', amount: 10 }, { code: 'cup350', amount: 1 }],
+    },
+    {
+      id: 'matcha-300',
+      category: 'Особые',
+      name: 'Матча',
+      volumeMl: 300,
+      ingredients: [{ code: 'matcha', amount: 3 }, { code: 'milk', amount: 250 }, { code: 'cup350', amount: 1 }],
+    },
+    {
+      id: 'iced-latte-300',
+      category: 'Холодные',
+      name: 'Айс-латте',
+      volumeMl: 300,
+      ingredients: [{ code: 'coffee', amount: 19 }, { code: 'milk', amount: 200 }, { code: 'cup_p300', amount: 1 }],
+    },
+    {
+      id: 'filter-coffee-300',
+      category: 'Фильтр',
+      name: 'Фильтр-кофе',
+      volumeMl: 300,
+      ingredients: [{ code: 'filter_coffee', amount: 20 }, { code: 'cup350', amount: 1 }],
+    },
+  ],
+};
+
+const DEFAULT_RECIPE_ID = 'cappuccino-300';
+
+
+function asFiniteNumber(value) {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  if (typeof value !== 'string') return null;
+  const normalized = value.trim().replace(',', '.');
+  if (!normalized) return null;
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function roundMoney(value) {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+}
+
+function getIngredientSettings(ingredient, override = {}) {
+  const price = asFiniteNumber(override.price);
+  const size = asFiniteNumber(override.size);
+  return {
+    price: price !== null && price >= 0 ? price : ingredient.defaultPrice,
+    size: size !== null && size > 0 ? size : ingredient.defaultSize,
+  };
+}
+
+function calculateIngredientCost(recipeIngredient, catalogIngredient, override) {
+  if (!catalogIngredient || !recipeIngredient) return 0;
+
+  const amount = asFiniteNumber(recipeIngredient.amount);
+  if (amount === null || amount < 0) return 0;
+
+  const { price, size } = getIngredientSettings(catalogIngredient, override);
+  const rawLoss = asFiniteNumber(recipeIngredient.loss);
+  const loss = rawLoss === null || rawLoss < 0 ? 0 : rawLoss;
+
+  if (size <= 0 || loss >= 1) return 0;
+  return roundMoney((price / size) * amount / (1 - loss));
+}
+
+function calculateRecipeCost(snapshot, recipe, overrides = {}) {
+  const lines = (recipe?.ingredients || []).map((recipeIngredient) => {
+    const ingredient = snapshot.ingredients[recipeIngredient.code];
+    const settings = getIngredientSettings(ingredient, overrides[recipeIngredient.code]);
+    const cost = calculateIngredientCost(recipeIngredient, ingredient, overrides[recipeIngredient.code]);
+    return {
+      ...recipeIngredient,
+      ingredient,
+      settings,
+      cost,
+    };
+  });
+
+  return {
+    lines,
+    total: roundMoney(lines.reduce((sum, line) => sum + line.cost, 0)),
+  };
+}
+
+function formatRub(value) {
+  return new Intl.NumberFormat('ru-RU', {
+    style: 'currency',
+    currency: 'RUB',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value || 0);
+}
+
+function formatAmount(amount, unit) {
+  const value = Number.isInteger(amount) ? amount : String(amount).replace('.', ',');
+  return `${value} ${unit}`;
+}
+
+
+
+
+const PRICE_STORAGE_KEY = 'mbsCostCalc:v1:prices';
+const SELECTION_STORAGE_KEY = 'mbsCostCalc:v1:selection';
+const ALL_CATEGORIES = 'Все напитки';
+
+function readStoredJson(key, fallback) {
+  try {
+    const value = window.localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch (_) {
+    return fallback;
+  }
+}
+
+function writeStoredJson(key, value) {
+  try {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  } catch (_) {
+    // Калькулятор остаётся полезным, даже если браузер запретил localStorage.
+  }
+}
+
+function removeStoredValue(key) {
+  try {
+    window.localStorage.removeItem(key);
+  } catch (_) {
+    // Ничего не делаем: это влияет только на удобство повторного визита.
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function parseEditableNumber(value) {
+  const normalized = String(value).trim().replace(',', '.');
+  if (!normalized) return null;
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function getRecipe(snapshot, recipeId) {
+  return snapshot.recipes.find((recipe) => recipe.id === recipeId) || snapshot.recipes.find((recipe) => recipe.id === DEFAULT_RECIPE_ID) || snapshot.recipes[0];
+}
+
+function initCalculator() {
+  const root = document.querySelector('[data-mbs-costcalc-root]');
+  if (!root || root.dataset.mbsCostcalcReady === 'true') return;
+  root.dataset.mbsCostcalcReady = 'true';
+
+  const storedPrices = readStoredJson(PRICE_STORAGE_KEY, {});
+  const storedSelection = readStoredJson(SELECTION_STORAGE_KEY, {});
+  const state = {
+    activeCategory: ALL_CATEGORIES,
+    selectedRecipeId: typeof storedSelection.recipeId === 'string' ? storedSelection.recipeId : DEFAULT_RECIPE_ID,
+    overrides: storedPrices && typeof storedPrices === 'object' && !Array.isArray(storedPrices) ? storedPrices : {},
+  };
+
+  const elements = {
+    filters: root.querySelector('[data-category-filters]'),
+    recipeList: root.querySelector('[data-recipe-list]'),
+    selectedName: root.querySelector('[data-selected-name]'),
+    selectedVolume: root.querySelector('[data-selected-volume]'),
+    dialogRecipeName: root.querySelector('[data-dialog-recipe-name]'),
+    totalCost: root.querySelector('[data-total-cost]'),
+    breakdown: root.querySelector('[data-breakdown]'),
+    dialog: root.querySelector('[data-price-dialog]'),
+    priceFields: root.querySelector('[data-price-fields]'),
+  };
+
+  const faqItems = Array.from(root.querySelectorAll('.mbs-costcalc__faq details'));
+  faqItems.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) otherItem.removeAttribute('open');
+      });
+    });
+  });
+
+  function selectedRecipe() {
+    const recipe = getRecipe(COST_CALCULATOR_SNAPSHOT, state.selectedRecipeId);
+    state.selectedRecipeId = recipe.id;
+    return recipe;
+  }
+
+  function saveSelection() {
+    writeStoredJson(SELECTION_STORAGE_KEY, { recipeId: state.selectedRecipeId });
+  }
+
+  function savePrices() {
+    writeStoredJson(PRICE_STORAGE_KEY, state.overrides);
+  }
+
+  function renderFilters() {
+    const categories = [ALL_CATEGORIES, ...new Set(COST_CALCULATOR_SNAPSHOT.recipes.map((recipe) => recipe.category))];
+    elements.filters.innerHTML = categories.map((category) => `
+      <button class="mbs-costcalc__filter" type="button" data-category="${escapeHtml(category)}" aria-pressed="${category === state.activeCategory}">
+        ${escapeHtml(category)}
+      </button>
+    `).join('');
+  }
+
+  function renderRecipes() {
+    const recipes = state.activeCategory === ALL_CATEGORIES
+      ? COST_CALCULATOR_SNAPSHOT.recipes
+      : COST_CALCULATOR_SNAPSHOT.recipes.filter((recipe) => recipe.category === state.activeCategory);
+
+    elements.recipeList.innerHTML = recipes.map((recipe) => `
+      <button class="mbs-costcalc__recipe" type="button" data-recipe-id="${recipe.id}" aria-pressed="${recipe.id === state.selectedRecipeId}">
+        <span class="mbs-costcalc__recipe-name">${escapeHtml(recipe.name)}</span>
+        <span class="mbs-costcalc__recipe-volume">${recipe.volumeMl} мл</span>
+      </button>
+    `).join('');
+  }
+
+  function renderCalculation() {
+    const recipe = selectedRecipe();
+    const calculation = calculateRecipeCost(COST_CALCULATOR_SNAPSHOT, recipe, state.overrides);
+    const recipeLabel = `${recipe.name} · ${recipe.volumeMl} мл`;
+
+    elements.selectedName.textContent = recipeLabel;
+    elements.selectedVolume.textContent = `${recipe.volumeMl} мл`;
+    elements.dialogRecipeName.textContent = recipeLabel;
+    elements.totalCost.textContent = formatRub(calculation.total);
+    elements.breakdown.innerHTML = calculation.lines.map((line) => `
+      <div class="mbs-costcalc__breakdown-row">
+        <div>
+          <span class="mbs-costcalc__breakdown-name">${escapeHtml(line.ingredient.name)}</span>
+          <span class="mbs-costcalc__breakdown-meta">${formatAmount(line.amount, line.ingredient.amountUnit)} · ${formatRub(line.settings.price)} / ${line.settings.size} ${line.ingredient.packageSizeUnit}</span>
+        </div>
+        <span class="mbs-costcalc__breakdown-cost">${formatRub(line.cost)}</span>
+      </div>
+    `).join('');
+  }
+
+  function renderPriceFields() {
+    const recipe = selectedRecipe();
+    const uniqueCodes = [...new Set(recipe.ingredients.map((ingredient) => ingredient.code))];
+    elements.priceFields.innerHTML = uniqueCodes.map((code) => {
+      const ingredient = COST_CALCULATOR_SNAPSHOT.ingredients[code];
+      const override = state.overrides[code] || {};
+      const price = override.price ?? ingredient.defaultPrice;
+      const size = override.size ?? ingredient.defaultSize;
+      return `
+        <fieldset class="mbs-costcalc__price-fieldset">
+          <legend>${escapeHtml(ingredient.name)}</legend>
+          <div class="mbs-costcalc__field-grid">
+            <label class="mbs-costcalc__field">Цена ${escapeHtml(ingredient.packageLabel)}, ₽
+              <input type="number" min="0" step="0.01" inputmode="decimal" autocomplete="off" value="${price}" data-price-input data-ingredient-code="${code}" data-setting="price">
+            </label>
+            <label class="mbs-costcalc__field">Размер упаковки, ${escapeHtml(ingredient.packageSizeUnit)}
+              <input type="number" min="0.01" step="0.01" inputmode="decimal" autocomplete="off" value="${size}" data-price-input data-ingredient-code="${code}" data-setting="size">
+            </label>
+          </div>
+        </fieldset>
+      `;
+    }).join('');
+  }
+
+  function renderAll() {
+    renderFilters();
+    renderRecipes();
+    renderCalculation();
+    renderPriceFields();
+  }
+
+  function openDialog() {
+    renderPriceFields();
+    if (typeof elements.dialog.showModal === 'function') {
+      if (!elements.dialog.open) elements.dialog.showModal();
+      return;
+    }
+    elements.dialog.setAttribute('open', '');
+  }
+
+  function closeDialog() {
+    if (typeof elements.dialog.close === 'function' && elements.dialog.open) {
+      elements.dialog.close();
+      return;
+    }
+    elements.dialog.removeAttribute('open');
+  }
+
+  function resetSelectedRecipePrices() {
+    selectedRecipe().ingredients.forEach(({ code }) => delete state.overrides[code]);
+    savePrices();
+    renderAll();
+  }
+
+  function resetAllPrices() {
+    if (!window.confirm('Сбросить все сохранённые цены в этом калькуляторе?')) return;
+    state.overrides = {};
+    removeStoredValue(PRICE_STORAGE_KEY);
+    renderAll();
+  }
+
+  root.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button || !root.contains(button)) return;
+
+    if (button.matches('[data-category]')) {
+      state.activeCategory = button.dataset.category;
+      renderFilters();
+      renderRecipes();
+      return;
+    }
+
+    if (button.matches('[data-recipe-id]')) {
+      state.selectedRecipeId = button.dataset.recipeId;
+      saveSelection();
+      renderRecipes();
+      renderCalculation();
+      renderPriceFields();
+      return;
+    }
+
+    if (button.matches('[data-open-prices]')) openDialog();
+    if (button.matches('[data-close-prices]')) closeDialog();
+    if (button.matches('[data-reset-current]')) resetSelectedRecipePrices();
+    if (button.matches('[data-reset-all]')) resetAllPrices();
+  });
+
+  root.addEventListener('input', (event) => {
+    const input = event.target.closest('[data-price-input]');
+    if (!input || !root.contains(input)) return;
+
+    const value = parseEditableNumber(input.value);
+    const setting = input.dataset.setting;
+    const isValid = setting === 'price' ? value !== null && value >= 0 : value !== null && value > 0;
+    if (!isValid) return;
+
+    const code = input.dataset.ingredientCode;
+    state.overrides[code] = { ...(state.overrides[code] || {}), [setting]: value };
+    savePrices();
+    renderCalculation();
+  });
+
+  elements.dialog.addEventListener('click', (event) => {
+    if (event.target === elements.dialog) closeDialog();
+  });
+
+  renderAll();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCalculator, { once: true });
+} else {
+  initCalculator();
+}
+
+</script>

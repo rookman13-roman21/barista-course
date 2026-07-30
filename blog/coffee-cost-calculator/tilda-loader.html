@@ -1,0 +1,99 @@
+<!--
+  MBS Coffee Cost Calculator hosted loader.
+  Insert this file into one Tilda HTML block once.
+  The H1 and article remain native Tilda content above and below this block.
+-->
+<div id="mbs-costcalc-hosted-root" data-mbs-costcalc-loader>
+  <section style="padding:32px 20px;background:#f5f5f5;color:#1f2920;font-family:Mulish,Arial,sans-serif;">
+    <div style="max-width:760px;margin:0 auto;padding:24px;border:1px solid #dce5d9;border-radius:20px;background:#fff;">
+      <p style="margin:0 0 8px;color:#417033;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;">Калькулятор себестоимости</p>
+      <h2 style="margin:0;color:#1f2920;font-size:28px;line-height:1.12;font-weight:900;">Считаем продукты и упаковку</h2>
+      <p style="margin:12px 0 0;color:#5b675b;font-size:16px;line-height:1.5;">Цена упаковки ÷ размер упаковки × расход в рецепте. Подставьте свои закупочные цены — результат пересчитается сразу.</p>
+      <p role="status" style="margin:16px 0 0;color:#417033;font-size:14px;font-weight:800;">Загружаем калькулятор…</p>
+      <noscript><p style="margin:16px 0 0;color:#5b675b;font-size:14px;line-height:1.5;">Для работы калькулятора включите JavaScript. Базовые рецептуры и методика расчёта остаются доступны на странице.</p></noscript>
+    </div>
+  </section>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('mbs-costcalc-hosted-root');
+    if (!root || root.getAttribute('data-mbs-costcalc-loader-ready') === '1') return;
+    root.setAttribute('data-mbs-costcalc-loader-ready', '1');
+
+    var HOSTED_URL = 'https://api.barista-school.ru/api/coffee-cost-calculator.html';
+    var LOAD_TIMEOUT_MS = 10000;
+
+    function cacheBustedUrl(url) {
+      return url + (url.indexOf('?') === -1 ? '?' : '&') + 'v=' + Date.now();
+    }
+
+    function fetchWithTimeout(url) {
+      var controller = window.AbortController ? new AbortController() : null;
+      var timeoutId = null;
+      var options = { method: 'GET', credentials: 'omit', cache: 'no-store', headers: { Accept: 'text/html' } };
+      if (controller) options.signal = controller.signal;
+
+      return new Promise(function (resolve, reject) {
+        timeoutId = window.setTimeout(function () {
+          if (controller) controller.abort();
+          reject(new Error('Timeout'));
+        }, LOAD_TIMEOUT_MS);
+
+        fetch(cacheBustedUrl(url), options)
+          .then(function (response) {
+            window.clearTimeout(timeoutId);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            return response.text();
+          })
+          .then(resolve)
+          .catch(function (error) {
+            window.clearTimeout(timeoutId);
+            reject(error);
+          });
+      });
+    }
+
+    function validateHostedHtml(html) {
+      if (typeof html !== 'string' || html.length < 6000) throw new Error('Short HTML response');
+      if (html.indexOf('data-mbs-costcalc-hosted="v1"') === -1 || html.indexOf('mbsCostCalc:v1:prices') === -1) {
+        throw new Error('Unexpected HTML response');
+      }
+      return html;
+    }
+
+    function runScripts(container) {
+      Array.prototype.slice.call(container.querySelectorAll('script')).forEach(function (oldScript) {
+        var script = document.createElement('script');
+        Array.prototype.slice.call(oldScript.attributes).forEach(function (attr) {
+          script.setAttribute(attr.name, attr.value);
+        });
+        script.text = oldScript.text || oldScript.textContent || '';
+        oldScript.parentNode.replaceChild(script, oldScript);
+      });
+    }
+
+    function renderError() {
+      root.innerHTML = '' +
+        '<section style="padding:32px 20px;background:#f5f5f5;color:#1f2920;font-family:Mulish,Arial,sans-serif;text-align:center;">' +
+          '<div style="max-width:640px;margin:0 auto;padding:24px;border:1px solid #dce5d9;border-radius:20px;background:#fff;">' +
+            '<p style="margin:0 0 8px;color:#417033;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;">Калькулятор себестоимости</p>' +
+            '<div role="heading" aria-level="2" style="margin:0;color:#1f2920;font-size:28px;line-height:1.12;font-weight:900;">Калькулятор временно не загрузился</div>' +
+            '<p style="margin:12px 0 18px;color:#5b675b;font-size:16px;line-height:1.5;">Себестоимость считают так: цену упаковки делят на её размер и умножают на расход в рецепте. Попробуйте обновить страницу или откройте MBS* Coffee Menu.</p>' +
+            '<a href="/open_cafe_app" target="_top" style="display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;border-radius:999px;background:#cc2841;color:#fff!important;text-decoration:none;font-size:15px;font-weight:900;">Открыть MBS* Coffee Menu</a>' +
+          '</div>' +
+        '</section>';
+    }
+
+    fetchWithTimeout(HOSTED_URL)
+      .then(validateHostedHtml)
+      .then(function (html) {
+        root.innerHTML = html;
+        runScripts(root);
+      })
+      .catch(function (error) {
+        console.error('[mbs-costcalc] hosted calculator load failed', error);
+        renderError();
+      });
+  })();
+</script>
