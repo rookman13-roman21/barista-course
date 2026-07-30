@@ -14,6 +14,7 @@ barista-course/
 ├── about-school/             ← Страница «О школе» (baristaschool.ru/company)
 ├── barista-interview/        ← Лендинг «Собеседование бариста» (baristaschool.ru/hr)
 ├── barista-theory-cabinet/   ← Личный кабинет: теория перед курсом (Tilda Members)
+├── blog/                     ← Публичные полезные материалы; первый — калькулятор себестоимости напитков
 ├── breeew-battle/            ← Чемпионат MBS* Breeew battle (baristaschool.ru/breeew-battle)
 ├── capping/                  ← Страница каппингов (baristaschool.ru/capping)
 ├── certificates/             ← Страница подарочных сертификатов (baristaschool.ru/sertifikat)
@@ -45,6 +46,7 @@ barista-course/
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
 | `barista-theory-cabinet/` | Tilda Members | Tilda Members | Личный кабинет: 11 теоретических уроков перед очным курсом |
+| `blog/coffee-cost-calculator/` | `/blog/coffee-cost-calculator` | Tilda HTML Block, не опубликован | Mobile-first калькулятор себестоимости 12 учебных кофейных напитков, локальное хранение цен и CTA к Coffee Menu / «Миксологии» |
 | `breeew-battle/` | `/breeew-battle` | Tilda hosted loader | Чемпионат MBS* Breeew battle: hosted HTML, popup записи в yClients group activity, public JSON, Telegram Mini App |
 | `capping/` | `/capping` | Tilda hosted loader | Страница каппингов: Tilda один раз вставляет loader, актуальный HTML страницы загружается с `api.barista-school.ru` |
 | `certificates/` | `/sertifikat` | Tilda Zero Block | Каталог подарочных сертификатов с модальным окном и API |
@@ -78,6 +80,7 @@ barista-course/
 | Домашнее заваривание | `master-doma/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html` | `master-doma/index.html` |
 | Открытие кофейни | `open-coffeeshop/tilda-blocks/block-*.html` | `open-coffeeshop/index.html` |
 | Платформа для открытия кофейни | пока не нарезан на Tilda-блоки | `open_cafe_app/index.html` |
+| Калькулятор себестоимости напитков | `blog/coffee-cost-calculator/tilda-block.html` | `blog/coffee-cost-calculator/index.html` |
 | Предоплата | `prepay/tilda-block.html` | `prepay/index.html` |
 | Теоретическая подготовка | `barista-theory-cabinet/pages/barista_theory_*.html` | те же файлы |
 | 404 | `404/tilda-block.html` | `404/index.html` |
