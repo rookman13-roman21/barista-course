@@ -1,6 +1,6 @@
 # Публикация в Tilda: hosted calculator
 
-Server-часть ступени C выполнена 2026-07-30: `hosted/coffee-cost-calculator.html` из `main` commit `52c051e` выложен на `https://api.barista-school.ru/api/coffee-cost-calculator.html` и проверен по HTTPS. Tilda-страница опубликована: 2026-07-31 публичный HTML подтвердил HTTP 200, один H1, статичный SEO-блок и loader.
+Server-часть ступени C выполнена 2026-07-30 и обновлена 2026-07-31: `hosted/coffee-cost-calculator.html` из `main` commit `667281b` выложен на `https://api.barista-school.ru/api/coffee-cost-calculator.html` и проверен по HTTPS. Последняя правка увеличивает отступ между кнопкой «Изменить цены» и учебным пояснением до 32 px. Tilda-страница опубликована: 2026-07-31 публичный HTML подтвердил HTTP 200, один H1, статичный SEO-блок и loader.
 
 ## Что остаётся статичным в Tilda
 
