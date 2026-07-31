@@ -56,7 +56,7 @@ barista-course/
 | `home-barista-online/` | `/home_barista_online` | Tilda Members | Онлайн-курс: лендинг + 11 уроков + личный кабинет |
 | `master-doma/` | `/master_doma` | Tilda HTML Block | Мастер-класс «Домашнее заваривание»: landing + онлайн-запись из `homebrew.json` |
 | `open-coffeeshop/` | `/open_coffeeshop` | Tilda Zero Block | Курс «Открытие кофейни»: 8 блоков, 2 ведущих, 2 тарифа |
-| `open_cafe_app/` | `/open_cafe_app` | Static HTML prototype | Лендинг платформы MBS* Coffee Menu для расчёта открытия кофейни: бюджет, продажи, рецепты, финмодель, поставщики, PDF/Excel и покупка через Tilda Shop |
+| `open_cafe_app/` | `/open_cafe_app` | Tilda HTML Block, опубликована | Лендинг платформы MBS* Coffee Menu для расчёта открытия кофейни: бюджет, продажи, рецепты, финмодель, поставщики, PDF/Excel и покупка через Tilda Shop. Единственный блок копируется из `open_cafe_app/tilda-block.html`; в hero есть учебная ссылка на калькулятор себестоимости |
 | `prepay/` | `/prepay` | Tilda Zero Block | Страница предоплаты: Hero + Курсы + Правила (1 файл `tilda-block.html`) |
 | `tilda_blocks_others/` | разные | Tilda | Отдельные Tilda-блоки и hosted-виджеты, включая универсальный блок тренеров и публичный оценочный лист каппинга |
 | `scripts/` | — | Node.js | Утилиты: скачивание из Tilda API, миграция уроков |
@@ -79,7 +79,7 @@ barista-course/
 | Домашний бариста (онлайн, уроки) | `home-barista-online/pages/lessons/lesson-*.html` | те же файлы |
 | Домашнее заваривание | `master-doma/tilda-blocks/00-seo-and-page-styles.html` → `05-page-scripts.html` | `master-doma/index.html` |
 | Открытие кофейни | `open-coffeeshop/tilda-blocks/block-*.html` | `open-coffeeshop/index.html` |
-| Платформа для открытия кофейни | пока не нарезан на Tilda-блоки | `open_cafe_app/index.html` |
+| Платформа для открытия кофейни | `open_cafe_app/tilda-block.html` — один HTML-блок Tilda | `open_cafe_app/index.html` |
 | Калькулятор себестоимости напитков | `blog/coffee-cost-calculator/tilda-seo-block.html` + `blog/coffee-cost-calculator/tilda-loader.html` | `blog/coffee-cost-calculator/index.html`; hosted: `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` |
 | Предоплата | `prepay/tilda-block.html` | `prepay/index.html` |
 | Теоретическая подготовка | `barista-theory-cabinet/pages/barista_theory_*.html` | те же файлы |
@@ -251,12 +251,13 @@ scripts/tilda-fetch.js
 ### 4.11. Платформа для открытия кофейни `/open_cafe_app`
 - Страница: `open_cafe_app/index.html`.
 - Продакшн URL в тексте, SEO и canonical: `https://baristaschool.ru/open_cafe_app`.
-- На текущем этапе это один самодостаточный HTML-файл для локальной правки; на Tilda-блоки ещё не нарезан и не деплоился.
+- Это один самодостаточный HTML-файл для локальной правки. В Tilda опубликован один HTML-блок; его каноническая копия — `open_cafe_app/tilda-block.html`. После правки заменить содержимое блока целиком, сохранить и опубликовать страницу.
 - Продуктовое позиционирование в hero: «Платформа для открытия кофейни».
 - Оффер: расчёт бюджета, продаж, среднего чека, окупаемости, поставщиков и отчётов до аренды и закупок.
 - Цена: `18 900 ₽`; в стоимость входит 1 час консультации с Романом Суслиным, основателем MBS*.
 - CTA покупки: `#order:Сервис открытия кофейни + консультация=18900`.
 - CTA заявки: `#consalt`; локальный JS не должен перехватывать этот якорь, чтобы Tilda могла открыть попап.
+- В hero под основными CTA есть спокойная ссылка «Как считать себестоимость напитков →» на `/blog/coffee-cost-calculator`. Это учебный путь до выбора полного сервиса, не дополнительная CTA-кнопка; на странице калькулятора есть обратная ссылка на `/open_cafe_app`.
 - Дизайн опирается на `/Users/Romka/Downloads/All_Code/mbs-design-system/DESIGN_SYSTEM.md`: Mulish, фирменные цвета, чистая карточная сетка, классы с префиксом `mbs-openapp__`.
 - Блок реальных экранов содержит 5 карточек: план продаж, бюджет запуска, рецепты, финмодель, поставщики. На desktop и mobile карточки идут в горизонтальной ленте.
 - По клику карточка открывает lightbox. Внутри открытой карточки переключаются только вложенные слайды выбранного раздела: стрелками, клавиатурой и свайпом. Между основными карточками из lightbox не переключаемся.
