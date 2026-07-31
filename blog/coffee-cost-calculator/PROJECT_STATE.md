@@ -7,7 +7,7 @@
 | Production URL | `https://baristaschool.ru/blog/coffee-cost-calculator` — опубликована, HTTP 200 подтверждён 2026-07-31 |
 | Локальное превью | `blog/coffee-cost-calculator/index.html` |
 | Tilda-артефакты | `blog/coffee-cost-calculator/tilda-seo-block.html` + `blog/coffee-cost-calculator/tilda-loader.html` |
-| Hosted-артефакт | `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` → `https://api.barista-school.ru/api/coffee-cost-calculator.html` (выложен 2026-07-30 из `main` commit `52c051e`) |
+| Hosted-артефакт | `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` → `https://api.barista-school.ru/api/coffee-cost-calculator.html` (обновлён 2026-07-31 из `main` commit `667281b`; HTTP 200 и хеш файла подтверждены) |
 | Тип | Статичный SEO-блок и hosted-калькулятор через Tilda loader |
 | Источник рецептур | `Coffee_menu/HTML_coffee_menu`, commit `1439df3527214f1190ccfb955b40b292c08719bb` |
 | Публичная модель | 12 базовых учебных рецептур, ингредиенты, нормы, учебные ориентиры цены и упаковки |
