@@ -24,6 +24,9 @@ assert.ok(markup.includes('https://baristaschool.ru/bar_engineering'), 'Article 
 assert.ok(!/<iframe\b/i.test(markup), 'Viewer must not be embedded in an iframe');
 assert.ok(!/\bfetch\s*\(/.test(tildaBlock), 'Static Tilda article must not make external runtime requests');
 assert.ok(preview.includes('__2026-08-02_172739.png'), 'Preview must retain the approved cover image');
+for (const topic of ['канализации', '900 мм', '750 мм', '800 мм', '700 мм', 'нок-бокс', 'ринзер', '100 чеков в день', '380 В', '220 В']) {
+  assert.ok(markup.includes(topic), `Article must retain the dictated topic: ${topic}`);
+}
 assert.ok(preview.includes('@phosphor-icons/web@2.1.1'), 'Preview must load the approved icon library');
 assert.ok(styles.includes('max-width: 1100px'), 'Standard content width must match the design system');
 assert.ok(styles.includes('font-size: 82px'), 'Desktop hero title must match the design system');

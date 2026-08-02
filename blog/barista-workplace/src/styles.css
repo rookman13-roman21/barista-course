@@ -292,10 +292,15 @@
   line-height: 1.5;
 }
 
-.mbs-workplace__outcomes,
+.mbs-workplace__outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
 .mbs-workplace__check-list {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
