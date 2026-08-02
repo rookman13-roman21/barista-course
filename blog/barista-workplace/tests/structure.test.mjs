@@ -6,11 +6,13 @@ import vm from 'node:vm';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (file) => readFile(path.join(projectRoot, file), 'utf8');
-const [preview, tildaBlock, markup, styles] = await Promise.all([
+const [preview, tildaBlock, markup, styles, seoHead, publishingGuide] = await Promise.all([
   read('index.html'),
   read('tilda-block.html'),
   read('src/markup.html'),
   read('src/styles.css'),
+  read('seo-head.html'),
+  read('PUBLISHING.md'),
 ]);
 
 const viewerUrl = 'https://drawings.barista-school.ru/s/hjnAVgbSG8yDvrlCC8vNrb7D4xuywMKeWvVzks_8ixk';
@@ -35,6 +37,17 @@ for (const topic of ['канализации', '900 мм', '750 мм', '800 мм
   assert.ok(markup.includes(topic), `Article must retain the dictated topic: ${topic}`);
 }
 assert.ok(preview.includes('@phosphor-icons/web@2.1.1'), 'Preview must load the approved icon library');
+assert.ok(preview.includes('<link rel="canonical" href="https://baristaschool.ru/blog/barista-workplace">'), 'Preview must declare the publication canonical URL');
+assert.ok(preview.includes('<meta property="og:type" content="article">'), 'Preview must provide article social metadata');
+assert.ok(publishingGuide.includes('Как организовать рабочее место бариста: размеры и 3D-чертёж'), 'Publication guide must include the approved SEO title');
+assert.ok(!seoHead.includes('FAQPage'), 'Commercial article must not promise unavailable FAQ rich results');
+
+const blogPosting = seoHead.match(/<script type="application\/ld\+json">\s*([\s\S]*?)\s*<\/script>/);
+assert.ok(blogPosting, 'SEO head must include BlogPosting JSON-LD');
+const articleSchema = JSON.parse(blogPosting[1]);
+assert.equal(articleSchema['@type'], 'BlogPosting', 'Structured data must identify the page as a blog article');
+assert.equal(articleSchema.mainEntityOfPage['@id'], 'https://baristaschool.ru/blog/barista-workplace', 'Structured data must use the publication canonical URL');
+assert.equal(articleSchema.headline, 'Как организовать рабочее место бариста', 'Structured data headline must match the article');
 assert.ok(styles.includes('max-width: 1100px'), 'Standard content width must match the design system');
 assert.ok(styles.includes('font-size: 82px'), 'Desktop hero title must match the design system');
 assert.ok(styles.includes('@media (max-width: 420px)'), 'Hero must include the 420px title breakpoint');
