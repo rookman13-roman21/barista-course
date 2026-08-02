@@ -11,7 +11,8 @@ const [styles, markup, previewTemplate] = await Promise.all([
 ]);
 
 const fontImport = "@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');";
-const tildaBlock = `<!-- MBS Barista Workplace: paste this complete file into one Tilda T123 HTML block. -->\n<style>\n${fontImport}\n${styles}\n</style>\n\n${markup.trimEnd()}\n`;
+const phosphorIcons = '<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>';
+const tildaBlock = `<!-- MBS Barista Workplace: paste this complete file into one Tilda T123 HTML block. -->\n${phosphorIcons}\n<style>\n${fontImport}\n${styles}\n</style>\n\n${markup.trimEnd()}\n`;
 const preview = previewTemplate
   .replace('/* APP_STYLES */', styles)
   .replace('<!-- APP_MARKUP -->', markup);
