@@ -13,7 +13,7 @@
 - `index.html` — локальный preview; не вставлять в Tilda.
 - `tilda-block.html` — единственный HTML-блок Tilda для страницы.
 - `seo-head.html` — BlogPosting-разметка для кода HEAD страницы Tilda.
-- `PUBLISHING.md` — готовые SEO-поля и чек-лист самостоятельной публикации.
+- `TILDA_PUBLISHING.md` — готовые SEO-поля и чек-лист самостоятельной публикации.
 
 ## Локальная работа
 
@@ -30,7 +30,7 @@ node tests/structure.test.mjs
 
 Перед публикацией:
 
-1. перенести Title, Description, Canonical, Open Graph-поля и alt-текст из `PUBLISHING.md`;
+1. перенести Title, Description, Canonical, Open Graph-поля и alt-текст из `TILDA_PUBLISHING.md`;
 2. убедиться, что Tilda не добавляет второй H1;
 3. проверить desktop, 390 и 360 px, CTA на учебный проект, ссылку «Посмотреть кейсы» и страницу услуги;
 4. отдельно подтвердить на тестовой публикации Viewer, что отозванная share-ссылка отвечает `404`. Учебный материал для статьи во время этой проверки не отзывать.

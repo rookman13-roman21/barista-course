@@ -12,7 +12,7 @@ const [preview, tildaBlock, markup, styles, seoHead, publishingGuide] = await Pr
   read('src/markup.html'),
   read('src/styles.css'),
   read('seo-head.html'),
-  read('PUBLISHING.md'),
+  read('TILDA_PUBLISHING.md'),
 ]);
 
 const viewerUrl = 'https://drawings.barista-school.ru/s/hjnAVgbSG8yDvrlCC8vNrb7D4xuywMKeWvVzks_8ixk';
