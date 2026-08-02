@@ -1,0 +1,878 @@
+<!-- MBS Barista Workplace: paste this complete file into one Tilda T123 HTML block. -->
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap');
+.mbs-workplace {
+  --mbs-green-dark: #417033;
+  --mbs-green: #4f883e;
+  --mbs-green-light: #b6d8ab;
+  --mbs-bg-green: #e7f2e3;
+  --mbs-red: #cc2841;
+  --mbs-red-soft: #d83d54;
+  --mbs-bg: #f5f5f5;
+  --mbs-black: #1f1f1f;
+  --mbs-gray: #555555;
+  --mbs-white: #ffffff;
+  box-sizing: border-box;
+  color: var(--mbs-black);
+  font: 16px/1.5 Mulish, Arial, sans-serif;
+  overflow: hidden;
+}
+
+.mbs-workplace *,
+.mbs-workplace *::before,
+.mbs-workplace *::after {
+  box-sizing: border-box;
+}
+
+.mbs-workplace h1,
+.mbs-workplace h2,
+.mbs-workplace h3,
+.mbs-workplace p {
+  margin-top: 0;
+}
+
+.mbs-workplace a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mbs-workplace__container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.mbs-workplace__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 14px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(231, 242, 227, 0.95);
+  color: var(--mbs-green-dark);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.mbs-workplace h2 {
+  margin: 0 0 10px;
+  color: var(--mbs-black);
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.mbs-workplace__button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 28px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none !important;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+
+.mbs-workplace__button:hover {
+  transform: translateY(-1px);
+}
+
+.mbs-workplace__button:focus-visible,
+.mbs-workplace__drawing:focus-visible,
+.mbs-workplace summary:focus-visible {
+  outline: 3px solid var(--mbs-green-light);
+  outline-offset: 3px;
+}
+
+.mbs-workplace__button--primary {
+  background: var(--mbs-green);
+  color: var(--mbs-white) !important;
+}
+
+.mbs-workplace__button--primary:hover {
+  background: var(--mbs-green-dark);
+}
+
+.mbs-workplace__button--case {
+  border-color: var(--mbs-green-dark);
+  background: var(--mbs-white);
+  color: var(--mbs-green-dark) !important;
+}
+
+.mbs-workplace__button--case:hover {
+  background: var(--mbs-green-dark);
+  color: var(--mbs-white) !important;
+}
+
+/* Hero */
+.mbs-workplace__hero {
+  padding: 48px 20px;
+  background: var(--mbs-white);
+}
+
+.mbs-workplace__hero-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 72px 76px;
+  border: 8px solid var(--mbs-bg-green);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 17% 12%, rgba(231, 242, 227, 0.78) 0, rgba(231, 242, 227, 0.78) 18%, transparent 19%),
+    radial-gradient(circle at 88% 84%, rgba(231, 242, 227, 0.66) 0, rgba(231, 242, 227, 0.66) 16%, transparent 17%),
+    radial-gradient(circle at 58% 56%, rgba(231, 242, 227, 0.32) 0, rgba(231, 242, 227, 0.32) 13%, transparent 14%),
+    #f7f7f7;
+}
+
+.mbs-workplace__hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 480px;
+  gap: 28px 56px;
+  align-items: start;
+}
+
+.mbs-workplace__hero-content-top {
+  max-width: 600px;
+}
+
+.mbs-workplace__hero h1 {
+  max-width: 640px;
+  margin: 0;
+  color: var(--mbs-black);
+  font-size: 82px;
+  font-weight: 900;
+  letter-spacing: -0.07em;
+  line-height: 0.92;
+}
+
+@media (min-width: 821px) {
+  .mbs-workplace__hero h1 {
+    padding-bottom: 32px;
+  }
+}
+
+.mbs-workplace__lead {
+  max-width: 570px;
+  margin: 60px 0 0;
+  color: var(--mbs-black);
+  font-size: 27px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.27;
+}
+
+.mbs-workplace__lead--mobile {
+  display: none;
+}
+
+.mbs-workplace__hero-content-bottom {
+  align-self: end;
+}
+
+.mbs-workplace__hero .mbs-workplace__button {
+  min-height: 58px;
+  padding-inline: 32px;
+  font-size: 16px;
+}
+
+.mbs-workplace__hero .mbs-workplace__button--primary {
+  background: var(--mbs-red);
+}
+
+.mbs-workplace__hero .mbs-workplace__button--primary:hover {
+  background: var(--mbs-red-soft);
+}
+
+.mbs-workplace__hero .mbs-workplace__button--primary:focus-visible {
+  outline-color: var(--mbs-red-soft);
+}
+
+.mbs-workplace__hero-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  color: var(--mbs-gray);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mbs-workplace__hero-note::before {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--mbs-red);
+  content: "";
+}
+
+.mbs-workplace__drawing {
+  position: relative;
+  display: block;
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--mbs-white);
+  box-shadow: 0 22px 60px rgba(31, 31, 31, 0.12);
+}
+
+.mbs-workplace__drawing-picture {
+  display: block;
+  height: 600px;
+  overflow: hidden;
+  background: var(--mbs-bg-green);
+}
+
+.mbs-workplace__drawing-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.mbs-workplace__drawing-tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--mbs-green-dark);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.mbs-workplace__drawing-tag i,
+.mbs-workplace__drawing-arrow {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.mbs-workplace__drawing-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--mbs-white);
+}
+
+.mbs-workplace__drawing-caption strong {
+  display: block;
+  color: var(--mbs-black);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.mbs-workplace__drawing-caption span span {
+  display: block;
+  margin-top: 3px;
+  color: var(--mbs-gray);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.mbs-workplace__drawing-arrow {
+  flex: 0 0 auto;
+  color: var(--mbs-green-dark);
+}
+
+/* Intro */
+.mbs-workplace__intro {
+  padding: 90px 20px;
+  background: var(--mbs-bg);
+}
+
+.mbs-workplace__section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.72fr);
+  gap: 42px;
+  align-items: end;
+  margin-bottom: 34px;
+}
+
+.mbs-workplace__section-head > p {
+  margin: 0;
+  color: var(--mbs-gray);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.mbs-workplace__outcomes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mbs-workplace__check-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.mbs-workplace__outcome {
+  min-height: 190px;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--mbs-white);
+}
+
+.mbs-workplace__outcome span,
+.mbs-workplace__check-number {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background: var(--mbs-bg-green);
+  color: var(--mbs-green-dark);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.mbs-workplace__outcome h3,
+.mbs-workplace__check-item h3 {
+  margin: 0 0 7px;
+  color: var(--mbs-black);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1.24;
+}
+
+.mbs-workplace__outcome p,
+.mbs-workplace__check-item p {
+  margin: 0;
+  color: var(--mbs-gray);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* Checklist */
+.mbs-workplace__check {
+  padding: 90px 20px;
+  background: var(--mbs-white);
+}
+
+.mbs-workplace__check h2 {
+  max-width: 660px;
+}
+
+.mbs-workplace__check-lead {
+  max-width: 640px;
+  margin: 18px 0 0;
+  color: var(--mbs-gray);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.mbs-workplace__check-list {
+  margin: 38px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mbs-workplace__check-item {
+  min-height: 224px;
+  padding: 24px;
+  border: 2px solid var(--mbs-green-light);
+  border-radius: 20px;
+  background: var(--mbs-bg-green);
+}
+
+.mbs-workplace__check-number {
+  margin-bottom: 20px;
+  background: var(--mbs-white);
+}
+
+/* Service */
+.mbs-workplace__service {
+  padding: 90px 20px;
+  background: var(--mbs-bg-green);
+}
+
+.mbs-workplace__service-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 30px;
+  align-items: center;
+  padding: 40px;
+  border-radius: 20px;
+  background: var(--mbs-white);
+}
+
+.mbs-workplace__service-card h2 {
+  max-width: 680px;
+}
+
+.mbs-workplace__service-card p:not(.mbs-workplace__eyebrow) {
+  max-width: 680px;
+  margin: 15px 0 0;
+  color: var(--mbs-gray);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.mbs-workplace__service-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* FAQ */
+.mbs-workplace__faq {
+  padding: 90px 20px;
+  background: var(--mbs-bg);
+}
+
+.mbs-workplace__faq-wrap {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 72px;
+  align-items: start;
+}
+
+.mbs-workplace__faq-copy {
+  position: sticky;
+  top: 32px;
+}
+
+.mbs-workplace__faq-copy h2 {
+  font-size: 52px;
+  letter-spacing: -0.04em;
+}
+
+.mbs-workplace__faq-copy p:not(.mbs-workplace__eyebrow) {
+  margin: 18px 0 0;
+  color: var(--mbs-gray);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.mbs-workplace__faq-list {
+  border-top: 1px solid rgba(31, 31, 31, 0.16);
+}
+
+.mbs-workplace__faq details {
+  border-bottom: 1px solid rgba(31, 31, 31, 0.16);
+}
+
+.mbs-workplace__faq summary {
+  position: relative;
+  padding: 22px 42px 22px 0;
+  color: var(--mbs-black);
+  cursor: pointer;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.3;
+  list-style: none;
+}
+
+.mbs-workplace__faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.mbs-workplace__faq summary::after {
+  position: absolute;
+  top: 15px;
+  right: 2px;
+  color: var(--mbs-green-dark);
+  font-size: 30px;
+  font-weight: 400;
+  content: "+";
+}
+
+.mbs-workplace__faq details[open] summary::after {
+  content: "−";
+}
+
+.mbs-workplace__faq details p {
+  max-width: 670px;
+  margin: 0;
+  padding: 0 12px 24px 0;
+  color: var(--mbs-gray);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.mbs-workplace__faq details p a {
+  color: var(--mbs-green-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.mbs-workplace__faq details p a:hover {
+  color: var(--mbs-green);
+}
+
+/* Final CTA */
+.mbs-workplace__final {
+  padding: 90px 20px;
+  background: var(--mbs-white);
+}
+
+.mbs-workplace__final-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 60px;
+  align-items: center;
+  padding: 64px 72px;
+  border-radius: 28px;
+  background: var(--mbs-bg-green);
+}
+
+.mbs-workplace__final h2 {
+  max-width: 660px;
+}
+
+.mbs-workplace__final p:not(.mbs-workplace__eyebrow) {
+  max-width: 610px;
+  margin: 17px 0 0;
+  color: var(--mbs-gray);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.mbs-workplace__button--final {
+  min-height: 58px;
+  background: var(--mbs-white);
+  color: var(--mbs-green-dark) !important;
+}
+
+.mbs-workplace__button--final:hover {
+  background: var(--mbs-green-dark);
+  color: var(--mbs-white) !important;
+}
+
+@media (max-width: 1180px) {
+  .mbs-workplace__hero h1 {
+    font-size: 68px;
+  }
+
+  .mbs-workplace__lead {
+    font-size: 24px;
+  }
+
+  .mbs-workplace__hero-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .mbs-workplace__drawing {
+    grid-column: auto;
+    grid-row: auto;
+    max-width: 620px;
+  }
+
+  .mbs-workplace__faq-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .mbs-workplace__faq-copy {
+    position: static;
+  }
+
+  .mbs-workplace__outcomes {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mbs-workplace__check-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mbs-workplace__service-card,
+  .mbs-workplace__final-card {
+    grid-template-columns: 1fr;
+  }
+
+  .mbs-workplace__service-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 820px) {
+  .mbs-workplace h2 {
+    font-size: 26px;
+  }
+
+  .mbs-workplace__hero {
+    padding: 14px 12px;
+  }
+
+  .mbs-workplace__hero-wrap {
+    padding: 18px 16px 20px;
+    border-width: 4px;
+    border-radius: 22px;
+  }
+
+  .mbs-workplace__hero-grid {
+    gap: 24px;
+  }
+
+  .mbs-workplace__hero h1 {
+    font-size: 38px;
+  }
+
+  .mbs-workplace__lead--desktop {
+    display: none;
+  }
+
+  .mbs-workplace__lead--mobile {
+    display: block;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.27;
+  }
+
+  .mbs-workplace__drawing {
+    max-width: none;
+    border-radius: 14px;
+  }
+
+  .mbs-workplace__drawing-picture {
+    height: 267px;
+    min-height: 267px;
+  }
+
+  .mbs-workplace__drawing-caption {
+    padding: 14px 16px;
+  }
+
+  .mbs-workplace__hero-content-bottom,
+  .mbs-workplace__hero .mbs-workplace__button,
+  .mbs-workplace__button--final {
+    width: 100%;
+  }
+
+  .mbs-workplace__intro,
+  .mbs-workplace__check,
+  .mbs-workplace__service,
+  .mbs-workplace__faq,
+  .mbs-workplace__final {
+    padding: 64px 14px;
+  }
+
+  .mbs-workplace__section-head {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+
+  .mbs-workplace__outcomes,
+  .mbs-workplace__check-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mbs-workplace__outcome,
+  .mbs-workplace__check-item {
+    min-height: 0;
+    padding: 22px;
+  }
+
+  .mbs-workplace__service-card {
+    padding: 28px 22px;
+  }
+
+  .mbs-workplace__service-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .mbs-workplace__service-actions .mbs-workplace__button {
+    width: 100%;
+  }
+
+  .mbs-workplace__faq-wrap {
+    gap: 32px;
+  }
+
+  .mbs-workplace__faq-copy h2 {
+    font-size: 36px;
+  }
+
+  .mbs-workplace__faq-copy p:not(.mbs-workplace__eyebrow) {
+    font-size: 16px;
+  }
+
+  .mbs-workplace__faq summary {
+    padding-block: 19px;
+    font-size: 17px;
+  }
+
+  .mbs-workplace__faq details p {
+    padding-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .mbs-workplace__final-card {
+    gap: 30px;
+    padding: 44px 28px;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .mbs-workplace__hero h1 {
+    font-size: 34px;
+  }
+
+  .mbs-workplace__drawing-picture {
+    height: 300px;
+    min-height: 300px;
+  }
+
+  .mbs-workplace__eyebrow {
+    padding-inline: 12px;
+    font-size: 12px;
+  }
+}
+
+</style>
+
+<main class="mbs-workplace" data-mbs-workplace-root>
+  <section class="mbs-workplace__hero" aria-labelledby="mbs-workplace-title">
+    <div class="mbs-workplace__hero-wrap">
+      <div class="mbs-workplace__hero-grid">
+        <div class="mbs-workplace__hero-content-top">
+          <p class="mbs-workplace__eyebrow">Московская школа бариста · учебный материал</p>
+          <h1 id="mbs-workplace-title">Как организовать удобное рабочее место бариста</h1>
+          <p class="mbs-workplace__lead mbs-workplace__lead--desktop">Мы подготовили подробный 3D-чертёж рабочего места бариста. Он поможет продумать свой удобный бар: от расположения коммуникаций и оборудования до маршрута бариста в смене.</p>
+        </div>
+
+        <a class="mbs-workplace__drawing" href="https://drawings.barista-school.ru/s/hXlWbf8LynhRhWFRguCOez4FHF6FUGcVaYFleClyAxc" target="_blank" rel="noopener noreferrer" aria-label="Открыть учебный 3D-чертёж рабочего места бариста в новой вкладке">
+          <span class="mbs-workplace__drawing-tag"><i class="ph ph-cube" aria-hidden="true"></i>3D-проект</span>
+          <span class="mbs-workplace__drawing-picture"><img src="https://static.tildacdn.com/tild3365-6166-4862-b066-626636396261/__2026-08-02_172739.png" alt="3D-чертёж учебного рабочего места бариста с размерами" loading="eager"></span>
+          <span class="mbs-workplace__drawing-caption"><span><strong>Рабочее место бариста</strong><span>Модель, размеры и листы изделий</span></span><i class="ph ph-arrow-up-right mbs-workplace__drawing-arrow" aria-hidden="true"></i></span>
+        </a>
+
+        <p class="mbs-workplace__lead mbs-workplace__lead--mobile">Мы подготовили подробный 3D-чертёж рабочего места бариста. Он поможет продумать свой удобный бар: от расположения коммуникаций и оборудования до маршрута бариста в смене.</p>
+
+        <div class="mbs-workplace__hero-content-bottom">
+          <a class="mbs-workplace__button mbs-workplace__button--primary" href="https://drawings.barista-school.ru/s/hXlWbf8LynhRhWFRguCOez4FHF6FUGcVaYFleClyAxc" target="_blank" rel="noopener noreferrer">Открыть 3D-чертёж и документы <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-workplace__intro" aria-labelledby="mbs-workplace-why-title">
+    <div class="mbs-workplace__container">
+      <div class="mbs-workplace__section-head">
+        <div>
+          <p class="mbs-workplace__eyebrow">Почему это важно</p>
+          <h2 id="mbs-workplace-why-title">Проектируйте бар от коммуникаций и маршрута бариста</h2>
+        </div>
+        <p>Рабочая стойка должна поддерживать процесс: принимать воду и слив, оставлять место для инвентаря, сохранять контакт с гостем и не мешать двум бариста работать в паре.</p>
+      </div>
+      <div class="mbs-workplace__outcomes">
+        <article class="mbs-workplace__outcome"><span>01</span><h3>Привязка к коммуникациям</h3><p>При выборе места для бара в первую очередь смотрим на мокрые точки, но также оцениваем маршруты бариста, удобство для гостей и то, как стойка вписывается в пространство.</p></article>
+        <article class="mbs-workplace__outcome"><span>02</span><h3>Бариста видит гостя</h3><p>В процессе приготовления напитка бариста должен видеть зону выдачи и гостей, поддерживать контакт и при необходимости общаться. Для этого кофемашину разворачивают полубоком или лицом к зоне выдачи.</p></article>
+        <article class="mbs-workplace__outcome"><span>03</span><h3>Рабочий треугольник</h3><p>Кофемашина, кофемолка и молочная зона образуют компактный рабочий треугольник. Так у каждого движения появляется понятное место, а эспрессо- и молочная зоны не мешают друг другу.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-workplace__check" aria-labelledby="mbs-workplace-check-title">
+    <div class="mbs-workplace__container">
+      <p class="mbs-workplace__eyebrow">Быстрый чек-лист</p>
+      <h2 id="mbs-workplace-check-title">Проверьте рабочее место бариста по четырём параметрам</h2>
+      <p class="mbs-workplace__check-lead">Пройдите этот чек-лист до ремонта, изготовления мебели и закупки оборудования. Он поможет заметить ограничения, которые потом обходятся переделками и лишними движениями в смене.</p>
+      <ol class="mbs-workplace__check-list">
+        <li class="mbs-workplace__check-item"><span class="mbs-workplace__check-number">01</span><h3>Высота — от 900 мм</h3><p>Так под стойкой помещаются холодильники, ледогенераторы и другое барное оборудование. Это также универсальная высота для сотрудников разного роста.</p></li>
+        <li class="mbs-workplace__check-item"><span class="mbs-workplace__check-number">02</span><h3>Глубина — от 750 мм</h3><p>Кофемашина обычно занимает около 600 мм в глубину, поэтому перед ней нужно оставить место для стаканов, весов, холдера и инвентаря. Рекомендуем 800 мм; в других зонах не опускайтесь ниже 700 мм, если под столешницей стоят оборудование и коммуникации.</p></li>
+        <li class="mbs-workplace__check-item"><span class="mbs-workplace__check-number">03</span><h3>Нок-бокс и ринзер — в своих зонах</h3><p>Встраиваемый нок-бокс ставьте у кофемолки, а мусорное ведро — под ним: кофейный жмых сразу уходит вниз. Ринзер размещайте в молочной зоне и подключайте к холодной водопроводной воде и канализации — не к фильтрованной воде.</p></li>
+        <li class="mbs-workplace__check-item"><span class="mbs-workplace__check-number">04</span><h3>Зоны и электрика рассчитаны заранее</h3><p>Кофемашина стоит по центру: с одной стороны — кофемолка и нок-бокс для эспрессо, с другой — ринзер и молочная зона. При ориентире от 100 чеков в день это позволяет двум бариста одновременно готовить один напиток. До выбора кофемашины проверьте, есть ли трёхфазное подключение 380 В, или выбирайте модель на 220 В.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="mbs-workplace__service" aria-labelledby="mbs-workplace-service-title">
+    <div class="mbs-workplace__container">
+      <div class="mbs-workplace__service-card">
+        <div>
+          <p class="mbs-workplace__eyebrow">Когда нужен проект</p>
+          <h2 id="mbs-workplace-service-title">Чек-лист помогает увидеть ограничения. Проект помогает связать их с вашей кофейней.</h2>
+          <p>Когда есть помещение, меню, команда и реальные инженерные точки, мы помогаем собрать рабочую зону, подобрать оборудование и подготовить понятный пакет для реализации.</p>
+        </div>
+        <div class="mbs-workplace__service-actions">
+          <a class="mbs-workplace__button mbs-workplace__button--case" href="https://baristaschool.ru/bar_engineering#cases">Посмотреть кейсы</a>
+          <a class="mbs-workplace__button mbs-workplace__button--primary" href="https://baristaschool.ru/bar_engineering">Об услуге</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-workplace__faq" aria-labelledby="mbs-workplace-faq-title">
+    <div class="mbs-workplace__container mbs-workplace__faq-wrap">
+      <div class="mbs-workplace__faq-copy">
+        <p class="mbs-workplace__eyebrow">Вопросы</p>
+        <h2 id="mbs-workplace-faq-title">Важные уточнения</h2>
+        <p>Эти ответы помогут правильно применить чек-лист к действующему бару или проекту новой кофейни.</p>
+      </div>
+      <div class="mbs-workplace__faq-list">
+        <details><summary>С чего начать выбор места для бара?</summary><p>Начните с точки канализации. Воду обычно можно подвести дальше, а слив ограничивает планировку сильнее. Если нужен вывод через пол или насосная установка, заложите это в проект до монтажа.</p></details>
+        <details><summary>Какие размеры стойки считать базовыми?</summary><p>Высота — от 900 мм. В зоне кофемашины глубина — от 750 мм, рекомендуемый ориентир — 800 мм. Для других зон, где снизу остаются холодильное оборудование и коммуникации, не делайте менее 700 мм.</p></details>
+        <details><summary>Зачем нужен ринзер, если есть мойка?</summary><p>Ринзер быстро промывает питчеры холодной водой в молочной зоне. Это помогает поддерживать чистоту и работать в охлаждённых питчерах. Для него достаточно холодной водопроводной воды и подключения к канализации.</p></details>
+        <details><summary>Поможете организовать рабочее место бариста?</summary><p>Да. Мы проектируем рабочие места под конкретное помещение и бюджет: подбираем и расставляем оборудование, указываем места розеток, сантехники и точек подключения. В результате вы получаете техническое задание для мебельщика. Подробнее — в <a href="https://baristaschool.ru/bar_engineering">услуге проектирования барной эргономики</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="mbs-workplace__final" aria-labelledby="mbs-workplace-final-title">
+    <div class="mbs-workplace__container">
+      <div class="mbs-workplace__final-card">
+        <div>
+          <p class="mbs-workplace__eyebrow">Следующий шаг</p>
+          <h2 id="mbs-workplace-final-title">Начните с понятного рабочего места</h2>
+          <p>Откройте 3D-чертёж, сравните его со своим помещением и соберите вопросы до начала ремонта, заказа мебели или покупки оборудования.</p>
+        </div>
+        <a class="mbs-workplace__button mbs-workplace__button--final" href="https://drawings.barista-school.ru/s/hXlWbf8LynhRhWFRguCOez4FHF6FUGcVaYFleClyAxc" target="_blank" rel="noopener noreferrer">Открыть 3D-чертёж <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-mbs-workplace-root]');
+  if (!root || root.getAttribute('data-mbs-workplace-faq-ready') === 'true') return;
+
+  root.setAttribute('data-mbs-workplace-faq-ready', 'true');
+  var items = root.querySelectorAll('.mbs-workplace__faq details');
+
+  for (var i = 0; i < items.length; i += 1) {
+    items[i].addEventListener('toggle', function () {
+      if (!this.open) return;
+
+      for (var j = 0; j < items.length; j += 1) {
+        if (items[j] !== this) items[j].open = false;
+      }
+    });
+  }
+}());
+</script>
