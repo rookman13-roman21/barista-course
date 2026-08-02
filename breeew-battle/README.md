@@ -37,7 +37,7 @@ https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/
 2. Loader загружает полный HTML/CSS/JS с API-домена.
 3. Основной код страницы живёт в `breeew-battle.html`.
 4. Popup регистрации отправляет заявку в backend booking-сервиса.
-5. Публичные данные участников, счётчиков, судей и партнёров берутся из JSON.
+5. Публичные данные участников, счётчиков, судей, партнёров и призов берутся из JSON.
 6. Закрытая Telegram Mini App открывается из чата участников и проверяет членство пользователя в чате.
 
 ## Файлы
@@ -56,6 +56,8 @@ https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/
 /Users/Romka/Downloads/All_Code/schedule-online/basic-barista-booking/server/basic-barista-booking-server.js
 ```
 
+Подтверждённый список призов хранится в поле `prizes` файла `courses/breeew-battle.json`. Его используют и публичный JSON лендинга, и закрытая Mini App — вручную дублировать список в этих интерфейсах не нужно.
+
 ## Публичные URL
 
 ```text
@@ -71,7 +73,7 @@ https://api.barista-school.ru/api/course-booking/breeew-battle/telegram-bot-webh
 Loader в Tilda грузит:
 
 ```text
-https://api.barista-school.ru/api/breeew-battle.html?v=20260720-2
+https://api.barista-school.ru/api/breeew-battle.html?v=20260802-1
 ```
 
 При изменении `tilda-loader.html` нужно заменить HTML-блок в Tilda и опубликовать страницу.
