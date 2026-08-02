@@ -496,6 +496,18 @@
   line-height: 1.6;
 }
 
+.mbs-workplace__faq details p a {
+  color: var(--mbs-green-dark);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.mbs-workplace__faq details p a:hover {
+  color: var(--mbs-green);
+}
+
 /* Final CTA */
 .mbs-workplace__final {
   padding: 90px 20px;

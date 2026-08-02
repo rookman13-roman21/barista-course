@@ -81,6 +81,7 @@
         <details><summary>С чего начать выбор места для бара?</summary><p>Начните с точки канализации. Воду обычно можно подвести дальше, а слив ограничивает планировку сильнее. Если нужен вывод через пол или насосная установка, заложите это в проект до монтажа.</p></details>
         <details><summary>Какие размеры стойки считать базовыми?</summary><p>Высота — от 900 мм. В зоне кофемашины глубина — от 750 мм, рекомендуемый ориентир — 800 мм. Для других зон, где снизу остаются холодильное оборудование и коммуникации, не делайте менее 700 мм.</p></details>
         <details><summary>Зачем нужен ринзер, если есть мойка?</summary><p>Ринзер быстро промывает питчеры холодной водой в молочной зоне. Это помогает поддерживать чистоту и работать в охлаждённых питчерах. Для него достаточно холодной водопроводной воды и подключения к канализации.</p></details>
+        <details><summary>Поможете организовать рабочее место бариста?</summary><p>Да. Мы проектируем рабочие места под конкретное помещение и бюджет: подбираем и расставляем оборудование, указываем места розеток, сантехники и точек подключения. В результате вы получаете техническое задание для мебельщика. Подробнее — в <a href="https://baristaschool.ru/bar_engineering">услуге проектирования барной эргономики</a>.</p></details>
       </div>
     </div>
   </section>
@@ -98,3 +99,23 @@
     </div>
   </section>
 </main>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-mbs-workplace-root]');
+  if (!root || root.getAttribute('data-mbs-workplace-faq-ready') === 'true') return;
+
+  root.setAttribute('data-mbs-workplace-faq-ready', 'true');
+  var items = root.querySelectorAll('.mbs-workplace__faq details');
+
+  for (var i = 0; i < items.length; i += 1) {
+    items[i].addEventListener('toggle', function () {
+      if (!this.open) return;
+
+      for (var j = 0; j < items.length; j += 1) {
+        if (items[j] !== this) items[j].open = false;
+      }
+    });
+  }
+}());
+</script>
