@@ -392,6 +392,11 @@
     min-height: 790px;
     padding-top: 58px;
   }
+  .mbs-breeew-battle-prize-card--general {
+    min-height: auto;
+    padding: 34px 30px 32px;
+    border-color: rgba(65, 112, 51, .32);
+  }
   .mbs-breeew-battle-prize-card__place {
     margin: 0 0 18px;
     color: rgba(216, 61, 84, .76);
@@ -402,6 +407,11 @@
   .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place {
     color: var(--mbs-red-soft);
     font-size: 104px;
+  }
+  .mbs-breeew-battle-prize-card--general .mbs-breeew-battle-prize-card__place {
+    color: var(--mbs-green-dark);
+    font-size: 30px;
+    line-height: 1.08;
   }
   .mbs-breeew-battle-prize-card__place span {
     display: block;
@@ -2258,12 +2268,18 @@
     .mbs-breeew-battle-prize-card--first {
       padding-top: 38px;
     }
+    .mbs-breeew-battle-prize-card--general {
+      padding: 28px 24px;
+    }
     .mbs-breeew-battle-prize-card__place {
       margin-bottom: 16px;
       font-size: 74px;
     }
     .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place {
       font-size: 86px;
+    }
+    .mbs-breeew-battle-prize-card--general .mbs-breeew-battle-prize-card__place {
+      font-size: 28px;
     }
     .mbs-breeew-battle-prize-card__place span,
     .mbs-breeew-battle-prize-card--first .mbs-breeew-battle-prize-card__place span {
@@ -2670,7 +2686,7 @@
       <div class="mbs-breeew-battle-info__grid">
         <article class="mbs-breeew-battle-card"><h3>Соревновательная атмосфера</h3><p>Живой формат чемпионата: жеребьёвка, выступления, оценки и финальное награждение.</p></article>
         <article class="mbs-breeew-battle-card"><h3>Профессиональное судейство</h3><p>В отборе судьи оценивают букет, сладость, кислотность, тактильные ощущения, послевкусие и баланс напитка.</p></article>
-        <article class="mbs-breeew-battle-card mbs-breeew-battle-card--green"><h3>Призы и партнёры</h3><p>Партнёры поддерживают чемпионат, а победители получат призы от брендов кофейной индустрии.</p></article>
+        <article class="mbs-breeew-battle-card mbs-breeew-battle-card--green"><h3>Подарки от партнёров</h3><p>Подарки подготовлены для всех участников, а призёры получат дополнительные наборы от партнёров чемпионата.</p></article>
       </div>
     </div>
   </section>
@@ -2746,8 +2762,11 @@
   <section class="mbs-breeew-battle-prizes">
     <div class="mbs-breeew-battle__wrap">
       <div class="mbs-breeew-battle__label">Призы</div>
-      <h2 class="mbs-breeew-battle__title">Призы объявим ближе к чемпионату</h2>
-      <p class="mbs-breeew-battle__sub">Партнёры чемпионата уже подключаются к проекту. Как только призовые наборы будут подтверждены, мы обновим страницу и памятку участников.</p>
+      <h2 class="mbs-breeew-battle__title">Подарки для участников и призёров</h2>
+      <p class="mbs-breeew-battle__sub">Каждый участник получит подарки от партнёров чемпионата. Для 1, 2 и 3 места подготовлены призовые наборы и дополнительные подарки.</p>
+      <div class="mbs-breeew-battle-prizes__grid" data-prizes-root>
+        <div class="mbs-breeew-battle-state">Загружаем призы...</div>
+      </div>
     </div>
   </section>
 
@@ -3103,6 +3122,40 @@
       if (!target) return;
       ensureParticipantsWidget(target);
       processParticipantsData(toCupParticipants(items), target);
+    }
+    function renderPrizes(items) {
+      var target = root.querySelector('[data-prizes-root]');
+      if (!target) return;
+      var prizes = (Array.isArray(items) ? items : []).filter(function (prize) {
+        return prize && prize.place && Array.isArray(prize.groups) && prize.groups.length;
+      });
+      if (!prizes.length) {
+        target.innerHTML = '<div class="mbs-breeew-battle-state">Не удалось загрузить список призов. Попробуйте обновить страницу.</div>';
+        return;
+      }
+      target.innerHTML = prizes.map(function (prize) {
+        var place = String(prize.place || '').trim();
+        var placeMatch = place.match(/^([123])\s*место$/i);
+        var placeClass = placeMatch
+          ? (placeMatch[1] === '1' ? ' mbs-breeew-battle-prize-card--first' : (placeMatch[1] === '2' ? ' mbs-breeew-battle-prize-card--second' : ' mbs-breeew-battle-prize-card--third'))
+          : ' mbs-breeew-battle-prize-card--general';
+        var placeHtml = placeMatch
+          ? esc(placeMatch[1]) + '<span>место</span>'
+          : esc(place);
+        var groups = prize.groups.filter(function (group) {
+          return group && group.title && Array.isArray(group.items) && group.items.length;
+        }).map(function (group) {
+          return '<div class="mbs-breeew-battle-prize-group"><h3>' + esc(group.title) + '</h3><ul>' + group.items.map(function (item) {
+            return '<li>' + esc(item) + '</li>';
+          }).join('') + '</ul></div>';
+        }).join('');
+        return '<article class="mbs-breeew-battle-prize-card' + placeClass + '">' +
+          '<p class="mbs-breeew-battle-prize-card__place">' + placeHtml + '</p>' +
+          (prize.badge ? '<div class="mbs-breeew-battle-prize-card__badge">' + esc(prize.badge) + '</div>' : '') +
+          groups +
+          (prize.note ? '<div class="mbs-breeew-battle-prize-card__note">' + esc(prize.note) + '</div>' : '') +
+        '</article>';
+      }).join('');
     }
     function renderPartners(items) {
       var target = root.querySelector('[data-partners-root]');
@@ -3645,6 +3698,7 @@
       setText('[data-event-capacity]', capacity ? String(capacity) + ' участников' : '— участников');
       setCtaState(Boolean(counters.sold_out), completed);
       renderParticipants(state.data.participants || []);
+      renderPrizes(state.data.prizes || []);
       renderPartners(state.data.partners || []);
       renderJudges(state.data.judges || []);
       openPopupFromHash();
@@ -3659,6 +3713,7 @@
         .catch(function (error) {
           console.error('[mbs-breeew-battle] data load failed', error);
           renderParticipantsError();
+          renderPrizes([]);
           root.querySelector('[data-judges-root]').innerHTML = '<div class="mbs-breeew-battle-state">Не удалось загрузить список судей.</div>';
           setCtaState(false, isEventCompleted({}));
           setText('[data-counter-registered]', '—');
