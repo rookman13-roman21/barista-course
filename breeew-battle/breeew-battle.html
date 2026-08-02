@@ -397,6 +397,24 @@
     padding: 34px 30px 32px;
     border-color: rgba(65, 112, 51, .32);
   }
+  @media (min-width: 981px) {
+    .mbs-breeew-battle-prize-card--general {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 38px;
+      width: min(100%, 760px);
+      padding: 24px 28px 26px;
+      justify-self: center;
+    }
+    .mbs-breeew-battle-prize-card--general .mbs-breeew-battle-prize-card__place {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+    .mbs-breeew-battle-prize-card--general .mbs-breeew-battle-prize-group + .mbs-breeew-battle-prize-group {
+      margin-top: 0;
+    }
+  }
   .mbs-breeew-battle-prize-card__place {
     margin: 0 0 18px;
     color: rgba(216, 61, 84, .76);
