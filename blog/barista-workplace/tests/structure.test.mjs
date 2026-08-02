@@ -15,7 +15,7 @@ const [preview, tildaBlock, markup, styles, seoHead, publishingGuide] = await Pr
   read('TILDA_PUBLISHING.md'),
 ]);
 
-const viewerUrl = 'https://drawings.barista-school.ru/s/hjnAVgbSG8yDvrlCC8vNrb7D4xuywMKeWvVzks_8ixk';
+const viewerUrl = 'https://drawings.barista-school.ru/s/hXlWbf8LynhRhWFRguCOez4FHF6FUGcVaYFleClyAxc';
 
 assert.equal((preview.match(/<h1\b/gi) || []).length, 1, 'Local preview must contain one H1');
 assert.equal((tildaBlock.match(/<h1\b/gi) || []).length, 1, 'Tilda block must contain one H1');
