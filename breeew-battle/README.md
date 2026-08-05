@@ -2,7 +2,7 @@
 
 База знаний по лендингу чемпионата Московской школы бариста по альтернативному завариванию кофе.
 
-Актуально на `2026-07-20`.
+Актуально на `2026-08-05`.
 
 Страница на сайте:
 
@@ -40,6 +40,16 @@ https://docs.google.com/document/d/1wRhkNyrUWJaMoY9iLb5IvqcFaOp08FQGmG5m0ZHGldo/
 5. Публичные данные участников, счётчиков, судей, партнёров и призов берутся из JSON.
 6. Закрытая Telegram Mini App открывается из чата участников и проверяет членство пользователя в чате.
 
+## Итоги Breeew Battle 2026
+
+Архивная панель результатов и отметки в таблице участников заданы в `ARCHIVE_RESULTS_2026` внутри `breeew-battle.html`. Они выводятся только когда публичный JSON возвращает `event.status: "completed"`.
+
+- 1 место — Виктор Кузнецов, «БунаБуна».
+- 2 место — Полина Панферова, Coffee Workshop.
+- 3 место — Минь Туан Нгуен, «Кофетонойя».
+
+Проекты в таблице остаются данными публичного JSON; не дублируются в конфигурации результатов.
+
 ## Файлы
 
 - `breeew-battle.html` — полный hosted HTML/CSS/JS лендинга и popup записи.
@@ -73,7 +83,7 @@ https://api.barista-school.ru/api/course-booking/breeew-battle/telegram-bot-webh
 Loader в Tilda грузит:
 
 ```text
-https://api.barista-school.ru/api/breeew-battle.html?v=20260802-1
+https://api.barista-school.ru/api/breeew-battle.html?v=20260805-1
 ```
 
 При изменении `tilda-loader.html` нужно заменить HTML-блок в Tilda и опубликовать страницу.
