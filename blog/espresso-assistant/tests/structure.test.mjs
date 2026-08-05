@@ -61,6 +61,7 @@ assert.ok(hosted.includes('overflow: hidden'), 'Date-picker shells prevent iOS i
 assert.ok(hosted.includes('data-create-roast-date-display'), 'The selected creation date is visible above the native picker');
 assert.ok(hosted.includes('mbs-espresso-assistant__back {'), 'The all-sessions control has a dedicated button style');
 assert.ok(hosted.includes('mbs-espresso-assistant__saved-roast-date'), 'Saved-session roast date has its own unbroken line');
+assert.ok(hosted.includes('mbs-espresso-assistant__recommendation h3 { margin-bottom: 14px; font-size: 23px'), 'Mobile recommendation hierarchy stays compact');
 
 for (const [name, content] of [['seo', seo], ['hosted', hosted], ['loader', loader], ['archive', archive]]) {
   assert.equal((content.match(/id=["']consalt["']/gi) || []).length, 0, `${name} must not shadow Tilda popup anchors`);

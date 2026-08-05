@@ -539,7 +539,12 @@
   .mbs-espresso-assistant__shot-card,
   .mbs-espresso-assistant__recommendation,
   .mbs-espresso-assistant__history { padding: 18px; }
-  .mbs-espresso-assistant__recommendation h3 { font-size: 25px; }
+  .mbs-espresso-assistant__recommendation { padding: 20px; border-radius: 20px; }
+  .mbs-espresso-assistant__recommendation .mbs-espresso-assistant__kicker { margin-bottom: 8px; }
+  .mbs-espresso-assistant__recommendation h3 { margin-bottom: 14px; font-size: 23px; line-height: 1.12; }
+  .mbs-espresso-assistant__recommendation > p:not(.mbs-espresso-assistant__kicker) { margin-top: 0; margin-bottom: 0; font-size: 14px; line-height: 1.52; }
+  .mbs-espresso-assistant__recommendation-action { margin: 0 0 14px !important; font-size: 16px !important; line-height: 1.42 !important; }
+  .mbs-espresso-assistant__soft-warning { margin-top: 14px; padding: 12px 14px; font-size: 13px !important; line-height: 1.5 !important; }
   .mbs-espresso-assistant__attempt-list { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .mbs-espresso-assistant__attempt-list::-webkit-scrollbar { display: none; }
   .mbs-espresso-assistant__attempt { min-width: min(78vw, 280px); scroll-snap-align: start; }
