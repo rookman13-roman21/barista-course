@@ -50,7 +50,7 @@
         <h2 id="mbs-espresso-assistant-faq-title">Что важно знать новичку</h2>
       </div>
     </div>
-    <div class="mbs-espresso-assistant__faq-list">
+    <div class="mbs-espresso-assistant__faq-list" data-mbs-espresso-assistant-faq>
       <details><summary>Почему нельзя менять несколько параметров сразу?</summary><p>После одной перемены проще понять, что именно повлияло на вкус. Поэтому помощник сохраняет дозировку и выход, когда предлагает изменить помол, или сохраняет всё остальное при изменении температуры.</p></details>
       <details><summary>Нужно ли обязательно попасть в 25–30 секунд?</summary><p>Это учебный ориентир для несбалансированного шота, а не оценка качества. Если вкус уже сладкий и сбалансированный, повторите рецепт: два близких результата в диапазоне 20–35 секунд подтверждают его стабильность.</p></details>
       <details><summary>Почему помощник не говорит количество кликов кофемолки?</summary><p>Шаг регулировки у кофемолок отличается. Универсальная рекомендация — направление изменения помола и целевое изменение времени пролива.</p></details>
@@ -136,4 +136,21 @@
     }
   ]
 }
+</script>
+
+<script>
+(() => {
+  const faq = document.querySelector('[data-mbs-espresso-assistant-faq]');
+  if (!faq || faq.dataset.singleOpenReady === '1') return;
+  faq.dataset.singleOpenReady = '1';
+  const items = Array.from(faq.querySelectorAll('details'));
+  items.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      items.forEach((other) => {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
+})();
 </script>

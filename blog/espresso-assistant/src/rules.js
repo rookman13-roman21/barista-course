@@ -13,8 +13,8 @@ export const ESPRESSO_LIMITS = Object.freeze({
 export const ROAST_PRESETS = Object.freeze({
   unknown: { label: 'Не знаю', ratio: 2, temperature: 93, time: 25 },
   medium: { label: 'Средняя', ratio: 2, temperature: 93, time: 25 },
-  dark: { label: 'Тёмная', ratio: 1.8, temperature: 91, time: 25 },
-  light: { label: 'Светлая', ratio: 2.2, temperature: 94, time: 25 },
+  dark: { label: 'Тёмная', ratio: 2, temperature: 91, time: 25 },
+  light: { label: 'Светлая', ratio: 2, temperature: 94, time: 25 },
 });
 
 export const TASTE_OPTIONS = Object.freeze({

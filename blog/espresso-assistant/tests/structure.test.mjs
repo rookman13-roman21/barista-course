@@ -52,6 +52,11 @@ assert.ok(loader.includes('data-mbs-espresso-assistant-loader-slot'), 'Loader mo
 assert.ok(loader.includes('быстрее 25 секунд'), 'Loader fallback uses the current advisory time range');
 assert.ok(seo.includes('сладкий и сбалансированный'), 'Static method explains the balanced-taste exception');
 assert.ok(hosted.includes('остаток кофе предыдущей настройки'), 'Hosted helper explains grinder retention after an adjustment');
+assert.ok(seo.includes('data-mbs-espresso-assistant-faq'), 'Static FAQ has its own single-open accordion scope');
+assert.ok(seo.includes("item.addEventListener('toggle'"), 'Static FAQ closes other items when one is opened');
+assert.ok(seo.includes('other.open = false'), 'Static FAQ enforces one open item');
+assert.ok(hosted.includes('input[type="date"]'), 'Hosted date fields constrain their intrinsic mobile width');
+assert.ok(hosted.includes('mbs-espresso-assistant__back {'), 'The all-sessions control has a dedicated button style');
 
 for (const [name, content] of [['seo', seo], ['hosted', hosted], ['loader', loader], ['archive', archive]]) {
   assert.equal((content.match(/id=["']consalt["']/gi) || []).length, 0, `${name} must not shadow Tilda popup anchors`);

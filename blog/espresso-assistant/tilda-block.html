@@ -251,8 +251,7 @@
 .mbs-espresso-assistant__button--primary:hover { background: var(--mbs-ea-red-hover); }
 .mbs-espresso-assistant__button--secondary { border: 1px solid #bfd5b9; background: #fff; color: var(--mbs-ea-green) !important; }
 .mbs-espresso-assistant__button--secondary:hover { border-color: var(--mbs-ea-green); background: #f8fbf7; }
-.mbs-espresso-assistant__text-button,
-.mbs-espresso-assistant__back {
+.mbs-espresso-assistant__text-button {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -268,6 +267,22 @@
   text-underline-offset: 3px;
 }
 .mbs-espresso-assistant__text-button--danger { color: #a52236; }
+.mbs-espresso-assistant__back {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  border: 1px solid #bfd5b9;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--mbs-ea-green);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.mbs-espresso-assistant__back:hover { border-color: var(--mbs-ea-green); background: #f8fbf7; }
 
 .mbs-espresso-assistant--hosted {
   padding: 34px 0 72px;
@@ -311,6 +326,11 @@
   background: #fff;
   color: var(--mbs-ea-ink);
   font-size: 16px;
+}
+.mbs-espresso-assistant__field input[type="date"] {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 .mbs-espresso-assistant__field textarea { min-height: 86px; resize: vertical; }
 .mbs-espresso-assistant__field input:hover,
@@ -739,7 +759,7 @@
         <h2 id="mbs-espresso-assistant-faq-title">Что важно знать новичку</h2>
       </div>
     </div>
-    <div class="mbs-espresso-assistant__faq-list">
+    <div class="mbs-espresso-assistant__faq-list" data-mbs-espresso-assistant-faq>
       <details><summary>Почему нельзя менять несколько параметров сразу?</summary><p>После одной перемены проще понять, что именно повлияло на вкус. Поэтому помощник сохраняет дозировку и выход, когда предлагает изменить помол, или сохраняет всё остальное при изменении температуры.</p></details>
       <details><summary>Нужно ли обязательно попасть в 25–30 секунд?</summary><p>Это учебный ориентир для несбалансированного шота, а не оценка качества. Если вкус уже сладкий и сбалансированный, повторите рецепт: два близких результата в диапазоне 20–35 секунд подтверждают его стабильность.</p></details>
       <details><summary>Почему помощник не говорит количество кликов кофемолки?</summary><p>Шаг регулировки у кофемолок отличается. Универсальная рекомендация — направление изменения помола и целевое изменение времени пролива.</p></details>
@@ -827,6 +847,23 @@
 }
 </script>
 
+<script>
+(() => {
+  const faq = document.querySelector('[data-mbs-espresso-assistant-faq]');
+  if (!faq || faq.dataset.singleOpenReady === '1') return;
+  faq.dataset.singleOpenReady = '1';
+  const items = Array.from(faq.querySelectorAll('details'));
+  items.forEach((item) => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      items.forEach((other) => {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
+})();
+</script>
+
 
 <script>
 (function () {
@@ -846,8 +883,8 @@ const ESPRESSO_LIMITS = Object.freeze({
 const ROAST_PRESETS = Object.freeze({
   unknown: { label: 'Не знаю', ratio: 2, temperature: 93, time: 25 },
   medium: { label: 'Средняя', ratio: 2, temperature: 93, time: 25 },
-  dark: { label: 'Тёмная', ratio: 1.8, temperature: 91, time: 25 },
-  light: { label: 'Светлая', ratio: 2.2, temperature: 94, time: 25 },
+  dark: { label: 'Тёмная', ratio: 2, temperature: 91, time: 25 },
+  light: { label: 'Светлая', ratio: 2, temperature: 94, time: 25 },
 });
 
 const TASTE_OPTIONS = Object.freeze({

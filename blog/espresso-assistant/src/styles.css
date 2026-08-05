@@ -249,8 +249,7 @@
 .mbs-espresso-assistant__button--primary:hover { background: var(--mbs-ea-red-hover); }
 .mbs-espresso-assistant__button--secondary { border: 1px solid #bfd5b9; background: #fff; color: var(--mbs-ea-green) !important; }
 .mbs-espresso-assistant__button--secondary:hover { border-color: var(--mbs-ea-green); background: #f8fbf7; }
-.mbs-espresso-assistant__text-button,
-.mbs-espresso-assistant__back {
+.mbs-espresso-assistant__text-button {
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -266,6 +265,22 @@
   text-underline-offset: 3px;
 }
 .mbs-espresso-assistant__text-button--danger { color: #a52236; }
+.mbs-espresso-assistant__back {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 15px;
+  border: 1px solid #bfd5b9;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--mbs-ea-green);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.mbs-espresso-assistant__back:hover { border-color: var(--mbs-ea-green); background: #f8fbf7; }
 
 .mbs-espresso-assistant--hosted {
   padding: 34px 0 72px;
@@ -309,6 +324,11 @@
   background: #fff;
   color: var(--mbs-ea-ink);
   font-size: 16px;
+}
+.mbs-espresso-assistant__field input[type="date"] {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 .mbs-espresso-assistant__field textarea { min-height: 86px; resize: vertical; }
 .mbs-espresso-assistant__field input:hover,

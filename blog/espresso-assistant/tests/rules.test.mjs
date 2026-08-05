@@ -23,9 +23,11 @@ const attempt = (overrides = {}) => ({
 assert.equal(calculateRatio(18, 36), 2);
 assert.equal(calculateRatio(0, 36), null);
 assert.deepEqual(getStarterRecipe({ roast: 'dark', dose: 19 }), {
-  roast: 'dark', ratio: 1.8, dose: 19, yield: 34.2, temperature: 91, time: 25,
+  roast: 'dark', ratio: 2, dose: 19, yield: 38, temperature: 91, time: 25,
 });
-assert.equal(getStarterRecipe({ roast: 'light', dose: 18 }).yield, 39.6);
+assert.deepEqual(getStarterRecipe({ roast: 'light', dose: 18 }), {
+  roast: 'light', ratio: 2, dose: 18, yield: 36, temperature: 94, time: 25,
+});
 assert.equal(ESPRESSO_LIMITS.ratioStep, 0.2);
 
 const mixed = buildRecommendation({ attempt: attempt({ time: 15, taste: 'mixed' }), session });
