@@ -2419,7 +2419,7 @@
     .mbs-breeew-battle-partners__grid,
     .mbs-breeew-battle-counter { grid-template-columns: 1fr; }
     .mbs-breeew-battle-participants .mbs-breeew-battle-counter {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: .9fr 1.2fr .9fr;
       gap: 8px;
       margin-bottom: 18px;
     }
@@ -2435,6 +2435,15 @@
     }
     .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item strong {
       font-size: 28px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item:nth-child(2) {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item:nth-child(2) strong {
+      font-size: 18px;
+      letter-spacing: -.04em;
+      white-space: nowrap;
     }
     .mbs-breeew-battle-partners {
       padding: 30px 20px 30px;
@@ -2731,6 +2740,13 @@
     }
     .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item strong {
       font-size: 26px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item:nth-child(2) {
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+    .mbs-breeew-battle-participants .mbs-breeew-battle-counter__item:nth-child(2) strong {
+      font-size: 16px;
     }
     .mbs-breeew-battle-popup__summary {
       gap: 6px;
