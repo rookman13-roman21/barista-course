@@ -14,7 +14,7 @@ barista-course/
 ├── about-school/             ← Страница «О школе» (baristaschool.ru/company)
 ├── barista-interview/        ← Лендинг «Собеседование бариста» (baristaschool.ru/hr)
 ├── barista-theory-cabinet/   ← Личный кабинет: теория перед курсом (Tilda Members)
-├── blog/                     ← Публичные полезные материалы: калькулятор себестоимости и статья о рабочем месте бариста
+├── blog/                     ← Публичные полезные материалы: калькулятор себестоимости, помощник настройки эспрессо и статья о рабочем месте бариста
 ├── breeew-battle/            ← Чемпионат MBS* Breeew battle (baristaschool.ru/breeew-battle)
 ├── capping/                  ← Страница каппингов (baristaschool.ru/capping)
 ├── certificates/             ← Страница подарочных сертификатов (baristaschool.ru/sertifikat)
@@ -47,6 +47,7 @@ barista-course/
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
 | `barista-theory-cabinet/` | Tilda Members | Tilda Members | Личный кабинет: 11 теоретических уроков перед очным курсом |
 | `blog/coffee-cost-calculator/` | `/blog/coffee-cost-calculator` | Tilda SEO-блок + hosted loader, опубликована | HTTP 200 подтверждён 2026-07-31; H1 и SEO-статья доступны статичным HTML Tilda, mobile-first калькулятор 12 учебных напитков подгружается с `api.barista-school.ru`. Остались popup `#consalt`, корректировка Keywords и мобильная проверка CTA |
+| `blog/espresso-assistant/` | `/blog/espresso-assistant` | Tilda SEO-блок + hosted loader, локально | Помощник настройки эспрессо: сессии по зерну, журнал шотов, временной гейт до вкусовых советов, одно изменение за попытку и подтверждение повторяемого рецепта. Backend отсутствует, данные остаются в `localStorage`; production ещё не затронут |
 | `blog/barista-workplace/` | `/blog/barista-workplace` | Один Tilda HTML Block, локальный черновик | Учебная статья об удобном рабочем месте бариста: чек-лист, открытый 3D-проект с размерами и документами, спокойный переход к кейсам и услуге проектирования бара. Не опубликована |
 | `breeew-battle/` | `/breeew-battle` | Tilda hosted loader | Чемпионат MBS* Breeew battle: hosted HTML, popup записи в yClients group activity, public JSON, Telegram Mini App |
 | `capping/` | `/capping` | Tilda hosted loader | Страница каппингов: Tilda один раз вставляет loader, актуальный HTML страницы загружается с `api.barista-school.ru` |
@@ -82,6 +83,7 @@ barista-course/
 | Открытие кофейни | `open-coffeeshop/tilda-blocks/block-*.html` | `open-coffeeshop/index.html` |
 | Платформа для открытия кофейни | `open_cafe_app/tilda-block.html` — один HTML-блок Tilda | `open_cafe_app/index.html` |
 | Калькулятор себестоимости напитков | `blog/coffee-cost-calculator/tilda-seo-block.html` + `blog/coffee-cost-calculator/tilda-loader.html` | `blog/coffee-cost-calculator/index.html`; hosted: `blog/coffee-cost-calculator/hosted/coffee-cost-calculator.html` |
+| Помощник настройки эспрессо | `blog/espresso-assistant/tilda-seo-block.html` + `blog/espresso-assistant/tilda-loader.html` | `blog/espresso-assistant/index.html`; hosted: `blog/espresso-assistant/hosted/espresso-assistant.html` |
 | Удобное рабочее место бариста | `blog/barista-workplace/tilda-block.html` — один HTML-блок Tilda | `blog/barista-workplace/index.html` |
 | Предоплата | `prepay/tilda-block.html` | `prepay/index.html` |
 | Теоретическая подготовка | `barista-theory-cabinet/pages/barista_theory_*.html` | те же файлы |
