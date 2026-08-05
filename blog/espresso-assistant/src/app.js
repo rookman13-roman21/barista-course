@@ -15,10 +15,17 @@
     library: root.querySelector('[data-session-library]'),
     sessionList: root.querySelector('[data-session-list]'),
     resetAll: root.querySelector('[data-reset-all]'),
+    exportAll: root.querySelector('[data-export-all]'),
     workspace: root.querySelector('[data-workspace]'),
     sessionName: root.querySelector('[data-session-name]'),
     sessionMeta: root.querySelector('[data-session-meta]'),
     sessionStatus: root.querySelector('[data-session-status]'),
+    createRoastDate: root.querySelector('[data-create-roast-date]'),
+    editRoastDate: root.querySelector('[data-edit-roast-date]'),
+    roastDateForm: root.querySelector('[data-roast-date-form]'),
+    roastDateInput: root.querySelector('[data-roast-date-input]'),
+    roastDateError: root.querySelector('[data-roast-date-error]'),
+    cancelRoastDate: root.querySelector('[data-cancel-roast-date]'),
     starterDose: root.querySelector('[data-starter-dose]'),
     starterYield: root.querySelector('[data-starter-yield]'),
     starterRatio: root.querySelector('[data-starter-ratio]'),
@@ -40,6 +47,7 @@
     finish: root.querySelector('[data-finish-session]'),
     resume: root.querySelector('[data-resume-session]'),
     copy: root.querySelector('[data-copy-recipe]'),
+    exportSession: root.querySelector('[data-export-session]'),
     close: root.querySelector('[data-close-session]'),
     live: root.querySelector('[data-live-status]'),
   };
@@ -72,11 +80,20 @@
     return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
   }
 
+  function formatRoastDate(value) {
+    const normalized = normalizeRoastDate(value);
+    if (!normalized) return 'не указана';
+    const [year, month, day] = normalized.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('ru-RU', {
+      day: 'numeric', month: 'long', year: 'numeric',
+    });
+  }
+
   function makeId(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   }
 
-  function normalizeAttempt(rawAttempt, session, previousAttempts) {
+  function normalizeAttempt(rawAttempt, session) {
     if (!rawAttempt || typeof rawAttempt !== 'object') return null;
     const dose = Number(rawAttempt.dose);
     const beverageYield = Number(rawAttempt.yield);
@@ -99,7 +116,7 @@
       notes: typeof rawAttempt.notes === 'string' ? rawAttempt.notes.slice(0, 280) : '',
     };
     normalized.ratio = calculateRatio(normalized.dose, normalized.yield);
-    normalized.recommendation = buildRecommendation({ attempt: normalized, session, previousAttempts });
+    normalized.recommendation = normalizeRecommendationSnapshot(rawAttempt.recommendation);
     return normalized;
   }
 
@@ -114,6 +131,7 @@
     const session = {
       id: rawSession.id,
       beanName: rawSession.beanName.trim().slice(0, 80),
+      roastDate: normalizeRoastDate(rawSession.roastDate),
       roast: rawSession.roast,
       dose,
       canAdjustTemperature: rawSession.canAdjustTemperature,
@@ -127,7 +145,7 @@
 
     const rawAttempts = rawSession.attempts.slice(-MAX_ATTEMPTS);
     rawAttempts.forEach((rawAttempt) => {
-      const normalizedAttempt = normalizeAttempt(rawAttempt, session, session.attempts);
+      const normalizedAttempt = normalizeAttempt(rawAttempt, session);
       if (normalizedAttempt) session.attempts.push(normalizedAttempt);
       else storageCorrupt = true;
     });
@@ -192,6 +210,7 @@
 
   function renderLibrary() {
     elements.resetAll.hidden = sessions.length === 0 && !storageCorrupt;
+    elements.exportAll.hidden = !sessions.some((session) => session.attempts.length > 0);
     if (!sessions.length) {
       elements.sessionList.innerHTML = '<p class="mbs-espresso-assistant__empty">Здесь появятся сохранённые сессии для разных зёрен.</p>';
       return;
@@ -209,14 +228,29 @@
             <span class="mbs-espresso-assistant__status mbs-espresso-assistant__status--${session.status === 'completed' ? 'complete' : 'active'}">${status}</span>
             <h3>${escapeHtml(session.beanName)}</h3>
             <p>${escapeHtml(result)} · ${session.attempts.length} ${session.attempts.length === 1 ? 'попытка' : 'попыток'}</p>
-            <small>${escapeHtml(formatDate(session.updatedAt || session.createdAt))}</small>
+            <small>Дата обжарки: ${escapeHtml(formatRoastDate(session.roastDate))} · обновлено ${escapeHtml(formatDate(session.updatedAt || session.createdAt))}</small>
           </div>
           <div class="mbs-espresso-assistant__saved-actions">
             <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-open-session="${escapeHtml(session.id)}">Открыть</button>
+            ${lastAttempt ? `<button class="mbs-espresso-assistant__text-button" type="button" data-export-session-id="${escapeHtml(session.id)}">PDF</button>` : ''}
             <button class="mbs-espresso-assistant__text-button mbs-espresso-assistant__text-button--danger" type="button" data-delete-session="${escapeHtml(session.id)}">Удалить</button>
           </div>
         </article>`;
     }).join('');
+  }
+
+  function displayRecommendation(session, attempt) {
+    if (!attempt) return { recommendation: null, historical: false };
+    if (attempt.recommendation) return { recommendation: attempt.recommendation, historical: true };
+    const index = session.attempts.indexOf(attempt);
+    return {
+      recommendation: buildRecommendation({
+        attempt,
+        session,
+        previousAttempts: session.attempts.slice(0, Math.max(0, index)),
+      }),
+      historical: false,
+    };
   }
 
   function renderStarter(session) {
@@ -243,11 +277,8 @@
       return;
     }
 
-    const recommendation = lastAttempt.recommendation || buildRecommendation({
-      attempt: lastAttempt,
-      session,
-      previousAttempts: session.attempts.slice(0, -1),
-    });
+    const displayed = displayRecommendation(session, lastAttempt);
+    const recommendation = displayed.recommendation;
     const warning = recommendation.softWarning
       ? `<p class="mbs-espresso-assistant__soft-warning">${escapeHtml(recommendation.softWarning)}</p>`
       : '';
@@ -256,12 +287,13 @@
       : '';
     elements.recommendation.className = `mbs-espresso-assistant__recommendation mbs-espresso-assistant__recommendation--${escapeHtml(recommendation.kind)}`;
     elements.recommendation.innerHTML = `
-      <p class="mbs-espresso-assistant__kicker">Следующее одно действие</p>
+      <p class="mbs-espresso-assistant__kicker">${displayed.historical ? 'Следующее одно действие' : 'Подсказка по текущей методике'}</p>
       <h3>${escapeHtml(recommendation.title)}</h3>
       <p class="mbs-espresso-assistant__recommendation-action">${escapeHtml(recommendation.action)}</p>
       <p>${escapeHtml(recommendation.explanation)}</p>
       ${afterAction}
-      ${warning}`;
+      ${warning}
+      ${displayed.historical ? '' : '<p class="mbs-espresso-assistant__soft-warning">Историческая рекомендация для этого шота не была зафиксирована.</p>'}`;
   }
 
   function renderAttempts(session) {
@@ -287,7 +319,7 @@
 
   function prefillAttemptForm(session) {
     const last = session.attempts[session.attempts.length - 1];
-    const recommendation = last && last.recommendation;
+    const recommendation = last ? displayRecommendation(session, last).recommendation : null;
     elements.dose.value = last ? last.dose : session.starter.dose;
     elements.beverageYield.value = recommendation && recommendation.targetYield
       ? recommendation.targetYield
@@ -309,7 +341,12 @@
   function renderWorkspace(session) {
     elements.sessionName.textContent = session.beanName;
     const roast = ROAST_PRESETS[session.roast] || ROAST_PRESETS.unknown;
-    elements.sessionMeta.textContent = `${roast.label} обжарка · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
+    elements.sessionMeta.textContent = `${roast.label} обжарка · дата обжарки: ${formatRoastDate(session.roastDate)} · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
+    elements.editRoastDate.textContent = session.roastDate ? 'Изменить дату обжарки' : 'Добавить дату обжарки';
+    elements.roastDateForm.hidden = true;
+    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateError.hidden = true;
+    elements.roastDateError.textContent = '';
     elements.sessionStatus.textContent = session.status === 'completed' ? 'Сессия завершена' : `Попыток: ${session.attempts.length}/${MAX_ATTEMPTS}`;
     elements.sessionStatus.className = `mbs-espresso-assistant__status mbs-espresso-assistant__status--${session.status === 'completed' ? 'complete' : 'active'}`;
     renderStarter(session);
@@ -321,6 +358,7 @@
     elements.resume.hidden = session.status !== 'completed';
     elements.finish.hidden = session.status === 'completed' || !hasAttempts;
     elements.copy.hidden = !hasAttempts;
+    elements.exportSession.hidden = !hasAttempts;
     if (session.status !== 'completed') prefillAttemptForm(session);
   }
 
@@ -341,6 +379,24 @@
       : `Коэффициент: ${formatNumber(elements.beverageYield.value)} ÷ ${formatNumber(elements.dose.value)} = 1:${formatNumber(ratio, 2)}`;
   }
 
+  function validateRoastDate(value, input, errorElement = null) {
+    const raw = String(value || '').trim();
+    const message = raw && isFutureRoastDate(raw)
+      ? 'Дата обжарки не может быть позже сегодняшней. Исправьте её или оставьте поле пустым.'
+      : '';
+    input.setCustomValidity(message);
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.hidden = !message;
+    }
+    if (message) {
+      input.reportValidity();
+      announce(message);
+      return false;
+    }
+    return true;
+  }
+
   function createSession(event) {
     event.preventDefault();
     const formData = new FormData(elements.createForm);
@@ -358,6 +414,7 @@
     }
 
     const beanName = String(formData.get('beanName') || '').trim();
+    const rawRoastDate = String(formData.get('roastDate') || '').trim();
     const roast = String(formData.get('roast') || 'unknown');
     const dose = Number(formData.get('dose'));
     const canAdjustTemperature = formData.get('canAdjustTemperature') === 'yes';
@@ -366,10 +423,12 @@
       elements.createForm.elements.beanName.focus();
       return;
     }
+    if (!validateRoastDate(rawRoastDate, elements.createRoastDate)) return;
     const now = new Date().toISOString();
     const session = {
       id: makeId('session'),
       beanName,
+      roastDate: normalizeRoastDate(rawRoastDate),
       roast,
       dose,
       canAdjustTemperature,
@@ -408,11 +467,11 @@
       notes: elements.notes.value.trim().slice(0, 280),
     };
     item.ratio = calculateRatio(item.dose, item.yield);
-    item.recommendation = buildRecommendation({
+    item.recommendation = normalizeRecommendationSnapshot(buildRecommendation({
       attempt: item,
       session,
       previousAttempts: session.attempts,
-    });
+    }));
     session.attempts.push(item);
     updateSession(session);
     render();
@@ -471,6 +530,72 @@
     announce('Сессия снова активна.');
   }
 
+  function showRoastDateEditor() {
+    const session = activeSession();
+    if (!session) return;
+    elements.roastDateForm.hidden = false;
+    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateInput.setCustomValidity('');
+    elements.roastDateError.hidden = true;
+    elements.roastDateInput.focus();
+  }
+
+  function cancelRoastDateEditor() {
+    elements.roastDateForm.hidden = true;
+    elements.roastDateInput.setCustomValidity('');
+    elements.roastDateError.hidden = true;
+    elements.editRoastDate.focus();
+  }
+
+  function saveRoastDate(event) {
+    event.preventDefault();
+    const session = activeSession();
+    if (!session || !validateRoastDate(elements.roastDateInput.value, elements.roastDateInput, elements.roastDateError)) return;
+    session.roastDate = normalizeRoastDate(elements.roastDateInput.value);
+    updateSession(session);
+    render();
+    elements.editRoastDate.focus();
+    announce(session.roastDate ? 'Дата обжарки сохранена.' : 'Дата обжарки удалена.');
+  }
+
+  function openReport(reportSessions, mode) {
+    const selected = reportSessions.filter((session) => session.attempts.length > 0);
+    if (!selected.length) {
+      announce('Сначала сохраните хотя бы один шот.');
+      return;
+    }
+    const report = buildReportDocument({
+      sessions: selected,
+      mode,
+      logoDataUri: MBS_ESPRESSO_LOGO_DATA_URI,
+      generatedAt: new Date(),
+    });
+    const reportWindow = window.open('', '_blank');
+    if (!reportWindow) {
+      announce('Браузер заблокировал окно отчёта. Разрешите всплывающие окна и повторите выгрузку.');
+      return;
+    }
+    reportWindow.opener = null;
+    reportWindow.document.open();
+    reportWindow.document.write(report.html);
+    reportWindow.document.close();
+    announce('Журнал подготовлен. В новом окне нажмите «Сохранить как PDF».');
+  }
+
+  function exportCurrentSession() {
+    const session = activeSession();
+    if (session) openReport([session], 'session');
+  }
+
+  function exportAllSessions() {
+    openReport(sessions.slice(), 'journal');
+  }
+
+  function exportSessionById(id) {
+    const session = sessions.find((item) => item.id === id);
+    if (session) openReport([session], 'session');
+  }
+
   function copyFallback(text) {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -489,10 +614,11 @@
     const last = session && session.attempts[session.attempts.length - 1];
     if (!session || !last) return;
     const roast = ROAST_PRESETS[session.roast] || ROAST_PRESETS.unknown;
+    const roastDate = `\nДата обжарки: ${formatRoastDate(session.roastDate)}`;
     const temperature = session.canAdjustTemperature && last.temperature !== null
       ? `\nТемпература: ${formatNumber(last.temperature)} °C`
       : '';
-    const text = `Рецепт эспрессо MBS*\nЗерно: ${session.beanName}\nОбжарка: ${roast.label.toLowerCase()}\nДозировка: ${formatNumber(last.dose)} г\nВыход: ${formatNumber(last.yield)} г\nКоэффициент: 1:${formatNumber(last.ratio, 2)}\nВремя: ${formatNumber(last.time)} с${temperature}\nВкус: ${TASTE_OPTIONS[last.taste] || last.taste}`;
+    const text = `Рецепт эспрессо MBS*\nЗерно: ${session.beanName}${roastDate}\nОбжарка: ${roast.label.toLowerCase()}\nДозировка: ${formatNumber(last.dose)} г\nВыход: ${formatNumber(last.yield)} г\nКоэффициент: 1:${formatNumber(last.ratio, 2)}\nВремя: ${formatNumber(last.time)} с${temperature}\nВкус: ${TASTE_OPTIONS[last.taste] || last.taste}`;
     try {
       if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
       else if (!copyFallback(text)) throw new Error('Copy command failed');
@@ -526,11 +652,23 @@
   elements.finish.addEventListener('click', finishSession);
   elements.resume.addEventListener('click', resumeSession);
   elements.copy.addEventListener('click', copyRecipe);
+  elements.exportSession.addEventListener('click', exportCurrentSession);
+  elements.exportAll.addEventListener('click', exportAllSessions);
+  elements.editRoastDate.addEventListener('click', showRoastDateEditor);
+  elements.cancelRoastDate.addEventListener('click', cancelRoastDateEditor);
+  elements.roastDateForm.addEventListener('submit', saveRoastDate);
+  elements.createRoastDate.addEventListener('input', () => elements.createRoastDate.setCustomValidity(''));
+  elements.roastDateInput.addEventListener('input', () => {
+    elements.roastDateInput.setCustomValidity('');
+    elements.roastDateError.hidden = true;
+  });
   elements.resetAll.addEventListener('click', resetAll);
   elements.sessionList.addEventListener('click', (event) => {
     const openButton = event.target.closest('[data-open-session]');
+    const exportButton = event.target.closest('[data-export-session-id]');
     const deleteButton = event.target.closest('[data-delete-session]');
     if (openButton) openSession(openButton.getAttribute('data-open-session'));
+    if (exportButton) exportSessionById(exportButton.getAttribute('data-export-session-id'));
     if (deleteButton) deleteSession(deleteButton.getAttribute('data-delete-session'));
   });
 

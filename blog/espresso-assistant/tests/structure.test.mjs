@@ -34,7 +34,15 @@ assert.ok(hosted.includes('data-mbs-espresso-assistant-hosted="v1"'), 'Hosted he
 assert.ok(hosted.includes('mbsEspressoAssistant:v1:sessions'), 'Hosted helper keeps versioned session storage');
 assert.ok(hosted.includes('mbsEspressoAssistant:v1:activeSessionId'), 'Hosted helper keeps versioned active-session storage');
 assert.ok(!/\bfetch\s*\(/.test(hosted), 'Hosted helper must not call external APIs');
+assert.ok(!/\bXMLHttpRequest\b/.test(hosted), 'Hosted helper must not use external request clients');
 assert.ok(!/src\/(rules|app)\.js/.test(hosted), 'Hosted helper must be self-contained');
+assert.ok(hosted.includes('data:image/png;base64,'), 'Hosted helper embeds the print logo');
+assert.ok(!hosted.includes('static.tildacdn.com/tild3934-3663-4132-a239-316638666135/MBS_LOGO.png'), 'Hosted helper does not load the print logo from CDN');
+assert.ok(!/<(?:img|script|link)[^>]+(?:src|href)=["']https?:/i.test(hosted), 'Hosted helper has no external runtime resources');
+assert.ok(hosted.includes('data-export-all'), 'Hosted helper exposes the full-journal PDF action');
+assert.ok(hosted.includes('data-export-session'), 'Hosted helper exposes the current-session PDF action');
+assert.ok(hosted.includes('data-create-roast-date'), 'Hosted helper records the roast date');
+assert.ok(hosted.includes('Рекомендация не зафиксирована'), 'Hosted helper handles attempts without a historical recommendation');
 
 assert.ok(loader.includes('https://api.barista-school.ru/api/espresso-assistant.html'), 'Loader targets the hosted endpoint');
 assert.ok(loader.includes('AbortController'), 'Loader aborts a slow request');

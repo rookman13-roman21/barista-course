@@ -4,6 +4,7 @@ import path from 'node:path';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourcePath = (...segments) => path.join(projectRoot, 'src', ...segments);
+const assetPath = (...segments) => path.join(projectRoot, 'assets', ...segments);
 
 function makeClassicScript(source) {
   return source
@@ -11,17 +12,20 @@ function makeClassicScript(source) {
     .replace(/^import[^;]+;\s*$/gm, '');
 }
 
-const [styles, seoMarkup, hostedMarkup, previewTemplate, rules, app] = await Promise.all([
+const [styles, seoMarkup, hostedMarkup, previewTemplate, rules, report, app, logo] = await Promise.all([
   readFile(sourcePath('styles.css'), 'utf8'),
   readFile(sourcePath('seo-markup.html'), 'utf8'),
   readFile(sourcePath('hosted-markup.html'), 'utf8'),
   readFile(sourcePath('preview-template.html'), 'utf8'),
   readFile(sourcePath('rules.js'), 'utf8'),
+  readFile(sourcePath('report.js'), 'utf8'),
   readFile(sourcePath('app.js'), 'utf8'),
+  readFile(assetPath('mbs-logo-print.png')),
 ]);
 
-const runtimeBody = [rules, app].map(makeClassicScript).join('\n\n');
-const runtime = `(function () {\n${runtimeBody}\n}());`;
+const logoDataUri = `data:image/png;base64,${logo.toString('base64')}`;
+const runtimeBody = [rules, report, app].map(makeClassicScript).join('\n\n');
+const runtime = `(function () {\nconst MBS_ESPRESSO_LOGO_DATA_URI = ${JSON.stringify(logoDataUri)};\n${runtimeBody}\n}());`;
 const loaderSlot = '<div data-mbs-espresso-assistant-loader-slot aria-live="polite"></div>';
 if (!seoMarkup.includes(loaderSlot)) throw new Error('SEO markup does not contain the hosted loader slot');
 
