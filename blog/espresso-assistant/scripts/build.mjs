@@ -12,19 +12,24 @@ function makeClassicScript(source) {
     .replace(/^import[^;]+;\s*$/gm, '');
 }
 
-const [styles, seoMarkup, hostedMarkup, previewTemplate, rules, report, app, logo] = await Promise.all([
+const [styles, seoMarkup, hostedMarkup, previewTemplate, rules, report, pdf, app, logo] = await Promise.all([
   readFile(sourcePath('styles.css'), 'utf8'),
   readFile(sourcePath('seo-markup.html'), 'utf8'),
   readFile(sourcePath('hosted-markup.html'), 'utf8'),
   readFile(sourcePath('preview-template.html'), 'utf8'),
   readFile(sourcePath('rules.js'), 'utf8'),
   readFile(sourcePath('report.js'), 'utf8'),
+  readFile(sourcePath('pdf.js'), 'utf8'),
   readFile(sourcePath('app.js'), 'utf8'),
   readFile(assetPath('mbs-logo-print.png')),
 ]);
 
 const logoDataUri = `data:image/png;base64,${logo.toString('base64')}`;
-const runtimeBody = [rules, report, app].map(makeClassicScript).join('\n\n');
+const legacyReportMarker = '\nfunction recipeMarkup';
+const legacyReportIndex = report.indexOf(legacyReportMarker);
+if (legacyReportIndex === -1) throw new Error('Report runtime boundary is missing');
+const reportRuntime = report.slice(0, legacyReportIndex);
+const runtimeBody = [rules, reportRuntime, pdf, app].map(makeClassicScript).join('\n\n');
 const runtime = `(function () {\nconst MBS_ESPRESSO_LOGO_DATA_URI = ${JSON.stringify(logoDataUri)};\n${runtimeBody}\n}());`;
 const loaderSlot = '<div data-mbs-espresso-assistant-loader-slot aria-live="polite"></div>';
 if (!seoMarkup.includes(loaderSlot)) throw new Error('SEO markup does not contain the hosted loader slot');

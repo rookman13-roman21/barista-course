@@ -41,15 +41,15 @@ assert.ok(!hosted.includes('static.tildacdn.com/tild3934-3663-4132-a239-31663866
 assert.ok(!/<(?:img|script|link)[^>]+(?:src|href)=["']https?:/i.test(hosted), 'Hosted helper has no external runtime resources');
 assert.ok(hosted.includes('data-export-all'), 'Hosted helper exposes the full-journal PDF action');
 assert.ok(hosted.includes('data-export-session'), 'Hosted helper exposes the current-session PDF action');
-assert.ok(hosted.includes('data-mbs-espresso-assistant-print-root'), 'Report prints through a dedicated root in the current document for mobile Safari');
-assert.ok(hosted.includes('body>*{display:none!important}'), 'Only the report is visible during system printing');
-assert.ok(hosted.includes("printStyle.media = 'all'"), 'Report styles are active before mobile Safari snapshots the page');
-assert.ok(hosted.includes("element.style.setProperty('display', 'none', 'important')"), 'The source Tilda page is hidden inline before printing');
-assert.ok(!hosted.includes('URL.createObjectURL(new Blob([report.html]'), 'Report avoids mobile Safari blob preview tabs');
-assert.ok(hosted.includes("window.matchMedia('(max-width: 700px)').matches"), 'Mobile printing chooses a portrait-safe layout');
-assert.ok(hosted.includes('size:210mm 297mm'), 'Mobile printing requests A4 portrait when Safari ignores landscape sizing');
-assert.ok(hosted.includes('width:240mm!important'), 'Mobile report uses the available iOS PDF page width');
-assert.ok(hosted.includes('padding-right:5mm!important'), 'Mobile report keeps a safe right print inset');
+assert.ok(hosted.includes('buildReportPdf({'), 'All PDF actions use the binary PDF generator');
+assert.ok(hosted.includes("new Blob([pdfBytes], { type: 'application/pdf' })"), 'Report is a real application/pdf file');
+assert.ok(hosted.includes('canvas.toDataURL(\'image/jpeg\''), 'PDF pages are rendered independently of the Tilda DOM');
+assert.ok(hosted.includes("previewWindow.location.replace(url)"), 'Generated PDF opens in the device PDF viewer');
+assert.ok(hosted.includes('link.download = report.filename'), 'Popup-blocked browsers receive a direct PDF download');
+assert.ok(hosted.includes('%PDF-1.4') || hosted.includes('37, 80, 68, 70, 45, 49, 46, 52'), 'Hosted helper contains the PDF 1.4 writer');
+assert.ok(!hosted.includes('data-mbs-espresso-assistant-print-root'), 'PDF does not reuse the public Tilda page for printing');
+assert.ok(!hosted.includes("element.style.setProperty('display', 'none', 'important')"), 'PDF does not mutate Tilda visibility');
+assert.ok(!hosted.includes('window.print()'), 'Hosted helper contains no legacy system-print path');
 assert.ok(hosted.includes('data-create-roast-date'), 'Hosted helper records the roast date');
 assert.ok(hosted.includes('Рекомендация не зафиксирована'), 'Hosted helper handles attempts without a historical recommendation');
 

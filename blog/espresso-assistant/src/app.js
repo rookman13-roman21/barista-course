@@ -578,69 +578,46 @@
     announce(session.roastDate ? 'Дата обжарки сохранена.' : 'Дата обжарки удалена.');
   }
 
-  function openReport(reportSessions, mode) {
+  async function openReport(reportSessions, mode) {
     const selected = reportSessions.filter((session) => session.attempts.length > 0);
     if (!selected.length) {
       announce('Сначала сохраните хотя бы один шот.');
       return;
     }
-    const report = buildReportDocument({
-      sessions: selected,
-      mode,
-      logoDataUri: MBS_ESPRESSO_LOGO_DATA_URI,
-      generatedAt: new Date(),
-    });
-    const previous = document.querySelector('[data-mbs-espresso-assistant-print-root]');
-    if (previous) previous.remove();
-    const previousStyle = document.querySelector('[data-mbs-espresso-assistant-print-style]');
-    if (previousStyle) previousStyle.remove();
-    const compactPrint = window.matchMedia('(max-width: 700px)').matches;
-    const printStyle = document.createElement('style');
-    printStyle.media = 'all';
-    printStyle.dataset.mbsEspressoAssistantPrintStyle = 'true';
-    printStyle.textContent = `${report.printStyles}${compactPrint ? '\n@page{size:210mm 297mm;margin:12mm 10mm 16mm}' : ''}\n@media print{body>*{display:none!important}body>[data-mbs-espresso-assistant-print-root]{display:block!important}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-page{width:240mm!important;max-width:240mm!important;margin-left:0!important;margin-right:0!important;padding-right:5mm!important;overflow:visible!important}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-footer{width:235mm!important;max-width:235mm!important;margin-left:0!important;margin-right:0!important}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-summary,body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-meta{grid-template-columns:repeat(2,minmax(0,1fr))}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-recipes{grid-template-columns:1fr}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-brand{grid-template-columns:90px minmax(0,1fr);gap:12px}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-logo{width:90px;height:27px}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-brand>a{grid-column:1/-1}}`;
-    const printRoot = document.createElement('section');
-    printRoot.hidden = true;
-    printRoot.dataset.mbsEspressoAssistantPrintRoot = 'true';
-    printRoot.classList.toggle('mbs-espresso-assistant-print-root--compact', compactPrint);
-    printRoot.innerHTML = report.printMarkup;
-    const previousTitle = document.title;
-    const hiddenElements = [];
-    let cleaned = false;
-    const cleanup = () => {
-      if (cleaned) return;
-      cleaned = true;
-      hiddenElements.forEach(({ element, display, displayPriority, ariaHidden }) => {
-        if (display) element.style.setProperty('display', display, displayPriority);
-        else element.style.removeProperty('display');
-        if (ariaHidden === null) element.removeAttribute('aria-hidden');
-        else element.setAttribute('aria-hidden', ariaHidden);
+    const previewWindow = window.open('', '_blank');
+    if (previewWindow) {
+      previewWindow.document.title = 'Подготавливаем PDF…';
+      previewWindow.document.body.style.cssText = 'margin:0;padding:32px;background:#eef3ec;color:#1f2920;font:700 18px Arial,sans-serif';
+      previewWindow.document.body.textContent = 'Подготавливаем журнал эспрессо…';
+    }
+    announce('Формируем PDF. Это может занять несколько секунд.');
+    try {
+      const report = await buildReportPdf({
+        sessions: selected,
+        mode,
+        logoDataUri: MBS_ESPRESSO_LOGO_DATA_URI,
+        generatedAt: new Date(),
       });
-      printRoot.remove();
-      printStyle.remove();
-      document.title = previousTitle;
-    };
-    document.head.append(printStyle);
-    document.body.append(printRoot);
-    Array.from(document.body.children).forEach((element) => {
-      if (element === printRoot) return;
-      hiddenElements.push({
-        element,
-        display: element.style.getPropertyValue('display'),
-        displayPriority: element.style.getPropertyPriority('display'),
-        ariaHidden: element.getAttribute('aria-hidden'),
-      });
-      element.style.setProperty('display', 'none', 'important');
-      element.setAttribute('aria-hidden', 'true');
-    });
-    printRoot.hidden = false;
-    printRoot.style.setProperty('display', 'block', 'important');
-    document.title = report.title;
-    window.addEventListener('afterprint', cleanup, { once: true });
-    void printRoot.offsetHeight;
-    window.print();
-    window.setTimeout(cleanup, 30000);
-    announce('Открылось системное окно печати. Выберите «Сохранить как PDF».');
+      const url = URL.createObjectURL(report.blob);
+      if (previewWindow && !previewWindow.closed) {
+        previewWindow.location.replace(url);
+      } else {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = report.filename;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        document.body.append(link);
+        link.click();
+        link.remove();
+      }
+      window.setTimeout(() => URL.revokeObjectURL(url), 300000);
+      announce(`PDF готов: ${report.pageCount} стр.`);
+    } catch (error) {
+      if (previewWindow && !previewWindow.closed) previewWindow.close();
+      console.error('[mbs-espresso-assistant] PDF failed', error);
+      announce('Не удалось сформировать PDF. Обновите страницу и попробуйте ещё раз.');
+    }
   }
 
   function exportCurrentSession() {

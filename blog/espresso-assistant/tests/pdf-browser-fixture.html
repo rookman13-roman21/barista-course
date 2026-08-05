@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><title>PDF browser fixture</title></head>
+<body>Готовим контрольный PDF…
+<script type="module">
+  import { buildReportPdf } from '../src/pdf.js';
+
+  const logoResponse = await fetch('../assets/mbs-logo-print.png');
+  const logoBlob = await logoResponse.blob();
+  const logoDataUri = await new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(logoBlob);
+  });
+  const recommendation = {
+    kind: 'grind-finer',
+    title: 'Увеличьте экстракцию',
+    action: 'Сделайте помол немного мельче и цельтесь в 28 секунд. Дозировку и выход не меняйте.',
+    explanation: 'Контрольная рекомендация.',
+    softWarning: '',
+  };
+  const attempts = Array.from({ length: 30 }, (_, index) => ({
+    id: `shot-${index + 1}`,
+    createdAt: new Date(Date.UTC(2026, 7, 5, 9, index)).toISOString(),
+    dose: 18,
+    yield: 36 + ((index % 3) * 0.2),
+    ratio: 2,
+    time: 25 + (index % 5),
+    temperature: 93,
+    taste: index % 2 ? 'balanced' : 'grassy',
+    unstable: index % 7 === 0,
+    notes: `Контрольная заметка шота ${index + 1}: проверяем кириллицу, переносы и правую границу страницы.`,
+    recommendation,
+  }));
+  const session = {
+    id: 'fixture-session',
+    beanName: 'Эфиопия Сидамо — очень длинное контрольное название зерна',
+    roastDate: '2026-07-24',
+    roast: 'light',
+    canAdjustTemperature: true,
+    starter: { dose: 18, yield: 36, ratio: 2, time: 25, temperature: 94 },
+    status: 'active',
+    createdAt: '2026-08-05T09:00:00.000Z',
+    attempts,
+  };
+  const report = await buildReportPdf({ sessions: [session], mode: 'session', logoDataUri, generatedAt: new Date('2026-08-05T12:00:00+03:00') });
+  await fetch('/__save_pdf__', { method: 'POST', headers: { 'Content-Type': 'application/pdf' }, body: report.bytes });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(report.blob);
+  link.download = 'espresso-assistant-control.pdf';
+  document.body.append(link);
+  link.click();
+  document.body.textContent = `READY ${report.pageCount}`;
+  document.body.dataset.ready = 'true';
+</script>
+</body>
+</html>

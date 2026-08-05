@@ -92,7 +92,7 @@ export function normalizeRecommendationSnapshot(rawRecommendation) {
   return snapshot;
 }
 
-function formatNumber(value, digits = 1) {
+export function formatReportNumber(value, digits = 1) {
   const number = asFiniteNumber(value);
   if (number === null) return '—';
   return number.toLocaleString('ru-RU', {
@@ -101,13 +101,13 @@ function formatNumber(value, digits = 1) {
   });
 }
 
-function formatDateOnly(value) {
+export function formatReportDateOnly(value) {
   const parsed = parseDateOnly(value);
   if (!parsed) return 'не указана';
   return parsed.date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-function formatDateTime(value) {
+export function formatReportDateTime(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '—';
   return date.toLocaleString('ru-RU', {
@@ -136,22 +136,22 @@ export function summarizeReport(sessions) {
 function recipeMarkup(session, attempt, label) {
   if (!attempt) return `<div class="ea-report-recipe"><span>${escapeReportHtml(label)}</span><strong>Нет сохранённых шотов</strong></div>`;
   const temperature = session.canAdjustTemperature && attempt.temperature !== null
-    ? `${formatNumber(attempt.temperature)} °C`
+    ? `${formatReportNumber(attempt.temperature)} °C`
     : 'не отслеживается';
   return `<div class="ea-report-recipe">
     <span>${escapeReportHtml(label)}</span>
-    <strong>${formatNumber(attempt.dose)} г → ${formatNumber(attempt.yield)} г · 1:${formatNumber(attempt.ratio, 2)}</strong>
-    <small>${formatNumber(attempt.time)} с · ${temperature}</small>
+    <strong>${formatReportNumber(attempt.dose)} г → ${formatReportNumber(attempt.yield)} г · 1:${formatReportNumber(attempt.ratio, 2)}</strong>
+    <small>${formatReportNumber(attempt.time)} с · ${temperature}</small>
   </div>`;
 }
 
 function starterMarkup(session) {
   const starter = session.starter || {};
-  const temperature = session.canAdjustTemperature ? `${formatNumber(starter.temperature)} °C` : 'не меняем';
+  const temperature = session.canAdjustTemperature ? `${formatReportNumber(starter.temperature)} °C` : 'не меняем';
   return `<div class="ea-report-recipe">
     <span>Базовый рецепт</span>
-    <strong>${formatNumber(starter.dose)} г → ${formatNumber(starter.yield)} г · 1:${formatNumber(starter.ratio, 2)}</strong>
-    <small>${formatNumber(starter.time)} с · ${temperature}</small>
+    <strong>${formatReportNumber(starter.dose)} г → ${formatReportNumber(starter.yield)} г · 1:${formatReportNumber(starter.ratio, 2)}</strong>
+    <small>${formatReportNumber(starter.time)} с · ${temperature}</small>
   </div>`;
 }
 
@@ -164,16 +164,16 @@ function attemptRows(session) {
       ? `<strong>${escapeReportHtml(recommendation.title)}.</strong> ${escapeReportHtml(recommendation.action)}`
       : 'Рекомендация не зафиксирована';
     const temperature = session.canAdjustTemperature && attempt.temperature !== null
-      ? `${formatNumber(attempt.temperature)} °C`
+      ? `${formatReportNumber(attempt.temperature)} °C`
       : '—';
     const taste = TASTE_OPTIONS[attempt.taste] || attempt.taste || '—';
     return `<tbody class="ea-report-shot">
       <tr>
-        <td><strong>${index + 1}</strong><small>${escapeReportHtml(formatDateTime(attempt.createdAt))}</small></td>
-        <td>${formatNumber(attempt.dose)} г</td>
-        <td>${formatNumber(attempt.yield)} г</td>
-        <td>1:${formatNumber(attempt.ratio, 2)}</td>
-        <td>${formatNumber(attempt.time)} с</td>
+        <td><strong>${index + 1}</strong><small>${escapeReportHtml(formatReportDateTime(attempt.createdAt))}</small></td>
+        <td>${formatReportNumber(attempt.dose)} г</td>
+        <td>${formatReportNumber(attempt.yield)} г</td>
+        <td>1:${formatReportNumber(attempt.ratio, 2)}</td>
+        <td>${formatReportNumber(attempt.time)} с</td>
         <td>${temperature}</td>
         <td>${escapeReportHtml(taste)}</td>
         <td>${attempt.unstable ? 'Неровный' : 'Без отметки'}</td>
@@ -189,7 +189,7 @@ function sessionMarkup(session, index) {
   const attempts = Array.isArray(session.attempts) ? session.attempts : [];
   const result = confirmed || attempts[attempts.length - 1] || null;
   const resultLabel = confirmed ? 'Подтверждённый рецепт' : 'Последний шот';
-  const completedAt = session.status === 'completed' ? formatDateTime(session.completedAt) : '—';
+  const completedAt = session.status === 'completed' ? formatReportDateTime(session.completedAt) : '—';
   return `<section class="ea-report-session${index ? ' ea-report-session--next' : ''}">
     <div class="ea-report-session-brand"><span>MBS* ${REPORT_SCHOOL_NAME}</span><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></div>
     <div class="ea-report-session-head">
@@ -198,8 +198,8 @@ function sessionMarkup(session, index) {
     </div>
     <dl class="ea-report-meta">
       <div><dt>Обжарка</dt><dd>${escapeReportHtml(roast.label)}</dd></div>
-      <div><dt>Дата обжарки</dt><dd>${escapeReportHtml(formatDateOnly(session.roastDate))}</dd></div>
-      <div><dt>Начало</dt><dd>${escapeReportHtml(formatDateTime(session.createdAt))}</dd></div>
+      <div><dt>Дата обжарки</dt><dd>${escapeReportHtml(formatReportDateOnly(session.roastDate))}</dd></div>
+      <div><dt>Начало</dt><dd>${escapeReportHtml(formatReportDateTime(session.createdAt))}</dd></div>
       <div><dt>Завершение</dt><dd>${escapeReportHtml(completedAt)}</dd></div>
       <div><dt>Шотов</dt><dd>${attempts.length}</dd></div>
       <div><dt>Повторяемость</dt><dd>${confirmed ? 'Подтверждена' : 'Не подтверждена'}</dd></div>
@@ -249,14 +249,14 @@ export function buildReportDocument({ sessions = [], mode = 'journal', logoDataU
   <body><div class="ea-report-toolbar"><button type="button" data-ea-report-print disabled>Подготавливаем печать…</button><button type="button" onclick="window.close()">Закрыть</button></div>
   <main class="ea-report-page">
     <header class="ea-report-brand"><img class="ea-report-logo" src="${escapeReportHtml(logoDataUri)}" alt="MBS*"><div><span>${REPORT_SCHOOL_NAME}</span><div class="ea-report-title" role="heading" aria-level="1">Журнал настройки эспрессо</div></div><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></header>
-    <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatDateTime(generatedAt))}</p>
+    <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatReportDateTime(generatedAt))}</p>
     <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>
     ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}
   </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer>${printRuntime}</body></html>`;
   return {
     title,
     html,
-    printMarkup: `<main class="ea-report-page">\n    <header class="ea-report-brand"><img class="ea-report-logo" src="${escapeReportHtml(logoDataUri)}" alt="MBS*"><div><span>${REPORT_SCHOOL_NAME}</span><div class="ea-report-title" role="heading" aria-level="1">Журнал настройки эспрессо</div></div><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></header>\n    <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatDateTime(generatedAt))}</p>\n    <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>\n    ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}\n  </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer>`,
+    printMarkup: `<main class="ea-report-page">\n    <header class="ea-report-brand"><img class="ea-report-logo" src="${escapeReportHtml(logoDataUri)}" alt="MBS*"><div><span>${REPORT_SCHOOL_NAME}</span><div class="ea-report-title" role="heading" aria-level="1">Журнал настройки эспрессо</div></div><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></header>\n    <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatReportDateTime(generatedAt))}</p>\n    <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>\n    ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}\n  </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer>`,
     printStyles: reportStyles(),
   };
 }
