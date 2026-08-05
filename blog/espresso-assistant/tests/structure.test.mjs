@@ -43,6 +43,8 @@ assert.ok(hosted.includes('data-export-all'), 'Hosted helper exposes the full-jo
 assert.ok(hosted.includes('data-export-session'), 'Hosted helper exposes the current-session PDF action');
 assert.ok(hosted.includes('data-mbs-espresso-assistant-print-root'), 'Report prints through a dedicated root in the current document for mobile Safari');
 assert.ok(hosted.includes('body>*{display:none!important}'), 'Only the report is visible during system printing');
+assert.ok(hosted.includes("printStyle.media = 'all'"), 'Report styles are active before mobile Safari snapshots the page');
+assert.ok(hosted.includes("element.style.setProperty('display', 'none', 'important')"), 'The source Tilda page is hidden inline before printing');
 assert.ok(!hosted.includes('URL.createObjectURL(new Blob([report.html]'), 'Report avoids mobile Safari blob preview tabs');
 assert.ok(hosted.includes("window.matchMedia('(max-width: 700px)').matches"), 'Mobile printing chooses a portrait-safe layout');
 assert.ok(hosted.includes('size:210mm 297mm'), 'Mobile printing requests A4 portrait when Safari ignores landscape sizing');
