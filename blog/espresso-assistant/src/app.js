@@ -228,7 +228,10 @@
             <span class="mbs-espresso-assistant__status mbs-espresso-assistant__status--${session.status === 'completed' ? 'complete' : 'active'}">${status}</span>
             <h3>${escapeHtml(session.beanName)}</h3>
             <p>${escapeHtml(result)} · ${session.attempts.length} ${session.attempts.length === 1 ? 'попытка' : 'попыток'}</p>
-            <small>Дата обжарки: ${escapeHtml(formatRoastDate(session.roastDate))} · обновлено ${escapeHtml(formatDate(session.updatedAt || session.createdAt))}</small>
+            <div class="mbs-espresso-assistant__saved-meta">
+              <span class="mbs-espresso-assistant__saved-roast-date">Дата обжарки: ${escapeHtml(formatRoastDate(session.roastDate))}</span>
+              <span>Обновлено ${escapeHtml(formatDate(session.updatedAt || session.createdAt))}</span>
+            </div>
           </div>
           <div class="mbs-espresso-assistant__saved-actions">
             <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-open-session="${escapeHtml(session.id)}">Открыть</button>

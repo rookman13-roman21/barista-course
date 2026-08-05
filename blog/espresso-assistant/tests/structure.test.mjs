@@ -56,7 +56,9 @@ assert.ok(seo.includes('data-mbs-espresso-assistant-faq'), 'Static FAQ has its o
 assert.ok(seo.includes("item.addEventListener('toggle'"), 'Static FAQ closes other items when one is opened');
 assert.ok(seo.includes('other.open = false'), 'Static FAQ enforces one open item');
 assert.ok(hosted.includes('input[type="date"]'), 'Hosted date fields constrain their intrinsic mobile width');
+assert.ok(hosted.includes('box-sizing: border-box !important'), 'Hosted date fields include borders within their mobile width');
 assert.ok(hosted.includes('mbs-espresso-assistant__back {'), 'The all-sessions control has a dedicated button style');
+assert.ok(hosted.includes('mbs-espresso-assistant__saved-roast-date'), 'Saved-session roast date has its own unbroken line');
 
 for (const [name, content] of [['seo', seo], ['hosted', hosted], ['loader', loader], ['archive', archive]]) {
   assert.equal((content.match(/id=["']consalt["']/gi) || []).length, 0, `${name} must not shadow Tilda popup anchors`);

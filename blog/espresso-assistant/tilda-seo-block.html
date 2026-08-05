@@ -328,6 +328,8 @@
   font-size: 16px;
 }
 .mbs-espresso-assistant__field input[type="date"] {
+  display: block !important;
+  box-sizing: border-box !important;
   min-width: 0 !important;
   max-width: 100% !important;
   width: 100% !important;
@@ -388,7 +390,9 @@
 }
 .mbs-espresso-assistant__saved-session h3 { margin: 8px 0 4px; font-size: 18px; font-weight: 900; }
 .mbs-espresso-assistant__saved-session p { margin-bottom: 3px; color: var(--mbs-ea-muted); font-size: 13px; }
-.mbs-espresso-assistant__saved-session small { color: #7d877d; font-size: 12px; }
+.mbs-espresso-assistant__saved-meta { display: grid; gap: 2px; margin-top: 8px; color: #7d877d; font-size: 12px; line-height: 1.45; }
+.mbs-espresso-assistant__saved-meta span { display: block; }
+.mbs-espresso-assistant__saved-roast-date { white-space: nowrap; }
 .mbs-espresso-assistant__saved-actions { display: flex; flex: 0 0 auto; gap: 14px; align-items: center; }
 .mbs-espresso-assistant__saved-actions .mbs-espresso-assistant__button { min-height: 42px; padding: 8px 17px; font-size: 13px; }
 .mbs-espresso-assistant__empty { margin: 0; padding: 18px; border-radius: 14px; background: var(--mbs-ea-bg); color: var(--mbs-ea-muted); font-size: 14px; }
@@ -519,6 +523,7 @@
   .mbs-espresso-assistant__inline-edit { max-width: none; }
   .mbs-espresso-assistant__inline-edit-actions { align-items: stretch; flex-direction: column; }
   .mbs-espresso-assistant__saved-session { align-items: stretch; flex-direction: column; }
+  .mbs-espresso-assistant__saved-roast-date { font-size: 11px; }
   .mbs-espresso-assistant__saved-actions { justify-content: space-between; }
   .mbs-espresso-assistant__saved-actions .mbs-espresso-assistant__button { width: auto; }
   .mbs-espresso-assistant__starter dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
