@@ -337,7 +337,8 @@
   color: var(--mbs-ea-ink);
   font-size: 16px;
 }
-.mbs-espresso-assistant__field input[type="date"] {
+.mbs-espresso-assistant__field input[data-create-roast-date],
+.mbs-espresso-assistant__field input[data-roast-date-input] {
   display: block !important;
   box-sizing: border-box !important;
   min-width: 0 !important;
@@ -588,7 +589,7 @@
         </label>
         <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
           <span>Дата обжарки <small>необязательно</small></span>
-          <input name="roastDate" type="date" data-create-roast-date>
+          <input name="roastDate" type="text" inputmode="text" maxlength="10" placeholder="ДД.ММ.ГГГГ" autocomplete="off" data-create-roast-date>
         </label>
         <label class="mbs-espresso-assistant__field">
           <span>Степень обжарки</span>
@@ -648,7 +649,7 @@
         <p data-session-meta></p>
         <button class="mbs-espresso-assistant__text-button" type="button" data-edit-roast-date>Изменить дату обжарки</button>
         <form class="mbs-espresso-assistant__inline-edit" data-roast-date-form hidden>
-          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>можно оставить пустой</small></span><input type="date" data-roast-date-input></label>
+          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>ДД.ММ.ГГГГ или оставить пустой</small></span><input type="text" inputmode="text" maxlength="10" placeholder="ДД.ММ.ГГГГ" autocomplete="off" data-roast-date-input></label>
           <p class="mbs-espresso-assistant__field-error" data-roast-date-error hidden></p>
           <div class="mbs-espresso-assistant__inline-edit-actions">
             <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="submit">Сохранить дату</button>
@@ -1214,8 +1215,13 @@ function asFiniteNumber(value) {
 }
 
 function parseDateOnly(value) {
-  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
-  const [year, month, day] = value.split('-').map(Number);
+  if (typeof value !== 'string') return null;
+  const text = value.trim();
+  const isoMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const localMatch = text.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (!isoMatch && !localMatch) return null;
+  const [, yearText, monthText, dayText] = isoMatch || [null, localMatch[3], localMatch[2], localMatch[1]];
+  const [year, month, day] = [yearText, monthText, dayText].map(Number);
   const date = new Date(year, month - 1, day);
   if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
   return { year, month, day, date };
@@ -1232,7 +1238,9 @@ function localIsoDate(value = new Date()) {
 
 function normalizeRoastDate(value) {
   const text = typeof value === 'string' ? value.trim() : '';
-  return parseDateOnly(text) ? text : null;
+  const parsed = parseDateOnly(text);
+  if (!parsed) return null;
+  return `${parsed.year}-${String(parsed.month).padStart(2, '0')}-${String(parsed.day).padStart(2, '0')}`;
 }
 
 function isFutureRoastDate(value, referenceDate = new Date()) {
@@ -1544,6 +1552,13 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     });
   }
 
+  function formatRoastDateInput(value) {
+    const normalized = normalizeRoastDate(value);
+    if (!normalized) return '';
+    const [year, month, day] = normalized.split('-');
+    return `${day}.${month}.${year}`;
+  }
+
   function makeId(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   }
@@ -1802,7 +1817,7 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     elements.sessionMeta.textContent = `${roast.label} обжарка · дата обжарки: ${formatRoastDate(session.roastDate)} · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
     elements.editRoastDate.textContent = session.roastDate ? 'Изменить дату обжарки' : 'Добавить дату обжарки';
     elements.roastDateForm.hidden = true;
-    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
     elements.roastDateError.hidden = true;
     elements.roastDateError.textContent = '';
     elements.sessionStatus.textContent = session.status === 'completed' ? 'Сессия завершена' : `Попыток: ${session.attempts.length}/${MAX_ATTEMPTS}`;
@@ -1839,9 +1854,10 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
 
   function validateRoastDate(value, input, errorElement = null) {
     const raw = String(value || '').trim();
-    const message = raw && isFutureRoastDate(raw)
-      ? 'Дата обжарки не может быть позже сегодняшней. Исправьте её или оставьте поле пустым.'
-      : '';
+    const normalized = normalizeRoastDate(raw);
+    let message = '';
+    if (raw && !normalized) message = 'Введите дату в формате ДД.ММ.ГГГГ.';
+    else if (raw && isFutureRoastDate(normalized)) message = 'Дата обжарки не может быть позже сегодняшней. Исправьте её или оставьте поле пустым.';
     input.setCustomValidity(message);
     if (errorElement) {
       errorElement.textContent = message;
@@ -1992,7 +2008,7 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     const session = activeSession();
     if (!session) return;
     elements.roastDateForm.hidden = false;
-    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
     elements.roastDateInput.setCustomValidity('');
     elements.roastDateError.hidden = true;
     elements.roastDateInput.focus();

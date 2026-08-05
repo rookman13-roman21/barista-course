@@ -10,8 +10,13 @@ function asFiniteNumber(value) {
 }
 
 function parseDateOnly(value) {
-  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
-  const [year, month, day] = value.split('-').map(Number);
+  if (typeof value !== 'string') return null;
+  const text = value.trim();
+  const isoMatch = text.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const localMatch = text.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (!isoMatch && !localMatch) return null;
+  const [, yearText, monthText, dayText] = isoMatch || [null, localMatch[3], localMatch[2], localMatch[1]];
+  const [year, month, day] = [yearText, monthText, dayText].map(Number);
   const date = new Date(year, month - 1, day);
   if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
   return { year, month, day, date };
@@ -28,7 +33,9 @@ export function localIsoDate(value = new Date()) {
 
 export function normalizeRoastDate(value) {
   const text = typeof value === 'string' ? value.trim() : '';
-  return parseDateOnly(text) ? text : null;
+  const parsed = parseDateOnly(text);
+  if (!parsed) return null;
+  return `${parsed.year}-${String(parsed.month).padStart(2, '0')}-${String(parsed.day).padStart(2, '0')}`;
 }
 
 export function isFutureRoastDate(value, referenceDate = new Date()) {

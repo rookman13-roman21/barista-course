@@ -89,6 +89,13 @@
     });
   }
 
+  function formatRoastDateInput(value) {
+    const normalized = normalizeRoastDate(value);
+    if (!normalized) return '';
+    const [year, month, day] = normalized.split('-');
+    return `${day}.${month}.${year}`;
+  }
+
   function makeId(prefix) {
     return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
   }
@@ -347,7 +354,7 @@
     elements.sessionMeta.textContent = `${roast.label} обжарка · дата обжарки: ${formatRoastDate(session.roastDate)} · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
     elements.editRoastDate.textContent = session.roastDate ? 'Изменить дату обжарки' : 'Добавить дату обжарки';
     elements.roastDateForm.hidden = true;
-    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
     elements.roastDateError.hidden = true;
     elements.roastDateError.textContent = '';
     elements.sessionStatus.textContent = session.status === 'completed' ? 'Сессия завершена' : `Попыток: ${session.attempts.length}/${MAX_ATTEMPTS}`;
@@ -384,9 +391,10 @@
 
   function validateRoastDate(value, input, errorElement = null) {
     const raw = String(value || '').trim();
-    const message = raw && isFutureRoastDate(raw)
-      ? 'Дата обжарки не может быть позже сегодняшней. Исправьте её или оставьте поле пустым.'
-      : '';
+    const normalized = normalizeRoastDate(raw);
+    let message = '';
+    if (raw && !normalized) message = 'Введите дату в формате ДД.ММ.ГГГГ.';
+    else if (raw && isFutureRoastDate(normalized)) message = 'Дата обжарки не может быть позже сегодняшней. Исправьте её или оставьте поле пустым.';
     input.setCustomValidity(message);
     if (errorElement) {
       errorElement.textContent = message;
@@ -537,7 +545,7 @@
     const session = activeSession();
     if (!session) return;
     elements.roastDateForm.hidden = false;
-    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
     elements.roastDateInput.setCustomValidity('');
     elements.roastDateError.hidden = true;
     elements.roastDateInput.focus();

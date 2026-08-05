@@ -325,7 +325,8 @@
   color: var(--mbs-ea-ink);
   font-size: 16px;
 }
-.mbs-espresso-assistant__field input[type="date"] {
+.mbs-espresso-assistant__field input[data-create-roast-date],
+.mbs-espresso-assistant__field input[data-roast-date-input] {
   display: block !important;
   box-sizing: border-box !important;
   min-width: 0 !important;

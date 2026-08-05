@@ -50,7 +50,9 @@ const session = (overrides = {}) => ({
 });
 
 assert.equal(normalizeRoastDate('2026-07-28'), '2026-07-28');
+assert.equal(normalizeRoastDate('28.07.2026'), '2026-07-28');
 assert.equal(normalizeRoastDate('2026-02-30'), null);
+assert.equal(normalizeRoastDate('30.02.2026'), null);
 assert.equal(normalizeRoastDate(''), null);
 assert.equal(isFutureRoastDate('2026-08-06', new Date(2026, 7, 5, 12)), true);
 assert.equal(isFutureRoastDate('2026-08-05', new Date(2026, 7, 5, 12)), false);

@@ -55,8 +55,9 @@ assert.ok(hosted.includes('остаток кофе предыдущей наст
 assert.ok(seo.includes('data-mbs-espresso-assistant-faq'), 'Static FAQ has its own single-open accordion scope');
 assert.ok(seo.includes("item.addEventListener('toggle'"), 'Static FAQ closes other items when one is opened');
 assert.ok(seo.includes('other.open = false'), 'Static FAQ enforces one open item');
-assert.ok(hosted.includes('input[type="date"]'), 'Hosted date fields constrain their intrinsic mobile width');
-assert.ok(hosted.includes('box-sizing: border-box !important'), 'Hosted date fields include borders within their mobile width');
+assert.ok((hosted.match(/type="text"[^>]+placeholder="ДД\.ММ\.ГГГГ"/g) || []).length >= 2, 'Roast dates use fixed-width text fields instead of iOS native date controls');
+assert.ok(!hosted.includes('type="date"'), 'Hosted helper avoids the iOS native date field width bug');
+assert.ok(hosted.includes('box-sizing: border-box !important'), 'Roast date fields include borders within their mobile width');
 assert.ok(hosted.includes('mbs-espresso-assistant__back {'), 'The all-sessions control has a dedicated button style');
 assert.ok(hosted.includes('mbs-espresso-assistant__saved-roast-date'), 'Saved-session roast date has its own unbroken line');
 
