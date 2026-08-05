@@ -21,9 +21,11 @@
     sessionMeta: root.querySelector('[data-session-meta]'),
     sessionStatus: root.querySelector('[data-session-status]'),
     createRoastDate: root.querySelector('[data-create-roast-date]'),
+    createRoastDateDisplay: root.querySelector('[data-create-roast-date-display]'),
     editRoastDate: root.querySelector('[data-edit-roast-date]'),
     roastDateForm: root.querySelector('[data-roast-date-form]'),
     roastDateInput: root.querySelector('[data-roast-date-input]'),
+    roastDateDisplay: root.querySelector('[data-roast-date-display]'),
     roastDateError: root.querySelector('[data-roast-date-error]'),
     cancelRoastDate: root.querySelector('[data-cancel-roast-date]'),
     starterDose: root.querySelector('[data-starter-dose]'),
@@ -94,6 +96,13 @@
     if (!normalized) return '';
     const [year, month, day] = normalized.split('-');
     return `${day}.${month}.${year}`;
+  }
+
+  function setRoastDateControl(input, display, value) {
+    const normalized = normalizeRoastDate(value);
+    input.value = normalized || '';
+    display.textContent = normalized ? formatRoastDateInput(normalized) : 'Выберите дату';
+    display.classList.toggle('mbs-espresso-assistant__date-display--selected', Boolean(normalized));
   }
 
   function makeId(prefix) {
@@ -354,7 +363,7 @@
     elements.sessionMeta.textContent = `${roast.label} обжарка · дата обжарки: ${formatRoastDate(session.roastDate)} · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
     elements.editRoastDate.textContent = session.roastDate ? 'Изменить дату обжарки' : 'Добавить дату обжарки';
     elements.roastDateForm.hidden = true;
-    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
+    setRoastDateControl(elements.roastDateInput, elements.roastDateDisplay, session.roastDate);
     elements.roastDateError.hidden = true;
     elements.roastDateError.textContent = '';
     elements.sessionStatus.textContent = session.status === 'completed' ? 'Сессия завершена' : `Попыток: ${session.attempts.length}/${MAX_ATTEMPTS}`;
@@ -545,7 +554,7 @@
     const session = activeSession();
     if (!session) return;
     elements.roastDateForm.hidden = false;
-    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
+    setRoastDateControl(elements.roastDateInput, elements.roastDateDisplay, session.roastDate);
     elements.roastDateInput.setCustomValidity('');
     elements.roastDateError.hidden = true;
     elements.roastDateInput.focus();
@@ -668,11 +677,19 @@
   elements.editRoastDate.addEventListener('click', showRoastDateEditor);
   elements.cancelRoastDate.addEventListener('click', cancelRoastDateEditor);
   elements.roastDateForm.addEventListener('submit', saveRoastDate);
-  elements.createRoastDate.addEventListener('input', () => elements.createRoastDate.setCustomValidity(''));
-  elements.roastDateInput.addEventListener('input', () => {
+  function refreshCreateRoastDate() {
+    setRoastDateControl(elements.createRoastDate, elements.createRoastDateDisplay, elements.createRoastDate.value);
+    elements.createRoastDate.setCustomValidity('');
+  }
+  function refreshRoastDateEditor() {
+    setRoastDateControl(elements.roastDateInput, elements.roastDateDisplay, elements.roastDateInput.value);
     elements.roastDateInput.setCustomValidity('');
     elements.roastDateError.hidden = true;
-  });
+  }
+  elements.createRoastDate.addEventListener('input', refreshCreateRoastDate);
+  elements.createRoastDate.addEventListener('change', refreshCreateRoastDate);
+  elements.roastDateInput.addEventListener('input', refreshRoastDateEditor);
+  elements.roastDateInput.addEventListener('change', refreshRoastDateEditor);
   elements.resetAll.addEventListener('click', resetAll);
   elements.sessionList.addEventListener('click', (event) => {
     const openButton = event.target.closest('[data-open-session]');
@@ -684,5 +701,6 @@
   });
 
   loadStorage();
+  refreshCreateRoastDate();
   render();
 }());

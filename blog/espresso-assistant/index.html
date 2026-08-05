@@ -337,14 +337,22 @@
   color: var(--mbs-ea-ink);
   font-size: 16px;
 }
-.mbs-espresso-assistant__field input[data-create-roast-date],
-.mbs-espresso-assistant__field input[data-roast-date-input] {
-  display: block !important;
-  box-sizing: border-box !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  width: 100% !important;
+.mbs-espresso-assistant__date-picker {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  overflow: hidden;
+  border: 1px solid #cfdacd;
+  border-radius: 14px;
+  background: #fff;
 }
+.mbs-espresso-assistant__date-picker:focus-within { border-color: var(--mbs-ea-green); box-shadow: 0 0 0 3px rgba(65, 112, 51, .11); }
+.mbs-espresso-assistant__date-display { display: flex; min-height: 50px; align-items: center; padding: 12px 48px 12px 14px; color: #788278; font-size: 16px; pointer-events: none; }
+.mbs-espresso-assistant__date-display::after { position: absolute; right: 15px; color: var(--mbs-ea-green); content: 'Выбрать'; font-size: 12px; font-weight: 800; }
+.mbs-espresso-assistant__date-display--selected { color: var(--mbs-ea-ink); }
+.mbs-espresso-assistant__field .mbs-espresso-assistant__date-picker input[type="date"] { position: absolute !important; inset: 0; z-index: 1; display: block !important; box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; min-height: 50px; margin: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
 .mbs-espresso-assistant__field textarea { min-height: 86px; resize: vertical; }
 .mbs-espresso-assistant__field input:hover,
 .mbs-espresso-assistant__field select:hover,
@@ -589,7 +597,10 @@
         </label>
         <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
           <span>Дата обжарки <small>необязательно</small></span>
-          <input name="roastDate" type="text" inputmode="text" maxlength="10" placeholder="ДД.ММ.ГГГГ" autocomplete="off" data-create-roast-date>
+          <span class="mbs-espresso-assistant__date-picker">
+            <span class="mbs-espresso-assistant__date-display" data-create-roast-date-display>Выберите дату</span>
+            <input name="roastDate" type="date" data-create-roast-date>
+          </span>
         </label>
         <label class="mbs-espresso-assistant__field">
           <span>Степень обжарки</span>
@@ -649,7 +660,7 @@
         <p data-session-meta></p>
         <button class="mbs-espresso-assistant__text-button" type="button" data-edit-roast-date>Изменить дату обжарки</button>
         <form class="mbs-espresso-assistant__inline-edit" data-roast-date-form hidden>
-          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>ДД.ММ.ГГГГ или оставить пустой</small></span><input type="text" inputmode="text" maxlength="10" placeholder="ДД.ММ.ГГГГ" autocomplete="off" data-roast-date-input></label>
+          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>можно оставить пустой</small></span><span class="mbs-espresso-assistant__date-picker"><span class="mbs-espresso-assistant__date-display" data-roast-date-display>Выберите дату</span><input type="date" data-roast-date-input></span></label>
           <p class="mbs-espresso-assistant__field-error" data-roast-date-error hidden></p>
           <div class="mbs-espresso-assistant__inline-edit-actions">
             <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="submit">Сохранить дату</button>
@@ -1484,9 +1495,11 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     sessionMeta: root.querySelector('[data-session-meta]'),
     sessionStatus: root.querySelector('[data-session-status]'),
     createRoastDate: root.querySelector('[data-create-roast-date]'),
+    createRoastDateDisplay: root.querySelector('[data-create-roast-date-display]'),
     editRoastDate: root.querySelector('[data-edit-roast-date]'),
     roastDateForm: root.querySelector('[data-roast-date-form]'),
     roastDateInput: root.querySelector('[data-roast-date-input]'),
+    roastDateDisplay: root.querySelector('[data-roast-date-display]'),
     roastDateError: root.querySelector('[data-roast-date-error]'),
     cancelRoastDate: root.querySelector('[data-cancel-roast-date]'),
     starterDose: root.querySelector('[data-starter-dose]'),
@@ -1557,6 +1570,13 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     if (!normalized) return '';
     const [year, month, day] = normalized.split('-');
     return `${day}.${month}.${year}`;
+  }
+
+  function setRoastDateControl(input, display, value) {
+    const normalized = normalizeRoastDate(value);
+    input.value = normalized || '';
+    display.textContent = normalized ? formatRoastDateInput(normalized) : 'Выберите дату';
+    display.classList.toggle('mbs-espresso-assistant__date-display--selected', Boolean(normalized));
   }
 
   function makeId(prefix) {
@@ -1817,7 +1837,7 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     elements.sessionMeta.textContent = `${roast.label} обжарка · дата обжарки: ${formatRoastDate(session.roastDate)} · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
     elements.editRoastDate.textContent = session.roastDate ? 'Изменить дату обжарки' : 'Добавить дату обжарки';
     elements.roastDateForm.hidden = true;
-    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
+    setRoastDateControl(elements.roastDateInput, elements.roastDateDisplay, session.roastDate);
     elements.roastDateError.hidden = true;
     elements.roastDateError.textContent = '';
     elements.sessionStatus.textContent = session.status === 'completed' ? 'Сессия завершена' : `Попыток: ${session.attempts.length}/${MAX_ATTEMPTS}`;
@@ -2008,7 +2028,7 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     const session = activeSession();
     if (!session) return;
     elements.roastDateForm.hidden = false;
-    elements.roastDateInput.value = formatRoastDateInput(session.roastDate);
+    setRoastDateControl(elements.roastDateInput, elements.roastDateDisplay, session.roastDate);
     elements.roastDateInput.setCustomValidity('');
     elements.roastDateError.hidden = true;
     elements.roastDateInput.focus();
@@ -2131,11 +2151,19 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
   elements.editRoastDate.addEventListener('click', showRoastDateEditor);
   elements.cancelRoastDate.addEventListener('click', cancelRoastDateEditor);
   elements.roastDateForm.addEventListener('submit', saveRoastDate);
-  elements.createRoastDate.addEventListener('input', () => elements.createRoastDate.setCustomValidity(''));
-  elements.roastDateInput.addEventListener('input', () => {
+  function refreshCreateRoastDate() {
+    setRoastDateControl(elements.createRoastDate, elements.createRoastDateDisplay, elements.createRoastDate.value);
+    elements.createRoastDate.setCustomValidity('');
+  }
+  function refreshRoastDateEditor() {
+    setRoastDateControl(elements.roastDateInput, elements.roastDateDisplay, elements.roastDateInput.value);
     elements.roastDateInput.setCustomValidity('');
     elements.roastDateError.hidden = true;
-  });
+  }
+  elements.createRoastDate.addEventListener('input', refreshCreateRoastDate);
+  elements.createRoastDate.addEventListener('change', refreshCreateRoastDate);
+  elements.roastDateInput.addEventListener('input', refreshRoastDateEditor);
+  elements.roastDateInput.addEventListener('change', refreshRoastDateEditor);
   elements.resetAll.addEventListener('click', resetAll);
   elements.sessionList.addEventListener('click', (event) => {
     const openButton = event.target.closest('[data-open-session]');
@@ -2147,6 +2175,7 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
   });
 
   loadStorage();
+  refreshCreateRoastDate();
   render();
 }());
 

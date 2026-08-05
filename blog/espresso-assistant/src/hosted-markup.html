@@ -23,7 +23,10 @@
         </label>
         <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
           <span>Дата обжарки <small>необязательно</small></span>
-          <input name="roastDate" type="text" inputmode="text" maxlength="10" placeholder="ДД.ММ.ГГГГ" autocomplete="off" data-create-roast-date>
+          <span class="mbs-espresso-assistant__date-picker">
+            <span class="mbs-espresso-assistant__date-display" data-create-roast-date-display>Выберите дату</span>
+            <input name="roastDate" type="date" data-create-roast-date>
+          </span>
         </label>
         <label class="mbs-espresso-assistant__field">
           <span>Степень обжарки</span>
@@ -83,7 +86,7 @@
         <p data-session-meta></p>
         <button class="mbs-espresso-assistant__text-button" type="button" data-edit-roast-date>Изменить дату обжарки</button>
         <form class="mbs-espresso-assistant__inline-edit" data-roast-date-form hidden>
-          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>ДД.ММ.ГГГГ или оставить пустой</small></span><input type="text" inputmode="text" maxlength="10" placeholder="ДД.ММ.ГГГГ" autocomplete="off" data-roast-date-input></label>
+          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>можно оставить пустой</small></span><span class="mbs-espresso-assistant__date-picker"><span class="mbs-espresso-assistant__date-display" data-roast-date-display>Выберите дату</span><input type="date" data-roast-date-input></span></label>
           <p class="mbs-espresso-assistant__field-error" data-roast-date-error hidden></p>
           <div class="mbs-espresso-assistant__inline-edit-actions">
             <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="submit">Сохранить дату</button>

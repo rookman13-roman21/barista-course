@@ -327,14 +327,22 @@
   color: var(--mbs-ea-ink);
   font-size: 16px;
 }
-.mbs-espresso-assistant__field input[data-create-roast-date],
-.mbs-espresso-assistant__field input[data-roast-date-input] {
-  display: block !important;
-  box-sizing: border-box !important;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  width: 100% !important;
+.mbs-espresso-assistant__date-picker {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  overflow: hidden;
+  border: 1px solid #cfdacd;
+  border-radius: 14px;
+  background: #fff;
 }
+.mbs-espresso-assistant__date-picker:focus-within { border-color: var(--mbs-ea-green); box-shadow: 0 0 0 3px rgba(65, 112, 51, .11); }
+.mbs-espresso-assistant__date-display { display: flex; min-height: 50px; align-items: center; padding: 12px 48px 12px 14px; color: #788278; font-size: 16px; pointer-events: none; }
+.mbs-espresso-assistant__date-display::after { position: absolute; right: 15px; color: var(--mbs-ea-green); content: 'Выбрать'; font-size: 12px; font-weight: 800; }
+.mbs-espresso-assistant__date-display--selected { color: var(--mbs-ea-ink); }
+.mbs-espresso-assistant__field .mbs-espresso-assistant__date-picker input[type="date"] { position: absolute !important; inset: 0; z-index: 1; display: block !important; box-sizing: border-box !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; min-height: 50px; margin: 0; padding: 0; border: 0; opacity: 0; cursor: pointer; }
 .mbs-espresso-assistant__field textarea { min-height: 86px; resize: vertical; }
 .mbs-espresso-assistant__field input:hover,
 .mbs-espresso-assistant__field select:hover,
