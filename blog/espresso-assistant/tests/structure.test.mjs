@@ -46,7 +46,8 @@ assert.ok(hosted.includes('body>*{display:none!important}'), 'Only the report is
 assert.ok(!hosted.includes('URL.createObjectURL(new Blob([report.html]'), 'Report avoids mobile Safari blob preview tabs');
 assert.ok(hosted.includes("window.matchMedia('(max-width: 700px)').matches"), 'Mobile printing chooses a portrait-safe layout');
 assert.ok(hosted.includes('size:210mm 297mm'), 'Mobile printing requests A4 portrait when Safari ignores landscape sizing');
-assert.ok(hosted.includes('width:245mm!important'), 'Mobile report width uses the available iOS PDF page without clipping');
+assert.ok(hosted.includes('width:240mm!important'), 'Mobile report uses the available iOS PDF page width');
+assert.ok(hosted.includes('padding-right:5mm!important'), 'Mobile report keeps a safe right print inset');
 assert.ok(hosted.includes('data-create-roast-date'), 'Hosted helper records the roast date');
 assert.ok(hosted.includes('Рекомендация не зафиксирована'), 'Hosted helper handles attempts without a historical recommendation');
 
