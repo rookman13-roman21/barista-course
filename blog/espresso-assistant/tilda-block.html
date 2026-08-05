@@ -1,0 +1,2084 @@
+<!-- MBS Espresso Assistant: local full-page archive. Do not paste into Tilda; use tilda-seo-block.html and tilda-loader.html. -->
+<style>
+.mbs-espresso-assistant {
+  --mbs-ea-green: #417033;
+  --mbs-ea-green-bright: #4f883e;
+  --mbs-ea-green-light: #b6d8ab;
+  --mbs-ea-green-soft: #e7f2e3;
+  --mbs-ea-red: #cc2841;
+  --mbs-ea-red-hover: #d83d54;
+  --mbs-ea-ink: #1f2920;
+  --mbs-ea-muted: #5b675b;
+  --mbs-ea-line: #d8e2d5;
+  --mbs-ea-bg: #f5f5f5;
+  --mbs-ea-paper: #fff;
+  box-sizing: border-box;
+  color: var(--mbs-ea-ink);
+  font-family: Mulish, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+.mbs-espresso-assistant *,
+.mbs-espresso-assistant *::before,
+.mbs-espresso-assistant *::after { box-sizing: border-box; }
+.mbs-espresso-assistant [hidden] { display: none !important; }
+.mbs-espresso-assistant button,
+.mbs-espresso-assistant input,
+.mbs-espresso-assistant select,
+.mbs-espresso-assistant textarea { font: inherit; }
+.mbs-espresso-assistant button,
+.mbs-espresso-assistant a { -webkit-tap-highlight-color: transparent; }
+.mbs-espresso-assistant a { color: inherit; }
+.mbs-espresso-assistant h1,
+.mbs-espresso-assistant h2,
+.mbs-espresso-assistant h3,
+.mbs-espresso-assistant p { margin-top: 0; }
+.mbs-espresso-assistant button:focus-visible,
+.mbs-espresso-assistant a:focus-visible,
+.mbs-espresso-assistant input:focus-visible,
+.mbs-espresso-assistant select:focus-visible,
+.mbs-espresso-assistant textarea:focus-visible,
+.mbs-espresso-assistant summary:focus-visible {
+  outline: 3px solid rgba(204, 40, 65, .32);
+  outline-offset: 3px;
+}
+
+.mbs-espresso-assistant__hero,
+.mbs-espresso-assistant__article,
+.mbs-espresso-assistant__method,
+.mbs-espresso-assistant__faq,
+.mbs-espresso-assistant__cta,
+.mbs-espresso-assistant--hosted > .mbs-espresso-assistant__panel,
+.mbs-espresso-assistant--hosted > .mbs-espresso-assistant__library,
+.mbs-espresso-assistant--hosted > .mbs-espresso-assistant__workspace,
+.mbs-espresso-assistant--hosted > .mbs-espresso-assistant__corrupt {
+  width: min(1100px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.mbs-espresso-assistant__eyebrow,
+.mbs-espresso-assistant__kicker {
+  margin: 0 0 10px;
+  color: var(--mbs-ea-green);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.mbs-espresso-assistant__hero {
+  padding: 72px 0 54px;
+}
+
+.mbs-espresso-assistant__hero h1 {
+  max-width: 780px;
+  margin-bottom: 22px;
+  font-size: clamp(42px, 6.5vw, 78px);
+  font-weight: 900;
+  letter-spacing: -.07em;
+  line-height: .92;
+  overflow-wrap: anywhere;
+}
+
+.mbs-espresso-assistant__lead {
+  max-width: 720px;
+  margin-bottom: 24px;
+  color: #465246;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -.015em;
+  line-height: 1.48;
+}
+
+.mbs-espresso-assistant__section-head,
+.mbs-espresso-assistant__panel-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 34px;
+  align-items: end;
+  margin-bottom: 34px;
+}
+
+.mbs-espresso-assistant__section-head h2,
+.mbs-espresso-assistant__panel-head h2,
+.mbs-espresso-assistant__workspace-head h2,
+.mbs-espresso-assistant__compact-head h2,
+.mbs-espresso-assistant__compact-head h3,
+.mbs-espresso-assistant__starter h3,
+.mbs-espresso-assistant__recommendation h3,
+.mbs-espresso-assistant__cta h2 {
+  margin-bottom: 0;
+  font-size: clamp(27px, 3.5vw, 38px);
+  font-weight: 900;
+  letter-spacing: -.045em;
+  line-height: 1.05;
+}
+
+.mbs-espresso-assistant__section-head > p,
+.mbs-espresso-assistant__panel-head > p {
+  margin-bottom: 0;
+  color: var(--mbs-ea-muted);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.mbs-espresso-assistant__article { padding: 86px 0; }
+.mbs-espresso-assistant__parameter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.mbs-espresso-assistant__parameter-grid article {
+  min-height: 210px;
+  padding: 25px;
+  border: 1px solid var(--mbs-ea-line);
+  border-radius: 24px;
+  background: #fff;
+}
+.mbs-espresso-assistant__parameter-grid article > span {
+  display: inline-flex;
+  margin-bottom: 34px;
+  color: var(--mbs-ea-green);
+  font-size: 13px;
+  font-weight: 900;
+}
+.mbs-espresso-assistant__parameter-grid h3 { margin-bottom: 10px; font-size: 20px; font-weight: 900; letter-spacing: -.025em; }
+.mbs-espresso-assistant__parameter-grid p { margin-bottom: 0; color: var(--mbs-ea-muted); font-size: 14px; }
+
+.mbs-espresso-assistant__method {
+  padding: 74px;
+  border-radius: 34px;
+  background: var(--mbs-ea-green-soft);
+}
+.mbs-espresso-assistant__method-steps { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.mbs-espresso-assistant__method-steps li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 22px;
+  border: 1px solid #d4e5cf;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .8);
+}
+.mbs-espresso-assistant__method-steps li > span {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--mbs-ea-green);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+}
+.mbs-espresso-assistant__method-steps h3 { margin-bottom: 5px; font-size: 18px; font-weight: 900; }
+.mbs-espresso-assistant__method-steps p { margin-bottom: 0; color: var(--mbs-ea-muted); font-size: 14px; }
+.mbs-espresso-assistant__notice {
+  margin-top: 18px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--mbs-ea-green);
+  border-radius: 4px 16px 16px 4px;
+  background: #fff;
+  color: #445044;
+  font-size: 14px;
+}
+
+.mbs-espresso-assistant__faq { padding: 86px 0 70px; }
+.mbs-espresso-assistant__section-head--faq { grid-template-columns: 1fr; }
+.mbs-espresso-assistant__faq-list { border-top: 1px solid var(--mbs-ea-line); }
+.mbs-espresso-assistant__faq details { border-bottom: 1px solid var(--mbs-ea-line); }
+.mbs-espresso-assistant__faq summary {
+  position: relative;
+  padding: 24px 54px 24px 0;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  list-style: none;
+}
+.mbs-espresso-assistant__faq summary::-webkit-details-marker { display: none; }
+.mbs-espresso-assistant__faq summary::after {
+  content: '+';
+  position: absolute;
+  top: 18px;
+  right: 0;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--mbs-ea-green-soft);
+  color: var(--mbs-ea-green);
+  font-size: 24px;
+  font-weight: 700;
+}
+.mbs-espresso-assistant__faq details[open] summary::after { content: '−'; }
+.mbs-espresso-assistant__faq details p { max-width: 820px; margin: -4px 0 24px; color: var(--mbs-ea-muted); font-size: 16px; line-height: 1.65; }
+
+.mbs-espresso-assistant__cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 82px;
+  padding: 54px 58px;
+  border-radius: 30px;
+  background: var(--mbs-ea-green-soft);
+}
+.mbs-espresso-assistant__cta p:not(.mbs-espresso-assistant__eyebrow) { max-width: 650px; margin: 14px 0 0; color: var(--mbs-ea-muted); }
+
+.mbs-espresso-assistant__button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none !important;
+  transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.mbs-espresso-assistant__button:hover { transform: translateY(-1px); }
+.mbs-espresso-assistant__button--primary { background: var(--mbs-ea-red); color: #fff !important; box-shadow: 0 9px 22px rgba(204, 40, 65, .18); }
+.mbs-espresso-assistant__button--primary:hover { background: var(--mbs-ea-red-hover); }
+.mbs-espresso-assistant__button--secondary { border: 1px solid #bfd5b9; background: #fff; color: var(--mbs-ea-green) !important; }
+.mbs-espresso-assistant__button--secondary:hover { border-color: var(--mbs-ea-green); background: #f8fbf7; }
+.mbs-espresso-assistant__text-button,
+.mbs-espresso-assistant__back {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--mbs-ea-green);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.mbs-espresso-assistant__text-button--danger { color: #a52236; }
+
+.mbs-espresso-assistant--hosted {
+  padding: 34px 0 72px;
+  background: var(--mbs-ea-bg);
+}
+.mbs-espresso-assistant__panel,
+.mbs-espresso-assistant__library,
+.mbs-espresso-assistant__workspace {
+  border: 1px solid var(--mbs-ea-line);
+  border-radius: 30px;
+  background: #fff;
+  box-shadow: 0 16px 44px rgba(31, 41, 32, .055);
+}
+.mbs-espresso-assistant__panel { padding: 34px; }
+.mbs-espresso-assistant__library { margin-top: 18px !important; padding: 30px 34px; }
+.mbs-espresso-assistant__corrupt {
+  margin-bottom: 18px !important;
+  padding: 18px 20px;
+  border: 1px solid #ecbac2;
+  border-radius: 18px;
+  background: #fff5f6;
+  color: #7e1c2b;
+}
+.mbs-espresso-assistant__corrupt strong { display: block; margin-bottom: 4px; font-weight: 900; }
+.mbs-espresso-assistant__corrupt p { margin-bottom: 0; font-size: 14px; }
+
+.mbs-espresso-assistant__form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.mbs-espresso-assistant__field { display: flex; min-width: 0; flex-direction: column; gap: 7px; }
+.mbs-espresso-assistant__field--wide { grid-column: 1 / -1; }
+.mbs-espresso-assistant__field > span,
+.mbs-espresso-assistant__checklist-title { color: #334033; font-size: 13px; font-weight: 900; }
+.mbs-espresso-assistant__field small { color: #788278; font-size: 11px; font-weight: 600; }
+.mbs-espresso-assistant__field input,
+.mbs-espresso-assistant__field select,
+.mbs-espresso-assistant__field textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1px solid #cfdacd;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--mbs-ea-ink);
+  font-size: 16px;
+}
+.mbs-espresso-assistant__field textarea { min-height: 86px; resize: vertical; }
+.mbs-espresso-assistant__field input:hover,
+.mbs-espresso-assistant__field select:hover,
+.mbs-espresso-assistant__field textarea:hover { border-color: #9cb897; }
+.mbs-espresso-assistant__field input:focus,
+.mbs-espresso-assistant__field select:focus,
+.mbs-espresso-assistant__field textarea:focus { border-color: var(--mbs-ea-green); box-shadow: 0 0 0 3px rgba(65, 112, 51, .11); outline: 0; }
+
+.mbs-espresso-assistant__checklist {
+  display: grid;
+  gap: 9px;
+  margin: 22px 0;
+  padding: 22px 20px 20px;
+  border: 1px solid #d7e4d3;
+  border-radius: 18px;
+  background: var(--mbs-ea-green-soft);
+}
+.mbs-espresso-assistant__checklist-title { margin: 0 0 6px; }
+.mbs-espresso-assistant__checklist label,
+.mbs-espresso-assistant__check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #435043;
+  cursor: pointer;
+  font-size: 14px;
+}
+.mbs-espresso-assistant__checklist input,
+.mbs-espresso-assistant__check input { width: 18px; height: 18px; flex: 0 0 auto; margin: 1px 0 0; accent-color: var(--mbs-ea-green); }
+.mbs-espresso-assistant__check--single { margin: 16px 0; }
+
+.mbs-espresso-assistant__compact-head,
+.mbs-espresso-assistant__workspace-head {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.mbs-espresso-assistant__compact-head { margin-bottom: 20px; }
+.mbs-espresso-assistant__compact-actions { display: flex; gap: 14px; align-items: center; justify-content: flex-end; }
+.mbs-espresso-assistant__compact-actions .mbs-espresso-assistant__button { min-height: 42px; padding: 8px 17px; font-size: 13px; }
+.mbs-espresso-assistant__compact-head h2,
+.mbs-espresso-assistant__compact-head h3 { font-size: 25px; }
+.mbs-espresso-assistant__session-list { display: grid; gap: 10px; }
+.mbs-espresso-assistant__saved-session {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px;
+  border: 1px solid var(--mbs-ea-line);
+  border-radius: 18px;
+  background: #fff;
+}
+.mbs-espresso-assistant__saved-session h3 { margin: 8px 0 4px; font-size: 18px; font-weight: 900; }
+.mbs-espresso-assistant__saved-session p { margin-bottom: 3px; color: var(--mbs-ea-muted); font-size: 13px; }
+.mbs-espresso-assistant__saved-session small { color: #7d877d; font-size: 12px; }
+.mbs-espresso-assistant__saved-actions { display: flex; flex: 0 0 auto; gap: 14px; align-items: center; }
+.mbs-espresso-assistant__saved-actions .mbs-espresso-assistant__button { min-height: 42px; padding: 8px 17px; font-size: 13px; }
+.mbs-espresso-assistant__empty { margin: 0; padding: 18px; border-radius: 14px; background: var(--mbs-ea-bg); color: var(--mbs-ea-muted); font-size: 14px; }
+
+.mbs-espresso-assistant__workspace { padding: 34px; }
+.mbs-espresso-assistant__workspace-head { margin-bottom: 22px; }
+.mbs-espresso-assistant__workspace-head h2 { margin-top: 8px; }
+.mbs-espresso-assistant__workspace-head p:not(.mbs-espresso-assistant__kicker) { max-width: 720px; margin: 10px 0 0; color: var(--mbs-ea-muted); font-size: 14px; }
+.mbs-espresso-assistant__inline-edit { max-width: 360px; margin-top: 10px; padding: 14px; border: 1px solid var(--mbs-ea-line); border-radius: 16px; background: var(--mbs-ea-bg); }
+.mbs-espresso-assistant__inline-edit-actions { display: flex; gap: 14px; align-items: center; margin-top: 10px; }
+.mbs-espresso-assistant__inline-edit-actions .mbs-espresso-assistant__button { min-height: 42px; padding: 8px 16px; font-size: 13px; }
+.mbs-espresso-assistant__field-error { margin: 8px 0 0 !important; color: #a52236 !important; font-size: 12px !important; font-weight: 800; }
+.mbs-espresso-assistant__back { margin-bottom: 24px; }
+.mbs-espresso-assistant__status { display: inline-flex; width: max-content; padding: 6px 11px; border-radius: 999px; font-size: 11px; font-weight: 900; line-height: 1; text-transform: uppercase; }
+.mbs-espresso-assistant__status--active { background: var(--mbs-ea-green-soft); color: var(--mbs-ea-green); }
+.mbs-espresso-assistant__status--complete { background: #f8dde1; color: #a52236; }
+
+.mbs-espresso-assistant__starter {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid #cee0c9;
+  border-radius: 22px;
+  background: var(--mbs-ea-green-soft);
+}
+.mbs-espresso-assistant__starter h3 { font-size: 22px; }
+.mbs-espresso-assistant__starter dl { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 0; }
+.mbs-espresso-assistant__starter dl > div { padding: 12px; border-radius: 13px; background: rgba(255, 255, 255, .78); }
+.mbs-espresso-assistant__starter dt { color: #697469; font-size: 11px; font-weight: 800; }
+.mbs-espresso-assistant__starter dd { margin: 3px 0 0; font-size: 15px; font-weight: 900; }
+
+.mbs-espresso-assistant__workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 18px;
+}
+.mbs-espresso-assistant__shot-card,
+.mbs-espresso-assistant__recommendation,
+.mbs-espresso-assistant__history {
+  padding: 24px;
+  border: 1px solid var(--mbs-ea-line);
+  border-radius: 22px;
+  background: #fff;
+}
+.mbs-espresso-assistant__shot-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mbs-espresso-assistant__ratio-preview { margin: 12px 0 16px; padding: 10px 12px; border-radius: 12px; background: var(--mbs-ea-bg); color: var(--mbs-ea-green); font-size: 13px; font-weight: 800; }
+.mbs-espresso-assistant__shot-card .mbs-espresso-assistant__button { width: 100%; margin-top: 18px; }
+
+.mbs-espresso-assistant__decision-column { position: sticky; top: 90px; }
+.mbs-espresso-assistant__recommendation { border-color: #cddfc8; background: var(--mbs-ea-green-soft); }
+.mbs-espresso-assistant__recommendation--complete { border-color: #efb7c0; background: #f8dde1; }
+.mbs-espresso-assistant__recommendation--technique,
+.mbs-espresso-assistant__recommendation--diagnostic,
+.mbs-espresso-assistant__recommendation--invalid { border-color: #ead9aa; background: #fff9e9; }
+.mbs-espresso-assistant__recommendation h3 { margin-bottom: 16px; font-size: 28px; }
+.mbs-espresso-assistant__recommendation > p:not(.mbs-espresso-assistant__kicker) { color: #4f5c4f; font-size: 14px; }
+.mbs-espresso-assistant__recommendation-action { margin-bottom: 12px; color: var(--mbs-ea-ink) !important; font-size: 17px !important; font-weight: 900; line-height: 1.4; }
+.mbs-espresso-assistant__soft-warning { margin: 16px 0 0; padding: 11px 12px; border-radius: 11px; background: rgba(255, 255, 255, .7); font-size: 12px !important; }
+.mbs-espresso-assistant__session-actions { display: grid; gap: 8px; margin-top: 12px; }
+
+.mbs-espresso-assistant__history { margin-top: 18px; }
+.mbs-espresso-assistant__attempt-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.mbs-espresso-assistant__attempt { min-width: 0; padding: 16px; border: 1px solid var(--mbs-ea-line); border-radius: 16px; background: #fff; }
+.mbs-espresso-assistant__attempt-top { display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+.mbs-espresso-assistant__attempt-top strong { font-size: 14px; font-weight: 900; }
+.mbs-espresso-assistant__attempt-top span { padding: 4px 8px; border-radius: 999px; background: var(--mbs-ea-green-soft); color: var(--mbs-ea-green); font-size: 11px; font-weight: 900; }
+.mbs-espresso-assistant__attempt > p { margin: 8px 0 0; color: var(--mbs-ea-muted); font-size: 12px; }
+.mbs-espresso-assistant__attempt-taste { color: var(--mbs-ea-ink) !important; font-weight: 800; }
+.mbs-espresso-assistant__attempt-note { padding-top: 8px; border-top: 1px solid var(--mbs-ea-line); font-style: italic; }
+.mbs-espresso-assistant__sr-only { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+
+@media (max-width: 900px) {
+  .mbs-espresso-assistant__section-head,
+  .mbs-espresso-assistant__panel-head { grid-template-columns: 1fr; gap: 14px; }
+  .mbs-espresso-assistant__parameter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mbs-espresso-assistant__method { padding: 44px; }
+  .mbs-espresso-assistant__cta { grid-template-columns: 1fr; gap: 24px; }
+  .mbs-espresso-assistant__cta .mbs-espresso-assistant__button { width: max-content; }
+  .mbs-espresso-assistant__starter { grid-template-columns: 1fr; }
+  .mbs-espresso-assistant__starter dl { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mbs-espresso-assistant__workspace-grid { grid-template-columns: 1fr; }
+  .mbs-espresso-assistant__decision-column { position: static; }
+  .mbs-espresso-assistant__attempt-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .mbs-espresso-assistant__hero,
+  .mbs-espresso-assistant__article,
+  .mbs-espresso-assistant__method,
+  .mbs-espresso-assistant__faq,
+  .mbs-espresso-assistant__cta,
+  .mbs-espresso-assistant--hosted > .mbs-espresso-assistant__panel,
+  .mbs-espresso-assistant--hosted > .mbs-espresso-assistant__library,
+  .mbs-espresso-assistant--hosted > .mbs-espresso-assistant__workspace,
+  .mbs-espresso-assistant--hosted > .mbs-espresso-assistant__corrupt {
+    width: min(100% - 24px, 1100px);
+  }
+  .mbs-espresso-assistant__hero { padding: 40px 0 34px; }
+  .mbs-espresso-assistant__hero h1 { margin-bottom: 17px; font-size: clamp(37px, 12vw, 48px); }
+  .mbs-espresso-assistant__lead { font-size: 17px; }
+  .mbs-espresso-assistant__article { padding: 58px 0; }
+  .mbs-espresso-assistant__parameter-grid { display: flex; gap: 10px; overflow-x: auto; padding: 2px 2px 14px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .mbs-espresso-assistant__parameter-grid::-webkit-scrollbar { display: none; }
+  .mbs-espresso-assistant__parameter-grid article { min-width: min(82vw, 285px); min-height: 195px; scroll-snap-align: start; }
+  .mbs-espresso-assistant__method { padding: 30px 18px; border-radius: 0; }
+  .mbs-espresso-assistant__method-steps li { grid-template-columns: 42px minmax(0, 1fr); gap: 12px; padding: 16px; }
+  .mbs-espresso-assistant__method-steps li > span { width: 40px; height: 40px; border-radius: 12px; }
+  .mbs-espresso-assistant__faq { padding: 58px 0; }
+  .mbs-espresso-assistant__faq summary { padding: 20px 48px 20px 0; font-size: 16px; }
+  .mbs-espresso-assistant__faq details p { font-size: 15px; }
+  .mbs-espresso-assistant__cta { margin-bottom: 58px; padding: 34px 24px; border-radius: 24px; }
+  .mbs-espresso-assistant__cta .mbs-espresso-assistant__button { width: 100%; }
+  .mbs-espresso-assistant--hosted { padding: 18px 0 54px; }
+  .mbs-espresso-assistant__panel,
+  .mbs-espresso-assistant__library,
+  .mbs-espresso-assistant__workspace { padding: 20px; border-radius: 22px; }
+  .mbs-espresso-assistant__form-grid,
+  .mbs-espresso-assistant__shot-fields { grid-template-columns: 1fr; }
+  .mbs-espresso-assistant__field--wide { grid-column: auto; }
+  .mbs-espresso-assistant__button { width: 100%; }
+  .mbs-espresso-assistant__compact-head,
+  .mbs-espresso-assistant__workspace-head { flex-direction: column; gap: 12px; }
+  .mbs-espresso-assistant__compact-actions { width: 100%; align-items: stretch; flex-direction: column; }
+  .mbs-espresso-assistant__inline-edit { max-width: none; }
+  .mbs-espresso-assistant__inline-edit-actions { align-items: stretch; flex-direction: column; }
+  .mbs-espresso-assistant__saved-session { align-items: stretch; flex-direction: column; }
+  .mbs-espresso-assistant__saved-actions { justify-content: space-between; }
+  .mbs-espresso-assistant__saved-actions .mbs-espresso-assistant__button { width: auto; }
+  .mbs-espresso-assistant__starter dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mbs-espresso-assistant__shot-card,
+  .mbs-espresso-assistant__recommendation,
+  .mbs-espresso-assistant__history { padding: 18px; }
+  .mbs-espresso-assistant__recommendation h3 { font-size: 25px; }
+  .mbs-espresso-assistant__attempt-list { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .mbs-espresso-assistant__attempt-list::-webkit-scrollbar { display: none; }
+  .mbs-espresso-assistant__attempt { min-width: min(78vw, 280px); scroll-snap-align: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbs-espresso-assistant *,
+  .mbs-espresso-assistant *::before,
+  .mbs-espresso-assistant *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+
+</style>
+
+<main class="mbs-espresso-assistant mbs-espresso-assistant--seo" data-mbs-espresso-assistant-seo>
+  <section class="mbs-espresso-assistant__hero" aria-labelledby="mbs-espresso-assistant-title">
+    <div class="mbs-espresso-assistant__hero-copy">
+      <p class="mbs-espresso-assistant__eyebrow">MBS* Московская школа бариста</p>
+      <h1 id="mbs-espresso-assistant-title">Помощник настройки эспрессо</h1>
+      <p class="mbs-espresso-assistant__lead">Записывайте каждый шот, меняйте только один параметр и находите не случайно вкусный, а повторяемый рецепт.</p>
+    </div>
+  </section>
+
+  <section class="mbs-espresso-assistant mbs-espresso-assistant--hosted" data-mbs-espresso-assistant-hosted="v1" data-mbs-espresso-assistant-root>
+  <p class="mbs-espresso-assistant__sr-only" data-live-status aria-live="polite" aria-atomic="true"></p>
+
+  <div class="mbs-espresso-assistant__corrupt" data-corrupt-notice role="alert" hidden>
+    <strong>Сохранённые данные повреждены</strong>
+    <p>Помощник не стал использовать их, чтобы не показывать неверные рекомендации. Начните новую сессию или удалите локальные данные кнопкой ниже.</p>
+  </div>
+
+  <section class="mbs-espresso-assistant__panel mbs-espresso-assistant__create" data-create-section aria-labelledby="mbs-espresso-create-title">
+    <div class="mbs-espresso-assistant__panel-head">
+      <div>
+        <p class="mbs-espresso-assistant__kicker">Новая настройка</p>
+        <h2 id="mbs-espresso-create-title">Создайте сессию для зерна</h2>
+      </div>
+      <p>Стартовый рецепт — только точка отсчёта. Дальше ориентируемся на время, вкус и повторяемость.</p>
+    </div>
+
+    <form class="mbs-espresso-assistant__create-form" data-create-form>
+      <div class="mbs-espresso-assistant__form-grid">
+        <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
+          <span>Название зерна или смеси</span>
+          <input name="beanName" type="text" maxlength="80" placeholder="Например, Бразилия Серрадо" required autocomplete="off">
+        </label>
+        <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
+          <span>Дата обжарки <small>необязательно</small></span>
+          <input name="roastDate" type="date" data-create-roast-date>
+        </label>
+        <label class="mbs-espresso-assistant__field">
+          <span>Степень обжарки</span>
+          <select name="roast" required>
+            <option value="unknown">Не знаю</option>
+            <option value="medium">Средняя</option>
+            <option value="dark">Тёмная</option>
+            <option value="light">Светлая</option>
+          </select>
+        </label>
+        <label class="mbs-espresso-assistant__field">
+          <span>Дозировка корзины, г</span>
+          <input name="dose" type="number" min="5" max="30" step="0.1" value="18" required inputmode="decimal">
+        </label>
+        <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
+          <span>Можно менять температуру?</span>
+          <select name="canAdjustTemperature" required>
+            <option value="no">Нет или не знаю</option>
+            <option value="yes">Да, температура задаётся в градусах</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="mbs-espresso-assistant__checklist" role="group" aria-labelledby="mbs-espresso-assistant-preparation-title">
+        <p class="mbs-espresso-assistant__checklist-title" id="mbs-espresso-assistant-preparation-title">Подготовка перед первым шотом</p>
+        <label><input type="checkbox" data-preparation-check required><span>Кофемашина прогрета, группа и холдер очищены</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Корзина соответствует выбранной дозировке</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Весы и таймер готовы</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Распределение и темперовка будут одинаковыми</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Время считаю от запуска помпы до остановки пролива</span></label>
+      </div>
+
+      <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--primary" type="submit">Начать настройку</button>
+    </form>
+  </section>
+
+  <section class="mbs-espresso-assistant__library" data-session-library aria-labelledby="mbs-espresso-library-title">
+    <div class="mbs-espresso-assistant__compact-head">
+      <div>
+        <p class="mbs-espresso-assistant__kicker">Ваш журнал</p>
+        <h2 id="mbs-espresso-library-title">Сохранённые сессии</h2>
+      </div>
+      <div class="mbs-espresso-assistant__compact-actions">
+        <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-export-all hidden>PDF всего журнала</button>
+        <button class="mbs-espresso-assistant__text-button mbs-espresso-assistant__text-button--danger" type="button" data-reset-all hidden>Удалить все сессии</button>
+      </div>
+    </div>
+    <div class="mbs-espresso-assistant__session-list" data-session-list></div>
+  </section>
+
+  <section class="mbs-espresso-assistant__workspace" data-workspace hidden aria-labelledby="mbs-espresso-session-title">
+    <div class="mbs-espresso-assistant__workspace-head">
+      <div>
+        <button class="mbs-espresso-assistant__back" type="button" data-close-session>← Все сессии</button>
+        <p class="mbs-espresso-assistant__kicker">Активное зерно</p>
+        <h2 id="mbs-espresso-session-title" data-session-name tabindex="-1"></h2>
+        <p data-session-meta></p>
+        <button class="mbs-espresso-assistant__text-button" type="button" data-edit-roast-date>Изменить дату обжарки</button>
+        <form class="mbs-espresso-assistant__inline-edit" data-roast-date-form hidden>
+          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>можно оставить пустой</small></span><input type="date" data-roast-date-input></label>
+          <p class="mbs-espresso-assistant__field-error" data-roast-date-error hidden></p>
+          <div class="mbs-espresso-assistant__inline-edit-actions">
+            <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="submit">Сохранить дату</button>
+            <button class="mbs-espresso-assistant__text-button" type="button" data-cancel-roast-date>Отмена</button>
+          </div>
+        </form>
+      </div>
+      <span data-session-status></span>
+    </div>
+
+    <section class="mbs-espresso-assistant__starter" aria-labelledby="mbs-espresso-starter-title">
+      <div>
+        <p class="mbs-espresso-assistant__kicker">Отправная точка</p>
+        <h3 id="mbs-espresso-starter-title">Базовый рецепт</h3>
+      </div>
+      <dl>
+        <div><dt>Дозировка</dt><dd data-starter-dose>—</dd></div>
+        <div><dt>Выход</dt><dd data-starter-yield>—</dd></div>
+        <div><dt>Коэффициент</dt><dd data-starter-ratio>—</dd></div>
+        <div><dt>Время</dt><dd data-starter-time>—</dd></div>
+        <div><dt>Температура</dt><dd data-starter-temperature>—</dd></div>
+      </dl>
+    </section>
+
+    <div class="mbs-espresso-assistant__workspace-grid">
+      <section class="mbs-espresso-assistant__shot-card" aria-labelledby="mbs-espresso-shot-title">
+        <div class="mbs-espresso-assistant__compact-head">
+          <div>
+            <p class="mbs-espresso-assistant__kicker">Новая попытка</p>
+            <h3 id="mbs-espresso-shot-title">Запишите шот</h3>
+          </div>
+        </div>
+        <form data-attempt-form>
+          <div class="mbs-espresso-assistant__shot-fields">
+            <label class="mbs-espresso-assistant__field"><span>Дозировка, г</span><input type="number" min="5" max="30" step="0.1" required inputmode="decimal" data-attempt-dose></label>
+            <label class="mbs-espresso-assistant__field"><span>Выход, г</span><input type="number" min="5" max="100" step="0.1" required inputmode="decimal" data-attempt-yield></label>
+            <label class="mbs-espresso-assistant__field"><span>Время, с</span><input type="number" min="1" max="90" step="0.1" required inputmode="decimal" data-attempt-time></label>
+            <label class="mbs-espresso-assistant__field" data-temperature-wrap><span>Температура, °C</span><input type="number" min="88" max="95" step="0.5" inputmode="decimal" data-attempt-temperature></label>
+          </div>
+          <p class="mbs-espresso-assistant__ratio-preview" data-ratio-preview></p>
+          <label class="mbs-espresso-assistant__field">
+            <span>Главное наблюдение о вкусе</span>
+            <select required data-attempt-taste>
+              <option value="">Выберите один вариант</option>
+              <option value="balanced">Сладко и сбалансированно</option>
+              <option value="sour">Резко и агрессивно кисло</option>
+              <option value="bitter">Горько без выраженной сухости</option>
+              <option value="watery">Водянисто и слабо</option>
+              <option value="grassy">Травянисто, мало сладости</option>
+              <option value="dry">Сухо, лекарственно или терпко</option>
+              <option value="mixed">Одновременно кисло и горько</option>
+            </select>
+          </label>
+          <label class="mbs-espresso-assistant__check mbs-espresso-assistant__check--single"><input type="checkbox" data-attempt-unstable><span>Пролив был неравномерным или заметно отличался от предыдущего</span></label>
+          <label class="mbs-espresso-assistant__field"><span>Заметка <small>необязательно, до 280 знаков</small></span><textarea rows="3" maxlength="280" placeholder="Например: кислотность стала мягче" data-attempt-notes></textarea></label>
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--primary" type="submit">Сохранить шот и получить действие</button>
+        </form>
+      </section>
+
+      <div class="mbs-espresso-assistant__decision-column">
+        <article class="mbs-espresso-assistant__recommendation" data-recommendation></article>
+        <div class="mbs-espresso-assistant__session-actions">
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-export-session hidden>PDF этой сессии</button>
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-copy-recipe hidden>Скопировать текущий рецепт</button>
+          <button class="mbs-espresso-assistant__text-button" type="button" data-finish-session hidden>Завершить сессию</button>
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-resume-session hidden>Продолжить настройку</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="mbs-espresso-assistant__history" aria-labelledby="mbs-espresso-history-title">
+      <div class="mbs-espresso-assistant__compact-head">
+        <div>
+          <p class="mbs-espresso-assistant__kicker">История</p>
+          <h3 id="mbs-espresso-history-title">Попытки этой сессии</h3>
+        </div>
+      </div>
+      <p class="mbs-espresso-assistant__empty" data-attempt-empty>Сохраните первый шот — здесь появится сравнение попыток.</p>
+      <ol class="mbs-espresso-assistant__attempt-list" data-attempt-list></ol>
+    </section>
+  </section>
+</section>
+
+
+  <section class="mbs-espresso-assistant__article" aria-labelledby="mbs-espresso-assistant-track-title">
+    <div class="mbs-espresso-assistant__section-head">
+      <div>
+        <p class="mbs-espresso-assistant__eyebrow">Что записывать</p>
+        <h2 id="mbs-espresso-assistant-track-title">Параметры одного шота</h2>
+      </div>
+      <p>Цифры помогают повторить рецепт, а вкус — понять, куда двигаться. Если менять всё сразу, связь между действием и результатом теряется.</p>
+    </div>
+    <div class="mbs-espresso-assistant__parameter-grid">
+      <article><span>01</span><h3>Дозировка</h3><p>Вес сухого кофе в корзине. Во время обычной настройки держим его стабильным.</p></article>
+      <article><span>02</span><h3>Выход</h3><p>Вес готового эспрессо в чашке. Он определяет длину и концентрацию рецепта.</p></article>
+      <article><span>03</span><h3>Коэффициент</h3><p>Выход делим на дозировку: 36 г ÷ 18 г = коэффициент 1:2.</p></article>
+      <article><span>04</span><h3>Время</h3><p>Считаем от запуска помпы, включая предсмачивание, до остановки пролива.</p></article>
+      <article><span>05</span><h3>Вкус</h3><p>Выбираем одно главное наблюдение: кислотность, горечь, сухость, сладость или водянистость.</p></article>
+      <article><span>06</span><h3>Повторяемость</h3><p>Два близких по цифрам вкусных шота подтверждают, что рецепт действительно найден.</p></article>
+    </div>
+  </section>
+
+  <section class="mbs-espresso-assistant__method" aria-labelledby="mbs-espresso-assistant-method-title">
+    <div class="mbs-espresso-assistant__section-head">
+      <div>
+        <p class="mbs-espresso-assistant__eyebrow">Логика настройки</p>
+        <h2 id="mbs-espresso-assistant-method-title">Сначала стабильность, затем время и вкус</h2>
+      </div>
+      <p>Помощник не перебирает параметры вслепую. Он сначала проверяет стабильность пролива и только потом предлагает изменение рецепта.</p>
+    </div>
+    <ol class="mbs-espresso-assistant__method-steps">
+      <li><span>1</span><div><h3>Уберите нестабильность</h3><p>Неравномерный пролив и одновременно кислый и горький вкус требуют проверки распределения и темперовки.</p></div></li>
+      <li><span>2</span><div><h3>Верните несбалансированный шот к ориентиру</h3><p>Быстрее 25 секунд — помол мельче. Медленнее 30 секунд — помол крупнее. Остальные параметры не меняются.</p></div></li>
+      <li><span>3</span><div><h3>Доверяйте вкусу</h3><p>В диапазоне 25–30 секунд корректируйте рецепт по вкусу. Если шот уже сладкий и сбалансированный, не крутите помол из-за одной цифры — повторите рецепт.</p></div></li>
+    </ol>
+    <aside class="mbs-espresso-assistant__notice"><strong>Важно.</strong> Помощник даёт учебную последовательность действий, но не может оценить воду, состояние жерновов, свежесть зерна и технику приготовления вместо человека.</aside>
+  </section>
+
+  <section class="mbs-espresso-assistant__faq" aria-labelledby="mbs-espresso-assistant-faq-title">
+    <div class="mbs-espresso-assistant__section-head mbs-espresso-assistant__section-head--faq">
+      <div>
+        <p class="mbs-espresso-assistant__eyebrow">Короткие ответы</p>
+        <h2 id="mbs-espresso-assistant-faq-title">Что важно знать новичку</h2>
+      </div>
+    </div>
+    <div class="mbs-espresso-assistant__faq-list">
+      <details><summary>Почему нельзя менять несколько параметров сразу?</summary><p>После одной перемены проще понять, что именно повлияло на вкус. Поэтому помощник сохраняет дозировку и выход, когда предлагает изменить помол, или сохраняет всё остальное при изменении температуры.</p></details>
+      <details><summary>Нужно ли обязательно попасть в 25–30 секунд?</summary><p>Это учебный ориентир для несбалансированного шота, а не оценка качества. Если вкус уже сладкий и сбалансированный, повторите рецепт: два близких результата в диапазоне 20–35 секунд подтверждают его стабильность.</p></details>
+      <details><summary>Почему помощник не говорит количество кликов кофемолки?</summary><p>Шаг регулировки у кофемолок отличается. Универсальная рекомендация — направление изменения помола и целевое изменение времени пролива.</p></details>
+      <details><summary>Почему после изменения помола нужно подождать?</summary><p>Внутри кофемолки может оставаться кофе предыдущей настройки. Уберите его способом, подходящим вашей модели, и только затем оценивайте контрольный шот.</p></details>
+    </div>
+  </section>
+
+  <section class="mbs-espresso-assistant__cta" aria-labelledby="mbs-espresso-assistant-cta-title">
+    <div>
+      <p class="mbs-espresso-assistant__eyebrow">Следующий шаг</p>
+      <h2 id="mbs-espresso-assistant-cta-title">Закрепите настройку на практике</h2>
+      <p>На базовом курсе бариста вы отработаете работу с кофемолкой, вкус, приготовление эспрессо и стабильность результата вместе с тренером.</p>
+    </div>
+    <a class="mbs-espresso-assistant__button mbs-espresso-assistant__button--primary" href="/barista_courses" target="_top">Разобраться на практике</a>
+  </section>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://baristaschool.ru/blog/espresso-assistant#app",
+      "name": "Помощник настройки эспрессо",
+      "url": "https://baristaschool.ru/blog/espresso-assistant",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "description": "Учебный помощник для записи параметров эспрессо, ведения истории попыток и выбора одного следующего изменения рецепта.",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "Московская школа бариста",
+        "url": "https://baristaschool.ru"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://baristaschool.ru/blog/espresso-assistant#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Почему нельзя менять несколько параметров сразу?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "После одной перемены проще понять, что именно повлияло на вкус. Поэтому помощник меняет только одну переменную за попытку."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Нужно ли обязательно попасть в 25–30 секунд?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Это учебный ориентир для несбалансированного шота. Если вкус уже сладкий и сбалансированный, два близких результата в диапазоне 20–35 секунд подтверждают стабильность рецепта."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Почему помощник не говорит количество кликов кофемолки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Шаг регулировки у кофемолок отличается. Универсальная рекомендация — направление изменения помола и целевое изменение времени."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Почему после изменения помола нужно подождать?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Внутри кофемолки может оставаться кофе предыдущей настройки. Уберите его способом, подходящим вашей модели, и только затем оценивайте контрольный шот."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://baristaschool.ru/blog/espresso-assistant#breadcrumbs",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://baristaschool.ru" },
+        { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://baristaschool.ru/blog" },
+        { "@type": "ListItem", "position": 3, "name": "Помощник настройки эспрессо", "item": "https://baristaschool.ru/blog/espresso-assistant" }
+      ]
+    }
+  ]
+}
+</script>
+
+
+<script>
+(function () {
+const MBS_ESPRESSO_LOGO_DATA_URI = "data:image/png;base64,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5f9Puir/WLhw4bx58+bMmbtgwRfNmzdv3br16quvvuKKK1a5WhWfigBdgr8vvviC7rF48eKlllqKpEsvvTRzqxVWWAHV8H+zZs1S89fpwUorrZRY83LLLZcY3/iRDU1YdI7Zs2f/97///fzzz1u0aLHmmmtusMEGuXPHrFmznn322eeee27atGnvv//+l19+OX/+fGpk/k+PpLq11lpriy22+MUvfrHLLrvkXnvQRf79739PmjTp+eefR4z//Oc/c+bMQQYQ4DWgUkiza9fN99hjwO67777qqqsGuSoPvPfe+598MrfycrKUwHveosVyK6ywPK83jeIvS67ap0H19Ip//etfr7766htvTJs5c+bHH3+EOhYs+HLx4kXfffddQSSaU9AOvNCmTZu11157/fXX33jjjTfbbLPOnTvTbQq8Vnv5gxrBOQiHA8svnxwfTtOY4aUC9BtKvhdffPFvf/vb448/zoCWz1pBNjhrww033HvvvY855hhe4AoFhgseeuihW2655amnnvr000+zlNa9e/dzzz335z/Pc/LPOO7BBx9EDNiKUVVRMaDsE0888Te/+Q0jr6KJsySgqJtvvjlLylzSLLNM8xYtvh+VtGzZkmHjuuuuu9FGG/GG89e+fYfllmuRSy3lFUI3mDTpmccff2zixInTp08POl4Zpa2yyqpwVp8+fbbZpv+WW25JS8sopPIsEyY8iQDxcsaPn9C//9bxeAMxEFZD/U2ZMuWXv/wlI20HdnQFXu9KxL7vvvt+8pOfOKpIe8Q385RTToHsKqm9kHfJkiV33XVXjx490upyxA8YMICBZ+UyUMLhhx/uqKhmjxht/fjHPz7yyCNRDfPxXJqWsRDGU08++SRVMz6qRnuZGdClb7/99o8//jijSHkle+aZZxJbBCPnVUWNy/lRjetzVEe/+cMf/tCqVatEiCORfLIYrjtKS3v0zjvv7L///pHSSv152GGHVchZb7755p577llqveH0vXr1YuaY1szs8YMGDQoX2whhiOO4445jlJ29FeWlxCw1YsSIvn371mbutt5665100knl9dvyGjh58uS4ZQ1Dxz//+c/yCqx7rkYhrE8++WTfffct6W352c9+hnG6JATHjBnToUOHkmpJSzx06NCSqg4nZrEZA0daydnjd9xxR2aU4ZLLCDcgYRUQwALAp4VXroxGZcly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";
+const ESPRESSO_LIMITS = Object.freeze({
+  ratioMin: 1.5,
+  ratioMax: 2.5,
+  ratioStep: 0.2,
+  hardTimeMin: 20,
+  hardTimeMax: 35,
+  referenceTimeMin: 25,
+  referenceTimeMax: 30,
+  temperatureMin: 88,
+  temperatureMax: 95,
+});
+
+const ROAST_PRESETS = Object.freeze({
+  unknown: { label: 'Не знаю', ratio: 2, temperature: 93, time: 25 },
+  medium: { label: 'Средняя', ratio: 2, temperature: 93, time: 25 },
+  dark: { label: 'Тёмная', ratio: 1.8, temperature: 91, time: 25 },
+  light: { label: 'Светлая', ratio: 2.2, temperature: 94, time: 25 },
+});
+
+const TASTE_OPTIONS = Object.freeze({
+  balanced: 'Сладко и сбалансированно',
+  sour: 'Резко и агрессивно кисло',
+  bitter: 'Горько без выраженной сухости',
+  watery: 'Водянисто и слабо',
+  grassy: 'Травянисто, мало сладости',
+  dry: 'Сухо, лекарственно или терпко',
+  mixed: 'Одновременно кисло и горько',
+});
+
+function asNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function round(value, digits = 1) {
+  const factor = 10 ** digits;
+  return Math.round((value + Number.EPSILON) * factor) / factor;
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function withinTolerance(first, second, tolerance) {
+  return Math.abs(Number(first) - Number(second)) <= tolerance + 1e-9;
+}
+
+function attemptIsInWorkingBounds(attempt, canAdjustTemperature) {
+  const time = asNumber(attempt.time);
+  const ratio = calculateRatio(attempt.dose, attempt.yield);
+  if (time === null || time < ESPRESSO_LIMITS.hardTimeMin || time > ESPRESSO_LIMITS.hardTimeMax) return false;
+  if (ratio === null || ratio < ESPRESSO_LIMITS.ratioMin || ratio > ESPRESSO_LIMITS.ratioMax) return false;
+  if (canAdjustTemperature) {
+    const temperature = asNumber(attempt.temperature);
+    if (temperature === null || temperature < ESPRESSO_LIMITS.temperatureMin || temperature > ESPRESSO_LIMITS.temperatureMax) return false;
+  }
+  return true;
+}
+
+function calculateRatio(dose, beverageYield) {
+  const doseNumber = asNumber(dose);
+  const yieldNumber = asNumber(beverageYield);
+  if (doseNumber === null || yieldNumber === null || doseNumber <= 0 || yieldNumber <= 0) return null;
+  return round(yieldNumber / doseNumber, 2);
+}
+
+function getStarterRecipe({ roast = 'unknown', dose = 18 } = {}) {
+  const preset = ROAST_PRESETS[roast] || ROAST_PRESETS.unknown;
+  const safeDose = asNumber(dose) && Number(dose) > 0 ? Number(dose) : 18;
+  return {
+    roast: ROAST_PRESETS[roast] ? roast : 'unknown',
+    ratio: preset.ratio,
+    dose: round(safeDose, 1),
+    yield: round(safeDose * preset.ratio, 1),
+    temperature: preset.temperature,
+    time: preset.time,
+  };
+}
+
+function getSoftTimeWarning(time) {
+  const timeNumber = asNumber(time);
+  if (timeNumber === null) return '';
+  if (
+    (timeNumber >= ESPRESSO_LIMITS.hardTimeMin && timeNumber < ESPRESSO_LIMITS.referenceTimeMin)
+    || (timeNumber > ESPRESSO_LIMITS.referenceTimeMax && timeNumber <= ESPRESSO_LIMITS.hardTimeMax)
+  ) {
+    return `Время ${round(timeNumber, 1)} с находится вне учебного ориентира 25–30 с, но сбалансированный вкус важнее цифры.`;
+  }
+  return '';
+}
+
+function diagnosticRecommendation(softWarning = '') {
+  return {
+    kind: 'diagnostic',
+    title: 'Остановите изменения рецепта',
+    action: 'Проверьте зерно, воду, чистоту, корзину, жернова и технику подготовки.',
+    explanation: 'Рабочие границы уже достигнуты. Если рецепт начал меняться, также учтите нагрев кофемолки и влажность в помещении.',
+    softWarning,
+  };
+}
+
+function grindChangeNote() {
+  return 'После изменения помола уберите остаток кофе предыдущей настройки способом, подходящим вашей кофемолке, и только затем готовьте контрольный шот.';
+}
+
+function isRepeatablePair(previousAttempt, currentAttempt, canAdjustTemperature = false) {
+  if (!previousAttempt || !currentAttempt) return false;
+  if (previousAttempt.taste !== 'balanced' || currentAttempt.taste !== 'balanced') return false;
+  if (previousAttempt.unstable || currentAttempt.unstable) return false;
+  if (!attemptIsInWorkingBounds(previousAttempt, canAdjustTemperature)
+    || !attemptIsInWorkingBounds(currentAttempt, canAdjustTemperature)) return false;
+
+  const doseClose = withinTolerance(previousAttempt.dose, currentAttempt.dose, 0.2);
+  const yieldClose = withinTolerance(previousAttempt.yield, currentAttempt.yield, 1);
+  const timeClose = withinTolerance(previousAttempt.time, currentAttempt.time, 2);
+  let temperatureClose = true;
+
+  if (canAdjustTemperature) {
+    const previousTemperature = asNumber(previousAttempt.temperature);
+    const currentTemperature = asNumber(currentAttempt.temperature);
+    temperatureClose = previousTemperature !== null
+      && currentTemperature !== null
+      && withinTolerance(previousTemperature, currentTemperature, 1);
+  }
+
+  return doseClose && yieldClose && timeClose && temperatureClose;
+}
+
+function buildRecommendation({ attempt, session = {}, previousAttempts = [] } = {}) {
+  if (!attempt) throw new Error('Attempt is required');
+
+  const dose = asNumber(attempt.dose);
+  const beverageYield = asNumber(attempt.yield);
+  const time = asNumber(attempt.time);
+  const temperature = asNumber(attempt.temperature);
+  const ratio = calculateRatio(dose, beverageYield);
+
+  if (dose === null || dose <= 0 || beverageYield === null || beverageYield <= 0 || time === null || time <= 0 || ratio === null) {
+    return {
+      kind: 'invalid',
+      title: 'Проверьте цифры',
+      action: 'Заполните дозировку, выход и время положительными числами.',
+      explanation: 'Без этих параметров нельзя выбрать следующее изменение.',
+      softWarning: '',
+    };
+  }
+
+  if (attempt.unstable || attempt.taste === 'mixed') {
+    return {
+      kind: 'technique',
+      title: 'Сначала стабилизируйте пролив',
+      action: 'Не меняйте рецепт. Повторите шот после проверки распределения, темперовки и чистоты корзины.',
+      explanation: 'Одновременная резкая кислота и горечь или неровный пролив часто указывают на каналообразование.',
+      softWarning: '',
+    };
+  }
+
+  if (time < ESPRESSO_LIMITS.hardTimeMin) {
+    return {
+      kind: 'grind-finer-gate',
+      title: 'Слишком быстрый пролив',
+      action: 'Сделайте помол мельче. Дозировку, выход и температуру не меняйте.',
+      explanation: `Шот прошёл за ${round(time, 1)} с. Сначала верните время к учебному ориентиру 25–30 с, затем оценивайте вкус.`,
+      afterAction: grindChangeNote(),
+      targetTimeMin: ESPRESSO_LIMITS.referenceTimeMin,
+      softWarning: '',
+    };
+  }
+
+  if (time > ESPRESSO_LIMITS.hardTimeMax) {
+    return {
+      kind: 'grind-coarser-gate',
+      title: 'Слишком медленный пролив',
+      action: 'Сделайте помол крупнее. Дозировку, выход и температуру не меняйте.',
+      explanation: `Шот прошёл за ${round(time, 1)} с. Сначала верните время к учебному ориентиру 25–30 с, затем оценивайте вкус.`,
+      afterAction: grindChangeNote(),
+      targetTimeMax: ESPRESSO_LIMITS.referenceTimeMax,
+      softWarning: '',
+    };
+  }
+
+  const softWarning = getSoftTimeWarning(time);
+
+  if (session.canAdjustTemperature
+    && (temperature === null || temperature < ESPRESSO_LIMITS.temperatureMin || temperature > ESPRESSO_LIMITS.temperatureMax)) {
+    return {
+      kind: 'invalid',
+      title: 'Проверьте температуру',
+      action: `Укажите температуру в рабочем диапазоне ${ESPRESSO_LIMITS.temperatureMin}–${ESPRESSO_LIMITS.temperatureMax} °C.`,
+      explanation: 'Помощник не будет менять другие параметры, пока температура вне утверждённых границ.',
+      softWarning,
+    };
+  }
+
+  if (ratio < ESPRESSO_LIMITS.ratioMin || ratio > ESPRESSO_LIMITS.ratioMax) {
+    return diagnosticRecommendation(softWarning);
+  }
+
+  if (attempt.taste === 'balanced') {
+    const previousAttempt = previousAttempts[previousAttempts.length - 1];
+    const repeatable = isRepeatablePair(previousAttempt, attempt, Boolean(session.canAdjustTemperature));
+    return {
+      kind: repeatable ? 'complete' : 'repeat',
+      title: repeatable ? 'Рецепт повторяется' : 'Вкус найден — проверьте ещё раз',
+      action: repeatable
+        ? 'Сохраните итоговый рецепт. Два шота подряд получились сладкими, сбалансированными и близкими по параметрам.'
+        : 'Ничего не меняйте. Повторите тот же рецепт и сравните результат.',
+      explanation: repeatable
+        ? 'Повторяемость важнее единичной удачной чашки.'
+        : 'Одна удачная чашка ещё не доказывает стабильность рецепта.',
+      softWarning,
+      repeatable,
+    };
+  }
+
+  if (time < ESPRESSO_LIMITS.referenceTimeMin) {
+    return {
+      kind: 'grind-finer-gate',
+      title: 'Пролив быстрее учебного ориентира',
+      action: 'Сделайте помол мельче. Дозировку, выход и температуру не меняйте.',
+      explanation: `Несбалансированный шот прошёл за ${round(time, 1)} с. Сначала цельтесь в 25–30 с, затем снова оценивайте вкус.`,
+      afterAction: grindChangeNote(),
+      targetTimeMin: ESPRESSO_LIMITS.referenceTimeMin,
+      targetTimeMax: ESPRESSO_LIMITS.referenceTimeMax,
+      softWarning: '',
+    };
+  }
+
+  if (time > ESPRESSO_LIMITS.referenceTimeMax) {
+    return {
+      kind: 'grind-coarser-gate',
+      title: 'Пролив медленнее учебного ориентира',
+      action: 'Сделайте помол крупнее. Дозировку, выход и температуру не меняйте.',
+      explanation: `Несбалансированный шот прошёл за ${round(time, 1)} с. Сначала цельтесь в 25–30 с, затем снова оценивайте вкус.`,
+      afterAction: grindChangeNote(),
+      targetTimeMin: ESPRESSO_LIMITS.referenceTimeMin,
+      targetTimeMax: ESPRESSO_LIMITS.referenceTimeMax,
+      softWarning: '',
+    };
+  }
+
+  if (attempt.taste === 'sour' || attempt.taste === 'bitter' || attempt.taste === 'watery') {
+    const direction = attempt.taste === 'sour' ? 1 : -1;
+    const rawTargetRatio = round(ratio + (direction * ESPRESSO_LIMITS.ratioStep), 2);
+    const targetRatio = clamp(rawTargetRatio, ESPRESSO_LIMITS.ratioMin, ESPRESSO_LIMITS.ratioMax);
+    const atBoundary = round(targetRatio, 2) === round(ratio, 2);
+    if (atBoundary) return diagnosticRecommendation(softWarning);
+
+    const targetYield = round(dose * targetRatio, 1);
+    const increasing = direction > 0;
+    return {
+      kind: increasing ? 'ratio-up' : 'ratio-down',
+      title: increasing ? 'Увеличьте выход' : 'Уменьшите выход',
+      action: `Следующий шот: ${round(dose, 1)} г кофе → ${targetYield} г напитка, коэффициент 1:${String(targetRatio).replace('.', ',')}.`,
+      explanation: increasing
+        ? 'Больший выход помогает смягчить агрессивную кислоту.'
+        : 'Меньший выход делает напиток короче и концентрированнее.',
+      targetRatio,
+      targetYield,
+      softWarning,
+    };
+  }
+
+  if (attempt.taste === 'grassy') {
+    if (session.canAdjustTemperature && time >= 28 && temperature !== null && temperature < ESPRESSO_LIMITS.temperatureMax) {
+      const targetTemperature = Math.min(ESPRESSO_LIMITS.temperatureMax, round(temperature + 1, 1));
+      return {
+        kind: 'temperature-up',
+        title: 'Повысьте температуру',
+        action: `Поднимите температуру до ${targetTemperature} °C. Остальные параметры не меняйте.`,
+        explanation: 'Время уже близко к верхней границе, поэтому температура становится следующей одной переменной.',
+        targetTemperature,
+        softWarning,
+      };
+    }
+    const targetTime = Math.min(ESPRESSO_LIMITS.referenceTimeMax, round(time + 3, 1));
+    if (targetTime - time >= 2) {
+      return {
+        kind: 'grind-finer',
+        title: 'Увеличьте экстракцию',
+        action: `Сделайте помол немного мельче и цельтесь в ${targetTime} с. Дозировку и выход не меняйте.`,
+        explanation: 'Более долгий контакт с водой может добавить сладости и убрать травянистость.',
+        afterAction: grindChangeNote(),
+        targetTime,
+        softWarning,
+      };
+    }
+    return diagnosticRecommendation(softWarning);
+  }
+
+  if (attempt.taste === 'dry') {
+    if (session.canAdjustTemperature && time <= 25 && temperature !== null && temperature > ESPRESSO_LIMITS.temperatureMin) {
+      const targetTemperature = Math.max(ESPRESSO_LIMITS.temperatureMin, round(temperature - 1, 1));
+      return {
+        kind: 'temperature-down',
+        title: 'Понизьте температуру',
+        action: `Уменьшите температуру до ${targetTemperature} °C. Остальные параметры не меняйте.`,
+        explanation: 'Время уже близко к нижней границе, поэтому меняем только температуру.',
+        targetTemperature,
+        softWarning,
+      };
+    }
+    const targetTime = Math.max(ESPRESSO_LIMITS.referenceTimeMin, round(time - 3, 1));
+    if (time - targetTime >= 2) {
+      return {
+        kind: 'grind-coarser',
+        title: 'Уменьшите экстракцию',
+        action: `Сделайте помол немного крупнее и цельтесь в ${targetTime} с. Дозировку и выход не меняйте.`,
+        explanation: 'Более короткий контакт с водой может смягчить сухость и неприятную горечь.',
+        afterAction: grindChangeNote(),
+        targetTime,
+        softWarning,
+      };
+    }
+    return diagnosticRecommendation(softWarning);
+  }
+
+  return diagnosticRecommendation(softWarning);
+}
+
+
+
+const REPORT_SCHOOL_NAME = 'Московская школа бариста';
+const REPORT_SCHOOL_URL = 'https://baristaschool.ru';
+
+function asFiniteNumber(value) {
+  if (value === null || value === '' || typeof value === 'boolean') return null;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+function parseDateOnly(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const [year, month, day] = value.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+  return { year, month, day, date };
+}
+
+function localIsoDate(value = new Date()) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function normalizeRoastDate(value) {
+  const text = typeof value === 'string' ? value.trim() : '';
+  return parseDateOnly(text) ? text : null;
+}
+
+function isFutureRoastDate(value, referenceDate = new Date()) {
+  const normalized = normalizeRoastDate(value);
+  if (!normalized) return false;
+  return normalized > localIsoDate(referenceDate);
+}
+
+function escapeReportHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function sanitizeReportTitlePart(value) {
+  const safe = String(value ?? '')
+    .replace(/[\/\\:*?"<>|\p{Cc}\p{Cf}\p{Zl}\p{Zp}]+/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 80)
+    .trim();
+  return safe || 'Сессия';
+}
+
+function optionalSnapshotText(value, maxLength) {
+  return typeof value === 'string' ? value.slice(0, maxLength) : '';
+}
+
+function normalizeRecommendationSnapshot(rawRecommendation) {
+  if (!rawRecommendation || typeof rawRecommendation !== 'object') return null;
+  const kind = typeof rawRecommendation.kind === 'string' ? rawRecommendation.kind.trim() : '';
+  const title = optionalSnapshotText(rawRecommendation.title, 240);
+  const action = optionalSnapshotText(rawRecommendation.action, 2000);
+  const explanation = optionalSnapshotText(rawRecommendation.explanation, 2000);
+  if (!/^[a-z0-9-]{1,64}$/.test(kind) || !title || !action || !explanation) return null;
+
+  const snapshot = {
+    kind,
+    title,
+    action,
+    explanation,
+    softWarning: optionalSnapshotText(rawRecommendation.softWarning, 1000),
+  };
+  const afterAction = optionalSnapshotText(rawRecommendation.afterAction, 1000);
+  if (afterAction) snapshot.afterAction = afterAction;
+  for (const field of ['targetRatio', 'targetYield', 'targetTime', 'targetTimeMin', 'targetTimeMax', 'targetTemperature']) {
+    const number = asFiniteNumber(rawRecommendation[field]);
+    if (number !== null) snapshot[field] = number;
+  }
+  if (typeof rawRecommendation.repeatable === 'boolean') snapshot.repeatable = rawRecommendation.repeatable;
+  return snapshot;
+}
+
+function formatNumber(value, digits = 1) {
+  const number = asFiniteNumber(value);
+  if (number === null) return '—';
+  return number.toLocaleString('ru-RU', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: digits,
+  });
+}
+
+function formatDateOnly(value) {
+  const parsed = parseDateOnly(value);
+  if (!parsed) return 'не указана';
+  return parsed.date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function formatDateTime(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '—';
+  return date.toLocaleString('ru-RU', {
+    day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  });
+}
+
+function findConfirmedAttempt(session) {
+  const attempts = Array.isArray(session?.attempts) ? session.attempts : [];
+  for (let index = attempts.length - 1; index >= 0; index -= 1) {
+    if (attempts[index]?.recommendation?.kind === 'complete') return attempts[index];
+  }
+  return null;
+}
+
+function summarizeReport(sessions) {
+  const safeSessions = Array.isArray(sessions) ? sessions : [];
+  return {
+    sessions: safeSessions.length,
+    attempts: safeSessions.reduce((total, session) => total + (Array.isArray(session.attempts) ? session.attempts.length : 0), 0),
+    completed: safeSessions.filter((session) => session.status === 'completed').length,
+    confirmed: safeSessions.filter((session) => Boolean(findConfirmedAttempt(session))).length,
+  };
+}
+
+function recipeMarkup(session, attempt, label) {
+  if (!attempt) return `<div class="ea-report-recipe"><span>${escapeReportHtml(label)}</span><strong>Нет сохранённых шотов</strong></div>`;
+  const temperature = session.canAdjustTemperature && attempt.temperature !== null
+    ? `${formatNumber(attempt.temperature)} °C`
+    : 'не отслеживается';
+  return `<div class="ea-report-recipe">
+    <span>${escapeReportHtml(label)}</span>
+    <strong>${formatNumber(attempt.dose)} г → ${formatNumber(attempt.yield)} г · 1:${formatNumber(attempt.ratio, 2)}</strong>
+    <small>${formatNumber(attempt.time)} с · ${temperature}</small>
+  </div>`;
+}
+
+function starterMarkup(session) {
+  const starter = session.starter || {};
+  const temperature = session.canAdjustTemperature ? `${formatNumber(starter.temperature)} °C` : 'не меняем';
+  return `<div class="ea-report-recipe">
+    <span>Базовый рецепт</span>
+    <strong>${formatNumber(starter.dose)} г → ${formatNumber(starter.yield)} г · 1:${formatNumber(starter.ratio, 2)}</strong>
+    <small>${formatNumber(starter.time)} с · ${temperature}</small>
+  </div>`;
+}
+
+function attemptRows(session) {
+  const attempts = Array.isArray(session.attempts) ? session.attempts : [];
+  if (!attempts.length) return '<tbody><tr><td colspan="8" class="ea-report-empty">В этой сессии пока нет шотов.</td></tr></tbody>';
+  return attempts.map((attempt, index) => {
+    const recommendation = normalizeRecommendationSnapshot(attempt.recommendation);
+    const recommendationText = recommendation
+      ? `<strong>${escapeReportHtml(recommendation.title)}.</strong> ${escapeReportHtml(recommendation.action)}`
+      : 'Рекомендация не зафиксирована';
+    const temperature = session.canAdjustTemperature && attempt.temperature !== null
+      ? `${formatNumber(attempt.temperature)} °C`
+      : '—';
+    const taste = TASTE_OPTIONS[attempt.taste] || attempt.taste || '—';
+    return `<tbody class="ea-report-shot">
+      <tr>
+        <td><strong>${index + 1}</strong><small>${escapeReportHtml(formatDateTime(attempt.createdAt))}</small></td>
+        <td>${formatNumber(attempt.dose)} г</td>
+        <td>${formatNumber(attempt.yield)} г</td>
+        <td>1:${formatNumber(attempt.ratio, 2)}</td>
+        <td>${formatNumber(attempt.time)} с</td>
+        <td>${temperature}</td>
+        <td>${escapeReportHtml(taste)}</td>
+        <td>${attempt.unstable ? 'Неровный' : 'Без отметки'}</td>
+      </tr>
+      <tr class="ea-report-shot-detail"><td colspan="8"><b>Следующее действие:</b> ${recommendationText}<br><b>Заметка:</b> ${attempt.notes ? escapeReportHtml(attempt.notes) : '—'}</td></tr>
+    </tbody>`;
+  }).join('');
+}
+
+function sessionMarkup(session, index) {
+  const roast = ROAST_PRESETS[session.roast] || ROAST_PRESETS.unknown;
+  const confirmed = findConfirmedAttempt(session);
+  const attempts = Array.isArray(session.attempts) ? session.attempts : [];
+  const result = confirmed || attempts[attempts.length - 1] || null;
+  const resultLabel = confirmed ? 'Подтверждённый рецепт' : 'Последний шот';
+  const completedAt = session.status === 'completed' ? formatDateTime(session.completedAt) : '—';
+  return `<section class="ea-report-session${index ? ' ea-report-session--next' : ''}">
+    <div class="ea-report-session-brand"><span>MBS* ${REPORT_SCHOOL_NAME}</span><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></div>
+    <div class="ea-report-session-head">
+      <div><span>Сессия ${index + 1}</span><h2>${escapeReportHtml(session.beanName)}</h2></div>
+      <b>${session.status === 'completed' ? 'Завершена' : 'В работе'}</b>
+    </div>
+    <dl class="ea-report-meta">
+      <div><dt>Обжарка</dt><dd>${escapeReportHtml(roast.label)}</dd></div>
+      <div><dt>Дата обжарки</dt><dd>${escapeReportHtml(formatDateOnly(session.roastDate))}</dd></div>
+      <div><dt>Начало</dt><dd>${escapeReportHtml(formatDateTime(session.createdAt))}</dd></div>
+      <div><dt>Завершение</dt><dd>${escapeReportHtml(completedAt)}</dd></div>
+      <div><dt>Шотов</dt><dd>${attempts.length}</dd></div>
+      <div><dt>Повторяемость</dt><dd>${confirmed ? 'Подтверждена' : 'Не подтверждена'}</dd></div>
+    </dl>
+    <div class="ea-report-recipes">${starterMarkup(session)}${recipeMarkup(session, result, resultLabel)}</div>
+    <table>
+      <thead><tr><th>№ / дата</th><th>Доза</th><th>Выход</th><th>Коэфф.</th><th>Время</th><th>Темп.</th><th>Вкус</th><th>Пролив</th></tr></thead>
+      ${attemptRows(session)}
+    </table>
+  </section>`;
+}
+
+function reportStyles() {
+  return `
+    :root{color:#1f2920;font-family:Arial,sans-serif;font-size:10pt;line-height:1.35}
+    *{box-sizing:border-box} body{margin:0;background:#eef3ec;color:#1f2920}
+    a{color:inherit}.ea-report-toolbar{position:sticky;z-index:10;top:0;display:flex;gap:10px;justify-content:flex-end;padding:12px 18px;background:#1f2920}
+    .ea-report-toolbar button{min-height:42px;padding:9px 18px;border:0;border-radius:999px;background:#fff;color:#417033;cursor:pointer;font:700 14px Arial,sans-serif}
+    .ea-report-toolbar button:first-child{background:#cc2841;color:#fff}.ea-report-page{max-width:1120px;margin:22px auto;padding:34px;background:#fff;box-shadow:0 12px 38px rgba(31,41,32,.12)}
+    .ea-report-brand{display:grid;grid-template-columns:128px 1fr auto;gap:22px;align-items:center;padding-bottom:22px;border-bottom:3px solid #417033}
+    .ea-report-logo{width:128px;height:38px;object-fit:cover;object-position:center}.ea-report-brand span,.ea-report-session-brand span{color:#417033;font-size:9px;font-weight:800;letter-spacing:.07em;text-transform:uppercase}
+    .ea-report-title{margin:3px 0 0;font-size:27px;font-weight:700;line-height:1.05}.ea-report-brand a{font-weight:700}.ea-report-generated{margin:12px 0 0;color:#5b675b}
+    .ea-report-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}.ea-report-summary div{padding:14px;border-radius:12px;background:#e7f2e3}.ea-report-summary strong{display:block;font-size:22px}.ea-report-summary span{color:#5b675b;font-size:9px}
+    .ea-report-session{padding-top:8px}.ea-report-session--next{break-before:page}.ea-report-session-brand{display:flex;justify-content:space-between;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #b6d8ab}
+    .ea-report-session-head{display:flex;gap:20px;align-items:flex-start;justify-content:space-between}.ea-report-session-head span{color:#417033;font-size:9px;font-weight:800;text-transform:uppercase}.ea-report-session-head h2{margin:2px 0 0;font-size:22px}.ea-report-session-head>b{padding:5px 9px;border-radius:999px;background:#f8dde1;color:#a52236;font-size:9px;text-transform:uppercase}
+    .ea-report-meta{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0}.ea-report-meta div{padding:9px;border:1px solid #d8e2d5;border-radius:9px}.ea-report-meta dt{color:#697469;font-size:8px}.ea-report-meta dd{margin:3px 0 0;font-weight:700;font-size:9px}
+    .ea-report-recipes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.ea-report-recipe{padding:11px 13px;border-radius:10px;background:#e7f2e3}.ea-report-recipe span,.ea-report-recipe small{display:block;color:#5b675b;font-size:8px}.ea-report-recipe strong{display:block;margin:3px 0;font-size:11px}
+    table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8px}thead{display:table-header-group}th{padding:7px 6px;background:#417033;color:#fff;text-align:left}th:nth-child(1){width:12%}th:nth-child(2),th:nth-child(3),th:nth-child(4),th:nth-child(5),th:nth-child(6){width:8%}th:nth-child(7){width:25%}th:nth-child(8){width:15%}
+    td{padding:7px 6px;border:1px solid #d8e2d5;vertical-align:top;overflow-wrap:anywhere}.ea-report-shot{break-inside:avoid}.ea-report-shot td small{display:block;margin-top:2px;color:#6f796f;font-size:7px}.ea-report-shot-detail td{padding:6px 8px;background:#f5f5f5;line-height:1.45}.ea-report-empty{text-align:center;color:#5b675b}
+    .ea-report-footer{position:fixed;right:0;bottom:0;left:0;text-align:center;color:#5b675b;font-size:8px}
+    @page{size:A4 landscape;margin:12mm 10mm 16mm}
+    @media print{body{background:#fff}.ea-report-toolbar{display:none}.ea-report-page{max-width:none;margin:0;padding:0;box-shadow:none}.ea-report-summary{break-inside:avoid}.ea-report-brand{break-inside:avoid}}
+    @media screen and (max-width:700px){.ea-report-page{margin:0;padding:20px}.ea-report-brand{grid-template-columns:88px 1fr}.ea-report-brand>a{grid-column:1/-1}.ea-report-summary{grid-template-columns:1fr 1fr}.ea-report-meta{grid-template-columns:1fr 1fr}.ea-report-recipes{grid-template-columns:1fr}.ea-report-toolbar{justify-content:stretch}.ea-report-toolbar button{flex:1}}
+  `;
+}
+
+function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = '', generatedAt = new Date() } = {}) {
+  const safeSessions = Array.isArray(sessions) ? sessions : [];
+  const summary = summarizeReport(safeSessions);
+  const titlePart = mode === 'session' && safeSessions[0]
+    ? sanitizeReportTitlePart(safeSessions[0].beanName)
+    : 'Все сессии';
+  const title = `MBS - Журнал эспрессо - ${titlePart} - ${localIsoDate(generatedAt)}`;
+  const sessionSections = safeSessions.map(sessionMarkup).join('');
+  const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeReportHtml(title)}</title><style>${reportStyles()}</style></head>
+  <body><div class="ea-report-toolbar"><button type="button" onclick="window.print()">Сохранить как PDF</button><button type="button" onclick="window.close()">Закрыть</button></div>
+  <main class="ea-report-page">
+    <header class="ea-report-brand"><img class="ea-report-logo" src="${escapeReportHtml(logoDataUri)}" alt="MBS*"><div><span>${REPORT_SCHOOL_NAME}</span><div class="ea-report-title" role="heading" aria-level="1">Журнал настройки эспрессо</div></div><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></header>
+    <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatDateTime(generatedAt))}</p>
+    <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>
+    ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}
+  </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer></body></html>`;
+  return { title, html };
+}
+
+
+(function () {
+  const root = document.querySelector('[data-mbs-espresso-assistant-root]');
+  if (!root || root.getAttribute('data-app-ready') === '1') return;
+  root.setAttribute('data-app-ready', '1');
+
+  const STORAGE_SESSIONS = 'mbsEspressoAssistant:v1:sessions';
+  const STORAGE_ACTIVE = 'mbsEspressoAssistant:v1:activeSessionId';
+  const MAX_SESSIONS = 10;
+  const MAX_ATTEMPTS = 30;
+
+  const elements = {
+    corrupt: root.querySelector('[data-corrupt-notice]'),
+    createSection: root.querySelector('[data-create-section]'),
+    createForm: root.querySelector('[data-create-form]'),
+    library: root.querySelector('[data-session-library]'),
+    sessionList: root.querySelector('[data-session-list]'),
+    resetAll: root.querySelector('[data-reset-all]'),
+    exportAll: root.querySelector('[data-export-all]'),
+    workspace: root.querySelector('[data-workspace]'),
+    sessionName: root.querySelector('[data-session-name]'),
+    sessionMeta: root.querySelector('[data-session-meta]'),
+    sessionStatus: root.querySelector('[data-session-status]'),
+    createRoastDate: root.querySelector('[data-create-roast-date]'),
+    editRoastDate: root.querySelector('[data-edit-roast-date]'),
+    roastDateForm: root.querySelector('[data-roast-date-form]'),
+    roastDateInput: root.querySelector('[data-roast-date-input]'),
+    roastDateError: root.querySelector('[data-roast-date-error]'),
+    cancelRoastDate: root.querySelector('[data-cancel-roast-date]'),
+    starterDose: root.querySelector('[data-starter-dose]'),
+    starterYield: root.querySelector('[data-starter-yield]'),
+    starterRatio: root.querySelector('[data-starter-ratio]'),
+    starterTime: root.querySelector('[data-starter-time]'),
+    starterTemperature: root.querySelector('[data-starter-temperature]'),
+    attemptForm: root.querySelector('[data-attempt-form]'),
+    dose: root.querySelector('[data-attempt-dose]'),
+    beverageYield: root.querySelector('[data-attempt-yield]'),
+    time: root.querySelector('[data-attempt-time]'),
+    temperatureWrap: root.querySelector('[data-temperature-wrap]'),
+    temperature: root.querySelector('[data-attempt-temperature]'),
+    taste: root.querySelector('[data-attempt-taste]'),
+    unstable: root.querySelector('[data-attempt-unstable]'),
+    notes: root.querySelector('[data-attempt-notes]'),
+    ratioPreview: root.querySelector('[data-ratio-preview]'),
+    recommendation: root.querySelector('[data-recommendation]'),
+    attemptList: root.querySelector('[data-attempt-list]'),
+    attemptEmpty: root.querySelector('[data-attempt-empty]'),
+    finish: root.querySelector('[data-finish-session]'),
+    resume: root.querySelector('[data-resume-session]'),
+    copy: root.querySelector('[data-copy-recipe]'),
+    exportSession: root.querySelector('[data-export-session]'),
+    close: root.querySelector('[data-close-session]'),
+    live: root.querySelector('[data-live-status]'),
+  };
+
+  let sessions = [];
+  let activeSessionId = null;
+  let storageCorrupt = false;
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function formatNumber(value, digits = 1) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return '—';
+    return number.toLocaleString('ru-RU', {
+      minimumFractionDigits: Number.isInteger(number) ? 0 : digits,
+      maximumFractionDigits: digits,
+    });
+  }
+
+  function formatDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '';
+    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function formatRoastDate(value) {
+    const normalized = normalizeRoastDate(value);
+    if (!normalized) return 'не указана';
+    const [year, month, day] = normalized.split('-').map(Number);
+    return new Date(year, month - 1, day).toLocaleDateString('ru-RU', {
+      day: 'numeric', month: 'long', year: 'numeric',
+    });
+  }
+
+  function makeId(prefix) {
+    return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+  }
+
+  function normalizeAttempt(rawAttempt, session) {
+    if (!rawAttempt || typeof rawAttempt !== 'object') return null;
+    const dose = Number(rawAttempt.dose);
+    const beverageYield = Number(rawAttempt.yield);
+    const time = Number(rawAttempt.time);
+    const temperature = session.canAdjustTemperature ? Number(rawAttempt.temperature) : null;
+    if (!Number.isFinite(dose) || dose <= 0 || !Number.isFinite(beverageYield) || beverageYield <= 0 || !Number.isFinite(time) || time <= 0) return null;
+    if (!Object.prototype.hasOwnProperty.call(TASTE_OPTIONS, rawAttempt.taste)) return null;
+    if (session.canAdjustTemperature
+      && (!Number.isFinite(temperature) || temperature < ESPRESSO_LIMITS.temperatureMin || temperature > ESPRESSO_LIMITS.temperatureMax)) return null;
+
+    const normalized = {
+      id: typeof rawAttempt.id === 'string' && rawAttempt.id ? rawAttempt.id : makeId('shot'),
+      createdAt: typeof rawAttempt.createdAt === 'string' ? rawAttempt.createdAt : new Date().toISOString(),
+      dose,
+      yield: beverageYield,
+      time,
+      temperature,
+      taste: rawAttempt.taste,
+      unstable: Boolean(rawAttempt.unstable),
+      notes: typeof rawAttempt.notes === 'string' ? rawAttempt.notes.slice(0, 280) : '',
+    };
+    normalized.ratio = calculateRatio(normalized.dose, normalized.yield);
+    normalized.recommendation = normalizeRecommendationSnapshot(rawAttempt.recommendation);
+    return normalized;
+  }
+
+  function normalizeSession(rawSession) {
+    if (!rawSession || typeof rawSession !== 'object' || typeof rawSession.id !== 'string' || !rawSession.id) return null;
+    if (typeof rawSession.beanName !== 'string' || !rawSession.beanName.trim()) return null;
+    if (!Object.prototype.hasOwnProperty.call(ROAST_PRESETS, rawSession.roast)) return null;
+    if (typeof rawSession.canAdjustTemperature !== 'boolean') return null;
+    const dose = Number(rawSession.dose);
+    if (!Number.isFinite(dose) || dose <= 0 || !Array.isArray(rawSession.attempts)) return null;
+
+    const session = {
+      id: rawSession.id,
+      beanName: rawSession.beanName.trim().slice(0, 80),
+      roastDate: normalizeRoastDate(rawSession.roastDate),
+      roast: rawSession.roast,
+      dose,
+      canAdjustTemperature: rawSession.canAdjustTemperature,
+      starter: getStarterRecipe({ roast: rawSession.roast, dose }),
+      status: rawSession.status === 'completed' ? 'completed' : 'active',
+      createdAt: typeof rawSession.createdAt === 'string' ? rawSession.createdAt : new Date().toISOString(),
+      updatedAt: typeof rawSession.updatedAt === 'string' ? rawSession.updatedAt : new Date().toISOString(),
+      attempts: [],
+    };
+    if (session.status === 'completed' && typeof rawSession.completedAt === 'string') session.completedAt = rawSession.completedAt;
+
+    const rawAttempts = rawSession.attempts.slice(-MAX_ATTEMPTS);
+    rawAttempts.forEach((rawAttempt) => {
+      const normalizedAttempt = normalizeAttempt(rawAttempt, session);
+      if (normalizedAttempt) session.attempts.push(normalizedAttempt);
+      else storageCorrupt = true;
+    });
+    if (rawSession.attempts.length > MAX_ATTEMPTS) storageCorrupt = true;
+    return session;
+  }
+
+  function announce(message) {
+    if (!elements.live) return;
+    elements.live.textContent = '';
+    window.setTimeout(() => { elements.live.textContent = message; }, 20);
+  }
+
+  function loadStorage() {
+    try {
+      const rawSessions = window.localStorage.getItem(STORAGE_SESSIONS);
+      if (rawSessions) {
+        const parsed = JSON.parse(rawSessions);
+        if (!Array.isArray(parsed)) throw new Error('Sessions payload must be an array');
+        const normalized = parsed.map(normalizeSession).filter(Boolean);
+        if (normalized.length !== parsed.length || parsed.length > MAX_SESSIONS) storageCorrupt = true;
+        sessions = normalized.slice(0, MAX_SESSIONS);
+      }
+      const storedActive = window.localStorage.getItem(STORAGE_ACTIVE);
+      activeSessionId = sessions.some((session) => session.id === storedActive) ? storedActive : null;
+      if (storedActive && !activeSessionId) storageCorrupt = true;
+    } catch (error) {
+      console.error('[mbs-espresso-assistant] stored data is invalid', error);
+      sessions = [];
+      activeSessionId = null;
+      storageCorrupt = true;
+    }
+  }
+
+  function saveSessions() {
+    try {
+      window.localStorage.setItem(STORAGE_SESSIONS, JSON.stringify(sessions));
+      storageCorrupt = false;
+      if (activeSessionId) window.localStorage.setItem(STORAGE_ACTIVE, activeSessionId);
+      else window.localStorage.removeItem(STORAGE_ACTIVE);
+      return true;
+    } catch (error) {
+      console.error('[mbs-espresso-assistant] could not save sessions', error);
+      announce('Не удалось сохранить данные в браузере.');
+      return false;
+    }
+  }
+
+  function activeSession() {
+    return sessions.find((session) => session.id === activeSessionId) || null;
+  }
+
+  function updateSession(session) {
+    session.updatedAt = new Date().toISOString();
+    sessions = [session, ...sessions.filter((item) => item.id !== session.id)].slice(0, MAX_SESSIONS);
+    saveSessions();
+  }
+
+  function renderCorruptNotice() {
+    elements.corrupt.hidden = !storageCorrupt;
+  }
+
+  function renderLibrary() {
+    elements.resetAll.hidden = sessions.length === 0 && !storageCorrupt;
+    elements.exportAll.hidden = !sessions.some((session) => session.attempts.length > 0);
+    if (!sessions.length) {
+      elements.sessionList.innerHTML = '<p class="mbs-espresso-assistant__empty">Здесь появятся сохранённые сессии для разных зёрен.</p>';
+      return;
+    }
+
+    elements.sessionList.innerHTML = sessions.map((session) => {
+      const lastAttempt = session.attempts[session.attempts.length - 1];
+      const status = session.status === 'completed' ? 'Завершена' : 'В работе';
+      const result = lastAttempt
+        ? `${formatNumber(lastAttempt.dose)} г → ${formatNumber(lastAttempt.yield)} г · ${formatNumber(lastAttempt.time)} с`
+        : 'Пока без попыток';
+      return `
+        <article class="mbs-espresso-assistant__saved-session">
+          <div>
+            <span class="mbs-espresso-assistant__status mbs-espresso-assistant__status--${session.status === 'completed' ? 'complete' : 'active'}">${status}</span>
+            <h3>${escapeHtml(session.beanName)}</h3>
+            <p>${escapeHtml(result)} · ${session.attempts.length} ${session.attempts.length === 1 ? 'попытка' : 'попыток'}</p>
+            <small>Дата обжарки: ${escapeHtml(formatRoastDate(session.roastDate))} · обновлено ${escapeHtml(formatDate(session.updatedAt || session.createdAt))}</small>
+          </div>
+          <div class="mbs-espresso-assistant__saved-actions">
+            <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-open-session="${escapeHtml(session.id)}">Открыть</button>
+            ${lastAttempt ? `<button class="mbs-espresso-assistant__text-button" type="button" data-export-session-id="${escapeHtml(session.id)}">PDF</button>` : ''}
+            <button class="mbs-espresso-assistant__text-button mbs-espresso-assistant__text-button--danger" type="button" data-delete-session="${escapeHtml(session.id)}">Удалить</button>
+          </div>
+        </article>`;
+    }).join('');
+  }
+
+  function displayRecommendation(session, attempt) {
+    if (!attempt) return { recommendation: null, historical: false };
+    if (attempt.recommendation) return { recommendation: attempt.recommendation, historical: true };
+    const index = session.attempts.indexOf(attempt);
+    return {
+      recommendation: buildRecommendation({
+        attempt,
+        session,
+        previousAttempts: session.attempts.slice(0, Math.max(0, index)),
+      }),
+      historical: false,
+    };
+  }
+
+  function renderStarter(session) {
+    const starter = session.starter || getStarterRecipe(session);
+    elements.starterDose.textContent = `${formatNumber(starter.dose)} г`;
+    elements.starterYield.textContent = `${formatNumber(starter.yield)} г`;
+    elements.starterRatio.textContent = `1:${formatNumber(starter.ratio)}`;
+    elements.starterTime.textContent = `${formatNumber(starter.time)} с`;
+    elements.starterTemperature.textContent = session.canAdjustTemperature
+      ? `${formatNumber(starter.temperature)} °C`
+      : 'Не меняем';
+  }
+
+  function renderRecommendation(session) {
+    const lastAttempt = session.attempts[session.attempts.length - 1];
+    if (!lastAttempt) {
+      const starter = session.starter;
+      elements.recommendation.className = 'mbs-espresso-assistant__recommendation mbs-espresso-assistant__recommendation--start';
+      elements.recommendation.innerHTML = `
+        <p class="mbs-espresso-assistant__kicker">Первый шот</p>
+        <h3>Начните с базового рецепта</h3>
+        <p class="mbs-espresso-assistant__recommendation-action">${formatNumber(starter.dose)} г кофе → ${formatNumber(starter.yield)} г напитка за ${formatNumber(starter.time)} с${session.canAdjustTemperature ? ` при ${formatNumber(starter.temperature)} °C` : ''}.</p>
+        <p>После пролива взвесьте напиток, запишите время и выберите главное впечатление от вкуса.</p>`;
+      return;
+    }
+
+    const displayed = displayRecommendation(session, lastAttempt);
+    const recommendation = displayed.recommendation;
+    const warning = recommendation.softWarning
+      ? `<p class="mbs-espresso-assistant__soft-warning">${escapeHtml(recommendation.softWarning)}</p>`
+      : '';
+    const afterAction = recommendation.afterAction
+      ? `<p class="mbs-espresso-assistant__soft-warning">${escapeHtml(recommendation.afterAction)}</p>`
+      : '';
+    elements.recommendation.className = `mbs-espresso-assistant__recommendation mbs-espresso-assistant__recommendation--${escapeHtml(recommendation.kind)}`;
+    elements.recommendation.innerHTML = `
+      <p class="mbs-espresso-assistant__kicker">${displayed.historical ? 'Следующее одно действие' : 'Подсказка по текущей методике'}</p>
+      <h3>${escapeHtml(recommendation.title)}</h3>
+      <p class="mbs-espresso-assistant__recommendation-action">${escapeHtml(recommendation.action)}</p>
+      <p>${escapeHtml(recommendation.explanation)}</p>
+      ${afterAction}
+      ${warning}
+      ${displayed.historical ? '' : '<p class="mbs-espresso-assistant__soft-warning">Историческая рекомендация для этого шота не была зафиксирована.</p>'}`;
+  }
+
+  function renderAttempts(session) {
+    elements.attemptEmpty.hidden = session.attempts.length > 0;
+    elements.attemptList.innerHTML = session.attempts.slice().reverse().map((item, reverseIndex) => {
+      const number = session.attempts.length - reverseIndex;
+      const temperature = session.canAdjustTemperature && item.temperature !== null
+        ? ` · ${formatNumber(item.temperature)} °C`
+        : '';
+      const flags = item.unstable ? ' · неровный пролив' : '';
+      return `
+        <li class="mbs-espresso-assistant__attempt">
+          <div class="mbs-espresso-assistant__attempt-top">
+            <strong>Шот ${number}</strong>
+            <span>1:${formatNumber(item.ratio, 2)}</span>
+          </div>
+          <p>${formatNumber(item.dose)} г → ${formatNumber(item.yield)} г · ${formatNumber(item.time)} с${temperature}</p>
+          <p class="mbs-espresso-assistant__attempt-taste">${escapeHtml(TASTE_OPTIONS[item.taste] || item.taste)}${flags}</p>
+          ${item.notes ? `<p class="mbs-espresso-assistant__attempt-note">${escapeHtml(item.notes)}</p>` : ''}
+        </li>`;
+    }).join('');
+  }
+
+  function prefillAttemptForm(session) {
+    const last = session.attempts[session.attempts.length - 1];
+    const recommendation = last ? displayRecommendation(session, last).recommendation : null;
+    elements.dose.value = last ? last.dose : session.starter.dose;
+    elements.beverageYield.value = recommendation && recommendation.targetYield
+      ? recommendation.targetYield
+      : (last ? last.yield : session.starter.yield);
+    elements.time.value = '';
+    elements.temperatureWrap.hidden = !session.canAdjustTemperature;
+    elements.temperature.required = Boolean(session.canAdjustTemperature);
+    elements.temperature.value = session.canAdjustTemperature
+      ? (recommendation && recommendation.targetTemperature
+        ? recommendation.targetTemperature
+        : (last && last.temperature !== null ? last.temperature : session.starter.temperature))
+      : '';
+    elements.taste.value = '';
+    elements.unstable.checked = false;
+    elements.notes.value = '';
+    updateRatioPreview();
+  }
+
+  function renderWorkspace(session) {
+    elements.sessionName.textContent = session.beanName;
+    const roast = ROAST_PRESETS[session.roast] || ROAST_PRESETS.unknown;
+    elements.sessionMeta.textContent = `${roast.label} обжарка · дата обжарки: ${formatRoastDate(session.roastDate)} · базовая дозировка ${formatNumber(session.dose)} г · ${session.canAdjustTemperature ? 'температуру можно менять' : 'температуру не меняем'}`;
+    elements.editRoastDate.textContent = session.roastDate ? 'Изменить дату обжарки' : 'Добавить дату обжарки';
+    elements.roastDateForm.hidden = true;
+    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateError.hidden = true;
+    elements.roastDateError.textContent = '';
+    elements.sessionStatus.textContent = session.status === 'completed' ? 'Сессия завершена' : `Попыток: ${session.attempts.length}/${MAX_ATTEMPTS}`;
+    elements.sessionStatus.className = `mbs-espresso-assistant__status mbs-espresso-assistant__status--${session.status === 'completed' ? 'complete' : 'active'}`;
+    renderStarter(session);
+    renderRecommendation(session);
+    renderAttempts(session);
+
+    const hasAttempts = session.attempts.length > 0;
+    elements.attemptForm.hidden = session.status === 'completed';
+    elements.resume.hidden = session.status !== 'completed';
+    elements.finish.hidden = session.status === 'completed' || !hasAttempts;
+    elements.copy.hidden = !hasAttempts;
+    elements.exportSession.hidden = !hasAttempts;
+    if (session.status !== 'completed') prefillAttemptForm(session);
+  }
+
+  function render() {
+    renderCorruptNotice();
+    renderLibrary();
+    const session = activeSession();
+    elements.createSection.hidden = Boolean(session);
+    elements.library.hidden = Boolean(session);
+    elements.workspace.hidden = !session;
+    if (session) renderWorkspace(session);
+  }
+
+  function updateRatioPreview() {
+    const ratio = calculateRatio(elements.dose.value, elements.beverageYield.value);
+    elements.ratioPreview.textContent = ratio === null
+      ? 'Коэффициент появится после ввода дозировки и выхода.'
+      : `Коэффициент: ${formatNumber(elements.beverageYield.value)} ÷ ${formatNumber(elements.dose.value)} = 1:${formatNumber(ratio, 2)}`;
+  }
+
+  function validateRoastDate(value, input, errorElement = null) {
+    const raw = String(value || '').trim();
+    const message = raw && isFutureRoastDate(raw)
+      ? 'Дата обжарки не может быть позже сегодняшней. Исправьте её или оставьте поле пустым.'
+      : '';
+    input.setCustomValidity(message);
+    if (errorElement) {
+      errorElement.textContent = message;
+      errorElement.hidden = !message;
+    }
+    if (message) {
+      input.reportValidity();
+      announce(message);
+      return false;
+    }
+    return true;
+  }
+
+  function createSession(event) {
+    event.preventDefault();
+    const formData = new FormData(elements.createForm);
+    const preparationChecks = Array.from(elements.createForm.querySelectorAll('[data-preparation-check]'));
+    if (!preparationChecks.every((input) => input.checked)) {
+      announce('Подтвердите всю подготовку перед началом.');
+      preparationChecks.find((input) => !input.checked)?.focus();
+      return;
+    }
+
+    if (sessions.length >= MAX_SESSIONS) {
+      const oldest = sessions[sessions.length - 1];
+      if (!window.confirm(`Уже сохранено ${MAX_SESSIONS} сессий. Создание новой удалит самую старую «${oldest.beanName}». Продолжить?`)) return;
+      sessions = sessions.slice(0, MAX_SESSIONS - 1);
+    }
+
+    const beanName = String(formData.get('beanName') || '').trim();
+    const rawRoastDate = String(formData.get('roastDate') || '').trim();
+    const roast = String(formData.get('roast') || 'unknown');
+    const dose = Number(formData.get('dose'));
+    const canAdjustTemperature = formData.get('canAdjustTemperature') === 'yes';
+    if (!beanName) {
+      announce('Введите название зерна или смеси.');
+      elements.createForm.elements.beanName.focus();
+      return;
+    }
+    if (!validateRoastDate(rawRoastDate, elements.createRoastDate)) return;
+    const now = new Date().toISOString();
+    const session = {
+      id: makeId('session'),
+      beanName,
+      roastDate: normalizeRoastDate(rawRoastDate),
+      roast,
+      dose,
+      canAdjustTemperature,
+      starter: getStarterRecipe({ roast, dose }),
+      status: 'active',
+      createdAt: now,
+      updatedAt: now,
+      attempts: [],
+    };
+    sessions = [session, ...sessions];
+    activeSessionId = session.id;
+    saveSessions();
+    render();
+    elements.sessionName.focus();
+    announce(`Сессия для зерна «${beanName}» создана.`);
+  }
+
+  function addAttempt(event) {
+    event.preventDefault();
+    const session = activeSession();
+    if (!session || session.status === 'completed') return;
+    if (session.attempts.length >= MAX_ATTEMPTS) {
+      announce('В этой сессии уже 30 попыток. Завершите её или начните новую.');
+      return;
+    }
+
+    const item = {
+      id: makeId('shot'),
+      createdAt: new Date().toISOString(),
+      dose: Number(elements.dose.value),
+      yield: Number(elements.beverageYield.value),
+      time: Number(elements.time.value),
+      temperature: session.canAdjustTemperature ? Number(elements.temperature.value) : null,
+      taste: elements.taste.value,
+      unstable: elements.unstable.checked,
+      notes: elements.notes.value.trim().slice(0, 280),
+    };
+    item.ratio = calculateRatio(item.dose, item.yield);
+    item.recommendation = normalizeRecommendationSnapshot(buildRecommendation({
+      attempt: item,
+      session,
+      previousAttempts: session.attempts,
+    }));
+    session.attempts.push(item);
+    updateSession(session);
+    render();
+    elements.recommendation.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    announce(item.recommendation.action);
+  }
+
+  function openSession(id) {
+    if (!sessions.some((session) => session.id === id)) return;
+    activeSessionId = id;
+    saveSessions();
+    render();
+    elements.sessionName.focus();
+  }
+
+  function closeSession() {
+    activeSessionId = null;
+    saveSessions();
+    render();
+    elements.createForm.querySelector('input')?.focus();
+  }
+
+  function deleteSession(id) {
+    const session = sessions.find((item) => item.id === id);
+    if (!session || !window.confirm(`Удалить сессию «${session.beanName}» и все её попытки?`)) return;
+    sessions = sessions.filter((item) => item.id !== id);
+    if (activeSessionId === id) activeSessionId = null;
+    saveSessions();
+    render();
+    announce('Сессия удалена.');
+  }
+
+  function finishSession() {
+    const session = activeSession();
+    if (!session || !session.attempts.length) return;
+    const last = session.attempts[session.attempts.length - 1];
+    const isConfirmed = last.recommendation?.kind === 'complete';
+    const question = isConfirmed
+      ? 'Сохранить повторяемый рецепт и завершить сессию?'
+      : 'Завершить сессию? Два повторяемых сбалансированных шота пока не подтверждены.';
+    if (!window.confirm(question)) return;
+    session.status = 'completed';
+    session.completedAt = new Date().toISOString();
+    updateSession(session);
+    render();
+    announce('Сессия завершена и сохранена.');
+  }
+
+  function resumeSession() {
+    const session = activeSession();
+    if (!session) return;
+    session.status = 'active';
+    delete session.completedAt;
+    updateSession(session);
+    render();
+    announce('Сессия снова активна.');
+  }
+
+  function showRoastDateEditor() {
+    const session = activeSession();
+    if (!session) return;
+    elements.roastDateForm.hidden = false;
+    elements.roastDateInput.value = session.roastDate || '';
+    elements.roastDateInput.setCustomValidity('');
+    elements.roastDateError.hidden = true;
+    elements.roastDateInput.focus();
+  }
+
+  function cancelRoastDateEditor() {
+    elements.roastDateForm.hidden = true;
+    elements.roastDateInput.setCustomValidity('');
+    elements.roastDateError.hidden = true;
+    elements.editRoastDate.focus();
+  }
+
+  function saveRoastDate(event) {
+    event.preventDefault();
+    const session = activeSession();
+    if (!session || !validateRoastDate(elements.roastDateInput.value, elements.roastDateInput, elements.roastDateError)) return;
+    session.roastDate = normalizeRoastDate(elements.roastDateInput.value);
+    updateSession(session);
+    render();
+    elements.editRoastDate.focus();
+    announce(session.roastDate ? 'Дата обжарки сохранена.' : 'Дата обжарки удалена.');
+  }
+
+  function openReport(reportSessions, mode) {
+    const selected = reportSessions.filter((session) => session.attempts.length > 0);
+    if (!selected.length) {
+      announce('Сначала сохраните хотя бы один шот.');
+      return;
+    }
+    const report = buildReportDocument({
+      sessions: selected,
+      mode,
+      logoDataUri: MBS_ESPRESSO_LOGO_DATA_URI,
+      generatedAt: new Date(),
+    });
+    const reportWindow = window.open('', '_blank');
+    if (!reportWindow) {
+      announce('Браузер заблокировал окно отчёта. Разрешите всплывающие окна и повторите выгрузку.');
+      return;
+    }
+    reportWindow.opener = null;
+    reportWindow.document.open();
+    reportWindow.document.write(report.html);
+    reportWindow.document.close();
+    announce('Журнал подготовлен. В новом окне нажмите «Сохранить как PDF».');
+  }
+
+  function exportCurrentSession() {
+    const session = activeSession();
+    if (session) openReport([session], 'session');
+  }
+
+  function exportAllSessions() {
+    openReport(sessions.slice(), 'journal');
+  }
+
+  function exportSessionById(id) {
+    const session = sessions.find((item) => item.id === id);
+    if (session) openReport([session], 'session');
+  }
+
+  function copyFallback(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+    return copied;
+  }
+
+  async function copyRecipe() {
+    const session = activeSession();
+    const last = session && session.attempts[session.attempts.length - 1];
+    if (!session || !last) return;
+    const roast = ROAST_PRESETS[session.roast] || ROAST_PRESETS.unknown;
+    const roastDate = `\nДата обжарки: ${formatRoastDate(session.roastDate)}`;
+    const temperature = session.canAdjustTemperature && last.temperature !== null
+      ? `\nТемпература: ${formatNumber(last.temperature)} °C`
+      : '';
+    const text = `Рецепт эспрессо MBS*\nЗерно: ${session.beanName}${roastDate}\nОбжарка: ${roast.label.toLowerCase()}\nДозировка: ${formatNumber(last.dose)} г\nВыход: ${formatNumber(last.yield)} г\nКоэффициент: 1:${formatNumber(last.ratio, 2)}\nВремя: ${formatNumber(last.time)} с${temperature}\nВкус: ${TASTE_OPTIONS[last.taste] || last.taste}`;
+    try {
+      if (navigator.clipboard && window.isSecureContext) await navigator.clipboard.writeText(text);
+      else if (!copyFallback(text)) throw new Error('Copy command failed');
+      announce('Рецепт скопирован.');
+    } catch (error) {
+      console.error('[mbs-espresso-assistant] copy failed', error);
+      announce('Не удалось скопировать рецепт.');
+    }
+  }
+
+  function resetAll() {
+    if (!window.confirm('Удалить все сохранённые сессии и попытки? Это действие нельзя отменить.')) return;
+    sessions = [];
+    activeSessionId = null;
+    try {
+      window.localStorage.removeItem(STORAGE_SESSIONS);
+      window.localStorage.removeItem(STORAGE_ACTIVE);
+      storageCorrupt = false;
+    } catch (error) {
+      console.error('[mbs-espresso-assistant] reset failed', error);
+    }
+    render();
+    announce('Все сессии удалены.');
+  }
+
+  elements.createForm.addEventListener('submit', createSession);
+  elements.attemptForm.addEventListener('submit', addAttempt);
+  elements.dose.addEventListener('input', updateRatioPreview);
+  elements.beverageYield.addEventListener('input', updateRatioPreview);
+  elements.close.addEventListener('click', closeSession);
+  elements.finish.addEventListener('click', finishSession);
+  elements.resume.addEventListener('click', resumeSession);
+  elements.copy.addEventListener('click', copyRecipe);
+  elements.exportSession.addEventListener('click', exportCurrentSession);
+  elements.exportAll.addEventListener('click', exportAllSessions);
+  elements.editRoastDate.addEventListener('click', showRoastDateEditor);
+  elements.cancelRoastDate.addEventListener('click', cancelRoastDateEditor);
+  elements.roastDateForm.addEventListener('submit', saveRoastDate);
+  elements.createRoastDate.addEventListener('input', () => elements.createRoastDate.setCustomValidity(''));
+  elements.roastDateInput.addEventListener('input', () => {
+    elements.roastDateInput.setCustomValidity('');
+    elements.roastDateError.hidden = true;
+  });
+  elements.resetAll.addEventListener('click', resetAll);
+  elements.sessionList.addEventListener('click', (event) => {
+    const openButton = event.target.closest('[data-open-session]');
+    const exportButton = event.target.closest('[data-export-session-id]');
+    const deleteButton = event.target.closest('[data-delete-session]');
+    if (openButton) openSession(openButton.getAttribute('data-open-session'));
+    if (exportButton) exportSessionById(exportButton.getAttribute('data-export-session-id'));
+    if (deleteButton) deleteSession(deleteButton.getAttribute('data-delete-session'));
+  });
+
+  loadStorage();
+  render();
+}());
+
+}());
+</script>

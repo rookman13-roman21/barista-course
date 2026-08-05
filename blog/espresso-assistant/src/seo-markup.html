@@ -1,0 +1,139 @@
+<main class="mbs-espresso-assistant mbs-espresso-assistant--seo" data-mbs-espresso-assistant-seo>
+  <section class="mbs-espresso-assistant__hero" aria-labelledby="mbs-espresso-assistant-title">
+    <div class="mbs-espresso-assistant__hero-copy">
+      <p class="mbs-espresso-assistant__eyebrow">MBS* Московская школа бариста</p>
+      <h1 id="mbs-espresso-assistant-title">Помощник настройки эспрессо</h1>
+      <p class="mbs-espresso-assistant__lead">Записывайте каждый шот, меняйте только один параметр и находите не случайно вкусный, а повторяемый рецепт.</p>
+    </div>
+  </section>
+
+  <div data-mbs-espresso-assistant-loader-slot aria-live="polite"></div>
+
+  <section class="mbs-espresso-assistant__article" aria-labelledby="mbs-espresso-assistant-track-title">
+    <div class="mbs-espresso-assistant__section-head">
+      <div>
+        <p class="mbs-espresso-assistant__eyebrow">Что записывать</p>
+        <h2 id="mbs-espresso-assistant-track-title">Параметры одного шота</h2>
+      </div>
+      <p>Цифры помогают повторить рецепт, а вкус — понять, куда двигаться. Если менять всё сразу, связь между действием и результатом теряется.</p>
+    </div>
+    <div class="mbs-espresso-assistant__parameter-grid">
+      <article><span>01</span><h3>Дозировка</h3><p>Вес сухого кофе в корзине. Во время обычной настройки держим его стабильным.</p></article>
+      <article><span>02</span><h3>Выход</h3><p>Вес готового эспрессо в чашке. Он определяет длину и концентрацию рецепта.</p></article>
+      <article><span>03</span><h3>Коэффициент</h3><p>Выход делим на дозировку: 36 г ÷ 18 г = коэффициент 1:2.</p></article>
+      <article><span>04</span><h3>Время</h3><p>Считаем от запуска помпы, включая предсмачивание, до остановки пролива.</p></article>
+      <article><span>05</span><h3>Вкус</h3><p>Выбираем одно главное наблюдение: кислотность, горечь, сухость, сладость или водянистость.</p></article>
+      <article><span>06</span><h3>Повторяемость</h3><p>Два близких по цифрам вкусных шота подтверждают, что рецепт действительно найден.</p></article>
+    </div>
+  </section>
+
+  <section class="mbs-espresso-assistant__method" aria-labelledby="mbs-espresso-assistant-method-title">
+    <div class="mbs-espresso-assistant__section-head">
+      <div>
+        <p class="mbs-espresso-assistant__eyebrow">Логика настройки</p>
+        <h2 id="mbs-espresso-assistant-method-title">Сначала стабильность, затем время и вкус</h2>
+      </div>
+      <p>Помощник не перебирает параметры вслепую. Он сначала проверяет стабильность пролива и только потом предлагает изменение рецепта.</p>
+    </div>
+    <ol class="mbs-espresso-assistant__method-steps">
+      <li><span>1</span><div><h3>Уберите нестабильность</h3><p>Неравномерный пролив и одновременно кислый и горький вкус требуют проверки распределения и темперовки.</p></div></li>
+      <li><span>2</span><div><h3>Верните несбалансированный шот к ориентиру</h3><p>Быстрее 25 секунд — помол мельче. Медленнее 30 секунд — помол крупнее. Остальные параметры не меняются.</p></div></li>
+      <li><span>3</span><div><h3>Доверяйте вкусу</h3><p>В диапазоне 25–30 секунд корректируйте рецепт по вкусу. Если шот уже сладкий и сбалансированный, не крутите помол из-за одной цифры — повторите рецепт.</p></div></li>
+    </ol>
+    <aside class="mbs-espresso-assistant__notice"><strong>Важно.</strong> Помощник даёт учебную последовательность действий, но не может оценить воду, состояние жерновов, свежесть зерна и технику приготовления вместо человека.</aside>
+  </section>
+
+  <section class="mbs-espresso-assistant__faq" aria-labelledby="mbs-espresso-assistant-faq-title">
+    <div class="mbs-espresso-assistant__section-head mbs-espresso-assistant__section-head--faq">
+      <div>
+        <p class="mbs-espresso-assistant__eyebrow">Короткие ответы</p>
+        <h2 id="mbs-espresso-assistant-faq-title">Что важно знать новичку</h2>
+      </div>
+    </div>
+    <div class="mbs-espresso-assistant__faq-list">
+      <details><summary>Почему нельзя менять несколько параметров сразу?</summary><p>После одной перемены проще понять, что именно повлияло на вкус. Поэтому помощник сохраняет дозировку и выход, когда предлагает изменить помол, или сохраняет всё остальное при изменении температуры.</p></details>
+      <details><summary>Нужно ли обязательно попасть в 25–30 секунд?</summary><p>Это учебный ориентир для несбалансированного шота, а не оценка качества. Если вкус уже сладкий и сбалансированный, повторите рецепт: два близких результата в диапазоне 20–35 секунд подтверждают его стабильность.</p></details>
+      <details><summary>Почему помощник не говорит количество кликов кофемолки?</summary><p>Шаг регулировки у кофемолок отличается. Универсальная рекомендация — направление изменения помола и целевое изменение времени пролива.</p></details>
+      <details><summary>Почему после изменения помола нужно подождать?</summary><p>Внутри кофемолки может оставаться кофе предыдущей настройки. Уберите его способом, подходящим вашей модели, и только затем оценивайте контрольный шот.</p></details>
+    </div>
+  </section>
+
+  <section class="mbs-espresso-assistant__cta" aria-labelledby="mbs-espresso-assistant-cta-title">
+    <div>
+      <p class="mbs-espresso-assistant__eyebrow">Следующий шаг</p>
+      <h2 id="mbs-espresso-assistant-cta-title">Закрепите настройку на практике</h2>
+      <p>На базовом курсе бариста вы отработаете работу с кофемолкой, вкус, приготовление эспрессо и стабильность результата вместе с тренером.</p>
+    </div>
+    <a class="mbs-espresso-assistant__button mbs-espresso-assistant__button--primary" href="/barista_courses" target="_top">Разобраться на практике</a>
+  </section>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://baristaschool.ru/blog/espresso-assistant#app",
+      "name": "Помощник настройки эспрессо",
+      "url": "https://baristaschool.ru/blog/espresso-assistant",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "description": "Учебный помощник для записи параметров эспрессо, ведения истории попыток и выбора одного следующего изменения рецепта.",
+      "publisher": {
+        "@type": "EducationalOrganization",
+        "name": "Московская школа бариста",
+        "url": "https://baristaschool.ru"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://baristaschool.ru/blog/espresso-assistant#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Почему нельзя менять несколько параметров сразу?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "После одной перемены проще понять, что именно повлияло на вкус. Поэтому помощник меняет только одну переменную за попытку."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Нужно ли обязательно попасть в 25–30 секунд?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Это учебный ориентир для несбалансированного шота. Если вкус уже сладкий и сбалансированный, два близких результата в диапазоне 20–35 секунд подтверждают стабильность рецепта."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Почему помощник не говорит количество кликов кофемолки?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Шаг регулировки у кофемолок отличается. Универсальная рекомендация — направление изменения помола и целевое изменение времени."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Почему после изменения помола нужно подождать?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Внутри кофемолки может оставаться кофе предыдущей настройки. Уберите его способом, подходящим вашей модели, и только затем оценивайте контрольный шот."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://baristaschool.ru/blog/espresso-assistant#breadcrumbs",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://baristaschool.ru" },
+        { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://baristaschool.ru/blog" },
+        { "@type": "ListItem", "position": 3, "name": "Помощник настройки эспрессо", "item": "https://baristaschool.ru/blog/espresso-assistant" }
+      ]
+    }
+  ]
+}
+</script>

@@ -1,0 +1,168 @@
+<section class="mbs-espresso-assistant mbs-espresso-assistant--hosted" data-mbs-espresso-assistant-hosted="v1" data-mbs-espresso-assistant-root>
+  <p class="mbs-espresso-assistant__sr-only" data-live-status aria-live="polite" aria-atomic="true"></p>
+
+  <div class="mbs-espresso-assistant__corrupt" data-corrupt-notice role="alert" hidden>
+    <strong>Сохранённые данные повреждены</strong>
+    <p>Помощник не стал использовать их, чтобы не показывать неверные рекомендации. Начните новую сессию или удалите локальные данные кнопкой ниже.</p>
+  </div>
+
+  <section class="mbs-espresso-assistant__panel mbs-espresso-assistant__create" data-create-section aria-labelledby="mbs-espresso-create-title">
+    <div class="mbs-espresso-assistant__panel-head">
+      <div>
+        <p class="mbs-espresso-assistant__kicker">Новая настройка</p>
+        <h2 id="mbs-espresso-create-title">Создайте сессию для зерна</h2>
+      </div>
+      <p>Стартовый рецепт — только точка отсчёта. Дальше ориентируемся на время, вкус и повторяемость.</p>
+    </div>
+
+    <form class="mbs-espresso-assistant__create-form" data-create-form>
+      <div class="mbs-espresso-assistant__form-grid">
+        <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
+          <span>Название зерна или смеси</span>
+          <input name="beanName" type="text" maxlength="80" placeholder="Например, Бразилия Серрадо" required autocomplete="off">
+        </label>
+        <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
+          <span>Дата обжарки <small>необязательно</small></span>
+          <input name="roastDate" type="date" data-create-roast-date>
+        </label>
+        <label class="mbs-espresso-assistant__field">
+          <span>Степень обжарки</span>
+          <select name="roast" required>
+            <option value="unknown">Не знаю</option>
+            <option value="medium">Средняя</option>
+            <option value="dark">Тёмная</option>
+            <option value="light">Светлая</option>
+          </select>
+        </label>
+        <label class="mbs-espresso-assistant__field">
+          <span>Дозировка корзины, г</span>
+          <input name="dose" type="number" min="5" max="30" step="0.1" value="18" required inputmode="decimal">
+        </label>
+        <label class="mbs-espresso-assistant__field mbs-espresso-assistant__field--wide">
+          <span>Можно менять температуру?</span>
+          <select name="canAdjustTemperature" required>
+            <option value="no">Нет или не знаю</option>
+            <option value="yes">Да, температура задаётся в градусах</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="mbs-espresso-assistant__checklist" role="group" aria-labelledby="mbs-espresso-assistant-preparation-title">
+        <p class="mbs-espresso-assistant__checklist-title" id="mbs-espresso-assistant-preparation-title">Подготовка перед первым шотом</p>
+        <label><input type="checkbox" data-preparation-check required><span>Кофемашина прогрета, группа и холдер очищены</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Корзина соответствует выбранной дозировке</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Весы и таймер готовы</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Распределение и темперовка будут одинаковыми</span></label>
+        <label><input type="checkbox" data-preparation-check required><span>Время считаю от запуска помпы до остановки пролива</span></label>
+      </div>
+
+      <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--primary" type="submit">Начать настройку</button>
+    </form>
+  </section>
+
+  <section class="mbs-espresso-assistant__library" data-session-library aria-labelledby="mbs-espresso-library-title">
+    <div class="mbs-espresso-assistant__compact-head">
+      <div>
+        <p class="mbs-espresso-assistant__kicker">Ваш журнал</p>
+        <h2 id="mbs-espresso-library-title">Сохранённые сессии</h2>
+      </div>
+      <div class="mbs-espresso-assistant__compact-actions">
+        <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-export-all hidden>PDF всего журнала</button>
+        <button class="mbs-espresso-assistant__text-button mbs-espresso-assistant__text-button--danger" type="button" data-reset-all hidden>Удалить все сессии</button>
+      </div>
+    </div>
+    <div class="mbs-espresso-assistant__session-list" data-session-list></div>
+  </section>
+
+  <section class="mbs-espresso-assistant__workspace" data-workspace hidden aria-labelledby="mbs-espresso-session-title">
+    <div class="mbs-espresso-assistant__workspace-head">
+      <div>
+        <button class="mbs-espresso-assistant__back" type="button" data-close-session>← Все сессии</button>
+        <p class="mbs-espresso-assistant__kicker">Активное зерно</p>
+        <h2 id="mbs-espresso-session-title" data-session-name tabindex="-1"></h2>
+        <p data-session-meta></p>
+        <button class="mbs-espresso-assistant__text-button" type="button" data-edit-roast-date>Изменить дату обжарки</button>
+        <form class="mbs-espresso-assistant__inline-edit" data-roast-date-form hidden>
+          <label class="mbs-espresso-assistant__field"><span>Дата обжарки <small>можно оставить пустой</small></span><input type="date" data-roast-date-input></label>
+          <p class="mbs-espresso-assistant__field-error" data-roast-date-error hidden></p>
+          <div class="mbs-espresso-assistant__inline-edit-actions">
+            <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="submit">Сохранить дату</button>
+            <button class="mbs-espresso-assistant__text-button" type="button" data-cancel-roast-date>Отмена</button>
+          </div>
+        </form>
+      </div>
+      <span data-session-status></span>
+    </div>
+
+    <section class="mbs-espresso-assistant__starter" aria-labelledby="mbs-espresso-starter-title">
+      <div>
+        <p class="mbs-espresso-assistant__kicker">Отправная точка</p>
+        <h3 id="mbs-espresso-starter-title">Базовый рецепт</h3>
+      </div>
+      <dl>
+        <div><dt>Дозировка</dt><dd data-starter-dose>—</dd></div>
+        <div><dt>Выход</dt><dd data-starter-yield>—</dd></div>
+        <div><dt>Коэффициент</dt><dd data-starter-ratio>—</dd></div>
+        <div><dt>Время</dt><dd data-starter-time>—</dd></div>
+        <div><dt>Температура</dt><dd data-starter-temperature>—</dd></div>
+      </dl>
+    </section>
+
+    <div class="mbs-espresso-assistant__workspace-grid">
+      <section class="mbs-espresso-assistant__shot-card" aria-labelledby="mbs-espresso-shot-title">
+        <div class="mbs-espresso-assistant__compact-head">
+          <div>
+            <p class="mbs-espresso-assistant__kicker">Новая попытка</p>
+            <h3 id="mbs-espresso-shot-title">Запишите шот</h3>
+          </div>
+        </div>
+        <form data-attempt-form>
+          <div class="mbs-espresso-assistant__shot-fields">
+            <label class="mbs-espresso-assistant__field"><span>Дозировка, г</span><input type="number" min="5" max="30" step="0.1" required inputmode="decimal" data-attempt-dose></label>
+            <label class="mbs-espresso-assistant__field"><span>Выход, г</span><input type="number" min="5" max="100" step="0.1" required inputmode="decimal" data-attempt-yield></label>
+            <label class="mbs-espresso-assistant__field"><span>Время, с</span><input type="number" min="1" max="90" step="0.1" required inputmode="decimal" data-attempt-time></label>
+            <label class="mbs-espresso-assistant__field" data-temperature-wrap><span>Температура, °C</span><input type="number" min="88" max="95" step="0.5" inputmode="decimal" data-attempt-temperature></label>
+          </div>
+          <p class="mbs-espresso-assistant__ratio-preview" data-ratio-preview></p>
+          <label class="mbs-espresso-assistant__field">
+            <span>Главное наблюдение о вкусе</span>
+            <select required data-attempt-taste>
+              <option value="">Выберите один вариант</option>
+              <option value="balanced">Сладко и сбалансированно</option>
+              <option value="sour">Резко и агрессивно кисло</option>
+              <option value="bitter">Горько без выраженной сухости</option>
+              <option value="watery">Водянисто и слабо</option>
+              <option value="grassy">Травянисто, мало сладости</option>
+              <option value="dry">Сухо, лекарственно или терпко</option>
+              <option value="mixed">Одновременно кисло и горько</option>
+            </select>
+          </label>
+          <label class="mbs-espresso-assistant__check mbs-espresso-assistant__check--single"><input type="checkbox" data-attempt-unstable><span>Пролив был неравномерным или заметно отличался от предыдущего</span></label>
+          <label class="mbs-espresso-assistant__field"><span>Заметка <small>необязательно, до 280 знаков</small></span><textarea rows="3" maxlength="280" placeholder="Например: кислотность стала мягче" data-attempt-notes></textarea></label>
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--primary" type="submit">Сохранить шот и получить действие</button>
+        </form>
+      </section>
+
+      <div class="mbs-espresso-assistant__decision-column">
+        <article class="mbs-espresso-assistant__recommendation" data-recommendation></article>
+        <div class="mbs-espresso-assistant__session-actions">
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-export-session hidden>PDF этой сессии</button>
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-copy-recipe hidden>Скопировать текущий рецепт</button>
+          <button class="mbs-espresso-assistant__text-button" type="button" data-finish-session hidden>Завершить сессию</button>
+          <button class="mbs-espresso-assistant__button mbs-espresso-assistant__button--secondary" type="button" data-resume-session hidden>Продолжить настройку</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="mbs-espresso-assistant__history" aria-labelledby="mbs-espresso-history-title">
+      <div class="mbs-espresso-assistant__compact-head">
+        <div>
+          <p class="mbs-espresso-assistant__kicker">История</p>
+          <h3 id="mbs-espresso-history-title">Попытки этой сессии</h3>
+        </div>
+      </div>
+      <p class="mbs-espresso-assistant__empty" data-attempt-empty>Сохраните первый шот — здесь появится сравнение попыток.</p>
+      <ol class="mbs-espresso-assistant__attempt-list" data-attempt-list></ol>
+    </section>
+  </section>
+</section>
