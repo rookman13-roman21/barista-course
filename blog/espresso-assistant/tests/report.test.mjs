@@ -96,8 +96,8 @@ assert.match(single.html, /28 июля 2026/);
 assert.ok(!single.html.includes('<тест>'));
 assert.ok(single.html.includes('&lt;тест&gt;'));
 assert.ok(single.html.includes('Кислотность &lt;стала&gt; мягче'));
-assert.match(single.html, /grid-template-columns:72px minmax\(0,1fr\)/);
-assert.match(single.html, /\.ea-report-logo\{width:72px;height:34px/);
+assert.match(single.html, /grid-template-columns:128px minmax\(0,1fr\);gap:20px/);
+assert.match(single.html, /\.ea-report-logo\{width:128px;height:38px/);
 
 const journal = buildReportDocument({ sessions: [session(), confirmedSession], mode: 'journal', generatedAt });
 assert.equal(journal.title, 'MBS - Журнал эспрессо - Все сессии - 2026-08-05');
