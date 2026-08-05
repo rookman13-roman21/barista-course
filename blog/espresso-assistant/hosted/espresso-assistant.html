@@ -1912,13 +1912,15 @@ function buildReportDocument({ sessions = [], mode = 'journal', logoDataUri = ''
     });
     const previous = document.querySelector('[data-mbs-espresso-assistant-print-root]');
     if (previous) previous.remove();
+    const compactPrint = window.matchMedia('(max-width: 700px)').matches;
     const printStyle = document.createElement('style');
     printStyle.media = 'print';
     printStyle.dataset.mbsEspressoAssistantPrintStyle = 'true';
-    printStyle.textContent = `${report.printStyles}\n@media print{body>*{display:none!important}body>[data-mbs-espresso-assistant-print-root]{display:block!important}}`;
+    printStyle.textContent = `${report.printStyles}${compactPrint ? '\n@page{size:210mm 297mm;margin:12mm 10mm 16mm}' : ''}\n@media print{body>*{display:none!important}body>[data-mbs-espresso-assistant-print-root]{display:block!important}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-page,body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-footer{width:190mm!important;max-width:190mm!important;margin-left:0!important;margin-right:0!important}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-summary,body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-meta{grid-template-columns:repeat(2,minmax(0,1fr))}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-recipes{grid-template-columns:1fr}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-brand{grid-template-columns:90px minmax(0,1fr);gap:12px}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-logo{width:90px;height:27px}body>[data-mbs-espresso-assistant-print-root].mbs-espresso-assistant-print-root--compact .ea-report-brand>a{grid-column:1/-1}}`;
     const printRoot = document.createElement('section');
     printRoot.hidden = true;
     printRoot.dataset.mbsEspressoAssistantPrintRoot = 'true';
+    printRoot.classList.toggle('mbs-espresso-assistant-print-root--compact', compactPrint);
     printRoot.innerHTML = report.printMarkup;
     const previousTitle = document.title;
     const cleanup = () => {
