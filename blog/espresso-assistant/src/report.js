@@ -253,5 +253,10 @@ export function buildReportDocument({ sessions = [], mode = 'journal', logoDataU
     <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>
     ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}
   </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer>${printRuntime}</body></html>`;
-  return { title, html };
+  return {
+    title,
+    html,
+    printMarkup: `<main class="ea-report-page">\n    <header class="ea-report-brand"><img class="ea-report-logo" src="${escapeReportHtml(logoDataUri)}" alt="MBS*"><div><span>${REPORT_SCHOOL_NAME}</span><div class="ea-report-title" role="heading" aria-level="1">Журнал настройки эспрессо</div></div><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></header>\n    <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatDateTime(generatedAt))}</p>\n    <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>\n    ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}\n  </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer>`,
+    printStyles: reportStyles(),
+  };
 }

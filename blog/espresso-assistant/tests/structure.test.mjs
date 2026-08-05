@@ -41,8 +41,9 @@ assert.ok(!hosted.includes('static.tildacdn.com/tild3934-3663-4132-a239-31663866
 assert.ok(!/<(?:img|script|link)[^>]+(?:src|href)=["']https?:/i.test(hosted), 'Hosted helper has no external runtime resources');
 assert.ok(hosted.includes('data-export-all'), 'Hosted helper exposes the full-journal PDF action');
 assert.ok(hosted.includes('data-export-session'), 'Hosted helper exposes the current-session PDF action');
-assert.ok(hosted.includes('URL.createObjectURL(new Blob([report.html]'), 'Report opens as a complete standalone document for reliable mobile printing');
-assert.ok(!hosted.includes('document.write(report.html)'), 'Report is not printed from an unfinished about:blank document');
+assert.ok(hosted.includes('data-mbs-espresso-assistant-print-root'), 'Report prints through a dedicated root in the current document for mobile Safari');
+assert.ok(hosted.includes('body>*{display:none!important}'), 'Only the report is visible during system printing');
+assert.ok(!hosted.includes('URL.createObjectURL(new Blob([report.html]'), 'Report avoids mobile Safari blob preview tabs');
 assert.ok(hosted.includes('data-create-roast-date'), 'Hosted helper records the roast date');
 assert.ok(hosted.includes('Рекомендация не зафиксирована'), 'Hosted helper handles attempts without a historical recommendation');
 

@@ -590,21 +590,29 @@
       logoDataUri: MBS_ESPRESSO_LOGO_DATA_URI,
       generatedAt: new Date(),
     });
-    let reportUrl = '';
-    try {
-      reportUrl = URL.createObjectURL(new Blob([report.html], { type: 'text/html;charset=utf-8' }));
-    } catch (_error) {
-      announce('Не удалось подготовить документ для печати. Обновите браузер и повторите попытку.');
-      return;
-    }
-    const reportWindow = window.open(reportUrl, '_blank');
-    if (!reportWindow) {
-      URL.revokeObjectURL(reportUrl);
-      announce('Браузер заблокировал окно отчёта. Разрешите всплывающие окна и повторите выгрузку.');
-      return;
-    }
-    reportWindow.opener = null;
-    announce('Журнал подготовлен. В новом окне нажмите «Сохранить как PDF».');
+    const previous = document.querySelector('[data-mbs-espresso-assistant-print-root]');
+    if (previous) previous.remove();
+    const printStyle = document.createElement('style');
+    printStyle.media = 'print';
+    printStyle.dataset.mbsEspressoAssistantPrintStyle = 'true';
+    printStyle.textContent = `${report.printStyles}\n@media print{body>*{display:none!important}body>[data-mbs-espresso-assistant-print-root]{display:block!important}}`;
+    const printRoot = document.createElement('section');
+    printRoot.hidden = true;
+    printRoot.dataset.mbsEspressoAssistantPrintRoot = 'true';
+    printRoot.innerHTML = report.printMarkup;
+    const previousTitle = document.title;
+    const cleanup = () => {
+      printRoot.remove();
+      printStyle.remove();
+      document.title = previousTitle;
+    };
+    document.head.append(printStyle);
+    document.body.append(printRoot);
+    document.title = report.title;
+    window.addEventListener('afterprint', cleanup, { once: true });
+    window.print();
+    window.setTimeout(cleanup, 30000);
+    announce('Открылось системное окно печати. Выберите «Сохранить как PDF».');
   }
 
   function exportCurrentSession() {
