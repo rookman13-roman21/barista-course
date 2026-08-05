@@ -5,14 +5,14 @@
 | Поле | Значение |
 |---|---|
 | Рабочий URL | `/blog/espresso-assistant` |
-| Production URL | Не опубликована |
+| Production URL | `https://baristaschool.ru/blog/espresso-assistant` |
 | Локальный preview | `blog/espresso-assistant/index.html` |
 | Tilda-артефакты | `tilda-seo-block.html` + `tilda-loader.html` |
-| Hosted-артефакт | `hosted/espresso-assistant.html` → планируемый `https://api.barista-school.ru/api/espresso-assistant.html` |
+| Hosted-артефакт | `hosted/espresso-assistant.html` → `https://api.barista-school.ru/api/espresso-assistant.html` |
 | Тип | Статичная SEO-методика в Tilda + автономный hosted-помощник |
 | Аудитория | Новички дома и в кофейне; температура учитывается только на подходящем оборудовании |
 | CTA | `/barista_courses` |
-| Ветка | `feat/espresso-assistant` |
+| Ветка | `main` |
 
 ## Реализовано локально
 
@@ -39,7 +39,7 @@
 - Не давать количество кликов кофемолки.
 - Не использовать чужие тексты, изображения, компас или название внешнего источника в публичном продукте.
 - Не считать HTTP 200 подтверждением пользовательского сценария.
-- Не публиковать hosted-файл и Tilda-блоки без отдельного разрешения Романа.
+- Не публиковать hosted-файл без отдельного разрешения Романа. Tilda редактирует и публикует только Роман.
 
 ## Как проверить
 
@@ -50,10 +50,10 @@
 5. Сформировать PDF одной сессии и всего журнала; проверить исторические рекомендации, заметки, брендирование и безопасное имя документа.
 6. Открыть локальный preview на desktop, 390 и 360 px; проверить touch, клавиатуру и горизонтальные списки.
 7. До merge вручную проверить сохранение PDF на реальных iPhone Safari и Android Chrome.
-8. После отдельного разрешения: deploy hosted-файла из `origin/main`, затем ручная публикация в Tilda и live-проверка SEO, loader, CTA и полного сценария.
+8. После отдельного разрешения: deploy hosted-файла из `origin/main`, затем проверка live SEO, loader, CTA и полного сценария. Изменения статичного Tilda-блока вручную публикует Роман.
 
 ## Текущий статус
 
-Локальная реализация и автоматические проверки подготовлены в ветке `feat/espresso-assistant`. Production URL, hosted endpoint и Tilda пока не изменялись.
+Инструмент опубликован: статичный SEO-блок и loader уже размещены Романом в Tilda, hosted-файл доступен по публичному endpoint. Версия интерфейса с мобильными правками и PDF-шапкой развернута 2026-08-05 из коммита `dd60265`.
 
 Обновлено: 2026-08-05.
