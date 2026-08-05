@@ -231,7 +231,7 @@ function reportStyles() {
     td{padding:7px 6px;border:1px solid #d8e2d5;vertical-align:top;overflow-wrap:anywhere}.ea-report-shot{break-inside:avoid}.ea-report-shot td small{display:block;margin-top:2px;color:#6f796f;font-size:7px}.ea-report-shot-detail td{padding:6px 8px;background:#f5f5f5;line-height:1.45}.ea-report-empty{text-align:center;color:#5b675b}
     .ea-report-footer{position:fixed;right:0;bottom:0;left:0;text-align:center;color:#5b675b;font-size:8px}
     @page{size:A4 landscape;margin:12mm 10mm 16mm}
-    @media print{body{background:#fff}.ea-report-toolbar{display:none}.ea-report-page{max-width:none;margin:0;padding:0;box-shadow:none}.ea-report-summary{break-inside:avoid}.ea-report-brand{break-inside:avoid}}
+    @media print{html,body{width:100%;height:auto!important;overflow:visible!important;background:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.ea-report-toolbar{display:none!important}.ea-report-page{display:block;max-width:none;margin:0;padding:0;box-shadow:none}.ea-report-summary{break-inside:avoid}.ea-report-brand{break-inside:avoid}.ea-report-footer{position:static;margin-top:8mm}}
     @media screen and (max-width:700px){.ea-report-page{margin:0;padding:20px}.ea-report-brand{grid-template-columns:128px minmax(0,1fr);gap:20px;align-items:start}.ea-report-logo{width:128px;height:38px;object-fit:cover;object-position:center}.ea-report-brand>div{min-width:0}.ea-report-title{font-size:24px;line-height:1.1}.ea-report-brand>a{grid-column:1/-1}.ea-report-summary{grid-template-columns:1fr 1fr}.ea-report-meta{grid-template-columns:1fr 1fr}.ea-report-recipes{grid-template-columns:1fr}.ea-report-toolbar{justify-content:stretch}.ea-report-toolbar button{flex:1}}
   `;
 }
@@ -244,13 +244,14 @@ export function buildReportDocument({ sessions = [], mode = 'journal', logoDataU
     : 'Все сессии';
   const title = `MBS - Журнал эспрессо - ${titlePart} - ${localIsoDate(generatedAt)}`;
   const sessionSections = safeSessions.map(sessionMarkup).join('');
+  const printRuntime = '<scr' + 'ipt>(function(){var button=document.querySelector(\'[data-ea-report-print]\');if(!button)return;function ready(){button.disabled=false;button.textContent=\'Сохранить как PDF\';button.addEventListener(\'click\',function(){window.focus();window.print();});}if(document.readyState===\'complete\'){ready();}else{window.addEventListener(\'load\',ready,{once:true});}}());</scr' + 'ipt>';
   const html = `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeReportHtml(title)}</title><style>${reportStyles()}</style></head>
-  <body><div class="ea-report-toolbar"><button type="button" onclick="window.print()">Сохранить как PDF</button><button type="button" onclick="window.close()">Закрыть</button></div>
+  <body><div class="ea-report-toolbar"><button type="button" data-ea-report-print disabled>Подготавливаем печать…</button><button type="button" onclick="window.close()">Закрыть</button></div>
   <main class="ea-report-page">
     <header class="ea-report-brand"><img class="ea-report-logo" src="${escapeReportHtml(logoDataUri)}" alt="MBS*"><div><span>${REPORT_SCHOOL_NAME}</span><div class="ea-report-title" role="heading" aria-level="1">Журнал настройки эспрессо</div></div><a href="${REPORT_SCHOOL_URL}">baristaschool.ru</a></header>
     <p class="ea-report-generated">Сформирован ${escapeReportHtml(formatDateTime(generatedAt))}</p>
     <section class="ea-report-summary" aria-label="Сводка"><div><strong>${summary.sessions}</strong><span>сессий</span></div><div><strong>${summary.attempts}</strong><span>шотов</span></div><div><strong>${summary.completed}</strong><span>завершено</span></div><div><strong>${summary.confirmed}</strong><span>повторяемость подтверждена</span></div></section>
     ${sessionSections || '<p class="ea-report-empty">В журнале пока нет сохранённых результатов.</p>'}
-  </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer></body></html>`;
+  </main><footer class="ea-report-footer">${REPORT_SCHOOL_NAME} · baristaschool.ru</footer>${printRuntime}</body></html>`;
   return { title, html };
 }

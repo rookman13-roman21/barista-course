@@ -590,15 +590,20 @@
       logoDataUri: MBS_ESPRESSO_LOGO_DATA_URI,
       generatedAt: new Date(),
     });
-    const reportWindow = window.open('', '_blank');
+    let reportUrl = '';
+    try {
+      reportUrl = URL.createObjectURL(new Blob([report.html], { type: 'text/html;charset=utf-8' }));
+    } catch (_error) {
+      announce('Не удалось подготовить документ для печати. Обновите браузер и повторите попытку.');
+      return;
+    }
+    const reportWindow = window.open(reportUrl, '_blank');
     if (!reportWindow) {
+      URL.revokeObjectURL(reportUrl);
       announce('Браузер заблокировал окно отчёта. Разрешите всплывающие окна и повторите выгрузку.');
       return;
     }
     reportWindow.opener = null;
-    reportWindow.document.open();
-    reportWindow.document.write(report.html);
-    reportWindow.document.close();
     announce('Журнал подготовлен. В новом окне нажмите «Сохранить как PDF».');
   }
 

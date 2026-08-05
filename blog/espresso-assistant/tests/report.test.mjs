@@ -98,6 +98,10 @@ assert.ok(single.html.includes('&lt;тест&gt;'));
 assert.ok(single.html.includes('Кислотность &lt;стала&gt; мягче'));
 assert.match(single.html, /grid-template-columns:128px minmax\(0,1fr\);gap:20px/);
 assert.match(single.html, /\.ea-report-logo\{width:128px;height:38px/);
+assert.match(single.html, /data-ea-report-print/);
+assert.match(single.html, /window\.focus\(\);window\.print\(\)/);
+assert.match(single.html, /-webkit-print-color-adjust:exact/);
+assert.match(single.html, /\.ea-report-footer\{position:static;margin-top:8mm\}/);
 
 const journal = buildReportDocument({ sessions: [session(), confirmedSession], mode: 'journal', generatedAt });
 assert.equal(journal.title, 'MBS - Журнал эспрессо - Все сессии - 2026-08-05');
