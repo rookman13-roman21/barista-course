@@ -105,6 +105,8 @@ assert.match(single.html, /\.ea-report-footer\{position:static;margin-top:8mm\}/
 assert.match(single.printMarkup, /class="ea-report-page"/);
 assert.match(single.printMarkup, /Московская школа бариста/);
 assert.match(single.printStyles, /@media print/);
+assert.match(single.printStyles, /grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+assert.match(single.printStyles, /width:100%!important;max-width:100%!important/);
 
 const journal = buildReportDocument({ sessions: [session(), confirmedSession], mode: 'journal', generatedAt });
 assert.equal(journal.title, 'MBS - Журнал эспрессо - Все сессии - 2026-08-05');
