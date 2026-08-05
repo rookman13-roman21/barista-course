@@ -101,12 +101,13 @@ assert.match(single.html, /\.ea-report-logo\{width:128px;height:38px/);
 assert.match(single.html, /data-ea-report-print/);
 assert.match(single.html, /window\.focus\(\);window\.print\(\)/);
 assert.match(single.html, /-webkit-print-color-adjust:exact/);
-assert.match(single.html, /\.ea-report-footer\{position:static;margin-top:8mm\}/);
+assert.match(single.html, /\.ea-report-footer\{width:277mm!important;max-width:277mm!important;position:static;margin-top:8mm\}/);
 assert.match(single.printMarkup, /class="ea-report-page"/);
 assert.match(single.printMarkup, /Московская школа бариста/);
 assert.match(single.printStyles, /@media print/);
 assert.match(single.printStyles, /grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
-assert.match(single.printStyles, /width:100%!important;max-width:100%!important/);
+assert.match(single.printStyles, /width:277mm!important;min-width:0!important;max-width:277mm!important/);
+assert.match(single.printStyles, /@page\{size:297mm 210mm;margin:12mm 10mm 16mm\}/);
 
 const journal = buildReportDocument({ sessions: [session(), confirmedSession], mode: 'journal', generatedAt });
 assert.equal(journal.title, 'MBS - Журнал эспрессо - Все сессии - 2026-08-05');
