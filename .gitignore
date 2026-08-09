@@ -3,3 +3,6 @@
 scripts/_temp/
 home-barista/
 push-open-coffeeshop.sh
+
+# Отдельный локальный Sites-проект со своим Git-репозиторием.
+summer-drinks/sites-preview/
