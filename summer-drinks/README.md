@@ -14,12 +14,19 @@
 | Файл | Назначение |
 |---|---|
 | `index.html` | Быстрый локальный preview актуального каталога |
-| `recipe-ice-tea-2026.html` | Локальный preview страницы рецепта через iframe |
+| `recipe-ice-tea-2026.html` | Быстрый локальный preview актуальной карточки рецепта |
 | `sites-preview/public/catalog.html` | Актуальный локальный дизайн каталога |
 | `sites-preview/public/recipe-ice-tea-2026.html` | Актуальный локальный дизайн карточки рецепта |
-| `tilda-blocks/catalog.html` | Архивный демо-каталог; не устанавливать в Tilda |
-| `tilda-blocks/recipe-ice-tea-2026.html` | Самодостаточный HTML-блок рецепта для Tilda |
 | `PROJECT_STATE.md` | Паспорт решений, связей и ограничений |
+
+`sites-preview/` — отдельный Git-репозиторий локального дизайн-preview. Его
+исходники находятся в `app/` и `public/`; `node_modules`, `dist`, `.vinext`,
+`.wrangler` и `.next` являются локальными зависимостями или результатами сборки
+и не входят в исходный код.
+
+Старые статические Tilda-демо удалены 10 августа 2026 года: они расходились с
+актуальным дизайном и больше нигде не использовались. Production-витрина и её
+Tilda-loader находятся в проекте `Coffee_menu/HTML_coffee_menu`.
 
 ## Публичные поля
 
