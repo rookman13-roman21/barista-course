@@ -2174,30 +2174,12 @@
   </main><!-- /#main-content -->
 
   <div class="mbs-hb-booking-modal" id="mbs-hb-booking-modal" hidden>
-    <div class="mbs-hb-booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="mbs-hb-booking-modal-title">
-      <button class="mbs-hb-booking-modal__close" type="button" aria-label="Закрыть окно выбора записи">
+    <div class="mbs-hb-booking-modal__dialog" role="dialog" aria-modal="true" aria-label="Онлайн запись на курс Бариста любитель" style="width:min(100%, 800px); padding:0; border:0; background:transparent; box-shadow:none">
+      <button class="mbs-hb-booking-modal__close" type="button" aria-label="Закрыть окно онлайн-записи" style="z-index:2">
         <i class="ph ph-x"></i>
       </button>
-      <div class="mbs-hb-booking-modal__label">
-        <i class="ph ph-calendar-check"></i>
-        Онлайн-запись
-      </div>
-      <h2 class="mbs-hb-booking-modal__title" id="mbs-hb-booking-modal-title">Выберите формат участия</h2>
-      <p class="mbs-hb-booking-modal__text">Можно прийти одному или вдвоём со скидкой. После выбора откроется форма записи и оплаты.</p>
-      <div class="mbs-hb-booking-modal__options">
-        <a class="mbs-hb-booking-modal__option" href="https://n1964448.yclients.com" target="_blank" rel="noopener noreferrer">
-          <span class="mbs-hb-booking-modal__option-head"><i class="ph ph-user"></i>Один участник</span>
-          <span class="mbs-hb-booking-modal__price">10 000 ₽</span>
-          <span class="mbs-hb-booking-modal__note">Индивидуальный курс на удобную дату.</span>
-          <span class="mbs-hb-booking-modal__go">Перейти к записи <i class="ph ph-arrow-up-right"></i></span>
-        </a>
-        <a class="mbs-hb-booking-modal__option mbs-hb-booking-modal__option--accent" href="https://n2230746.yclients.com" target="_blank" rel="noopener noreferrer">
-          <span class="mbs-hb-booking-modal__option-head"><i class="ph ph-users-two"></i>Вдвоём</span>
-          <span class="mbs-hb-booking-modal__price">14 000 ₽</span>
-          <span class="mbs-hb-booking-modal__saving">скидка 6 000 ₽</span>
-          <span class="mbs-hb-booking-modal__note">Оплата сразу за двух участников.</span>
-          <span class="mbs-hb-booking-modal__go">Перейти к записи <i class="ph ph-arrow-up-right"></i></span>
-        </a>
+      <div data-course-booking-widget data-course-slug="barista-3" aria-live="polite">
+        <div class="bbb-loading">Загружаем расписание…</div>
       </div>
     </div>
   </div>
@@ -2222,9 +2204,80 @@
       if (!modal) return;
 
       var closeButton = modal.querySelector('.mbs-hb-booking-modal__close');
+      var widgetRoot = modal.querySelector('[data-course-booking-widget]');
       var previousActiveElement = null;
       var lockedScrollY = 0;
       var previousBodyStyles = {};
+
+      function resetBookingDraft() {
+        if (!widgetRoot) return;
+        try {
+          var key = 'course-booking-draft-v1:barista-3:' + window.location.pathname;
+          var current = JSON.parse(window.localStorage.getItem(key) || 'null') || {};
+          window.localStorage.setItem(key, JSON.stringify({
+            savedAt: Date.now(),
+            step: 'variant',
+            variantId: '',
+            activeTrainer: null,
+            activeLesson: '1',
+            selectedDate: null,
+            cursor: '',
+            selected: {},
+            client: current.client || {}
+          }));
+        } catch (err) {
+          // Если localStorage недоступен, виджет всё равно откроется.
+        }
+      }
+
+      function loadBookingWidget() {
+        if (!widgetRoot) return;
+        resetBookingDraft();
+        widgetRoot.innerHTML = '<div class="bbb-loading">Загружаем расписание…</div>';
+
+        var existing = document.querySelector('script[data-course-booking-widget-script]');
+        if (existing && existing.parentNode) existing.parentNode.removeChild(existing);
+
+        var urls = [
+          'https://api.barista-school.ru/course-booking-widget.js?v=course-calendar-sync-20260818',
+          'https://api.barista-school.ru/basic-barista-widget.js?v=course-calendar-sync-20260818',
+          'https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=course-calendar-sync-20260818'
+        ];
+        var index = 0;
+
+        function failWidget() {
+          widgetRoot.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
+        }
+
+        function loadNext() {
+          if (index >= urls.length) {
+            failWidget();
+            return;
+          }
+          var script = document.createElement('script');
+          var timer = setTimeout(function () {
+            script.onerror = null;
+            if (script.parentNode) script.parentNode.removeChild(script);
+            index += 1;
+            loadNext();
+          }, 3000);
+
+          script.src = urls[index];
+          script.async = true;
+          script.dataset.courseBookingWidgetScript = '1';
+          script.onload = function () {
+            clearTimeout(timer);
+          };
+          script.onerror = function () {
+            clearTimeout(timer);
+            index += 1;
+            loadNext();
+          };
+          document.body.appendChild(script);
+        }
+
+        loadNext();
+      }
 
       function lockPageScroll() {
         lockedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
@@ -2259,6 +2312,7 @@
         previousActiveElement = document.activeElement;
         modal.hidden = false;
         lockPageScroll();
+        loadBookingWidget();
         requestAnimationFrame(function () {
           modal.classList.add('is-open');
           if (closeButton) closeButton.focus();
