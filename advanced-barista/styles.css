@@ -516,7 +516,17 @@ body.mbs-ad-lock { overflow: hidden; }
   .mbs-ad-checklist li { font-size: 15px; }
   .mbs-ad-program { padding: 48px 0; }
   .mbs-ad-program__title { margin-bottom: 21px !important; }
-  .mbs-ad-program__tabs { display: flex; width: calc(100% + 16px); padding-right: 16px; overflow-x: auto; scrollbar-width: none; }
+  .mbs-ad-program__tabs {
+    display: flex;
+    width: calc(100% + 16px);
+    padding-right: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
   .mbs-ad-program__tabs::-webkit-scrollbar { display: none; }
   .mbs-ad-program__tab { min-width: 82px; flex: 0 0 auto; padding: 11px 8px; font-size: 14px; }
   .mbs-ad-program__tab::after { right: 6px; left: 6px; }
