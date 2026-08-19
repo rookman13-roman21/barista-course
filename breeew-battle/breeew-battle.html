@@ -397,6 +397,24 @@
     padding: 34px 30px 32px;
     border-color: rgba(65, 112, 51, .32);
   }
+  @media (min-width: 981px) {
+    .mbs-breeew-battle-prize-card--general {
+      display: grid;
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 38px;
+      width: min(100%, 760px);
+      padding: 24px 28px 26px;
+      justify-self: center;
+    }
+    .mbs-breeew-battle-prize-card--general .mbs-breeew-battle-prize-card__place {
+      grid-column: 1 / -1;
+      margin-bottom: 0;
+    }
+    .mbs-breeew-battle-prize-card--general .mbs-breeew-battle-prize-group + .mbs-breeew-battle-prize-group {
+      margin-top: 0;
+    }
+  }
   .mbs-breeew-battle-prize-card__place {
     margin: 0 0 18px;
     color: rgba(216, 61, 84, .76);
@@ -2175,6 +2193,9 @@
     .mbs-breeew-battle-prize-card--third {
       order: 3;
     }
+    .mbs-breeew-battle-prize-card--general {
+      order: 4;
+    }
     .mbs-breeew-battle-partners__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .mbs-breeew-battle-judges__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .mbs-breeew-battle-rules__box,
@@ -3133,7 +3154,19 @@
         target.innerHTML = '<div class="mbs-breeew-battle-state">Не удалось загрузить список призов. Попробуйте обновить страницу.</div>';
         return;
       }
-      target.innerHTML = prizes.map(function (prize) {
+      var desktopOrder = { '2 место': 0, '1 место': 1, '3 место': 2 };
+      var orderedPrizes = prizes.map(function (prize, index) {
+        var place = String(prize.place || '').trim();
+        return {
+          prize: prize,
+          index: index,
+          order: Object.prototype.hasOwnProperty.call(desktopOrder, place) ? desktopOrder[place] : 3,
+        };
+      }).sort(function (left, right) {
+        return left.order - right.order || left.index - right.index;
+      });
+      target.innerHTML = orderedPrizes.map(function (entry) {
+        var prize = entry.prize;
         var place = String(prize.place || '').trim();
         var placeMatch = place.match(/^([123])\s*место$/i);
         var placeClass = placeMatch

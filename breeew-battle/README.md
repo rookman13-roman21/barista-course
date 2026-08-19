@@ -196,28 +196,13 @@ BREEEW_BATTLE_TG_WEBHOOK_SECRET=...
 
 Mini App не должна выводить телефоны, email, ссылки оплаты, внутренние `record_id` и Telegram участников.
 
-В hero-карточке «Площадка» отображается Московская школа бариста. Карта берётся из `content.venue.map_url`; адрес выдачи кофе приходит отдельно из `coffee_delivery.pickup.map_url`.
+В hero-карточке «Площадка» отображается Московская школа бариста. Карта берётся из `content.venue.map_url`.
 
-### Кофе для подготовки
+### Старт чемпионата
 
-На вкладке `Главное` сразу после hero расположен блок `Как получить кофе для подготовки`. Контент блока приходит из `breeewBattleMiniAppContent()` в `schedule-online/basic-barista-booking/server/basic-barista-booking-server.js`; frontend в `telegram-mini-app.html` только безопасно отрисовывает тексты и ссылки.
+На вкладке `Главное` сразу после hero расположен блок `Старт чемпионата` с актуальным порядком начала дня: сбор участников `10:20–10:30`, знакомство и напутствие `10:30`, первая пара начинает выступление в `10:40`. Контент приходит из `event_start` в `breeewBattleMiniAppContent()` из `schedule-online/basic-barista-booking/server/basic-barista-booking-server.js`.
 
-Для иногородних участников Mini App открывает CRM-форму для адреса ближайшего ПВЗ СДЭК:
-
-```text
-https://baristaschool.bitrix24site.ru/breeew-battle-cdek/
-```
-
-В Mini App к ссылке добавляются UTM-метки `utm_source=telegram`, `utm_medium=mini_app`, `utm_campaign=breeew_battle_cdek`.
-
-Участники из Москвы могут забрать кофе самостоятельно в тренинг-центре с `11:00` до `19:00`, предварительно написав в Telegram школы. В блоке доступны две отдельные кнопки:
-
-```text
-https://t.me/Moscow_barista_school
-https://yandex.ru/maps/org/206204133172
-```
-
-Не переносить эту информацию в регламент или FAQ: это оперативный организационный блок для уже подтверждённых участников.
+Кнопка `Открыть полный тайминг` переключает внутри Mini App на вкладку `Тайминг`. Устаревшие карточки `Медиагайд` и `Как получить кофе для подготовки` на главном экране не выводятся.
 
 ### Кофе первого этапа
 
@@ -228,16 +213,6 @@ https://theweldercatherine.ru/catalog/dlya_filtra/tanzaniya_lungva_av/
 ```
 
 Данные карточки задаются объектом `first_stage_coffee` в `breeewBattleMiniAppContent()`; изображение берётся по публичной прямой ссылке The Welder Catherine.
-
-### Медиагайд
-
-На вкладке `Главное` сразу после hero доступна отдельная карточка `Медиагайд`. Она напоминает об обязательной публикации о подготовке: сроке до `1 августа`, требованиях к отметкам и отправке ссылки в чат участников. Карточка ведёт в browser-viewer PDF из Google Docs, поэтому документ открывается для чтения внутри Telegram, а не скачивается:
-
-```text
-https://docs.google.com/document/d/1ngrqjq7j1ySJ0m9hBhfw1FAzJ4V2wPM3K5aqOJrAJqY
-```
-
-Ссылка задаётся объектом `media_guide` в `breeewBattleMiniAppContent()`.
 
 ## Проверки
 
