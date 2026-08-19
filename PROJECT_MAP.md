@@ -43,7 +43,7 @@ barista-course/
 | Папка | Продакшн URL | Платформа | Краткое описание |
 |---|---|---|---|
 | `404/` | — | Tilda | Страница 404 — единственный `index.html` + `tilda-block.html` |
-| `advanced-barista/` | `/probarista` (текущая Tilda-страница не менялась) | Local preview + Tilda release candidate | Новая версия «Продвинутого курса бариста»: безопасный demo-flow в preview, отдельные Tilda-артефакты и конфиг записи готовы к C-review; не опубликованы |
+| `advanced-barista/` | `/probarista` (текущая Tilda-страница не менялась) | Local preview + Tilda release package | Новая версия «Продвинутого курса бариста»: backend записи и расписание выложены, Tilda-артефакты готовы; сама страница ещё не опубликована |
 | `_templates/` | — | Docs / HTML templates | Шаблоны для новых страниц; `tilda-event-page/` — стартовая структура событийной страницы и мастер-класса |
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
@@ -178,12 +178,13 @@ scripts/tilda-fetch.js
 - Cron обновления слотов на production работает каждые 5 минут как fallback.
 - Виджет передаёт `staff_preference`: конкретный тренер → категория yClients `Сотрудник важен`, `Любой тренер` → `Сотрудник не важен`.
 
-### 4.5.1. Продвинутый курс бариста — release candidate
+### 4.5.1. Продвинутый курс бариста
 - Local preview: `advanced-barista/index.html`; он сохраняет только безопасную demo-логику и не обращается к API.
 - Tilda-пакет: `advanced-barista/tilda-blocks/`. Порядок вставки и отдельный shared trainers widget описаны в его `README.md`.
 - Конфиг рабочей записи: соседний проект `schedule-online/basic-barista-booking/courses/advanced-barista.json`. Он содержит шесть последовательных занятий, варианты 35 000 ₽ и 45 000 ₽, предоплату 5 000 ₽ и manager-flow.
 - Виджет подключается по slug `advanced-barista` через общий `course-booking-widget.js`; в Tilda-обвязке не хранить токены и прямые URL yClients.
-- Текущая Tilda-страница `/probarista` не менялась. До deploy, ручной вставки и публикации нужны финальный C-review и отдельное решение Романа.
+- 19 августа 2026 года backend-конфиг и cron выложены из commit `af870e9`; health booking-сервиса, публичный JSON шести уроков и `check_only` для solo/pair подтверждены.
+- Текущая Tilda-страница `/probarista` не менялась. Для ручной вставки и публикации Tilda нужен отдельный шаг.
 
 ### 4.6. Онлайн-запись на экскурсии
 - Страница: `excu/tilda-block.html`, локальное превью: `excu/index.html`.
