@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MBS Mixology Recipes — публичная карточка авторского рецепта">
+  <title>Янтарный лес — MBS Mixology Recipes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #19221a;
+      --muted: #687068;
+      --paper: #fcfcf9;
+      --canvas: #f1f3ef;
+      --line: #dbe2d8;
+      --green: #417033;
+      --green-bright: #4f883e;
+      --green-pale: #e7f2e3;
+      --red: #cc2841;
+      --red-hover: #d83d54;
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --shadow: 0 18px 44px rgba(35, 51, 35, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: Mulish, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+    button { font: inherit; }
+    .page { max-width: 1280px; margin: 0 auto; padding: 22px 24px 104px; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 46px;
+      margin-bottom: 18px;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #3f4c40;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+
+    .product {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(410px, .95fr);
+      overflow: hidden;
+      border: 1px solid #e2e6df;
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .visual { position: relative; min-height: 638px; background: #dce9d7; }
+    .visual.visual--fallback::before { content: "Фотография напитка будет добавлена"; position: absolute; z-index: 1; inset: 0; display: grid; place-items: center; padding: 24px; color: var(--green); background: var(--green-pale); font-size: 15px; font-weight: 800; text-align: center; }
+    .visual__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(16, 29, 17, .02) 40%, rgba(16, 29, 17, .54) 100%);
+      pointer-events: none;
+    }
+    .visual__meta {
+      position: absolute;
+      z-index: 1;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      gap: 12px;
+      color: #fff;
+    }
+    .visual__caption { max-width: 300px; font-size: 12px; line-height: 1.45; font-weight: 700; opacity: .94; }
+    .visual__score {
+      padding: 9px 11px;
+      border: 1px solid rgba(255,255,255,.44);
+      border-radius: 999px;
+      background: rgba(17, 33, 18, .25);
+      backdrop-filter: blur(8px);
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .content { display: flex; flex-direction: column; padding: 42px 42px 38px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      width: max-content;
+      margin-bottom: 19px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--green-pale);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(42px, 4.2vw, 62px); line-height: .94; letter-spacing: -.055em; }
+    .lead { max-width: 530px; margin: 19px 0 0; color: var(--muted); font-size: 16px; line-height: 1.52; font-weight: 600; }
+
+    .facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 29px 0;
+    }
+    .fact { min-height: 70px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .fact span { display: block; margin-bottom: 5px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .fact b { display: block; font-size: 14px; line-height: 1.24; }
+
+    .price-row { display: flex; align-items: end; justify-content: space-between; gap: 18px; padding-top: 4px; }
+    .price-row small { display: block; margin-bottom: 5px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .price { font-size: 29px; font-weight: 900; letter-spacing: -.045em; }
+    .price-note { max-width: 175px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; text-align: right; }
+    .actions { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 18px; }
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      padding: 0 18px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .button:hover { transform: translateY(-1px); }
+    .button--primary { background: var(--red); color: #fff; }
+    .button--primary:hover { background: var(--red-hover); }
+    .button--secondary { border-color: var(--line); color: var(--green); background: #fff; }
+    .message { min-height: 18px; margin: 10px 2px 0; color: var(--green); font-size: 12px; font-weight: 800; }
+
+    .equipment-panel { margin-top: 18px; overflow: hidden; border: 1px solid #e2e6df; border-radius: var(--radius-lg); background: var(--paper); box-shadow: 0 5px 18px rgba(35, 51, 35, .035); }
+    .equipment-panel summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; cursor: pointer; list-style: none; }
+    .equipment-panel summary::-webkit-details-marker { display: none; }
+    .equipment-panel__title { display: block; font-size: 17px; font-weight: 900; }
+    .equipment-panel__count { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; font-weight: 700; }
+    .equipment-panel__chevron { display: grid; width: 32px; height: 32px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: var(--green); background: var(--green-pale); font-size: 18px; transition: transform .18s ease; }
+    .equipment-panel[open] .equipment-panel__chevron { transform: rotate(180deg); }
+    .equipment-panel__list { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 24px; padding: 0 0 22px; border-top: 1px solid var(--line); padding-top: 18px; }
+    .equipment-panel__item { padding: 8px 10px; border: 1px solid #c9ddc3; border-radius: 999px; color: #456041; background: #fff; font-size: 13px; font-weight: 800; }
+
+    .section { margin-top: 18px; padding: 30px; border: 1px solid #e2e6df; border-radius: var(--radius-lg); background: var(--paper); box-shadow: 0 5px 18px rgba(35, 51, 35, .035); }
+    .section-heading { display: flex; justify-content: space-between; gap: 20px; align-items: end; margin-bottom: 21px; }
+    .section-heading h2 { margin: 0; font-size: 26px; line-height: 1; letter-spacing: -.035em; }
+    .section-heading p { max-width: 430px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .tile { padding: 19px; border: 1px solid var(--line); border-radius: var(--radius-md); background: #fff; }
+    .tile__icon { display: grid; width: 34px; height: 34px; margin-bottom: 15px; place-items: center; border-radius: 11px; background: var(--green-pale); color: var(--green); font-size: 16px; }
+    .tile h3 { margin: 0; font-size: 16px; line-height: 1.2; }
+    .tile p { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    .preview-grid { display: grid; grid-template-columns: 1.17fr .83fr; gap: 12px; }
+    .profile { padding: 23px; border-radius: var(--radius-md); background: var(--green-pale); }
+    .profile__label, .locked__label { display: block; margin-bottom: 10px; color: var(--green); font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .profile h3 { max-width: 560px; margin: 0; font-size: 22px; line-height: 1.12; letter-spacing: -.03em; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+    .chip { padding: 7px 9px; border: 1px solid #c9ddc3; border-radius: 999px; color: #456041; background: rgba(255,255,255,.62); font-size: 12px; font-weight: 800; }
+    .locked { padding: 23px; border: 1px solid #e6d8dc; border-radius: var(--radius-md); background: #fbf7f7; }
+    .locked__label { color: var(--red); }
+    .locked h3 { margin: 0; font-size: 18px; line-height: 1.2; }
+    .locked ul { margin: 14px 0 0; padding: 0; list-style: none; }
+    .locked li { display: flex; gap: 8px; align-items: center; margin-top: 9px; color: #6e6567; font-size: 13px; font-weight: 700; }
+    .lock { color: var(--red); font-size: 12px; }
+
+    .author { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 18px; }
+    .author__avatar { display: grid; width: 64px; height: 64px; place-items: center; border-radius: 50%; background: #dae8d5; color: var(--green); font-size: 19px; font-weight: 900; }
+    .author__role { margin: 0 0 5px; color: var(--green); font-size: 11px; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; }
+    .author h2 { margin: 0; font-size: 22px; letter-spacing: -.03em; }
+    .author p { max-width: 660px; margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .author__badge { padding: 9px 11px; border: 1px solid var(--line); border-radius: 12px; color: #465147; background: #fff; font-size: 12px; font-weight: 800; text-align: right; }
+
+    .sticky-buy { display: none; }
+
+    @media (max-width: 920px) {
+      .product { grid-template-columns: 1fr; }
+      .visual { min-height: 430px; }
+      .content { padding: 34px; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page { padding: 13px 13px calc(93px + env(safe-area-inset-bottom)); }
+      .topbar { margin-bottom: 12px; }
+      .brand { font-size: 10px; }
+      .product, .section { border-radius: 21px; }
+      .visual { min-height: 345px; }
+      .visual__meta { left: 16px; right: 16px; bottom: 16px; }
+      .visual__caption { max-width: 190px; }
+      .content { padding: 25px 20px 26px; }
+      h1 { font-size: 44px; }
+      .lead { font-size: 15px; }
+      .facts { margin: 22px 0; }
+      .price { font-size: 26px; }
+      .actions { grid-template-columns: 1fr; }
+      .equipment-panel { margin-top: 12px; border-radius: 21px; }
+      .equipment-panel summary { padding: 18px 20px; }
+      .equipment-panel__list { margin: 0 20px; padding-bottom: 20px; }
+      .section { margin-top: 12px; padding: 23px 20px; }
+      .section-heading { display: block; margin-bottom: 17px; }
+      .section-heading h2 { font-size: 23px; }
+      .section-heading p { margin-top: 9px; font-size: 13px; }
+      .preview-grid { grid-template-columns: 1fr; }
+      .profile, .locked { padding: 19px; }
+      .author { grid-template-columns: auto 1fr; gap: 13px; }
+      .author__badge { display: none; }
+      .author p { font-size: 12px; }
+      .sticky-buy { position: fixed; z-index: 5; right: 0; bottom: 0; left: 0; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px calc(11px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: rgba(252,252,249,.96); backdrop-filter: blur(14px); }
+      .sticky-buy small { display: block; color: var(--muted); font-size: 10px; font-weight: 700; }
+      .sticky-buy b { font-size: 16px; }
+      .sticky-buy .button { min-height: 43px; padding: 0 13px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="back" href="../index.html" aria-label="Вернуться в каталог рецептов">← Все рецепты</a>
+      <div class="brand"><span class="brand__dot"></span>MBS Mixology Recipes</div>
+    </header>
+
+    <article class="product" aria-labelledby="recipe-title">
+      <section class="visual" aria-label="Фотография напитка Янтарный лес">
+        <img class="visual__photo" src="https://barista-school.online/api/uploads/author-recipes/14/1782139236-8fc7114a.jpg" alt="Янтарный лес" loading="eager" onerror="this.hidden=true; this.parentElement.classList.add('visual--fallback');">
+      </section>
+
+      <section class="content">
+        <span class="eyebrow">Авторский рецепт</span>
+        <h1 id="recipe-title">Янтарный лес</h1>
+        <p class="lead">Кофейный напиток с сочной яблочной кислотностью, древесными оттенками зелёного чая и цветочной сладостью. Подойдёт для тех, кто хочет что-то менее сладкое и освежающее. С каждым глотком кофе будет отходить на задний план, больше раскрывая чайную составляющую.</p>
+
+        <div class="facts" aria-label="Основные параметры рецепта">
+          <div class="fact"><span>Объём порции</span><b>350 мл</b></div>
+          <div class="fact"><span>Подача</span><b>0–3 °C · 3–5 минут</b></div>
+        </div>
+
+        <div class="price-row">
+          <div><small>Доступ к рецепту</small><div class="price">По запросу</div></div>
+        </div>
+        <div class="actions">
+          <button class="button button--primary" type="button" data-request-access>Запросить доступ</button>
+          <a class="button button--secondary" href="#included">Что входит</a>
+        </div>
+        <div class="message" data-message aria-live="polite"></div>
+      </section>
+    </article>
+
+    <details class="equipment-panel">
+      <summary>
+        <span><span class="equipment-panel__title">Необходимое оборудование</span><span class="equipment-panel__count">Сифон · чайник с контролем температуры · ещё 4</span></span>
+        <span class="equipment-panel__chevron" aria-hidden="true">⌄</span>
+      </summary>
+      <div class="equipment-panel__list" aria-label="Полный список необходимого оборудования">
+        <span class="equipment-panel__item">Сифон</span>
+        <span class="equipment-panel__item">Чайник с контролем температуры</span>
+        <span class="equipment-panel__item">Термометр</span>
+        <span class="equipment-panel__item">Холодильник</span>
+        <span class="equipment-panel__item">Весы</span>
+        <span class="equipment-panel__item">Льдогенератор</span>
+      </div>
+    </details>
+
+    <section class="section" id="included" aria-labelledby="included-title">
+      <div class="section-heading">
+        <h2 id="included-title">Не просто идея напитка — комплект для запуска</h2>
+        <p>Публичная карточка помогает оценить применимость рецепта. Рабочие материалы открываются после получения доступа.</p>
+      </div>
+      <div class="grid-3">
+        <article class="tile"><div class="tile__icon">01</div><h3>Технологическая карта</h3><p>Точный рабочий документ для стабильного приготовления на баре.</p></article>
+        <article class="tile"><div class="tile__icon">02</div><h3>Видео процесса</h3><p>Наглядный материал для обучения команды и запуска позиции.</p></article>
+        <article class="tile"><div class="tile__icon">03</div><h3>Ингредиенты и внедрение</h3><p>Список ингредиентов, поставщики и рекомендации Московской школы бариста.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="preview-title">
+      <div class="section-heading">
+        <h2 id="preview-title">Вкус и подача</h2>
+        <p>Познакомьтесь с характером напитка до оформления доступа.</p>
+      </div>
+      <div class="preview-grid">
+        <article class="profile">
+          <h3>Яркая ароматика зелёного яблока</h3>
+          <div class="chips" aria-label="Публичные характеристики"><span class="chip">Янтарный цвет · чайное тело</span><span class="chip">Нежная пена</span></div>
+        </article>
+        <article class="locked">
+          <span class="locked__label">Откроется после получения доступа</span>
+          <h3>Полная технология рецепта</h3>
+          <ul>
+            <li><span class="lock">●</span> Граммовки и точный состав</li>
+            <li><span class="lock">●</span> Пошаговый процесс</li>
+            <li><span class="lock">●</span> Техкарта и поставщики</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section author" aria-labelledby="author-title">
+      <div class="author__avatar" aria-hidden="true">АЧ</div>
+      <div>
+        <p class="author__role">Автор рецепта</p>
+        <h2 id="author-title">Анна Черненко</h2>
+      </div>
+      <div class="author__badge">Автор<br>рецепта</div>
+    </section>
+  </main>
+
+  <div class="sticky-buy" aria-label="Быстрое действие">
+    <div><small>Доступ к рецепту</small><b>По запросу</b></div>
+    <button class="button button--primary" type="button" data-request-access>Запросить доступ</button>
+  </div>
+
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll('[data-request-access]');
+      var messages = document.querySelectorAll('[data-message]');
+      buttons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          messages.forEach(function (message) {
+            message.textContent = 'Прототип: здесь будет переход к оформлению доступа. Публикация и оплата пока не подключены.';
+          });
+        });
+      });
+    }());
+  </script>
+</body>
+</html>
