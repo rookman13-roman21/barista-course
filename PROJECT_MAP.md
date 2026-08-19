@@ -12,6 +12,7 @@ barista-course/
 ├── 404/                      ← Страница ошибки 404
 ├── _templates/                ← Шаблоны для новых Tilda-страниц
 ├── about-school/             ← Страница «О школе» (baristaschool.ru/company)
+├── advanced-barista/         ← Локальный preview страницы «Продвинутый курс бариста» (не опубликован)
 ├── barista-interview/        ← Лендинг «Собеседование бариста» (baristaschool.ru/hr)
 ├── barista-theory-cabinet/   ← Личный кабинет: теория перед курсом (Tilda Members)
 ├── blog/                     ← Публичные полезные материалы: калькулятор себестоимости, помощник настройки эспрессо и статья о рабочем месте бариста
@@ -42,6 +43,7 @@ barista-course/
 | Папка | Продакшн URL | Платформа | Краткое описание |
 |---|---|---|---|
 | `404/` | — | Tilda | Страница 404 — единственный `index.html` + `tilda-block.html` |
+| `advanced-barista/` | `/probarista` (текущая Tilda-страница не менялась) | Local preview + Tilda release candidate | Новая версия «Продвинутого курса бариста»: безопасный demo-flow в preview, отдельные Tilda-артефакты и конфиг записи готовы к C-review; не опубликованы |
 | `_templates/` | — | Docs / HTML templates | Шаблоны для новых страниц; `tilda-event-page/` — стартовая структура событийной страницы и мастер-класса |
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
@@ -70,6 +72,7 @@ barista-course/
 | Страница | Файл для Tilda | Файл для локального просмотра |
 |---|---|---|
 | О школе | `about-school/blocks/block-0*.html` | `about-school/index.html` |
+| Продвинутый курс бариста | `advanced-barista/tilda-blocks/00-seo.html`, `01-hero-and-for-whom.html`, shared trainers, `02-course-content.html`, `09-online-booking-popup.html`, `10-page-interactions.html` — не опубликованы | `advanced-barista/index.html` |
 | Собеседование бариста | `barista-interview/index.html` | `barista-interview/index.html` |
 | Чемпионат MBS* Breeew battle | `breeew-battle/tilda-loader.html` | `breeew-battle/breeew-battle.html` |
 | Каппинг кофе | `capping/tilda-loader.html` | `capping/index.html` |
@@ -174,6 +177,13 @@ scripts/tilda-fetch.js
 - Для ручных изменений в yClients используется webhook `POST /api/course-booking/basic-barista/yclients-webhook`, защищённый token из production `.env`.
 - Cron обновления слотов на production работает каждые 5 минут как fallback.
 - Виджет передаёт `staff_preference`: конкретный тренер → категория yClients `Сотрудник важен`, `Любой тренер` → `Сотрудник не важен`.
+
+### 4.5.1. Продвинутый курс бариста — release candidate
+- Local preview: `advanced-barista/index.html`; он сохраняет только безопасную demo-логику и не обращается к API.
+- Tilda-пакет: `advanced-barista/tilda-blocks/`. Порядок вставки и отдельный shared trainers widget описаны в его `README.md`.
+- Конфиг рабочей записи: соседний проект `schedule-online/basic-barista-booking/courses/advanced-barista.json`. Он содержит шесть последовательных занятий, варианты 35 000 ₽ и 45 000 ₽, предоплату 5 000 ₽ и manager-flow.
+- Виджет подключается по slug `advanced-barista` через общий `course-booking-widget.js`; в Tilda-обвязке не хранить токены и прямые URL yClients.
+- Текущая Tilda-страница `/probarista` не менялась. До deploy, ручной вставки и публикации нужны финальный C-review и отдельное решение Романа.
 
 ### 4.6. Онлайн-запись на экскурсии
 - Страница: `excu/tilda-block.html`, локальное превью: `excu/index.html`.

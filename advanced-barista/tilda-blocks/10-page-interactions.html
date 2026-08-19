@@ -1,0 +1,161 @@
+<!-- Сгенерировано scripts/build-tilda-blocks.js из local preview. Не редактировать вручную. -->
+<script>
+(function () {
+  'use strict';
+
+  document.querySelectorAll('.mbs-ad-faq__items').forEach(function (list) {
+    var items = Array.prototype.slice.call(list.querySelectorAll('details'));
+
+    function closeItem(details) {
+      var body = details.querySelector('.mbs-ad-faq__body');
+      if (!body || !details.open || details.dataset.busy === '1') return;
+      details.dataset.busy = '1';
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.height = '0px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details.dataset.busy = '0';
+      });
+    }
+
+    function openItem(details) {
+      var body = details.querySelector('.mbs-ad-faq__body');
+      if (!body || details.open || details.dataset.busy === '1') return;
+      items.forEach(function (item) { if (item !== details) closeItem(item); });
+      details.dataset.busy = '1';
+      details.open = true;
+      body.style.height = '0px';
+      body.offsetHeight;
+      body.style.height = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        body.style.height = 'auto';
+        details.dataset.busy = '0';
+      });
+    }
+
+    items.forEach(function (details) {
+      var body = details.querySelector('.mbs-ad-faq__body');
+      var summary = details.querySelector('summary');
+      if (!body || !summary) return;
+      body.style.height = details.open ? 'auto' : '0px';
+      summary.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (details.open) closeItem(details);
+        else openItem(details);
+      });
+    });
+  });
+}());
+
+(function () {
+  'use strict';
+
+  var photos = Array.prototype.slice.call(document.querySelectorAll('[data-equipment-photo]'));
+  var lightbox = document.querySelector('[data-equipment-lightbox]');
+  var image = document.querySelector('[data-equipment-lightbox-image]');
+  if (!photos.length || !lightbox || !image) return;
+
+  var currentIndex = 0;
+
+  function show(index) {
+    currentIndex = (index + photos.length) % photos.length;
+    var source = photos[currentIndex].querySelector('img');
+    image.src = source.currentSrc || source.src;
+    image.alt = source.alt || '';
+  }
+
+  function close() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('mbs-ad-lock');
+  }
+
+  photos.forEach(function (photo, index) {
+    photo.addEventListener('click', function () {
+      show(index);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-ad-lock');
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-equipment-close]')).forEach(function (button) {
+    button.addEventListener('click', close);
+  });
+  document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(currentIndex - 1); });
+  document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(currentIndex + 1); });
+  document.addEventListener('keydown', function (event) {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (event.key === 'Escape') close();
+    if (event.key === 'ArrowLeft') show(currentIndex - 1);
+    if (event.key === 'ArrowRight') show(currentIndex + 1);
+  });
+}());
+
+(function () {
+  'use strict';
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-program-day]'));
+  var number = document.querySelector('[data-program-number]');
+  var format = document.querySelector('[data-program-format]');
+  var title = document.querySelector('[data-program-title]');
+  var description = document.querySelector('[data-program-description]');
+  if (!tabs.length || !number || !format || !title || !description) return;
+
+  var days = [
+    {
+      format: 'Теория и практика',
+      title: 'Познакомитесь с профессией бариста',
+      description: 'Посмотрим, как устроен бар внутри, каким оборудованием пользуется бариста, поговорим о базовых правилах техники безопасности и работе с кассой. Узнаете, что важно учитывать при настройке эспрессо, какое влияние на вкус оказывает вода и как правильно её подобрать. Попробуете самостоятельно сварить эспрессо и почистить кофемашину, как настоящий бариста.'
+    },
+    {
+      format: 'Теория и практика',
+      title: 'Разбудите рецепторы и настроите эспрессо',
+      description: 'Разбудим свои рецепторы — попробуем растворы базовых вкусов и разнообразные лоты кофе, а также разберёмся, что происходит с зерном во время обжарки и заваривания. Совместно настроим эспрессо и приготовим идеальную чашку, измерим её качество специальным прибором.'
+    },
+    {
+      format: 'Теория и практика',
+      title: 'Освоите молоко и классические напитки',
+      description: 'Попробуем и узнаем истории возникновения трёх всемирно известных напитков: капучино, латте и флет уайта. Подробно изучим химию молока, научимся правильно взбивать и вливать молоко так, чтобы получилось сердечко. Узнаем, как и для чего нужно чистить кофемолку.'
+    },
+    {
+      format: 'Теория и практика',
+      title: 'Улучшите латте-арт и авторские напитки',
+      description: 'Оттачивание навыков, расширение, изучение разных техник вливания и улучшение латте-арта. Поговорим о сезонных и авторских напитках — как реализовать задумку и делать заготовки. Разберёте классические ингредиенты для авторских напитков и способы их подачи.'
+    },
+    {
+      format: 'Практика',
+      title: 'Закрепите кофейное меню на практике',
+      description: 'Проведём мини-аттестацию — приготовите эспрессо и капучино вашему тренеру. Проработаем и изучим на практике всё кофейное меню и продолжим оттачивать навыки работы с молоком и более сложными рисунками на кофе.'
+    },
+    {
+      format: 'Аттестация',
+      title: 'Покажете всё, чему научились',
+      description: 'Самостоятельно настроите эспрессо, приготовите эспрессо-сет, классические кофейные напитки и презентуете их тренеру. Под присмотром тренера попробуете принимать реальные заказы от гостей и готовить их по всем правилам.'
+    }
+  ];
+
+  function selectDay(index) {
+    var day = days[index];
+    if (!day) return;
+    number.textContent = 'День ' + (index + 1);
+    format.textContent = day.format;
+    title.textContent = day.title;
+    description.textContent = day.description;
+    tabs.forEach(function (tab, tabIndex) {
+      var isActive = tabIndex === index;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { selectDay(Number(tab.getAttribute('data-program-day'))); });
+  });
+}());
+</script>
