@@ -1,0 +1,154 @@
+<!-- Сгенерировано scripts/build-tilda-blocks.js из local preview. Не редактировать вручную. -->
+<script>
+(function () {
+  'use strict';
+
+  document.querySelectorAll('[data-hero-video-play]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var media = button.closest('.mbs-alt-hero__media');
+      if (!media) return;
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://player.vimeo.com/video/999634019?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+      iframe.title = 'Курс «Альтернативное заваривание кофе»';
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      media.replaceChildren(iframe);
+    });
+  });
+
+  document.querySelectorAll('.mbs-alt-faq__items').forEach(function (list) {
+    var items = Array.prototype.slice.call(list.querySelectorAll('details'));
+
+    function closeItem(details) {
+      var body = details.querySelector('.mbs-alt-faq__body');
+      if (!body || !details.open || details.dataset.busy === '1') return;
+      details.dataset.busy = '1';
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.height = '0px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details.dataset.busy = '0';
+      });
+    }
+
+    function openItem(details) {
+      var body = details.querySelector('.mbs-alt-faq__body');
+      if (!body || details.open || details.dataset.busy === '1') return;
+      items.forEach(function (item) { if (item !== details) closeItem(item); });
+      details.dataset.busy = '1';
+      details.open = true;
+      body.style.height = '0px';
+      body.offsetHeight;
+      body.style.height = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        body.style.height = 'auto';
+        details.dataset.busy = '0';
+      });
+    }
+
+    items.forEach(function (details) {
+      var body = details.querySelector('.mbs-alt-faq__body');
+      var summary = details.querySelector('summary');
+      if (!body || !summary) return;
+      body.style.height = details.open ? 'auto' : '0px';
+      summary.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (details.open) closeItem(details);
+        else openItem(details);
+      });
+    });
+  });
+}());
+
+(function () {
+  'use strict';
+
+  var photos = Array.prototype.slice.call(document.querySelectorAll('[data-equipment-photo]'));
+  var lightbox = document.querySelector('[data-equipment-lightbox]');
+  var image = document.querySelector('[data-equipment-lightbox-image]');
+  if (!photos.length || !lightbox || !image) return;
+
+  var currentIndex = 0;
+
+  function show(index) {
+    currentIndex = (index + photos.length) % photos.length;
+    var source = photos[currentIndex].querySelector('img');
+    image.src = source.currentSrc || source.src;
+    image.alt = source.alt || '';
+  }
+
+  function close() {
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('mbs-alt-lock');
+  }
+
+  photos.forEach(function (photo, index) {
+    photo.addEventListener('click', function () {
+      show(index);
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-alt-lock');
+    });
+  });
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-equipment-close]')).forEach(function (button) {
+    button.addEventListener('click', close);
+  });
+  document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(currentIndex - 1); });
+  document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(currentIndex + 1); });
+  document.addEventListener('keydown', function (event) {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (event.key === 'Escape') close();
+    if (event.key === 'ArrowLeft') show(currentIndex - 1);
+    if (event.key === 'ArrowRight') show(currentIndex + 1);
+  });
+}());
+
+(function () {
+  'use strict';
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-program-day]'));
+  var number = document.querySelector('[data-program-number]');
+  var format = document.querySelector('[data-program-format]');
+  var title = document.querySelector('[data-program-title]');
+  var description = document.querySelector('[data-program-description]');
+  if (!tabs.length || !number || !format || !title || !description) return;
+
+  var days = [
+    {
+      format: 'Выбор и практика',
+      title: 'Выберите методы и зерно под свой интерес',
+      description: 'В школе есть V60, кемекс, аэропресс, френч-пресс, джезве и другие способы. Вы сами выбираете, с какими хотите познакомиться, а тренер помогает сравнить большой выбор зерна и вкусов.'
+    },
+    {
+      format: 'Углубление и рецепты',
+      title: 'Отработаете выбранные методы глубже',
+      description: 'Сфокусируетесь на способах, которые понравились или нужны для дома и кофейни. Будете менять помол, температуру, соотношение кофе и воды, сравнивать чашки и собирать рецепты, которые сможете повторить самостоятельно.'
+    }
+  ];
+
+  function selectDay(index) {
+    var day = days[index];
+    if (!day) return;
+    number.textContent = 'Занятие ' + (index + 1);
+    format.textContent = day.format;
+    title.textContent = day.title;
+    description.textContent = day.description;
+    tabs.forEach(function (tab, tabIndex) {
+      var isActive = tabIndex === index;
+      tab.classList.toggle('is-active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { selectDay(Number(tab.getAttribute('data-program-day'))); });
+  });
+}());
+</script>
