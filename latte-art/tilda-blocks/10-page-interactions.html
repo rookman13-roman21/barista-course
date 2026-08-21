@@ -1,0 +1,49 @@
+<!-- Сгенерировано scripts/build-tilda-blocks.js из local preview. Не редактировать вручную. -->
+<script>
+(function () {
+  'use strict';
+
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-program-day]'));
+  var number = document.querySelector('[data-program-number]');
+  var format = document.querySelector('[data-program-format]');
+  var title = document.querySelector('[data-program-title]');
+  var description = document.querySelector('[data-program-description]');
+  if (!tabs.length || !number || !format || !title || !description) return;
+
+  var lessons = [
+    {
+      format: 'Основа техники',
+      title: 'Поймёте текстуру молока и базовое вливание',
+      description: 'Разберёте, как эспрессо, температура и текстура молока влияют на рисунок. Отработаете базовую стойку, положение питчера и вливание, чтобы получить чистое сердце.'
+    },
+    {
+      format: 'Форма и контраст',
+      title: 'Соберёте тюльпан и научитесь управлять потоком',
+      description: 'Закрепите базу, отработаете высоту, скорость и траекторию вливания. Поймёте, почему рисунок теряет форму, и научитесь собирать более сложный тюльпан.'
+    },
+    {
+      format: 'Повторение в сервисе',
+      title: 'Увереннее нарисуете розетту и свой рисунок',
+      description: 'Соединим движения в целый рисунок, уделим внимание чистоте чашки и повторяемости. Тренер поможет выбрать следующий шаг для самостоятельной практики.'
+    }
+  ];
+
+  function selectLesson(index) {
+    var lesson = lessons[index];
+    if (!lesson) return;
+    number.textContent = 'Занятие ' + (index + 1);
+    format.textContent = lesson.format;
+    title.textContent = lesson.title;
+    description.textContent = lesson.description;
+    tabs.forEach(function (tab, tabIndex) {
+      var active = tabIndex === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { selectLesson(Number(tab.getAttribute('data-program-day'))); });
+  });
+}());
+</script>

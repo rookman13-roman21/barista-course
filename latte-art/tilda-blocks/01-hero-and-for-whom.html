@@ -1,0 +1,205 @@
+<!-- Сгенерировано scripts/build-tilda-blocks.js из local preview. Не редактировать вручную. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<style>
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #fff; color: #1f1f1f; font-family: Mulish, Arial, sans-serif; }
+button, a { font: inherit; }
+button { cursor: pointer; }
+.mbs-la-page { overflow: hidden; --green: #417033; --green-bright: #4f883e; --pale: #e7f2e3; --red: #cc2841; --ink: #1f1f1f; --muted: #646464; --line: #e4e7e2; }
+.mbs-la-shell { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+.mbs-la-hero { padding: 30px 0 66px; background: linear-gradient(152deg, #f7faf5 0%, #fff 48%, #f8dde1 155%); }
+.mbs-la-hero__card { display: grid; grid-template-columns: minmax(0, .95fr) minmax(330px, 1.05fr); border: 1px solid #e1e9dc; border-radius: 28px; overflow: hidden; background: #fff; box-shadow: 0 24px 70px rgba(43, 71, 36, .09); }
+.mbs-la-hero__copy { padding: 62px 58px 44px; display: flex; flex-direction: column; justify-content: center; }
+.mbs-la-label, .mbs-la-kicker { margin: 0; color: var(--green); font-size: 13px; font-weight: 900; letter-spacing: .075em; line-height: 1.25; text-transform: uppercase; }
+.mbs-la-label { display: inline-flex; gap: 8px; align-items: center; letter-spacing: .035em; }
+.mbs-la-label i { color: var(--red); font-size: 18px; }
+.mbs-la-hero h1, .mbs-la-page h2, .mbs-la-page h3 { margin: 0; font-weight: 900; letter-spacing: -.045em; }
+.mbs-la-hero h1 { margin-top: 22px; color: #274523; font-size: clamp(48px, 5.4vw, 76px); line-height: .96; }
+.mbs-la-hero__lead { max-width: 500px; margin: 30px 0 0; color: #3c493a; font-size: 18px; line-height: 1.58; }
+.mbs-la-hero__media { min-height: 510px; position: relative; background: #dfeadd; }
+.mbs-la-hero__media img { width: 100%; height: 100%; position: absolute; object-fit: cover; object-position: center; }
+.mbs-la-hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 48%, rgba(20, 38, 19, .58)); }
+.mbs-la-hero__image-note { position: absolute; z-index: 1; bottom: 28px; left: 28px; right: 28px; color: #fff; font-size: 15px; font-weight: 800; line-height: 1.35; }
+.mbs-la-hero__image-note i { margin-right: 7px; color: #b6d8ab; }
+.mbs-la-hero__bottom { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto auto; gap: 28px; align-items: center; padding: 26px 34px 24px; border-top: 1px solid #e5e9e2; }
+.mbs-la-facts { display: flex; flex-wrap: wrap; gap: 9px 18px; color: #40513d; font-size: 14px; font-weight: 800; }
+.mbs-la-facts span { white-space: nowrap; }
+.mbs-la-facts i { margin-right: 6px; color: var(--green-bright); font-size: 17px; vertical-align: -1px; }
+.mbs-la-hero__prices { display: flex; gap: 22px; }
+.mbs-la-hero__prices div { display: grid; gap: 2px; }
+.mbs-la-hero__prices span { color: #697368; font-size: 12px; font-weight: 700; }
+.mbs-la-hero__prices b { color: #263f23; font-size: 18px; letter-spacing: -.03em; }
+.mbs-la-actions { display: flex; gap: 10px; }
+.mbs-la-button { min-height: 47px; border: 1px solid transparent; border-radius: 999px; padding: 12px 19px; display: inline-flex; gap: 8px; align-items: center; justify-content: center; text-decoration: none; font-size: 14px; font-weight: 900; transition: transform .2s ease, background .2s ease, border .2s ease; }
+.mbs-la-button:hover { transform: translateY(-2px); }
+.mbs-la-button--primary { background: var(--red); color: #fff; box-shadow: 0 10px 22px rgba(204, 40, 65, .2); }
+.mbs-la-button--primary:hover { background: #ad2036; }
+.mbs-la-button--secondary { border-color: #ccd8c8; color: #345c2b; background: #fff; }
+.mbs-la-button--secondary:hover { background: #f2f7f0; border-color: var(--green); }
+.mbs-la-note { grid-column: 1 / -1; margin: -15px 0 0; color: #717771; font-size: 12px; font-weight: 700; }
+.mbs-la-for-whom, .mbs-la-program, .mbs-la-skills, .mbs-la-price, .mbs-la-flow, .mbs-la-faq, .mbs-la-final { padding: 96px 0; }
+.mbs-la-section-head { display: flex; gap: 48px; justify-content: space-between; align-items: end; margin-bottom: 34px; }
+.mbs-la-section-head h2, .mbs-la-program__title, .mbs-la-skills h2, .mbs-la-booking-format h2, .mbs-la-faq h2, .mbs-la-final h2 { margin-top: 12px; color: #274523; font-size: clamp(32px, 4vw, 49px); line-height: 1.04; }
+.mbs-la-section-head > p { max-width: 405px; margin: 0; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.mbs-la-card-scroll { display: grid; grid-template-columns: repeat(4, 1fr); gap: 13px; }
+.mbs-la-person-card { min-height: 202px; border: 1px solid #e2e9de; border-radius: 18px; padding: 25px 23px; background: #fafcf9; }
+.mbs-la-person-card > i { display: grid; place-items: center; width: 37px; height: 37px; border-radius: 50%; color: #fff; background: var(--green-bright); font-size: 20px; }
+.mbs-la-person-card h3 { margin-top: 20px; color: #314e2c; font-size: 20px; line-height: 1.12; }
+.mbs-la-person-card p { margin: 10px 0 0; color: #697168; font-size: 14px; line-height: 1.5; }
+.mbs-la-program { background: #f5f8f3; }
+.mbs-la-program__title { max-width: 680px; }
+.mbs-la-program__tabs { display: flex; gap: 9px; margin-top: 31px; overflow-x: auto; scrollbar-width: thin; }
+.mbs-la-program__tab { flex: 0 0 auto; min-height: 43px; border: 1px solid #cdd9c8; border-radius: 999px; padding: 9px 18px; color: #365e2d; background: #fff; font-size: 14px; font-weight: 900; }
+.mbs-la-program__tab.is-active { border-color: var(--green); color: #fff; background: var(--green); }
+.mbs-la-program__detail { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 42px; min-height: 224px; margin-top: 20px; padding: 39px 43px; border-radius: 22px; color: #fff; background: #386630; box-shadow: 0 20px 45px rgba(45, 84, 39, .16); }
+.mbs-la-program__meta { display: flex; flex-direction: column; gap: 10px; color: #c4dfbd; font-size: 16px; font-weight: 900; }
+.mbs-la-program__meta small { color: #fff; font-size: 12px; font-weight: 700; opacity: .74; text-transform: uppercase; letter-spacing: .07em; }
+.mbs-la-program__detail h3 { font-size: clamp(27px, 3.3vw, 39px); line-height: 1.06; }
+.mbs-la-program__detail p { max-width: 720px; margin: 20px 0 0; color: rgba(255, 255, 255, .86); font-size: 16px; line-height: 1.6; }
+.mbs-la-skills__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .82fr); gap: 84px; align-items: center; }
+.mbs-la-skills h2 { max-width: 560px; }
+.mbs-la-checklist { display: grid; gap: 14px; margin: 30px 0 0; padding: 0; list-style: none; }
+.mbs-la-checklist li { display: flex; gap: 11px; align-items: flex-start; color: #475247; font-size: 16px; line-height: 1.48; }
+.mbs-la-checklist i { flex: 0 0 auto; margin-top: 2px; color: var(--green-bright); font-size: 20px; font-weight: 900; }
+.mbs-la-skills__photo { position: relative; margin: 0; }
+.mbs-la-skills__photo img { width: 100%; min-height: 390px; display: block; border-radius: 22px; object-fit: cover; object-position: 52% center; }
+.mbs-la-skills__photo figcaption { position: absolute; right: 16px; bottom: 16px; left: 16px; padding: 14px 16px; border-radius: 13px; color: #fff; background: rgba(28, 51, 25, .74); backdrop-filter: blur(6px); font-size: 13px; font-weight: 800; line-height: 1.35; }
+.mbs-la-price { background: #fff; }
+.mbs-la-booking-format { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(390px, .95fr); gap: 48px; padding: 54px; border-radius: 28px; background: linear-gradient(137deg, #f5f9f3, #e2efde); }
+.mbs-la-booking-format__info > p:not(.mbs-la-label):not(.mbs-la-booking-format__prepay) { max-width: 500px; margin: 17px 0 0; color: #566254; font-size: 16px; line-height: 1.55; }
+.mbs-la-booking-format__fact { margin-top: 25px; color: #31582a; font-size: 16px; font-weight: 900; }
+.mbs-la-booking-format__fact i, .mbs-la-booking-format__prepay i { margin-right: 7px; color: var(--red); }
+.mbs-la-booking-format__prepay { margin: 25px 0 0; color: #4d594c; font-size: 14px; font-weight: 800; }
+.mbs-la-booking-format__actions { display: flex; gap: 10px; margin-top: 21px; }
+.mbs-la-booking-format__cards { display: grid; gap: 12px; }
+.mbs-la-booking-format__card { border: 1px solid #d1dfcd; border-radius: 18px; padding: 26px 27px; background: rgba(255,255,255,.82); }
+.mbs-la-booking-format__card--accent { border-color: #638f58; background: #fff; box-shadow: 0 12px 24px rgba(61, 103, 54, .10); }
+.mbs-la-booking-format__card h3 { color: #355e2d; font-size: 20px; }
+.mbs-la-booking-format__value { margin: 7px 0 0; color: #293f25; font-size: 31px; font-weight: 900; letter-spacing: -.045em; }
+.mbs-la-booking-format__note { margin: 9px 0 0; color: #647164; font-size: 13px; line-height: 1.4; }
+.mbs-la-booking-format__card ul { display: grid; gap: 7px; margin: 16px 0 0; padding: 0; list-style: none; color: #50614c; font-size: 13px; line-height: 1.35; }
+.mbs-la-booking-format__card li::before { content: '•'; margin-right: 7px; color: var(--red); }
+.mbs-la-booking-format__mobile-prices { display: none; }
+.mbs-la-flow { padding-top: 0; }
+.mbs-la-section-head--compact { margin-bottom: 26px; }
+.mbs-la-flow__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.mbs-la-flow__steps li { min-height: 164px; padding: 24px 21px; border-top: 2px solid #8bad80; background: #f6f8f5; }
+.mbs-la-flow__steps span { color: var(--red); font-size: 13px; font-weight: 900; letter-spacing: .08em; }
+.mbs-la-flow__steps b { display: block; margin-top: 25px; color: #355b2e; font-size: 17px; }
+.mbs-la-flow__steps p { margin: 7px 0 0; color: #697168; font-size: 13px; line-height: 1.42; }
+.mbs-la-faq { background: #f7f7f6; }
+.mbs-la-faq__grid { display: grid; grid-template-columns: .72fr 1.28fr; gap: 92px; }
+.mbs-la-faq__intro > p:not(.mbs-la-kicker) { margin: 16px 0 23px; color: var(--muted); font-size: 16px; line-height: 1.55; }
+.mbs-la-faq__items { border-top: 1px solid #d9ddd7; }
+.mbs-la-faq details { border-bottom: 1px solid #d9ddd7; }
+.mbs-la-faq summary { padding: 21px 38px 21px 0; position: relative; color: #314d2c; cursor: pointer; font-size: 17px; font-weight: 900; line-height: 1.34; list-style: none; }
+.mbs-la-faq summary::-webkit-details-marker { display: none; }
+.mbs-la-faq summary i { position: absolute; top: 19px; right: 3px; color: var(--red); font-size: 22px; transition: transform .2s ease; }
+.mbs-la-faq details[open] summary i { transform: rotate(45deg); }
+.mbs-la-faq details p { max-width: 670px; margin: -2px 0 20px; color: #666d65; font-size: 14px; line-height: 1.56; }
+.mbs-la-final { padding-top: 74px; }
+.mbs-la-final__card { display: flex; justify-content: space-between; gap: 48px; padding: 50px 53px; border-radius: 25px; color: #fff; background: #315b2a; }
+.mbs-la-final h2 { color: #fff; }
+.mbs-la-final__card > div:first-child > p:not(.mbs-la-label) { max-width: 545px; margin: 18px 0 0; color: #dbe9d7; font-size: 16px; line-height: 1.57; }
+.mbs-la-final .mbs-la-label { color: #d2ebcc; }
+.mbs-la-final__actions { min-width: 250px; display: flex; flex-direction: column; align-items: stretch; justify-content: center; gap: 10px; }
+.mbs-la-final__button { min-height: 49px; border: 1px solid transparent; border-radius: 999px; padding: 12px 19px; display: inline-flex; justify-content: center; align-items: center; gap: 8px; text-decoration: none; font-size: 14px; font-weight: 900; transition: transform .2s ease; }
+.mbs-la-final__button:hover { transform: translateY(-2px); }
+.mbs-la-final__button--primary { color: #fff; background: var(--red); }
+.mbs-la-final__button--secondary { border-color: #a9c7a2; color: #fff; }
+.mbs-la-final__contacts { display: grid; gap: 7px; margin-top: 8px; }
+.mbs-la-final__contacts a { color: #e5f0e1; text-decoration: none; font-size: 12px; font-weight: 800; }
+.mbs-la-final__contacts i { margin-right: 5px; color: #b6d8ab; }
+.mbs-la-modal { position: fixed; inset: 0; z-index: 100000; display: none; align-items: center; justify-content: center; padding: 20px; font-family: Mulish, Arial, sans-serif; }
+.mbs-la-modal.is-open { display: flex; }
+.mbs-la-modal__backdrop { position: absolute; inset: 0; background: rgba(20, 31, 18, .58); backdrop-filter: blur(4px); }
+.mbs-la-modal__panel { width: min(540px, 100%); position: relative; padding: 38px; border-radius: 23px; background: #fff; box-shadow: 0 24px 70px rgba(0,0,0,.22); }
+.mbs-la-modal__close { position: absolute; top: 11px; right: 15px; border: 0; color: #536351; background: transparent; font-size: 30px; line-height: 1; }
+.mbs-la-modal h2 { margin-top: 13px; color: #31572b; font-size: 32px; letter-spacing: -.04em; }
+.mbs-la-modal__lead { margin: 12px 0 0; color: #687168; font-size: 15px; line-height: 1.5; }
+.mbs-la-modal__choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 24px; }
+.mbs-la-modal__choices button { min-height: 136px; border: 1px solid #d4e0d0; border-radius: 16px; padding: 18px; text-align: left; background: #fbfcfa; color: #365d2f; }
+.mbs-la-modal__choices button:hover, .mbs-la-modal__choices button.is-selected { border-color: var(--green); background: #eff6ec; }
+.mbs-la-modal__choices span, .mbs-la-modal__choices b, .mbs-la-modal__choices small { display: block; }
+.mbs-la-modal__choices span { font-size: 15px; font-weight: 900; }
+.mbs-la-modal__choices b { margin-top: 10px; color: #263f23; font-size: 24px; letter-spacing: -.04em; }
+.mbs-la-modal__choices small { margin-top: 5px; color: #677367; font-size: 12px; }
+.mbs-la-modal__summary { margin: 18px 0 0; padding: 15px; border-radius: 13px; color: #44613e; background: #f0f6ed; font-size: 14px; font-weight: 800; line-height: 1.5; }
+.mbs-la-modal__next { width: 100%; margin-top: 14px; }
+body.mbs-la-lock { overflow: hidden; }
+@media (max-width: 1000px) { .mbs-la-hero__copy { padding: 48px 40px 36px; } .mbs-la-hero__bottom { grid-template-columns: 1fr auto; } .mbs-la-actions { grid-column: 1 / -1; } .mbs-la-booking-format { grid-template-columns: 1fr; gap: 35px; } .mbs-la-card-scroll { grid-template-columns: repeat(2, 1fr); } .mbs-la-skills__grid { gap: 45px; } .mbs-la-faq__grid { gap: 48px; } }
+@media (max-width: 760px) { .mbs-la-shell { width: min(100% - 28px, 570px); } .mbs-la-hero { padding: 14px 0 50px; } .mbs-la-hero__card { display: flex; flex-direction: column; border-radius: 21px; } .mbs-la-hero__copy { padding: 34px 25px 25px; } .mbs-la-hero h1 { font-size: 51px; } .mbs-la-hero__lead { margin-top: 21px; font-size: 16px; } .mbs-la-hero__media { min-height: 282px; order: 2; } .mbs-la-hero__bottom { display: flex; flex-direction: column; align-items: stretch; gap: 17px; padding: 22px 25px; order: 3; } .mbs-la-hero__prices { justify-content: space-between; } .mbs-la-actions, .mbs-la-booking-format__actions { display: grid; grid-template-columns: 1fr; } .mbs-la-note { margin: -8px 0 0; } .mbs-la-for-whom, .mbs-la-program, .mbs-la-skills, .mbs-la-price, .mbs-la-faq, .mbs-la-final { padding: 64px 0; } .mbs-la-flow { padding: 0 0 64px; } .mbs-la-section-head, .mbs-la-faq__grid { display: grid; grid-template-columns: 1fr; gap: 14px; } .mbs-la-section-head { align-items: start; margin-bottom: 25px; } .mbs-la-section-head h2, .mbs-la-program__title, .mbs-la-skills h2, .mbs-la-booking-format h2, .mbs-la-faq h2, .mbs-la-final h2 { font-size: 35px; } .mbs-la-card-scroll { display: flex; overflow-x: auto; width: calc(100% + 28px); margin-right: -28px; padding-right: 28px; scroll-snap-type: x mandatory; } .mbs-la-person-card { min-width: 250px; scroll-snap-align: start; } .mbs-la-program__tabs { width: calc(100% + 28px); margin-right: -28px; padding-right: 28px; } .mbs-la-program__detail { grid-template-columns: 1fr; gap: 25px; min-height: 280px; padding: 27px 25px; } .mbs-la-program__detail h3 { font-size: 29px; } .mbs-la-program__detail p { font-size: 15px; } .mbs-la-skills__grid { grid-template-columns: 1fr; gap: 31px; } .mbs-la-skills__photo img { min-height: 300px; } .mbs-la-booking-format { padding: 33px 25px; border-radius: 20px; } .mbs-la-booking-format__mobile-prices { display: flex; justify-content: space-between; gap: 16px; margin-top: 24px; } .mbs-la-booking-format__mobile-prices div { display: grid; gap: 3px; } .mbs-la-booking-format__mobile-prices span { color: #697368; font-size: 12px; font-weight: 800; } .mbs-la-booking-format__mobile-prices b { color: #294524; font-size: 20px; } .mbs-la-booking-format__cards { display: none; } .mbs-la-flow__steps { grid-template-columns: 1fr 1fr; } .mbs-la-flow__steps li { min-height: 144px; } .mbs-la-faq__grid { gap: 30px; } .mbs-la-final__card { display: grid; gap: 30px; padding: 34px 25px; border-radius: 20px; } .mbs-la-final__actions { min-width: 0; } .mbs-la-modal { padding: 12px; } .mbs-la-modal__panel { padding: 31px 23px 24px; } }
+@media (max-width: 390px) { .mbs-la-hero h1 { font-size: 46px; } .mbs-la-flow__steps { grid-template-columns: 1fr; } .mbs-la-modal__choices { grid-template-columns: 1fr; } .mbs-la-modal__choices button { min-height: 102px; } }
+</style>
+<div class="mbs-la-page">
+<section class="mbs-la-hero" id="top">
+      <div class="mbs-la-shell">
+        <div class="mbs-la-hero__card">
+          <div class="mbs-la-hero__copy">
+            <p class="mbs-la-label"><i class="ph ph-drop" aria-hidden="true"></i> Практический курс с тренером</p>
+            <h1>Курс<br>латте-арт</h1>
+            <p class="mbs-la-hero__lead">Совершенствуем текущий уровень рисования или осваиваем технику латте-арт с нуля — в спокойном темпе и с большим количеством практики.</p>
+          </div>
+          <div class="mbs-la-hero__media">
+            <img src="https://static.tildacdn.com/tild3130-6239-4963-b634-326435613136/--min.jpg" alt="Рисунок латте-арт на капучино" fetchpriority="high">
+            <span class="mbs-la-hero__image-note"><i class="ph ph-coffee" aria-hidden="true"></i> От текстуры молока до уверенного рисунка</span>
+          </div>
+          <div class="mbs-la-hero__bottom">
+            <div class="mbs-la-facts" aria-label="Факты о курсе">
+              <span><i class="ph ph-calendar-blank" aria-hidden="true"></i> 3 занятия</span>
+              <span><i class="ph ph-clock" aria-hidden="true"></i> 9 часов практики</span>
+              <span><i class="ph ph-users" aria-hidden="true"></i> 1–2 участника</span>
+            </div>
+            <div class="mbs-la-hero__prices" aria-label="Стоимость курса">
+              <div><span>Один участник</span><b>24 000 ₽</b></div>
+              <div><span>Два участника</span><b>32 000 ₽</b></div>
+            </div>
+            <div class="mbs-la-actions">
+              <button class="mbs-la-button mbs-la-button--primary" type="button" data-booking-open><i class="ph ph-calendar-plus" aria-hidden="true"></i> Записаться онлайн</button>
+              <a class="mbs-la-button mbs-la-button--secondary" href="#consalt"><i class="ph ph-chat-text" aria-hidden="true"></i> Оставить заявку</a>
+            </div>
+            <p class="mbs-la-note">Предоплата 5 000 ₽ закрепляет выбранные даты. Остаток — на первом занятии.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mbs-la-for-whom">
+      <div class="mbs-la-shell">
+        <div class="mbs-la-section-head">
+          <div>
+            <p class="mbs-la-kicker">Кому подойдёт</p>
+            <h2>Практика для своего темпа</h2>
+          </div>
+          <p>Начинаем с вашего уровня: поставим базу или разберём, что мешает рисунку выглядеть чисто и повторяемо.</p>
+        </div>
+        <div class="mbs-la-card-scroll">
+          <article class="mbs-la-person-card">
+            <i class="ph ph-sparkle" aria-hidden="true"></i>
+            <h3>Начать с нуля</h3>
+            <p>Научиться готовить молоко и уверенно вливать первые рисунки без лишней теории.</p>
+          </article>
+          <article class="mbs-la-person-card">
+            <i class="ph ph-arrows-clockwise" aria-hidden="true"></i>
+            <h3>Сделать результат стабильным</h3>
+            <p>Понять, как повторять текстуру, скорость вливания и контраст рисунка из чашки в чашку.</p>
+          </article>
+          <article class="mbs-la-person-card">
+            <i class="ph ph-storefront" aria-hidden="true"></i>
+            <h3>Увереннее работать в кофейне</h3>
+            <p>Отработать движения, чтобы латте-арт оставался аккуратным и в ритме сервиса.</p>
+          </article>
+          <article class="mbs-la-person-card">
+            <i class="ph ph-users-three" aria-hidden="true"></i>
+            <h3>Учиться вдвоём</h3>
+            <p>Прийти с партнёром, коллегой или другом и пройти одну программу вместе.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+</div>

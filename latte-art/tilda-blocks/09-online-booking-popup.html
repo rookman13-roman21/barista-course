@@ -1,0 +1,161 @@
+<!-- ============================================================
+  TILDA BLOCK 09 — ONLINE BOOKING POPUP
+  Курс «Латте-арт». Добавить на страницу один раз после CTA-блоков.
+============================================================ -->
+
+<style>
+  .mbs-la-booking-popup { position:fixed; inset:0; z-index:99999; display:none; background:rgba(31,31,31,.58); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); font-family:'Mulish',sans-serif; }
+  .mbs-la-booking-popup.is-open { display:block; }
+  .mbs-la-booking-popup * { box-sizing:border-box; }
+  .mbs-la-booking-popup__scroll { width:100%; height:100%; overflow:auto; padding:28px 14px; display:flex; align-items:center; justify-content:center; }
+  .mbs-la-booking-popup__panel { position:relative; width:min(760px,100%); margin:auto; border-radius:24px; background:transparent; overflow:visible; }
+  .mbs-la-booking-popup__close, .mbs-la-booking-popup__share { position:absolute; top:12px; z-index:2; width:42px; height:42px; padding:0; border:0; border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 8px 22px rgba(31,31,31,.12); }
+  .mbs-la-booking-popup__close { right:12px; color:#1f1f1f; font-size:30px; line-height:1; }
+  .mbs-la-booking-popup__share { right:64px; display:inline-flex; align-items:center; justify-content:center; color:#417033; }
+  .mbs-la-booking-popup__share svg { width:21px; height:21px; display:block; }
+  .mbs-la-booking-popup__share.is-hidden { display:none; }
+  .mbs-la-booking-popup__panel [data-course-booking-widget] { min-height:420px; }
+  .mbs-la-booking-popup__toast { position:fixed; left:50%; bottom:24px; z-index:100000; transform:translateX(-50%); padding:12px 16px; border-radius:999px; color:#fff; background:#1f1f1f; font-size:14px; font-weight:800; line-height:1.2; opacity:0; pointer-events:none; transition:opacity .2s ease; }
+  .mbs-la-booking-popup__toast.is-visible { opacity:1; }
+  .mbs-la-booking-popup .bbb-widget-root { padding:0!important; background:transparent!important; }
+  body.mbs-la-booking-lock { overflow:hidden; }
+  @media (max-width:640px) { .mbs-la-booking-popup__scroll { display:block; padding:0; } .mbs-la-booking-popup__panel { width:100%; min-height:100vh; border-radius:0; } .mbs-la-booking-popup__close { top:8px; right:8px; } .mbs-la-booking-popup__share { top:8px; right:58px; } }
+</style>
+
+<div class="mbs-la-booking-popup" id="mbs-la-booking-popup" aria-hidden="true">
+  <div class="mbs-la-booking-popup__scroll" data-booking-close>
+    <div class="mbs-la-booking-popup__panel" role="dialog" aria-modal="true" aria-label="Онлайн запись на курс «Латте-арт»">
+      <button class="mbs-la-booking-popup__share is-hidden" type="button" data-booking-share aria-label="Поделиться ссылкой" title="Поделиться">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.5 12.5 15.5 8.5M8.5 11.5l7 4M6.75 15.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 9.75a3 3 0 1 1 0-6 3 3 0 0 1 0 6ZM17.25 20.25a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="mbs-la-booking-popup__close" type="button" data-booking-close aria-label="Закрыть">×</button>
+      <div data-course-booking-widget data-course-slug="latte-art"></div>
+    </div>
+  </div>
+  <div class="mbs-la-booking-popup__toast" id="mbs-la-booking-toast" aria-live="polite"></div>
+</div>
+
+<script>
+  (function () {
+    var popup = document.getElementById('mbs-la-booking-popup');
+    if (!popup) return;
+    var toastTimer = null;
+    var shareObserver = null;
+
+    function showToast(message) {
+      var toast = document.getElementById('mbs-la-booking-toast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add('is-visible');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { toast.classList.remove('is-visible'); }, 2200);
+    }
+
+    function buildShareUrl() {
+      var url = new URL(window.location.href);
+      url.searchParams.set('online_booking', '1');
+      url.hash = 'online-booking';
+      return url.toString();
+    }
+
+    function copyText(value) {
+      if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(value);
+      return new Promise(function (resolve, reject) {
+        var textarea = document.createElement('textarea');
+        textarea.value = value;
+        textarea.style.cssText = 'position:fixed;left:-9999px;top:-9999px;opacity:0';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try { document.execCommand('copy') ? resolve() : reject(new Error('copy failed')); } catch (err) { reject(err); }
+        document.body.removeChild(textarea);
+      });
+    }
+
+    function shareBookingLink() {
+      var url = buildShareUrl();
+      var payload = { title: 'Онлайн запись на курс «Латте-арт»', text: 'Выберите формат обучения, тренера и даты занятий.', url: url };
+      var nativeShare = navigator.share && window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      if (nativeShare) {
+        navigator.share(payload).catch(function (err) {
+          if (!err || err.name === 'AbortError') return;
+          copyText(url).then(function () { showToast('Ссылка скопирована'); });
+        });
+      } else {
+        copyText(url).then(function () { showToast('Ссылка скопирована'); }).catch(function () { showToast('Не удалось скопировать ссылку'); });
+      }
+    }
+
+    function syncShareButton() {
+      var button = popup.querySelector('[data-booking-share]');
+      var root = popup.querySelector('[data-course-booking-widget]');
+      if (button) button.classList.toggle('is-hidden', !(root && root.querySelector('.bbb-variant-grid')));
+    }
+
+    function observeWidget(root) {
+      if (shareObserver) shareObserver.disconnect();
+      if (!root || !window.MutationObserver) return syncShareButton();
+      shareObserver = new MutationObserver(syncShareButton);
+      shareObserver.observe(root, { childList:true, subtree:true });
+      syncShareButton();
+    }
+
+    function resetDraft(root) {
+      try {
+        var slug = (root && root.dataset.courseSlug) || 'latte-art';
+        var key = 'course-booking-draft-v1:' + slug + ':' + window.location.pathname;
+        var current = JSON.parse(window.localStorage.getItem(key) || 'null') || {};
+        window.localStorage.setItem(key, JSON.stringify({ savedAt:Date.now(), step:'variant', variantId:'', activeTrainer:null, activeLesson:'1', selectedDate:null, cursor:'', selected:{}, client:current.client || {} }));
+      } catch (err) {
+        // localStorage может быть недоступен; виджет всё равно должен открыться.
+      }
+    }
+
+    function loadWidget() {
+      var root = popup.querySelector('[data-course-booking-widget]');
+      if (root) { resetDraft(root); root.innerHTML = ''; observeWidget(root); }
+      var current = document.querySelector('script[data-course-booking-widget-script]');
+      if (current) current.parentNode.removeChild(current);
+      var urls = [
+        'https://api.barista-school.ru/course-booking-widget.js?v=latte-art-20260821',
+        'https://api.barista-school.ru/basic-barista-widget.js?v=latte-art-20260821',
+        'https://159-194-202-120.sslip.io/api-fallback/basic-barista-widget.js?v=latte-art-20260821'
+      ];
+      var index = 0;
+      function fail() {
+        if (root) root.innerHTML = '<div style="padding:48px 20px;text-align:center;color:#CC2841;font-weight:800">Не удалось загрузить онлайн-запись. Попробуйте обновить страницу или оставьте заявку.</div>';
+      }
+      function next() {
+        if (index >= urls.length) return fail();
+        var script = document.createElement('script');
+        var timer = setTimeout(function () { script.onerror = null; if (script.parentNode) script.parentNode.removeChild(script); index += 1; next(); }, 3000);
+        script.src = urls[index];
+        script.async = true;
+        script.dataset.courseBookingWidgetScript = '1';
+        script.onload = function () { clearTimeout(timer); };
+        script.onerror = function () { clearTimeout(timer); index += 1; next(); };
+        document.body.appendChild(script);
+      }
+      next();
+    }
+
+    function open(event) {
+      if (event) event.preventDefault();
+      popup.classList.add('is-open');
+      popup.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('mbs-la-booking-lock');
+      loadWidget();
+    }
+    function close() {
+      popup.classList.remove('is-open');
+      popup.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('mbs-la-booking-lock');
+    }
+
+    document.querySelectorAll('[data-booking-open]').forEach(function (button) { button.addEventListener('click', open); });
+    popup.querySelectorAll('[data-booking-share]').forEach(function (button) { button.addEventListener('click', shareBookingLink); });
+    popup.querySelectorAll('[data-booking-close]').forEach(function (item) { item.addEventListener('click', function (event) { if (event.target === item || event.target.hasAttribute('data-booking-close')) close(); }); });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && popup.classList.contains('is-open')) close(); });
+    try { if (new URLSearchParams(window.location.search).get('online_booking') === '1') open(); } catch (err) {}
+  }());
+</script>
