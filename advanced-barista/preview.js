@@ -193,6 +193,7 @@
 
   var photos = Array.prototype.slice.call(document.querySelectorAll('[data-equipment-photo]'));
   var lightbox = document.querySelector('[data-equipment-lightbox]');
+  if (lightbox && lightbox.parentNode !== document.body) document.body.appendChild(lightbox);
   var image = document.querySelector('[data-equipment-lightbox-image]');
   if (!photos.length || !lightbox || !image) return;
 
