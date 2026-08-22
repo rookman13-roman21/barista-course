@@ -22,6 +22,7 @@ yClients
   → backend/cron с токенами
   → публичный JSON https://api.barista-school.ru/api/trainers.json
   → публичный JSON https://api.barista-school.ru/api/advisors.json
+  → общий popup https://api.barista-school.ru/trainer-profile-widget.js
   → hosted widget https://api.barista-school.ru/api/trainers-widget.html
   → loader в Tilda
 ```
@@ -37,6 +38,17 @@ yClients
 ```text
 /Users/Romka/Downloads/All_Code/schedule-online/basic-barista-booking/trainers/overrides.json
 ```
+
+Общий popup профиля находится в соседнем проекте:
+
+```text
+/Users/Romka/Downloads/All_Code/schedule-online/basic-barista-booking/tilda/trainer-profile-widget.js
+```
+
+Его используют и витрина тренеров, и шаг выбора тренера в online booking.
+Компонент принимает уже публичный профиль, не делает запросов в yClients и
+создаёт уникальный DOM-инстанс, поэтому витрина и popup записи не конфликтуют
+по ID или слою.
 
 ## Источники данных
 
@@ -121,6 +133,10 @@ scp trainers-widget.html root@5.35.93.225:/var/www/html/api/trainers-widget.html
 ```
 
 Loader запрашивает HTML с cache-buster, поэтому изменения вёрстки и дизайна подтягиваются без повторной вставки кода в Tilda.
+
+Если меняется popup профиля, выкладывать его из `schedule-online` вместе с
+общим booking-widget через `bash deploy.sh basic-barista`; ручное копирование
+разных версий popup в этот блок не допускается.
 
 Если меняется сам loader, загрузить:
 
