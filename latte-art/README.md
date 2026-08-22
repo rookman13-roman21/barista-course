@@ -31,3 +31,11 @@ node scripts/build-tilda-blocks.js
 Реальная запись включается только отдельным release-пакетом в
 `schedule-online/basic-barista-booking`. Production popup использует общий
 виджет с course slug `latte-art`; он не содержит токенов и прямых URL yClients.
+
+## Подтверждённый production-статус
+
+22.08.2026 Роман вручную вставил Tilda-блоки, опубликовал страницу
+`https://baristaschool.ru/latte-art` и подтвердил работу онлайн-записи, CTA,
+FAQ и Vimeo-видео в hero. Актуальный GitHub-пакет страницы — `7b19c33`.
+Следующие Tilda-изменения снова публикуются и проверяются вручную; local
+preview не является production-приёмкой.

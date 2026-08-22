@@ -13,6 +13,7 @@ barista-course/
 ├── _templates/                ← Шаблоны для новых Tilda-страниц
 ├── about-school/             ← Страница «О школе» (baristaschool.ru/company)
 ├── advanced-barista/         ← Локальный preview страницы «Продвинутый курс бариста» (не опубликован)
+├── latte-art/                ← Курс «Латте-арт» (baristaschool.ru/latte-art)
 ├── barista-interview/        ← Лендинг «Собеседование бариста» (baristaschool.ru/hr)
 ├── barista-theory-cabinet/   ← Личный кабинет: теория перед курсом (Tilda Members)
 ├── blog/                     ← Публичные полезные материалы: калькулятор себестоимости, помощник настройки эспрессо и статья о рабочем месте бариста
@@ -44,6 +45,7 @@ barista-course/
 |---|---|---|---|
 | `404/` | — | Tilda | Страница 404 — единственный `index.html` + `tilda-block.html` |
 | `advanced-barista/` | `/probarista` (текущая Tilda-страница не менялась) | Local preview + Tilda release package | Новая версия «Продвинутого курса бариста»: backend записи и расписание выложены, Tilda-артефакты готовы; сама страница ещё не опубликована |
+| `latte-art/` | `/latte-art` | Local preview + Tilda release package | Опубликованный курс «Латте-арт»: shared online booking на 1–2 участников, 3 последовательных занятия и Vimeo-video в hero |
 | `_templates/` | — | Docs / HTML templates | Шаблоны для новых страниц; `tilda-event-page/` — стартовая структура событийной страницы и мастер-класса |
 | `about-school/` | `/company` | Tilda Zero Block | Страница «О школе»: 9 блоков, история школы, тренеры, проекты |
 | `barista-interview/` | `/hr` | Tilda Zero Block | B2B-лендинг «Собеседование бариста»: тарифы, FAQ, CTA |
@@ -73,6 +75,7 @@ barista-course/
 |---|---|---|
 | О школе | `about-school/blocks/block-0*.html` | `about-school/index.html` |
 | Продвинутый курс бариста | `advanced-barista/tilda-blocks/00-seo.html`, `01-hero-and-for-whom.html`, shared trainers, `02-course-content.html`, `09-online-booking-popup.html`, `10-page-interactions.html` — не опубликованы | `advanced-barista/index.html` |
+| Латте-арт | `latte-art/tilda-blocks/00-seo.html`, `01-hero-and-for-whom.html`, shared trainers, `02-course-content.html`, `09-online-booking-popup.html`, `10-page-interactions.html` — опубликованы | `latte-art/index.html` |
 | Собеседование бариста | `barista-interview/index.html` | `barista-interview/index.html` |
 | Чемпионат MBS* Breeew battle | `breeew-battle/tilda-loader.html` | `breeew-battle/breeew-battle.html` |
 | Каппинг кофе | `capping/tilda-loader.html` | `capping/index.html` |
@@ -185,6 +188,13 @@ scripts/tilda-fetch.js
 - Виджет подключается по slug `advanced-barista` через общий `course-booking-widget.js`; в Tilda-обвязке не хранить токены и прямые URL yClients.
 - 19 августа 2026 года backend-конфиг и cron выложены из commit `af870e9`; health booking-сервиса, публичный JSON шести уроков и `check_only` для solo/pair подтверждены.
 - Текущая Tilda-страница `/probarista` не менялась. Для ручной вставки и публикации Tilda нужен отдельный шаг.
+
+### 4.5.2. Латте-арт
+- Local preview: `latte-art/index.html`; он безопасно демонстрирует интерфейс и не обращается к API записи или оплате.
+- Tilda-пакет: `latte-art/tilda-blocks/`; он использует shared trainers widget и общий popup записи.
+- Конфиг рабочей записи: `schedule-online/basic-barista-booking/courses/latte-art.json`. В нём три последовательных занятия по три часа, варианты solo/pair (24 000 ₽ / 32 000 ₽), предоплата 5 000 ₽ и manager-flow.
+- Виджет подключается по slug `latte-art` через общий `course-booking-widget.js`; в Tilda-обвязке не хранить токены и прямые URL yClients.
+- 21 августа 2026 года production-конфиг и public slots трёх занятий были подтверждены; safe `check_only` прошёл для solo/pair. 22 августа Роман опубликовал `/latte-art` и подтвердил online booking, CTA, FAQ и Vimeo-video в hero.
 
 ### 4.6. Онлайн-запись на экскурсии
 - Страница: `excu/tilda-block.html`, локальное превью: `excu/index.html`.
