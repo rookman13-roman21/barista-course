@@ -226,9 +226,12 @@
   });
   document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(currentIndex - 1); });
   document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(currentIndex + 1); });
+  lightbox.addEventListener('click', function (event) {
+    if (event.target === lightbox) close();
+  });
   document.addEventListener('keydown', function (event) {
     if (!lightbox.classList.contains('is-open')) return;
-    if (event.key === 'Escape') close();
+    if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) close();
     if (event.key === 'ArrowLeft') show(currentIndex - 1);
     if (event.key === 'ArrowRight') show(currentIndex + 1);
   });

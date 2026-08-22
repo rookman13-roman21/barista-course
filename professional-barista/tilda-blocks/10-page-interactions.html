@@ -70,6 +70,27 @@
   var current = 0;
   function show(index) { current = (index + photos.length) % photos.length; var source = photos[current].querySelector('img'); image.src = source.currentSrc || source.src; image.alt = source.alt || ''; }
   function closeGallery() { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); document.body.classList.remove('mbs-ad-lock'); }
-  if (photos.length && lightbox && image) { photos.forEach(function (photo, index) { photo.addEventListener('click', function () { show(index); lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden', 'false'); document.body.classList.add('mbs-ad-lock'); }); }); document.querySelectorAll('[data-equipment-close]').forEach(function (button) { button.addEventListener('click', closeGallery); }); document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(current - 1); }); document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(current + 1); }); }
+  if (photos.length && lightbox && image) {
+    photos.forEach(function (photo, index) {
+      photo.addEventListener('click', function () {
+        show(index);
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('mbs-ad-lock');
+      });
+    });
+    document.querySelectorAll('[data-equipment-close]').forEach(function (button) { button.addEventListener('click', closeGallery); });
+    document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(current - 1); });
+    document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(current + 1); });
+    lightbox.addEventListener('click', function (event) {
+      if (event.target === lightbox) closeGallery();
+    });
+    document.addEventListener('keydown', function (event) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape' || event.key === 'Esc' || event.keyCode === 27) closeGallery();
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+  }
 }());
 </script>
