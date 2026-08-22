@@ -1,0 +1,63 @@
+/* Базовая Tilda-safe система блоков; build script разворачивает import в итоговый пакет. */
+@import url("../advanced-barista/styles.css");
+
+.mbs-sa-title { font-size: clamp(53px, 4.8vw, 68px) !important; }
+.mbs-sa-hero .mbs-ad-hero__media img { object-position: 54% center; }
+
+/* Desktop: чуть компактнее исходного hero, без изменения mobile-версии. */
+@media (min-width: 901px) {
+  .mbs-sa-hero { padding: 16px 0 20px; }
+  .mbs-sa-hero .mbs-ad-hero__card {
+    grid-template-columns: minmax(0, 1.28fr) minmax(340px, .82fr);
+    gap: 14px 28px;
+    padding: 28px;
+  }
+  .mbs-sa-hero .mbs-ad-hero__media { width: 340px; height: 580px; }
+  .mbs-sa-hero .mbs-ad-hero__media img { height: 580px; }
+}
+
+.mbs-sa-program__title { max-width: 740px; margin-bottom: 11px !important; }
+.mbs-sa-program__note,
+.mbs-sa-course-result {
+  max-width: 720px;
+  color: var(--mbs-ad-muted);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.55;
+}
+.mbs-sa-program__note { margin: 0 0 28px !important; }
+.mbs-sa-course-result { margin: 24px 0 0 !important; }
+.mbs-sa-course-result strong { color: var(--mbs-ad-ink); }
+.mbs-sa-page .mbs-sa-faq__body a { color: var(--mbs-ad-green); font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.mbs-sa-page .mbs-sa-faq__body a:hover { color: var(--mbs-ad-green-bright); }
+
+/* FAQ повторяет проверенный паттерн базового курса: одна раскрытая карточка,
+   плавная высота и липкая колонка вопросов на desktop. */
+.mbs-sa-faq { padding: 90px 0; }
+.mbs-sa-faq__side { align-self: start; position: relative; will-change: transform; }
+.mbs-sa-faq__list { display: grid; gap: 10px; }
+.mbs-sa-faq__item { overflow: hidden; border: 0; border-radius: 18px; background: var(--mbs-ad-gray); }
+.mbs-sa-faq__item summary { cursor: pointer; list-style: none; padding: 22px 24px; color: var(--mbs-ad-ink); font-size: 19px; font-weight: 900; line-height: 1.25; }
+.mbs-sa-faq__item summary::-webkit-details-marker { display: none; }
+.mbs-sa-faq__item summary::after { float: right; color: var(--mbs-ad-green); content: "+"; font-size: 24px; line-height: 1; }
+.mbs-sa-faq__item[open] summary::after { content: "×"; }
+.mbs-sa-faq__body { height: 0; overflow: hidden; transition: height .32s cubic-bezier(.4, 0, .2, 1); }
+.mbs-sa-faq__answer { max-width: 620px; margin: 0; padding: 0 24px 24px; color: var(--mbs-ad-muted); font-size: 16px; font-weight: 600; line-height: 1.6; overflow: visible; }
+
+@media (min-width: 821px) and (max-width: 900px) {
+  .mbs-sa-faq .mbs-ad-faq__grid { grid-template-columns: .75fr 1.25fr; gap: 48px; }
+}
+
+@media (max-width: 820px) {
+  .mbs-sa-faq { padding: 64px 0; }
+  .mbs-sa-faq .mbs-ad-faq__grid { grid-template-columns: 1fr; gap: 28px; }
+  .mbs-sa-faq__side { transform: none !important; will-change: auto; }
+  .mbs-sa-faq__item summary { padding: 20px; font-size: 17px; }
+  .mbs-sa-faq__answer { padding: 0 20px 20px; font-size: 15px; }
+}
+
+@media (max-width: 640px) {
+  .mbs-sa-title { font-size: 36px !important; }
+  .mbs-sa-program__note { margin-bottom: 21px !important; font-size: 15px; }
+  .mbs-sa-course-result { margin-top: 20px !important; font-size: 15px; }
+}

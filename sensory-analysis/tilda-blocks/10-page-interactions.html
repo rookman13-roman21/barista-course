@@ -1,0 +1,168 @@
+<!-- Сгенерировано scripts/build-tilda-blocks.js. Не редактировать вручную. -->
+<script>
+(function () {
+  'use strict';
+
+  var days = [
+    { format: 'Вкус и каппинг', title: 'Основы сенсорики', description: 'Разберём, как устроено восприятие вкуса и аромата. Потренируем память на настоях из фруктов, ягод, специй и овощей, проведём классический каппинг и посмотрим, как настои меняют восприятие чашки.' },
+    { format: 'Базовые вкусы и кислоты', title: 'Вкус в чистом виде', description: 'Сравним сладкий, солёный, кислый, горький и умами при разной концентрации. Разберём сочетания вкусов, познакомимся с органическими кислотами и увидим их проявление в кофе.' },
+    { format: 'Аромат и методика', title: 'Обоняние и сенсорная оценка', description: 'Разберём роль обоняния во вкусовом восприятии и познакомимся с методами сенсорной оценки: каппингом, каптестингом, триангуляцией и сравнительными дегустациями.' },
+    { format: 'Итоговая практика', title: 'Триангуляция и выводы', description: 'Освоим слепую дегустацию трёх чашек, научимся аргументированно находить различия и формулировать описание. Подведём итоги курса, ответим на вопросы и вручим сертификаты.' }
+  ];
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-program-day]'));
+  var number = document.querySelector('[data-program-number]');
+  var format = document.querySelector('[data-program-format]');
+  var title = document.querySelector('[data-program-title]');
+  var description = document.querySelector('[data-program-description]');
+
+  function selectDay(index) {
+    var day = days[index];
+    if (!day || !number || !format || !title || !description) return;
+    number.textContent = 'Занятие ' + (index + 1);
+    format.textContent = day.format;
+    title.textContent = day.title;
+    description.textContent = day.description;
+    tabs.forEach(function (tab, tabIndex) {
+      var active = tabIndex === index;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { selectDay(Number(tab.getAttribute('data-program-day'))); });
+  });
+
+  (function initStickyFaqPanel() {
+    var ticking = false;
+    var desktopQuery = window.matchMedia('(min-width: 821px)');
+
+    function clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
+    }
+
+    function updateStickyPanels() {
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-mbs-sa-faq-panel]'));
+      panels.forEach(function (panel) {
+        var section = panel.closest('[data-mbs-sa-faq-section]');
+        if (!section || !desktopQuery.matches) {
+          panel.style.transform = '';
+          return;
+        }
+
+        var container = panel.parentElement || section;
+        var offset = parseInt(panel.getAttribute('data-mbs-sa-faq-offset') || '90', 10);
+        var containerRect = container.getBoundingClientRect();
+        var maxShift = Math.max(0, container.offsetHeight - panel.offsetHeight);
+        var shift = clamp(offset - containerRect.top, 0, maxShift);
+        panel.style.transform = 'translate3d(0,' + shift + 'px,0)';
+      });
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function () {
+        updateStickyPanels();
+        ticking = false;
+      });
+    }
+
+    window.mbsSaFaqStickyUpdate = updateStickyPanels;
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    window.addEventListener('load', requestUpdate);
+    requestUpdate();
+  }());
+
+  document.querySelectorAll('[data-mbs-sa-faq-list]').forEach(function (list) {
+    var items = Array.prototype.slice.call(list.querySelectorAll('.mbs-sa-faq__item'));
+
+    function closeItem(details) {
+      var body = details.querySelector('.mbs-sa-faq__body');
+      if (!body || !details.open || details.dataset.busy === '1') return;
+      details.dataset.busy = '1';
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.height = '0px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details.dataset.busy = '0';
+        if (window.mbsSaFaqStickyUpdate) window.mbsSaFaqStickyUpdate();
+      });
+    }
+
+    function openItem(details) {
+      var body = details.querySelector('.mbs-sa-faq__body');
+      if (!body || details.open || details.dataset.busy === '1') return;
+      items.forEach(function (item) {
+        if (item !== details) closeItem(item);
+      });
+      details.dataset.busy = '1';
+      details.open = true;
+      var targetHeight = body.scrollHeight;
+      body.style.height = '0px';
+      body.offsetHeight;
+      body.style.height = targetHeight + 'px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        body.style.height = 'auto';
+        details.dataset.busy = '0';
+        if (window.mbsSaFaqStickyUpdate) window.mbsSaFaqStickyUpdate();
+      });
+    }
+
+    items.forEach(function (details) {
+      var body = details.querySelector('.mbs-sa-faq__body');
+      var summary = details.querySelector('summary');
+      if (!body || !summary) return;
+      body.style.height = details.open ? 'auto' : '0px';
+      summary.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (details.open) closeItem(details);
+        else openItem(details);
+        if (window.mbsSaFaqStickyUpdate) window.mbsSaFaqStickyUpdate();
+      });
+    });
+  });
+
+  var photos = Array.prototype.slice.call(document.querySelectorAll('[data-equipment-photo]'));
+  var lightbox = document.querySelector('[data-equipment-lightbox]');
+  var image = document.querySelector('[data-equipment-lightbox-image]');
+  var current = 0;
+  function show(index) {
+    current = (index + photos.length) % photos.length;
+    var source = photos[current] && photos[current].querySelector('img');
+    if (source && image) { image.src = source.currentSrc || source.src; image.alt = source.alt || ''; }
+  }
+  function closeGallery() {
+    if (!lightbox) return;
+    lightbox.classList.remove('is-open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('mbs-ad-lock');
+  }
+  if (photos.length && lightbox && image) {
+    if (lightbox.parentNode !== document.body) document.body.appendChild(lightbox);
+    photos.forEach(function (photo, index) {
+      photo.addEventListener('click', function () {
+        show(index);
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('mbs-ad-lock');
+      });
+    });
+    document.querySelectorAll('[data-equipment-close]').forEach(function (button) { button.addEventListener('click', closeGallery); });
+    document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(current - 1); });
+    document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(current + 1); });
+    lightbox.addEventListener('click', function (event) { if (event.target === lightbox) closeGallery(); });
+    document.addEventListener('keydown', function (event) {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') closeGallery();
+      if (event.key === 'ArrowLeft') show(current - 1);
+      if (event.key === 'ArrowRight') show(current + 1);
+    });
+  }
+}());
+</script>
