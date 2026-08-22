@@ -26,7 +26,7 @@ const mainContent = between(sourceHtml, '  <main class="mbs-la-page">\n', '\n  <
 const programStart = mainContent.indexOf('    <section class="mbs-la-program"');
 if (programStart === -1) throw new Error('Не удалось найти начало блока программы');
 
-const runtimeStart = previewScript.indexOf("\n(function () {\n  'use strict';\n\n  var tabs");
+const runtimeStart = previewScript.indexOf("\n(function () {\n  'use strict';\n\n  document.querySelectorAll('[data-hero-video-play]')");
 if (runtimeStart === -1) throw new Error('Не удалось отделить production-интерактив от demo-записи');
 const productionRuntime = previewScript.slice(runtimeStart).trim();
 

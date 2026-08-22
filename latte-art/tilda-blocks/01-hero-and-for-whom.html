@@ -130,6 +130,18 @@ body.mbs-la-lock { overflow: hidden; }
 }
 .mbs-la-hero__lead--mobile { display: none; }
 .mbs-la-hero__media { grid-column: 2; grid-row: 1 / span 2; width: 360px; height: 560px; min-height: 0; align-self: stretch; justify-self: center; }
+.mbs-la-hero__video-poster {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 22px;
+  background: var(--mbs-la-ink);
+  cursor: pointer;
+}
 .mbs-la-hero__media img {
   display: block;
   width: 100%;
@@ -139,6 +151,37 @@ body.mbs-la-lock { overflow: hidden; }
   object-fit: cover;
   object-position: center bottom;
 }
+.mbs-la-hero__video-poster::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(31, 31, 31, .04), rgba(31, 31, 31, .22));
+  content: '';
+}
+.mbs-la-hero__video-play {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .62);
+  border-radius: 50%;
+  color: var(--mbs-la-white);
+  background: rgba(31, 31, 31, .72);
+  box-shadow: 0 10px 28px rgba(31, 31, 31, .22);
+  font-size: 28px;
+  transform: translate(-50%, -50%);
+  transition: transform .2s ease, background .2s ease;
+}
+.mbs-la-hero__video-poster:hover .mbs-la-hero__video-play,
+.mbs-la-hero__video-poster:focus-visible .mbs-la-hero__video-play {
+  background: var(--mbs-la-red);
+  transform: translate(-50%, -50%) scale(1.07);
+}
+.mbs-la-hero__video-poster:focus-visible { outline: 3px solid var(--mbs-la-green); outline-offset: 4px; }
 .mbs-la-hero__media iframe {
   display: block;
   width: 100%;
@@ -492,8 +535,10 @@ body.mbs-la-lock { overflow: hidden; }
   .mbs-la-hero__card { gap: 21px; padding: 24px; border-width: 5px; border-radius: 22px; }
   .mbs-la-label { margin-bottom: 13px; font-size: 12px; }
   .mbs-la-hero__media { height: 267px; min-height: 267px; }
+  .mbs-la-hero__video-poster { border-radius: 15px; }
   .mbs-la-hero__media img { height: 267px; min-height: 267px; border-radius: 15px; }
   .mbs-la-hero__media iframe { height: 267px; border-radius: 15px; }
+  .mbs-la-hero__video-play { width: 58px; height: 58px; font-size: 23px; }
   .mbs-la-hero__lead { margin-top: 0 !important; font-size: 17px; line-height: 1.45; }
   .mbs-la-facts { gap: 10px 14px; margin-bottom: 15px; }
   .mbs-la-facts span { font-size: 13px; }
@@ -653,7 +698,10 @@ body.mbs-la-lock { overflow: hidden; }
             <p class="mbs-la-hero__lead mbs-la-hero__lead--desktop">Совершенствуем текущий уровень рисования или осваиваем основы латте-арта — в спокойном темпе и с большим количеством практики.</p>
           </div>
           <div class="mbs-la-hero__media">
-            <img src="https://static.tildacdn.com/tild3130-6239-4963-b634-326435613136/--min.jpg" alt="Рисунок латте-арт на капучино" fetchpriority="high">
+            <button class="mbs-la-hero__video-poster" type="button" data-hero-video-play aria-label="Посмотреть видео о курсе «Латте-арт»">
+              <img src="https://static.tildacdn.com/tild3130-6239-4963-b634-326435613136/--min.jpg" alt="Рисунок латте-арт на капучино" fetchpriority="high">
+              <span class="mbs-la-hero__video-play" aria-hidden="true"><i class="ph ph-play"></i></span>
+            </button>
           </div>
           <p class="mbs-la-hero__lead mbs-la-hero__lead--mobile">Совершенствуем текущий уровень рисования или осваиваем основы латте-арта — в спокойном темпе и с большим количеством практики.</p>
           <div class="mbs-la-hero__bottom">

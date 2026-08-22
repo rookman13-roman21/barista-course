@@ -64,6 +64,23 @@
 (function () {
   'use strict';
 
+  document.querySelectorAll('[data-hero-video-play]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var media = button.closest('.mbs-la-hero__media');
+      if (!media) return;
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://player.vimeo.com/video/999633455?autoplay=1&title=0&byline=0&portrait=0&dnt=1';
+      iframe.title = 'Курс «Латте-арт»';
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      media.replaceChildren(iframe);
+    });
+  });
+}());
+
+(function () {
+  'use strict';
+
   var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-program-day]'));
   var number = document.querySelector('[data-program-number]');
   var format = document.querySelector('[data-program-format]');
