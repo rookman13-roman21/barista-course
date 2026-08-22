@@ -107,3 +107,55 @@
     tab.addEventListener('click', function () { selectLesson(Number(tab.getAttribute('data-program-day'))); });
   });
 }());
+
+(function () {
+  'use strict';
+
+  document.querySelectorAll('.mbs-la-faq__items').forEach(function (list) {
+    var items = Array.prototype.slice.call(list.querySelectorAll('details'));
+
+    function closeItem(details) {
+      var body = details.querySelector('.mbs-la-faq__body');
+      if (!body || !details.open || details.dataset.busy === '1') return;
+      details.dataset.busy = '1';
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.height = '0px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details.dataset.busy = '0';
+      });
+    }
+
+    function openItem(details) {
+      var body = details.querySelector('.mbs-la-faq__body');
+      if (!body || details.open || details.dataset.busy === '1') return;
+      items.forEach(function (item) { if (item !== details) closeItem(item); });
+      details.dataset.busy = '1';
+      details.open = true;
+      body.style.height = '0px';
+      body.offsetHeight;
+      body.style.height = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        body.style.height = 'auto';
+        details.dataset.busy = '0';
+      });
+    }
+
+    items.forEach(function (details) {
+      var body = details.querySelector('.mbs-la-faq__body');
+      var summary = details.querySelector('summary');
+      if (!body || !summary) return;
+      body.style.height = details.open ? 'auto' : '0px';
+      summary.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (details.open) closeItem(details);
+        else openItem(details);
+      });
+    });
+  });
+}());
