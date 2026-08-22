@@ -1,0 +1,18 @@
+/* Общая визуальная база local preview для страниц курсов MBS. */
+@import url("../advanced-barista/styles.css");
+
+/* Единственная адаптация шаблона к более длинному названию курса. */
+.mbs-pr-title { font-size: clamp(48px, 4.2vw, 58px) !important; }
+.mbs-pr-program__title { margin-bottom: 11px !important; }
+.mbs-pr-program__note { max-width: 680px; margin: 0 0 27px !important; color: var(--mbs-ad-muted); font-size: 16px; font-weight: 600; line-height: 1.5; }
+.mbs-pr-course-result { max-width: 760px; margin: 24px 0 0 !important; color: var(--mbs-ad-muted); font-size: 16px; font-weight: 600; line-height: 1.55; }
+.mbs-pr-course-result strong { color: var(--mbs-ad-ink); }
+.mbs-ad-faq__body a { color: var(--mbs-ad-green); font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.mbs-ad-faq__body a:hover { color: var(--mbs-ad-green-bright); }
+
+@media (max-width: 640px) {
+  .mbs-pr-title { font-size: 34px !important; }
+  .mbs-pr-program__title { margin-bottom: 10px !important; }
+  .mbs-pr-program__note { margin-bottom: 21px !important; font-size: 15px; }
+  .mbs-pr-course-result { margin-top: 20px !important; font-size: 15px; }
+}

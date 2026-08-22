@@ -1,0 +1,74 @@
+<!-- Сгенерировано scripts/build-tilda-blocks.js. Не редактировать вручную. -->
+<script>
+(function () {
+  'use strict';
+  var days = [
+    { format: 'Знакомство и эспрессо', title: 'Профессиональный эспрессо', description: 'Начнём со знакомства и утвердим программу под ваш опыт и пожелания. Разберём оборудование, воду, помол, дозу, выход и время. Настроим базовый рецепт и поймём, что именно меняет вкус.' },
+    { format: 'Вкус и дегустация', title: 'Вкус кофе и кислоты', description: 'Разберём базовые вкусы, кислотность и её виды, сладость, горечь и баланс. Продегустируем растворы и эспрессо с разным вкусом.' },
+    { format: 'Измерения и практика', title: 'Экстракция и рефрактометр', description: 'Разберём TDS, выход экстракции и связь измерений с ощущениями во вкусе. Проведём серию настроек: изменим один параметр, измерим и сравним чашки.' },
+    { format: 'Каппинг', title: 'Профессиональный каппинг', description: 'Подготовим сессию, оценим аромат и вкус, проведём триангуляцию, разберём дескрипторы и дефекты. Сравним лоты, обработки и обжарку.' },
+    { format: 'Итоговая практика', title: 'Контроль качества эспрессо', description: 'Самостоятельно настроим эспрессо под заданный вкус, поработаем с рецептом и рефрактометром, продиагностируем проблемные чашки. Проведём итоговую практику и разбор с тренером.' }
+  ];
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-program-day]'));
+  var number = document.querySelector('[data-program-number]');
+  var format = document.querySelector('[data-program-format]');
+  var title = document.querySelector('[data-program-title]');
+  var description = document.querySelector('[data-program-description]');
+  function selectDay(index) { var day = days[index]; if (!day || !number || !format || !title || !description) return; number.textContent = 'День ' + (index + 1); format.textContent = day.format; title.textContent = day.title; description.textContent = day.description; tabs.forEach(function (tab, tabIndex) { var active = tabIndex === index; tab.classList.toggle('is-active', active); tab.setAttribute('aria-selected', active ? 'true' : 'false'); }); }
+  tabs.forEach(function (tab) { tab.addEventListener('click', function () { selectDay(Number(tab.getAttribute('data-program-day'))); }); });
+  document.querySelectorAll('.mbs-ad-faq__items').forEach(function (list) {
+    var items = Array.prototype.slice.call(list.querySelectorAll('details'));
+
+    function closeItem(details) {
+      var body = details.querySelector('.mbs-ad-faq__body');
+      if (!body || !details.open || details.dataset.busy === '1') return;
+      details.dataset.busy = '1';
+      body.style.height = body.scrollHeight + 'px';
+      body.offsetHeight;
+      body.style.height = '0px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        details.open = false;
+        details.dataset.busy = '0';
+      });
+    }
+
+    function openItem(details) {
+      var body = details.querySelector('.mbs-ad-faq__body');
+      if (!body || details.open || details.dataset.busy === '1') return;
+      items.forEach(function (item) { if (item !== details) closeItem(item); });
+      details.dataset.busy = '1';
+      details.open = true;
+      body.style.height = '0px';
+      body.offsetHeight;
+      body.style.height = body.scrollHeight + 'px';
+      body.addEventListener('transitionend', function done(event) {
+        if (event.propertyName !== 'height') return;
+        body.removeEventListener('transitionend', done);
+        body.style.height = 'auto';
+        details.dataset.busy = '0';
+      });
+    }
+
+    items.forEach(function (details) {
+      var body = details.querySelector('.mbs-ad-faq__body');
+      var summary = details.querySelector('summary');
+      if (!body || !summary) return;
+      body.style.height = details.open ? 'auto' : '0px';
+      summary.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (details.open) closeItem(details);
+        else openItem(details);
+      });
+    });
+  });
+  var photos = Array.prototype.slice.call(document.querySelectorAll('[data-equipment-photo]'));
+  var lightbox = document.querySelector('[data-equipment-lightbox]');
+  var image = document.querySelector('[data-equipment-lightbox-image]');
+  var current = 0;
+  function show(index) { current = (index + photos.length) % photos.length; var source = photos[current].querySelector('img'); image.src = source.currentSrc || source.src; image.alt = source.alt || ''; }
+  function closeGallery() { lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden', 'true'); document.body.classList.remove('mbs-ad-lock'); }
+  if (photos.length && lightbox && image) { photos.forEach(function (photo, index) { photo.addEventListener('click', function () { show(index); lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden', 'false'); document.body.classList.add('mbs-ad-lock'); }); }); document.querySelectorAll('[data-equipment-close]').forEach(function (button) { button.addEventListener('click', closeGallery); }); document.querySelector('[data-equipment-prev]').addEventListener('click', function () { show(current - 1); }); document.querySelector('[data-equipment-next]').addEventListener('click', function () { show(current + 1); }); }
+}());
+</script>
